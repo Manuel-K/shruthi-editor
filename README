@@ -1,0 +1,64 @@
+Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
+informations about the Shruthi, see
+<http://www.mutable-instruments.net/shruthi1>. 
+Application icon: "saraswati" by Francois Barbut.
+
+What works:
+ - Editing patches.
+ - Remotely changing patch options on the shruthi.
+ - Loading/saving patches from/to disk.
+ - Fetching/sending patches from/to the shruthi.
+ - Changes made to patch options on the shruthi change the settings of the
+   editor.
+ - Generate random patches.
+
+
+What doesn't work:
+ - Automatic fetching/sending, e.g. on loading/saving.
+ - Loading/saving full patch sysex.
+
+
+Known bugs:
+ - If you have a feedback loop (e.g. midi cable from active output to active
+   input) and you change the input and the output device at the same time, the
+   programm will crash. I don't know how to fix it. Reason: if you close a midi
+   output, portmidi flushes the output buffer. If you close the input at the
+   same time, portmidi will cause a segmentation fault on the next poll command.
+   Workaround: change only   input oder output device at a time if you have a
+   feedback loop.
+
+
+Prerequisites:
+ Qt4: http://qt.nokia.com/products/
+ PortMidi: http://portmedia.sourceforge.net/
+
+
+Compiling under windows (Prerequisites):
+To compile it on windows, you need the mingw version of qt, mingw and portmidi.
+You can download the first two archives from
+http://qt.nokia.com/downloads/windows-cpp.
+
+Extract mingw first, then install qt. 
+
+Extract portmidi and copy the file "portmidi.pro" from the pm_qt subfolder to
+the portmidi folder. Edit "portmidi.pro" and change the line
+CONFIG += staticlib # replace this with DLL for dynamic link on Windows
+to
+CONFIG += DLL # replace this with DLL for dynamic link on Windows
+.Run 
+> qmake 
+and then 
+> make release
+.
+Copy the "portmidi.h" from the pm_common subfolder and the file "portmidi.dll"
+from the release subfolder into the shruthi-editor source folder. 
+
+Remove the file "shruthi-editor.ui" inside the shruthi-editor source folder and
+rename the file "shruthi-editor-onepage.ui" to "shruthi-editor.ui".
+
+
+Compiling:
+Run 
+> qmake
+> make release
+inside the shruthi-editor source folder.
