@@ -53,9 +53,6 @@ and then
 Copy the "portmidi.h" from the pm_common subfolder and the file "portmidi.dll"
 from the release subfolder into the shruthi-editor source folder. 
 
-Remove the file "shruthi-editor.ui" inside the shruthi-editor source folder and
-rename the file "shruthi-editor-onepage.ui" to "shruthi-editor.ui".
-
 
 Compiling:
 Run 
