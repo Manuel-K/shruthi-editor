@@ -50,7 +50,7 @@ QStringList Labels::ModulationSource = QStringList()
   <<"Audio"
   <<"Operator 1"
   <<"Operator 2";
-// Operands = ModulationSource
+
 
 // ******************************************
 QStringList Labels::ModulationDestination = QStringList() 
@@ -160,7 +160,17 @@ QStringList Labels::OscillatorAlgorithm = QStringList()
   <<"Bit-crushed" // sine and triangle wave
   <<"Naive square wave"
   <<"Filtered noise generator"
-  <<"Vowel"; //Low-tech formant synthesis
+  <<"Vowel" //Low-tech formant synthesis
+  <<"Belish"
+  <<"Polatd"
+  <<"Cello"
+  <<"Clpswp"
+  <<"Female"
+  <<"Fmtvoc"
+  <<"Frmnt2"
+  <<"Res3hp"
+  <<"Electp"
+  <<"Vibes";
 
 // ******************************************
 QStringList Labels::SubOscillatorAlgorithm = QStringList() 
@@ -248,12 +258,12 @@ QStringList Labels::MainFilterMode = QStringList()
 // ******************************************
 QStringList Labels::SecondaryFilterMode = QStringList() 
 // ******************************************
-  <<"FILTER_MODE_PARALLEL_LP"
-  <<"FILTER_MODE_PARALLEL_BP"
-  <<"FILTER_MODE_PARALLEL_HP"
-  <<"FILTER_MODE_SERIAL_LP"
-  <<"FILTER_MODE_SERIAL_BP"
-  <<"FILTER_MODE_SERIAL_HP";
+  <<"Lowpass (parallel)"
+  <<"Bandpass (parallel)"
+  <<"Highpass (parallel)"
+  <<"Lowpass (serial)"
+  <<"Bandpass (serial)"
+  <<"Highpass (serial)";
 
 // ******************************************
 QStringList Labels::LFORate = QStringList()
