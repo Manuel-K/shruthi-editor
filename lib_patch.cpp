@@ -150,6 +150,13 @@ int Patch::INIT_PATCH[] =
     2, 8, 0, 10, 2, 0, 11, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
     105, 116, 32, 32, 32, 32, 1, 0, 12, 0, 13, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 33};
 
+    
+// ******************************************
+bool Patch::enabled(int i) {
+// ******************************************
+    return (i<68 || i==84 || i==85 || i>=92);
+}
+    
 // ******************************************
 Patch::Patch() {
 // ******************************************
@@ -185,7 +192,7 @@ QString Patch::getName() {
 void Patch::printPatch() {
 // ******************************************
     qDebug() << "name: " << name; //qPrintable(name); //.toLocal8Bit().constData()
-    for (int i=0; i < 108; i++) if (i<68 || i==84 || i==85 || i>=92) {
+    for (int i=0; i < 108; i++) if (enabled(i)) {
         const param_t param = parameters[i];
         if (parameters[i].dropdown)
             qDebug() << param.name << ": " << (*param.dropdown).at(data[i]);
@@ -205,7 +212,7 @@ void Patch::resetPatch() {
 void Patch::randomizePatch() {
 // ******************************************
     parseSysex(INIT_PATCH);
-    for (int i=0; i < 108; i++) if (i<68 || i==84 || i==85 || i>=92) {
+    for (int i=0; i < 108; i++) if (enabled(i)) {
         const param_t param = parameters[i];
         data[i]=(rand() % (param.max-param.min))+param.min;
     }
@@ -235,7 +242,7 @@ void Patch::parseSysex(int sysex[]) {
     temp[99] = temp[90]%8; // op 2 out
 
     // fix negative values (2s complement):
-    for (int i=0; i < 108; i++) if (i<68 || i==84 || i==85 || i>=92) 
+    for (int i=0; i < 108; i++) if (enabled(i)) 
         if (parameters[i].min < 0)
             temp[i] -= (temp[i]>>7)*256;
     // store patch
@@ -257,7 +264,7 @@ void Patch::generateSysex (int res[]) {
         temp[i] = data[i];
     
     // fix negative values (2s complement):
-    for (int i=0; i < 92; i++) if (i<68 || i==84 || i==85 || i>=92) 
+    for (int i=0; i < 92; i++) if (enabled(i)) 
         if (parameters[i].min < 0 && temp[i]<0)        
             temp[i]+=256;
     // compress data

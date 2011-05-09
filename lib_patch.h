@@ -43,6 +43,7 @@ class Patch {
     public:
         static param_t parameters[];
         static int INIT_PATCH[];
+        static bool enabled(int);
         
         Patch();
         

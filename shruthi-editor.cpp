@@ -21,6 +21,7 @@
 #include "settings-dialog.h"
 
 #include "lib_labels.h"
+#include "lib_patch.h"
 
 #define VERSION "0.15"
 Editor* editor;
@@ -36,7 +37,7 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor* edit, QWidget *parent) 
     // Setup Dials/ComboBoxes:
     QDial* tmp_d;
     QComboBox* tmp_c;
-    for (int i=0; i<100; i++) if (i<68 || i==84 || i==85 || i>=92) {
+    for (int i=0; i<100; i++) if (Patch::enabled(i)) {
         if (Patch::parameters[i].dropdown) {
             tmp_c = qFindChild<QComboBox*>(this, QString("c")+QString("%1").arg(i));
             tmp_c -> addItems(*(Patch::parameters[i].dropdown));
@@ -217,7 +218,7 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
 // ******************************************
 void shruthiEditorMainWindow::redrawAll() {
 // ******************************************
-    for (int i=0; i<100; i++) if (i<68 || i==84 || i==85 || i>=92)
+    for (int i=0; i<100; i++) if (Patch::enabled(i))
         redrawNRPN(i);
     patch_name->setText(editor->getName());
 }
