@@ -23,11 +23,8 @@
 #include "lib_labels.h"
 #include "lib_patch.h"
 
-<<<<<<< HEAD
 #define VERSION "0.17"
-=======
-#define VERSION "0.16"
->>>>>>> e2c5cda63651785d3a9bd1a5c2232922dd84e399
+
 Editor* editor;
 int MIDI_INPUT_DEVICE, MIDI_OUTPUT_DEVICE; 
 bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
