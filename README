@@ -42,4 +42,5 @@ v0.16 * support for dual VCF -> new ui layout
       * old ui layouts are currently broken (e.g. shruthi-editor-onepage.ui,
         shruthi-editor-tabs.ui)
 v0.17 * change from portmidi to RtMidi
-      * made save format cross system compatible
+      * made save format cross system compatible; this breaks backwards
+        compatibility
