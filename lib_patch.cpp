@@ -343,6 +343,45 @@ void Patch::parseFullSysex(std::vector< unsigned char > *message) {
     parseSysex(tmp);
 }
 
+// // ******************************************
+// void Patch::parseFullSysex(int sysex[], int len) {
+// // ******************************************
+//     // check if valid:
+//     if (!(sysex[0]==sysexHead[0] && sysex[1]==sysexHead[1] && sysex[2]==sysexHead[2] && sysex[3]==sysexHead[3] && sysex[4]==sysexHead[4] && sysex[5]==sysexHead[5])) {
+//         qDebug() << "Invalid sysex header.";
+//         return;
+//     }
+//     if (!(sysexFoot==sysex[len-1])) {
+//         qDebug() << "Invalid sysex footer.";
+//         return;
+//     }
+//     if (!(1==sysex[6]&&0==sysex[7])) {
+//         qDebug() << "Sysex is not a patch.";
+//         return;
+//     }
+//     // combine nibbles to bytes:
+//     int j=8;
+//     for (int i=8;i<len-1;i+=2)
+//         sysex[j++] = sysex[i]<<4|sysex[i+1];
+//     sysex[j]=sysex[len-1];
+//     len=j+1;
+//     
+//     if (!(33==sysex[len-3])) {
+//         qDebug() << "Invalid patch data.";
+//         return;
+//     }
+//     if (!calculateChecksum(sysex,8,100)==sysex[len-2]) {
+//         qDebug() << "Invalid checksum.";
+//         return;
+//     }
+//     
+//     // throw padding away:   
+//     int tmp[92];
+//     for (int i=0; i<92;i++)
+//         tmp[i]=sysex[8+i];
+// 
+//     parseSysex(tmp);
+// }
 
 // ******************************************
 void Patch::generateFullSysex (std::vector< unsigned char > *message) {
@@ -365,6 +404,27 @@ void Patch::generateFullSysex (std::vector< unsigned char > *message) {
     }
     message->push_back(Patch::sysexFoot);
 }
+
+// // ******************************************
+// void Patch::generateFullSysex (unsigned char res[]) {
+// // ******************************************
+// // Note: res must have at least 195 entries.
+//     int temp[93];
+//     generateSysex(temp);
+//     
+//     for (int i=0; i<6; i++)
+//         res[i]=sysexHead[i];
+//     res[6]=1;
+//     res[7]=0;
+//     temp[92]=calculateChecksum(temp,0,92);
+//     res[194]=sysexFoot;
+//     
+//     // expand bytes to nibbles:
+//     for (int i=0;i<93;i++) {
+//         res[8+2*i]= (temp[i]>>4)&0x0F;
+//         res[8+2*i+1]= temp[i]&0x0F;
+//     }
+// }
 
 
 // ******************************************
