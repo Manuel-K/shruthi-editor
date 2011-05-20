@@ -93,7 +93,7 @@ void Editor::process(queueitem_t item) {
 #ifdef DEBUG
             qDebug() << "SYSEX_RECIEVED";
 #endif
-            if (7<item.nrpn && item.message[6]==1 && item.message[7]==0)
+            if (7<item.size && item.message[6]==1 && item.message[7]==0)
                 patch.parseFullSysex(item.message,item.size);
             else {
                 emit displayStatusbar("Recieved unknown sysex.");
