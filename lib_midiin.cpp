@@ -76,99 +76,129 @@ bool parserNRPN::parse(int b0, int b1, int b2) {
 }
 
 
-// ******************************************
-parserSysex::parserSysex () {
-// ******************************************
-    recieving=false;
-    pos=0;
-}
+// // ******************************************
+// parserSysex::parserSysex () {
+// // ******************************************
+//     recieving=false;
+//     pos=0;
+// }
+// 
+// // ******************************************
+// bool parserSysex::isRecieving() {
+// // ******************************************
+//     return recieving;
+// }
+// // ******************************************
+// void parserSysex::setRecieving() {
+// // ******************************************
+//     recieving=true;
+//     pos=0;
+// }
+// 
+// // ******************************************
+// bool parserSysex::parse(int b0, int b1, int b2, int b3) {
+// // ******************************************
+//     buffer[pos++]=b0;
+//     if(b0!=247)
+//         buffer[pos++]=b1;
+//     if(b1!=247)
+//         buffer[pos++]=b2;
+//     if(b2!=247)
+//         buffer[pos++]=b3;
+//     if (b0==247||b1==247||b2==247||b3==247)  // end of sysex message
+//         recieving=false;
+//     return !recieving;
+// }
+// // ******************************************
+// int parserSysex::getSysex(int* sysex) {
+// // ******************************************
+//     for (int i=0; i<pos; i++)
+//         sysex[i]=buffer[i];
+//     return pos;
+// }
+// 
+// // ******************************************
+// int parserSysex::getLen() {
+// // ******************************************
+//     return pos;
+// }
+
+
+// // ******************************************
+// void MidiIn::listen() {
+// // ******************************************
+//     std::vector<unsigned char> message;
+//   
+//     midiin->getMessage( &message );
+//     process(&message);
+//     if (message.size()>0)
+//         QTimer::singleShot(0, this, SLOT(listen()));
+// }
+
 
 // ******************************************
-bool parserSysex::isRecieving() {
+void MidiIn::process ( std::vector< unsigned char > *message ) {
 // ******************************************
-    return recieving;
-}
-// ******************************************
-void parserSysex::setRecieving() {
-// ******************************************
-    recieving=true;
-    pos=0;
-}
+    int size;
+    size = message->size();
 
-// ******************************************
-bool parserSysex::parse(int b0, int b1, int b2, int b3) {
-// ******************************************
-    buffer[pos++]=b0;
-    if(b0!=247)
-        buffer[pos++]=b1;
-    if(b1!=247)
-        buffer[pos++]=b2;
-    if(b2!=247)
-        buffer[pos++]=b3;
-    if (b0==247||b1==247||b2==247||b3==247)  // end of sysex message
-        recieving=false;
-    return !recieving;
-}
-// ******************************************
-int parserSysex::getSysex(int* sysex) {
-// ******************************************
-    for (int i=0; i<pos; i++)
-        sysex[i]=buffer[i];
-    return pos;
-}
-
-// ******************************************
-int parserSysex::getLen() {
-// ******************************************
-    return pos;
-}
-
-// ******************************************
-void MidiIn::listen() {
-// ******************************************
-    if (!opened || !Pm_Poll(midiin)) 
-        return;
-    Pm_Read( midiin, buffer, 1 );
-    int b0 = (buffer->message & 0xFF);
-    int b1 = (buffer->message >> 8)& 0xFF;
-    int b2 = (buffer->message >> 16)& 0xFF;
-    int b3 = (buffer->message >> 24);
-    
-    if (b0==240 && b1==0 && b2==32 && b3==119) {//SYSEX_HEAD
-        sysex.setRecieving();
-#ifdef DEBUG
-        qDebug() << "detected start of sysex message";
-#endif
-    }
-    if (sysex.isRecieving()){
-        if (sysex.parse(b0,b1,b2,b3)) {
-            int len = sysex.getLen();
-            int *msg = new int[len];
-            sysex.getSysex(msg);
-            queueitem_t signal = {SYSEX_RECIEVED,len,0,NULL,NULL};
+    if (size>=4) {
+        int b0 = (int)message->at(0);
+        int b1 = (int)message->at(1);
+        int b2 = (int)message->at(2);
+        int b3 = (int)message->at(3);
+        int bl = (int)message->at(size-1);
+        
+        if (b0==240 && b1==0 && b2==32 && b3==119 && bl==247) {//SYSEX_HEAD
+            queueitem_t signal = {SYSEX_RECIEVED,size,0,NULL,NULL};
+            int *msg = new int[size];
+            for (int i=0; i<size;i++)
+                msg[i]=(int) message->at(i);
             signal.intp=msg;
             emit enqueue(signal);
         }
-    } else {
-        if (nrpn.parse(b0,b1,b2)) {
+    } else if (size>=3) { 
+        if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
             queueitem_t signal = {NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue(),NULL,NULL};
             emit enqueue(signal);
         }
+         
     }
-    QTimer::singleShot(0, this, SLOT(listen()));
+
+
+//     if (b0==240 && b1==0 && b2==32 && b3==119) {//SYSEX_HEAD
+//         sysex.setRecieving();
+// #ifdef DEBUG
+//         qDebug() << "detected start of sysex message";
+// #endif
+//     }
+//     if (sysex.isRecieving()){
+//         if (sysex.parse(b0,b1,b2,b3)) {
+//             int len = sysex.getLen();
+//             int *msg = new int[len];
+//             sysex.getSysex(msg);
+//             queueitem_t signal = {SYSEX_RECIEVED,len,0,NULL,NULL};
+//             signal.intp=msg;
+//             emit enqueue(signal);
+//         }
+//     } else {
+//         if (nrpn.parse(b0,b1,b2)) {
+//             queueitem_t signal = {NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue(),NULL,NULL};
+//             emit enqueue(signal);
+//         }
+//     }
 }
 
 // ******************************************
-MidiIn::~MidiIn() {
+void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData ) {
 // ******************************************
-#ifdef DEBUG
-    qDebug() << "MidiIn::~MidiIn()";
-#endif
-    timer->stop();
-    delete timer;
-    if (opened)
-        Pm_Close(midiin);
+  ((MidiIn*) userData) -> process(message);
 }
+
+
+
+
+
 // ******************************************
 MidiIn::MidiIn() {
 // ******************************************
@@ -176,10 +206,33 @@ MidiIn::MidiIn() {
     qDebug() << "MidiIn::MidiIn()";
 #endif
     opened = false;
-    timer = new QTimer(this);
+//     timer = new QTimer(this);
     input = -1;
-    connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
+    
+    try {
+        midiin = new RtMidiIn();
+    }
+    catch ( RtError &error ) {
+        error.printMessage();
+        qWarning() << "MidiOut::MidiIn(): could not initilize midi device for writing.";
+//         exit( EXIT_FAILURE );
+    }
+    
+//     connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
+
+
+// ******************************************
+MidiIn::~MidiIn() {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "MidiIn::~MidiIn()";
+#endif
+//     timer->stop();
+//     delete timer;
+    delete midiin;
+}
+
 
 // ******************************************
 void MidiIn::setMidiDevices(int in, int out) {
@@ -187,20 +240,45 @@ void MidiIn::setMidiDevices(int in, int out) {
 #ifdef DEBUG
     qDebug() << "MidiIn::setMidiDevices";
 #endif
-    if (in==input && opened)
-        return;
-    
-    if (opened) {
-        timer->stop();
-        opened=false;
-        Pm_Close(midiin);
-    }
-    opened = (Pm_OpenInput(&midiin,in,NULL,0,NULL,NULL)>=0);
-    if (opened) {
-        timer->start(100);
-        input = in;
-    } else {
-        qWarning() << "MidiIn::setMidiDevices(): could not open midi device for writing.";
-    }
+    open(in);
     emit midiInputStatusChanged(opened);
+}
+
+// ******************************************
+bool MidiIn::open(unsigned int port) {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "MidiIn::open("<<port<<")";
+#endif
+    if (input==port && opened)
+        return true;
+
+    if (opened) {
+//         timer->stop();
+        midiin->closePort();
+    }
+    
+    if (port >= midiin->getPortCount() ) {
+        qWarning() << "MidiIn::open(): trying to open midi device for reading which doesn't exist.";
+        opened = false;
+        return false;
+    } 
+    try {
+        midiin->openPort( port );
+        midiin->ignoreTypes( false, true, true );
+        opened = true;
+        midiin->setCallback(&mycallback,this);
+    }
+    catch ( RtError &error ) {
+#ifdef DEBUG
+        qDebug() << "MidiIn::open("<<port<<"): RtError on openPort().";
+#endif
+        opened = false;
+    }
+    if (opened) {
+//         timer->start(100);
+        input = port;
+    } else
+        qWarning() << "MidiIn::open(): could not open midi device for reading.";
+    return opened;
 }

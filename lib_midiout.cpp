@@ -22,78 +22,144 @@
 // ******************************************
 MidiOut::MidiOut() {
 // ******************************************
+#ifdef DEBUG
+    qDebug() << "MidiOut::MidiOut()";
+#endif
     opened=false;
     output=-1;
+    try {
+        midiout = new RtMidiOut();
+    }
+    catch ( RtError &error ) {
+        error.printMessage();
+        qWarning() << "MidiOut::MidiOut(): could not initilize midi device for writing.";
+//         exit( EXIT_FAILURE );
+    }
 }
 
+
 // ******************************************
-bool MidiOut::open(int channel) {
+MidiOut::~MidiOut() {
 // ******************************************
-    if (output==channel && opened)
+#ifdef DEBUG
+    qDebug() << "MidiOut::~MidiOut()";
+#endif
+    delete midiout;
+}
+
+
+// ******************************************
+bool MidiOut::open(unsigned int port) {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "MidiOut::open("<<port<<")";
+#endif
+    if (output==port && opened)
         return true;
-    if (opened) 
-        Pm_Close(midiout);
-    opened = (Pm_OpenOutput(&midiout,channel,NULL,0,NULL,NULL,10)>=0);
+
     if (opened)
-        output=channel;
+        midiout->closePort();
+
+    if (port >= midiout->getPortCount() ) {
+        qWarning() << "MidiOut::open(): trying to open midi device for writing which doesn't exist.";
+        opened = false;
+        return false;
+    } 
+    try {
+        midiout->openPort( port );
+        opened = true;
+    }
+    catch ( RtError &error ) {
+#ifdef DEBUG
+        qDebug() << "MidiOut::open("<<port<<"): RtError on openPort().";
+#endif
+        opened = false;
+    }
+    if (opened)
+        output = port;
     else
         qWarning() << "MidiOut::open(): could not open midi device for writing.";
     return opened;
 }
 
-// ******************************************
-void MidiOut::close() {
-// ******************************************
-    if (opened) {
-        Pm_Close(midiout);
-        opened=false;
-    }
-}
+// // ******************************************
+// void MidiOut::close() {
+// // ******************************************
+// #ifdef DEBUG
+//     qDebug() << "MidiOut::close()";
+// #endif
+//     if (opened) {
+//         midiout->closePort();
+//         opened=false;
+//     }
+// }
 
 // ******************************************
 void MidiOut::writeSysex(unsigned char sysex[]) {
 // ******************************************
-    if (opened)
-        Pm_WriteSysEx(midiout,0,sysex);
-    else
-        qDebug() << "MidiOut::writeNRPN(): could not send.";
+    if (!opened) {
+        qDebug() << "MidiOut::writeSysex(): could not send. Port not opened.";
+        return;
+    }
+    
+    std::vector<unsigned char> message;
+    int i;
+    for (i=0; sysex[i]!=247; i++)
+        message.push_back(sysex[i]);
+    message.push_back(sysex[i]);
+    write(message);
+}
+
+
+// ******************************************
+void MidiOut::write(std::vector<unsigned char> message) {
+// ******************************************
+    if (!opened) {
+        qDebug() << "MidiOut::write(): could not send. Port not opened.";
+        return;
+    }
+    
+    try {
+        midiout->sendMessage (&message);
+    }
+    catch ( RtError &error ) {
+        qDebug() << "MidiOut::write(): could not send. Error on sending.";
+        error.printMessage();
+    }
+}
+
+
+// ******************************************
+void MidiOut::writeBytes(unsigned char c1,unsigned char c2,unsigned char c3) {
+// ******************************************
+    std::vector<unsigned char> message;
+    message.push_back( c1 );
+    message.push_back( c2 );
+    message.push_back( c3 );
+    write( message );
 }
 
 // ******************************************
 void MidiOut::writeNRPN(int nrpn, int value) {
 // ******************************************
-    if (opened) {
-        int32_t nrpn_msb=nrpn>>7;
-        int32_t nrpn_lsb=nrpn%128;
-        int32_t value_msb;
-        int32_t value_lsb;
-        if (value<0) {
-         value_msb=1;
-         value_lsb=(value+128)%128;
-        } else {
-         value_msb=value>>7;
-         value_lsb=value%128;
-        }
-//         std::cout << "nrpn msb: " << nrpn_msb << ", nrpn lsb: " << nrpn_lsb <<", value msb: " << value_msb << ", value lsb:" << value_lsb << "\n";
-
-        buffer[0].message = Pm_Message(176, 99, nrpn_msb);
-        buffer[1].message = Pm_Message(176, 98, nrpn_lsb);
-        buffer[2].message = Pm_Message(176, 6, value_msb);
-        buffer[3].message = Pm_Message(176, 38, value_lsb);
-        buffer[0].timestamp = 0;
-        buffer[1].timestamp = 10;
-        buffer[2].timestamp = 20;
-        buffer[3].timestamp = 30;
-        
-        PmError rv=Pm_Write(midiout, buffer, 4);
-        if (rv<0) {
-            qDebug()<< "Pm_Write:"<<Pm_GetErrorText(rv);
-        }
-        if (Pm_HasHostError(midiout)) {
-            char error[128];
-            Pm_GetHostErrorText(error,128);
-            qWarning() << "Pm_GetHostErrorText():"<<error; 
-        }
-    } else
-        qDebug() << "MidiOut::writeNRPN(): could not send.";
+    if (!opened) {
+        qDebug() << "MidiOut::writeNRPN(): could not send. Port not opened.";
+        return;
+    }
+      
+    int32_t nrpn_msb=nrpn>>7;
+    int32_t nrpn_lsb=nrpn%128;
+    int32_t value_msb;
+    int32_t value_lsb;
+    if (value<0) {
+      value_msb=1;
+      value_lsb=(value+128)%128;
+    } else {
+      value_msb=value>>7;
+      value_lsb=value%128;
+    }
+    writeBytes(176, 99, nrpn_msb);
+    writeBytes(176, 98, nrpn_lsb);
+    writeBytes(176, 6, value_msb);
+    writeBytes(176, 38, value_lsb);
 }

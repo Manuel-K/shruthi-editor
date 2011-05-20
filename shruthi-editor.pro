@@ -16,18 +16,38 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-HEADERS     = settings-dialog.h shruthi-editor.h lib_patch.h lib_labels.h lib_editor.h lib_config.h lib_midiout.h lib_midiin.h
-SOURCES     = settings-dialog.cpp shruthi-editor.cpp main.cpp lib_patch.cpp lib_labels.cpp lib_editor.cpp lib_config.cpp lib_midiout.cpp lib_midiin.cpp
+HEADERS     = settings-dialog.h shruthi-editor.h lib_patch.h lib_labels.h lib_editor.h lib_config.h lib_midiout.h lib_midiin.h RtMidi.h
+SOURCES     = RtMidi.cpp settings-dialog.cpp shruthi-editor.cpp main.cpp lib_patch.cpp lib_labels.cpp lib_editor.cpp lib_config.cpp lib_midiout.cpp lib_midiin.cpp  
 FORMS       = settings-dialog.ui shruthi-editor.ui
 RC_FILE     = shruthi-editor.rc
 
 CONFIG += qt #debug
 #DEFINES+=DEBUG
-#DEFINES+=CLEANLOOKS
 
-# install
+LIBS += -L. 
 target.path = release/
 icons.path = release/
-icons.files = shruthi-editor.png shruthi-editor.ico
+icons.files = shruthi-editor.png
+
+unix {
+    # alsa:
+    DEFINES+=__LINUX_ALSASEQ__
+    LIBS+=-lasound
+    # jack;
+    #DEFINES+=__LINUX_JACK__
+    #LIBS+=-ljack
+}
+macx {
+    DEFINES+=__MACOSX_CORE__
+    LIBS+=-framework CoreMidi -framework CoreAudio -framework CoreFoundation
+}
+win32 {
+    DEFINES+=__WINDOWS_MM__
+    LIBS+=-lwinmm
+    DEFINES+=CLEANLOOKS
+    icons.files+=shruthi-editor.ico
+}
+
+
+# install
 INSTALLS += target icons
-LIBS += -L. -lportmidi

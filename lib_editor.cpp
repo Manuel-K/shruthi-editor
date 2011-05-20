@@ -48,7 +48,6 @@ Editor::~Editor() {
 #ifdef DEBUG
     qDebug() << "Editor::~Editor()";
 #endif
-    midiout.close();
 }
 
 // ******************************************

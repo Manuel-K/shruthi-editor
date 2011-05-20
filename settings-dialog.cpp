@@ -19,7 +19,7 @@
 #include <QtGui> 
 #include "settings-dialog.h"
 #include <iostream>
-#include "portmidi.h"
+#include "RtMidi.h"
 
 // ******************************************
 shruthiEditorSettings::shruthiEditorSettings(QWidget *parent) {
@@ -32,16 +32,59 @@ shruthiEditorSettings::shruthiEditorSettings(QWidget *parent) {
 // ******************************************
 void shruthiEditorSettings::getDeviceInfo() {
 // ******************************************
-    int numdev = Pm_CountDevices();
-    std::cout << numdev << " midi devices found.\n";
-
-    for (PmDeviceID i=0; i < numdev; i++) {
-        const PmDeviceInfo* inf = Pm_GetDeviceInfo(i);
-        if (inf->input)
-            midi_input_device->addItem(inf->name,i);
-        if (inf->output)
-            midi_output_device->addItem(inf->name,i);
+    RtMidiIn  *midiin = 0;
+    RtMidiOut *midiout = 0;
+    QString name;
+  
+    // Input ports:
+    try {
+        midiin = new RtMidiIn();
     }
+    catch ( RtError &error ) {
+        error.printMessage();
+        exit( EXIT_FAILURE );
+    }
+    unsigned int numdev = midiin->getPortCount();
+    
+    std::cout << numdev << " midi input devices found.\n";
+
+    for (unsigned int i=0; i < numdev; i++) {
+        try {
+            name = QString::fromStdString(midiin->getPortName(i));
+        }
+        catch ( RtError &error ) {
+            error.printMessage();
+            goto cleanup;
+        }
+        midi_input_device->addItem(name,i);
+    }
+    
+    // Output ports:
+    try {
+        midiout = new RtMidiOut();
+    }
+    catch ( RtError &error ) {
+        error.printMessage();
+        exit( EXIT_FAILURE );
+    }
+    numdev = midiout->getPortCount();
+    
+    std::cout << numdev << " midi output devices found.\n";
+
+    for (unsigned int i=0; i < numdev; i++) {
+        try {
+            name = QString::fromStdString(midiout->getPortName(i));
+        }
+        catch ( RtError &error ) {
+            error.printMessage();
+            goto cleanup;
+        }
+        midi_output_device->addItem(name,i);
+    }
+    
+    cleanup:
+    delete midiin;
+    delete midiout;
 }
 
 // ******************************************

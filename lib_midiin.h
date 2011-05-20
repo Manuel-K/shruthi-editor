@@ -19,10 +19,10 @@
 #ifndef SHRUTHI_MIDIIN_H
 #define SHRUTHI_MIDIIN_H
 
-#include "portmidi.h"
 #include <QObject>
 #include "lib_editor.h" // queueitem_t definition
-#include <QTimer>
+// #include <QTimer>
+#include "RtMidi.h"
 
 
 // ******************************************
@@ -40,21 +40,21 @@ class parserNRPN {
         bool parse(int,int,int);
 };
 
-// ******************************************
-class parserSysex {
-// ******************************************
-    private:
-        bool recieving;
-        int buffer[1024];
-        int pos;
-    public:
-        parserSysex();
-        bool isRecieving();
-        void setRecieving();
-        bool parse(int b0, int b1, int b2, int b3);
-        int getSysex(int *sysex);
-        int getLen();
-};
+// // ******************************************
+// class parserSysex {
+// // ******************************************
+//     private:
+//         bool recieving;
+//         int buffer[1024];
+//         int pos;
+//     public:
+//         parserSysex();
+//         bool isRecieving();
+//         void setRecieving();
+//         bool parse(int b0, int b1, int b2, int b3);
+//         int getSysex(int *sysex);
+//         int getLen();
+// };
 
 
 // ******************************************
@@ -63,23 +63,28 @@ class MidiIn : public QObject {
     Q_OBJECT
     private:
         parserNRPN nrpn;
-        parserSysex sysex;
-        PmStream* midiin;
-        bool opened;
-        PmEvent buffer[1];
-        QTimer *timer;
+//         parserSysex sysex;
         
-        int input;
+        RtMidiIn* midiin;
+        bool opened;
+        unsigned int input;
+
+//         QTimer *timer;
+        
+        bool open(unsigned int);
+        
     public:
         ~MidiIn();
         MidiIn();
-    private slots:
-        void listen();
+        void process ( std::vector< unsigned char > *message );
+//     private slots:
+//         void listen();
     public slots:
         void setMidiDevices(int,int);
     signals:
         void enqueue(queueitem_t);
         void midiInputStatusChanged(bool);
 };
+
 
 #endif

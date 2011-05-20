@@ -18,21 +18,23 @@
 
 #ifndef SHRUTHI_MIDIOUT_H
 #define SHRUTHI_MIDIOUT_H
-#include "portmidi.h"
+#include "RtMidi.h"
 
 // ******************************************
 class MidiOut {
 // ******************************************
     private:
-        PmStream* midiout;
+        RtMidiOut* midiout;
         bool opened;
-        PmEvent buffer[4];
-        int output;
+        unsigned int output;
+        void writeBytes(unsigned char c1,unsigned char c2,unsigned char c3);
     public:
         MidiOut();
-        bool open(int channel);
-        void close();
+        ~MidiOut();
+        bool open(unsigned int channel);
+//         void close();
         void writeSysex(unsigned char sysex[]);
+        void write(std::vector<unsigned char> sysex);
         void writeNRPN(int nrpn, int value);
 };
 

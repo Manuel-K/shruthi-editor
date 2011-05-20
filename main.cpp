@@ -23,7 +23,9 @@
 #include "lib_midiin.h"
 #include "shruthi-editor.h"
 #include <QDebug>
-#include "portmidi.h"
+// #include "portmidi.h"
+#include "RtMidi.h"
+
 #ifdef __MINGW32__
 #define CLEANLOOKS
 #endif
@@ -114,7 +116,7 @@ int main(int argc, char *argv[]) {
     QApplication::setStyle(new QCleanlooksStyle);
 #endif    
     
-    Pm_Initialize();
+//     Pm_Initialize();
     int retVal;
     
     {
@@ -185,7 +187,7 @@ int main(int argc, char *argv[]) {
 #ifdef DEBUG
     qDebug() << "Pm_Terminate();";
 #endif
-    Pm_Terminate();
+//     Pm_Terminate();
     
 #ifdef DEBUG
     qDebug() << "return"<< retVal;

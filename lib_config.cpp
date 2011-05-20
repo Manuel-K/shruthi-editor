@@ -32,7 +32,7 @@ void Config::load() {
 // ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     midiInputDevice=settings.value("midi/inputDevice",1).toInt();
-    midiOutputDevice=settings.value("midi/outputDevice",0).toInt();
+    midiOutputDevice=settings.value("midi/outputDevice",1).toInt();
 };
 
 // ******************************************
