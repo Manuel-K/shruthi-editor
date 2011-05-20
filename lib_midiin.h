@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include "lib_editor.h" // queueitem_t definition
+// #include <QTimer>
 #include "RtMidi.h"
 
 
@@ -68,12 +69,16 @@ class MidiIn : public QObject {
         bool opened;
         unsigned int input;
 
+//         QTimer *timer;
+        
         bool open(unsigned int);
         
     public:
         ~MidiIn();
         MidiIn();
         void process ( std::vector< unsigned char > *message );
+//     private slots:
+//         void listen();
     public slots:
         void setMidiDevices(int,int);
     signals:

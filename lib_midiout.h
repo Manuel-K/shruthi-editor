@@ -27,12 +27,13 @@ class MidiOut {
         RtMidiOut* midiout;
         bool opened;
         unsigned int output;
-        void write(unsigned char c1,unsigned char c2,unsigned char c3);
+        void writeBytes(unsigned char c1,unsigned char c2,unsigned char c3);
     public:
         MidiOut();
         ~MidiOut();
         bool open(unsigned int channel);
-        void write(unsigned char sysex[]);
+//         void close();
+        void writeSysex(unsigned char sysex[]);
         void write(std::vector<unsigned char> sysex);
         void writeNRPN(int nrpn, int value);
 };

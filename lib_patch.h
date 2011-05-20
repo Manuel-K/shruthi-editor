@@ -19,7 +19,6 @@
 #ifndef SHRUTHI_PATCH_H
 #define SHRUTHI_PATCH_H
 #include "lib_labels.h"
-#include <vector>
 
 // ******************************************
 struct param_t {
@@ -39,8 +38,8 @@ class Patch {
         int calculateChecksum(int sysex[],int start, int end);
         void parseSysex(int* sysex);
         void generateSysex(int res[]);
-        static const unsigned char sysexHead[6];
-        static const unsigned char sysexFoot;
+        static const int sysexHead[6];
+        static const int sysexFoot=247;
     public:
         static param_t parameters[];
         static int INIT_PATCH[];
@@ -56,10 +55,8 @@ class Patch {
         void printPatch();
         void resetPatch();
         void randomizePatch();
-        void parseFullSysex(std::vector< unsigned char > *message);
-//         void parseFullSysex(int* sysex, int len);
-//         void generateFullSysex(unsigned char res[]);
-        void generateFullSysex(std::vector< unsigned char > *message);
+        void parseFullSysex(int* sysex, int len);
+        void generateFullSysex(unsigned char res[]);
         
 
         bool loadFromDisk(QString location);

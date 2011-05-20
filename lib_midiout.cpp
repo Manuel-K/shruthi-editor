@@ -82,12 +82,23 @@ bool MidiOut::open(unsigned int port) {
     return opened;
 }
 
+// // ******************************************
+// void MidiOut::close() {
+// // ******************************************
+// #ifdef DEBUG
+//     qDebug() << "MidiOut::close()";
+// #endif
+//     if (opened) {
+//         midiout->closePort();
+//         opened=false;
+//     }
+// }
 
 // ******************************************
-void MidiOut::write(unsigned char sysex[]) {
+void MidiOut::writeSysex(unsigned char sysex[]) {
 // ******************************************
     if (!opened) {
-        qDebug() << "MidiOut::write(unsigned char[]): could not send. Port not opened.";
+        qDebug() << "MidiOut::writeSysex(): could not send. Port not opened.";
         return;
     }
     
@@ -104,7 +115,7 @@ void MidiOut::write(unsigned char sysex[]) {
 void MidiOut::write(std::vector<unsigned char> message) {
 // ******************************************
     if (!opened) {
-        qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Port not opened.";
+        qDebug() << "MidiOut::write(): could not send. Port not opened.";
         return;
     }
     
@@ -112,14 +123,14 @@ void MidiOut::write(std::vector<unsigned char> message) {
         midiout->sendMessage (&message);
     }
     catch ( RtError &error ) {
-        qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Error on sending.";
+        qDebug() << "MidiOut::write(): could not send. Error on sending.";
         error.printMessage();
     }
 }
 
 
 // ******************************************
-void MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
+void MidiOut::writeBytes(unsigned char c1,unsigned char c2,unsigned char c3) {
 // ******************************************
     std::vector<unsigned char> message;
     message.push_back( c1 );
@@ -147,8 +158,8 @@ void MidiOut::writeNRPN(int nrpn, int value) {
       value_msb=value>>7;
       value_lsb=value%128;
     }
-    write(176, 99, nrpn_msb);
-    write(176, 98, nrpn_lsb);
-    write(176, 6, value_msb);
-    write(176, 38, value_lsb);
+    writeBytes(176, 99, nrpn_msb);
+    writeBytes(176, 98, nrpn_lsb);
+    writeBytes(176, 6, value_msb);
+    writeBytes(176, 38, value_lsb);
 }
