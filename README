@@ -65,3 +65,4 @@ v0.16 * support for dual VCF -> new ui layout
       * one minor bugfix
       * old ui layouts are currently broken (e.g. shruthi-editor-onepage.ui,
         shruthi-editor-tabs.ui)
+v0.17 * change from portmidi to RtMidi

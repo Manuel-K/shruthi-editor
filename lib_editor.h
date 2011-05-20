@@ -36,10 +36,10 @@ enum ACTIONS
 struct queueitem_t {
 // ******************************************
     ACTIONS action;
-    int int0;
-    int int1;
+    int nrpn;
+    int value;
     QString string;
-    int* intp;
+    std::vector< unsigned char > *message;
 };  
 
 // ******************************************
