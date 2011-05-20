@@ -137,9 +137,9 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
         int bl = (int)message->at(size-1);
         
         if (b0==240 && b1==0 && b2==32 && b3==119 && bl==247) {//SYSEX_HEAD
-            int *msg = new int[size];
+            unsigned char *msg = new unsigned char[size];
             for (int i=0; i<size;i++)
-                msg[i]=(int) message->at(i);
+                msg[i]= message->at(i);
             queueitem_t signal (SYSEX_RECIEVED,msg,size);
             signal.message=msg;
             emit enqueue(signal);

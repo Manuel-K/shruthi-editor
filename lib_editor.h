@@ -39,8 +39,8 @@ struct queueitem_t {
     int nrpn;
     int value;
     QString string;
-    int size;
-    int* message;
+    unsigned int size;
+    unsigned char *message;
     // constructors:
     queueitem_t () {};
     queueitem_t (ACTIONS a): nrpn(0), value(0) {
@@ -55,7 +55,7 @@ struct queueitem_t {
         action=a; 
         string=s;
     };
-    queueitem_t (ACTIONS a, int *m, int s) {
+    queueitem_t (ACTIONS a, unsigned char *m, unsigned int s) {
         action=a; 
         message=m; 
         size=s;

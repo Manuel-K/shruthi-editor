@@ -143,33 +143,37 @@ param_t Patch::parameters [108] = {
     /*107*/ {"Time warp",0, 18,NULL}
 };
 
+
 // ******************************************
-int Patch::INIT_PATCH[] = 
+unsigned char Patch::INIT_PATCH[] = 
 // ******************************************
     {1, 0, 0, 0, 2, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
     90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
     2, 8, 0, 10, 2, 0, 11, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
     105, 116, 32, 32, 32, 32, 1, 0, 12, 0, 13, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 33};
 
-    
+
 // ******************************************
 bool Patch::enabled(int i) {
 // ******************************************
     return (i<68 || i==84 || i==85 || i>=92);
 }
-    
+
+
 // ******************************************
 Patch::Patch() {
 // ******************************************
     resetPatch();
     srand(time(NULL));
 }
-    
+
+
 // ******************************************
 void Patch::setParam(int param, int value) {
 // ******************************************
     data[param] = value;
 }
+
 
 // ******************************************
 int Patch::getParam(int param) {
@@ -177,17 +181,20 @@ int Patch::getParam(int param) {
     return data[param];
 }
 
+
 // ******************************************
 void Patch::setName(QString new_name) {
 // ******************************************
     name=new_name;
 }
 
+
 // ******************************************
 QString Patch::getName() {
 // ******************************************
     return name;
 }
+
 
 // ******************************************
 void Patch::printPatch() {
@@ -209,6 +216,7 @@ void Patch::resetPatch() {
     parseSysex(INIT_PATCH);
 }
 
+
 // ******************************************
 void Patch::randomizePatch() {
 // ******************************************
@@ -222,7 +230,7 @@ void Patch::randomizePatch() {
 
 
 // ******************************************
-void Patch::parseSysex(int sysex[]) {
+void Patch::parseSysex(unsigned char sysex[]) {
 // ******************************************
     int temp[108];
     
@@ -256,8 +264,9 @@ void Patch::parseSysex(int sysex[]) {
     name=tmp_name.join("").trimmed();
 }
 
+
 // ******************************************
-void Patch::generateSysex (int res[]) {
+void Patch::generateSysex (unsigned char res[]) {
 // ******************************************
     int temp[108];
     // copy data:
@@ -265,7 +274,7 @@ void Patch::generateSysex (int res[]) {
         temp[i] = data[i];
     
     // fix negative values (2s complement):
-    for (int i=0; i < 92; i++) if (enabled(i)) 
+    for (unsigned int i=0; i < 92; i++) if (enabled(i)) 
         if (parameters[i].min < 0 && temp[i]<0)        
             temp[i]+=256;
     // compress data
@@ -278,26 +287,28 @@ void Patch::generateSysex (int res[]) {
     
     // set name:
     QString temp_name = QString("%1").arg(name, -8, ' '); // pad name
-    for (int i=0; i<8; i++) //->(68,76):
+    for (unsigned int i=0; i<8; i++) //->(68,76):
         temp[68+i]=temp_name.at(i).toAscii();
     
     // copy data
-    for (int i=0; i<92 ;i++)
-        res[i] = temp[i];
+    for (unsigned int i=0; i<92 ;i++)
+        res[i] = (char) temp[i];
 }
 
+
 // ******************************************
-int Patch::calculateChecksum(int sysex[], int start, int end) {
+unsigned char Patch::calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end) {
 // ******************************************
     unsigned long chk=0;
-    for(int i=start; i<end;i++) {
+    for(unsigned int i=start; i<end;i++) {
         chk+=sysex[i];
     }
-    return (chk % 256);
+    return (unsigned char) (chk % 256);
 }
 
+
 // ******************************************
-void Patch::parseFullSysex(int sysex[], int len) {
+void Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
 // ******************************************
     // check if valid:
     if (!(sysex[0]==sysexHead[0] && sysex[1]==sysexHead[1] && sysex[2]==sysexHead[2] && sysex[3]==sysexHead[3] && sysex[4]==sysexHead[4] && sysex[5]==sysexHead[5])) {
@@ -314,7 +325,7 @@ void Patch::parseFullSysex(int sysex[], int len) {
     }
     // combine nibbles to bytes:
     int j=8;
-    for (int i=8;i<len-1;i+=2)
+    for (unsigned int i=8;i<len-1;i+=2)
         sysex[j++] = sysex[i]<<4|sysex[i+1];
     sysex[j]=sysex[len-1];
     len=j+1;
@@ -329,110 +340,54 @@ void Patch::parseFullSysex(int sysex[], int len) {
     }
     
     // throw padding away:   
-    int tmp[92];
+    unsigned char tmp[92];
     for (int i=0; i<92;i++)
         tmp[i]=sysex[8+i];
 
     parseSysex(tmp);
 }
 
-// // ******************************************
-// void Patch::generateFullSysex (unsigned char res[]) {
-// // ******************************************
-// // Note: res must have at least 195 entries.
-//     int temp[93];
-//     generateSysex(temp);
-//     
-//     for (int i=0; i<6; i++)
-//         res[i]=sysexHead[i];
-//     res[6]=1;
-//     res[7]=0;
-//     for (int i=0;i<92;i++)
-//         res[i+8]=temp[i];
-//     temp[92]=calculateChecksum(temp,0,92);
-//     res[194]=sysexFoot;
-//     
-//     // expand bytes to nibbles:
-//     for (int i=0;i<93;i++) {
-//         res[8+2*i]= (temp[i]>>4)&0x0F;
-//         res[8+2*i+1]= temp[i]&0x0F;
-//     }
-// }
 
-
-// // ******************************************
-// void Patch::parseFullSysex(std::vector< unsigned char > message) {
-// // ******************************************
-//     // check if valid:
-//     unsigned int len = message.size();
-//     if (!(message.at(0)==sysexHead[0] && message.at(1)==sysexHead[1] && message.at(2)==sysexHead[2] && message.at(3)==sysexHead[3] && message.at(4)==sysexHead[4] && message.at(5)==sysexHead[5])) {
-//         qDebug() << "Invalid sysex header.";
-//         return;
-//     }
-//     if (!(sysexFoot==message.at(len-1))) {
-//         qDebug() << "Invalid sysex footer.";
-//         return;
-//     }
-//     if (!(1==message.at(6)&&0==message.at(7))) {
-//         qDebug() << "Sysex is not a patch.";
-//         return;
-//     }
-//     
-//     // copy to temporay array:
-//     int *sysex = new int[message.size()];
-//     for (unsigned int i=0; i<message.size();i++)
-//         sysex[i]=(int) message.at(i); 
-//     
-//     // combine nibbles to bytes:
-//     int j=8;
-//     for (unsigned int i=8;i<len-1;i+=2)
-//         sysex[j++] = sysex[i]<<4|sysex[i+1];
-//     sysex[j]=sysex[len-1];
-//     len=j+1;
-//     
-//     if (!(33==sysex[len-3])) {
-//         qDebug() << "Invalid patch data.";
-//         return;
-//     }
-//     if (!calculateChecksum(sysex,8,100)==sysex[len-2]) {
-//         qDebug() << "Invalid checksum.";
-//         return;
-//     }
-//     
-//     // throw padding away:   
-//     int tmp[92];
-//     for (int i=0; i<92;i++)
-//         tmp[i]=sysex[8+i];
-// 
-//     parseSysex(tmp);
-// }
+// ******************************************
+void Patch::parseFullSysex(std::vector<unsigned char> message) {
+// ******************************************
+    // copy to temporay array:
+    unsigned char *sysex = new unsigned char[message.size()];
+    for (unsigned int i=0; i<message.size();i++)
+        sysex[i] = message.at(i); 
+    parseFullSysex(sysex, message.size());
+}
 
 
 // ******************************************
-void Patch::generateFullSysex (std::vector< unsigned char > *message) {
+void Patch::generateFullSysex(std::vector<unsigned char> *message) {
 // ******************************************
     message->reserve(195); // Note: must have at least 195 entries.
     
-    int temp[93];
+    unsigned char temp[93];
     generateSysex(temp);
     
-    for (int i=0; i<6; i++)
+    for (unsigned int i=0; i<6; i++)
         message->push_back(sysexHead[i]);
     message->push_back(1);
     message->push_back(0);
     temp[92]=calculateChecksum(temp,0,92);
     
     // expand bytes to nibbles:
-    for (int i=0;i<93;i++) {
+    for (unsigned int i=0;i<93;i++) {
         message->push_back((temp[i]>>4)&0x0F);
         message->push_back(temp[i]&0x0F);
     }
     message->push_back(Patch::sysexFoot);
 }
 
+
 // ******************************************
 bool Patch::loadFromDisk(QString location) {
 // ******************************************
+#ifdef DEBUG
+    qDebug() << "Patch::loadFromDisk("<<location<<")";
+#endif
     QFile file(location);
 
     if(!file.exists()) {
@@ -445,25 +400,29 @@ bool Patch::loadFromDisk(QString location) {
         return false;
     }
 
-    QTextStream ts(&file);
-    
-    int sysex[92] = {};
-    for (int i=0; i<92; i++) {
-        sysex[i] = (ts.read(1).toAscii()).at(0);
+    char  tmp [92];
+    file.read(tmp,92);
+
+    unsigned char sysex[92] = {};
+    for (unsigned int i=0; i<92; i++) {
+         sysex[i] = (char) tmp[i];
 #ifdef DEBUG
         qDebug() << i << ":" << sysex[i];
 #endif
     }
-    
     parseSysex(sysex);
     
     file.close();
     return true;
 };
-    
+
+
 // ******************************************
 bool Patch::saveToDisk(QString location) {
 // ******************************************
+#ifdef DEBUG
+    qDebug() << "Patch::saveToDisk("<<location<<")";
+#endif
     QFile file(location);
 
     if(!file.open(QIODevice::WriteOnly)) {
@@ -471,14 +430,15 @@ bool Patch::saveToDisk(QString location) {
         return false;
     }
 
-    QTextStream ts(&file);
-    
-    int sysex[92] = {};
+    unsigned char sysex[92] = {};
     generateSysex(sysex);
-    for (int i=0; i<92; i++)
-        ts << (char)sysex[i];
-    
-    file.close();
 
-    return true;
+    char temp[92];
+    for (unsigned int i=0; i<92; i++) {
+        temp[i]=(char) sysex[i];
+    }
+    bool status = file.write(temp,92)==92;
+
+    file.close();
+    return status;
 };

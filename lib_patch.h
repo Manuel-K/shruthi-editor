@@ -36,14 +36,14 @@ class Patch {
     private:
         QString name;
         int data[108];
-        int calculateChecksum(int sysex[],int start, int end);
-        void parseSysex(int* sysex);
-        void generateSysex(int res[]);
+        unsigned char calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end);
+        void parseSysex(unsigned char *sysex);
+        void generateSysex(unsigned char res[]);
         static const unsigned char sysexHead[6];
         static const unsigned char sysexFoot;
     public:
         static param_t parameters[];
-        static int INIT_PATCH[];
+        static unsigned char INIT_PATCH[];
         static bool enabled(int);
         
         Patch();
@@ -56,10 +56,9 @@ class Patch {
         void printPatch();
         void resetPatch();
         void randomizePatch();
-        void parseFullSysex(int* sysex, int len);
-//         void parseFullSysex(std::vector< unsigned char > message);
-//         void generateFullSysex(unsigned char res[]);
-        void generateFullSysex(std::vector< unsigned char > *message);
+        void parseFullSysex(unsigned char  *sysex, unsigned int len);
+        void parseFullSysex(std::vector<unsigned char> message);
+        void generateFullSysex(std::vector<unsigned char> *message);
 
         bool loadFromDisk(QString location);
         bool saveToDisk(QString location);
