@@ -1,6 +1,5 @@
 Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-informations about the Shruthi, see
-<http://www.mutable-instruments.net/shruthi1>. 
+informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
 Application icon: "saraswati" by Francois Barbut.
 
 What works:
@@ -59,3 +58,10 @@ Run
 > qmake
 > make release
 inside the shruthi-editor source folder.
+
+
+Changes:
+v0.16 * support for dual VCF -> new ui layout
+      * one minor bugfix
+      * old ui layouts are currently broken (e.g. shruthi-editor-onepage.ui,
+        shruthi-editor-tabs.ui)
