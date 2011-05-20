@@ -55,6 +55,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void setMidiDevices(int midiin, int midiout);
         void midiInputStatusChanged(bool);
         void midiOutputStatusChanged(bool);
+        void displayStatusbar(QString msg);
         
     signals:
         void enqueue(queueitem_t);

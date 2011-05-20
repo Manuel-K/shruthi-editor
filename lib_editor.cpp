@@ -57,47 +57,51 @@ void Editor::process(queueitem_t item) {
     switch (item.action) {
         case NRPN_PROCESS_EDITOR:
 #ifdef DEBUG
-            qDebug() << "NRPN_PROCESS_EDITOR: "<<item.int0 << ":" <<item.int1;
+            qDebug() << "NRPN_PROCESS_EDITOR: "<<item.nrpn << ":" <<item.value;
 #endif
-            if (patch.getParam(item.int0) != item.int1) {
-                patch.setParam(item.int0,item.int1);
-                midiout.writeNRPN(item.int0,item.int1);
+            if (patch.getParam(item.nrpn) != item.value) {
+                patch.setParam(item.nrpn,item.value);
+                midiout.writeNRPN(item.nrpn,item.value);
             }
             break;
          case SYSEX_FETCH_PATCH:
 #ifdef DEBUG
              qDebug() << "SYSEX_FETCH_PATCH";
 #endif
-             midiout.writeSysex(Editor::transferRequest);
+             midiout.write(Editor::transferRequest);
              break;
         case SYSEX_SEND_PATCH:
 #ifdef DEBUG
             qDebug() << "SYSEX_SEND_PATCH";
 #endif
-            unsigned char temp[195];
-            patch.generateFullSysex(temp);
-            midiout.writeSysex(temp);
+            {
+                std::vector<unsigned char> temp;
+                patch.generateFullSysex(&temp);
+                midiout.write(temp);
+            }
             break;
         case NRPN_RECIEVED:
-            if (Patch::parameters[item.int0].min<0 && item.int1>=127)
-                item.int1-=256; //2s complement
-            patch.setParam(item.int0,item.int1);
-            emit(redrawNRPN(item.int0));
+            if (Patch::parameters[item.nrpn].min<0 && item.value>=127)
+                item.value-=256; //2s complement
+            patch.setParam(item.nrpn,item.value);
+            emit(redrawNRPN(item.nrpn));
 #ifdef DEBUG
-            qDebug() << "NRPN_RECIEVED:" <<item.int0<<":"<<item.int1;
+            qDebug() << "NRPN_RECIEVED:" <<item.nrpn<<":"<<item.value;
 #endif
             break;
         case SYSEX_RECIEVED:
 #ifdef DEBUG
             qDebug() << "SYSEX_RECIEVED";
 #endif
-            if (7<item.int0 && item.intp[6]==1 && item.intp[7]==0)
-                patch.parseFullSysex(item.intp,item.int0);
+            if (7<item.nrpn && item.message[6]==1 && item.message[7]==0)
+                patch.parseFullSysex(item.message,item.size);
+            else {
+                emit displayStatusbar("Recieved unknown sysex.");
 #ifdef DEBUG
-            else
                 qDebug() << "unknown sysex type";
 #endif
-            delete item.intp;
+            }
+            delete item.message;
             emit redrawAll();
             break;
         case SET_PATCHNAME:
@@ -136,7 +140,7 @@ void Editor::process(queueitem_t item) {
             break;
         default:
 #ifdef DEBUG
-            qDebug() << "dequeue: " << item.action << ":" << item.int0 << "," << item.int1 << "," << item.string;
+            qDebug() << "dequeue: " << item.action << ":" << item.nrpn << "," << item.value << "," << item.string;
 #endif
             break;
     }

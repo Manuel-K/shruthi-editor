@@ -36,10 +36,30 @@ enum ACTIONS
 struct queueitem_t {
 // ******************************************
     ACTIONS action;
-    int int0;
-    int int1;
+    int nrpn;
+    int value;
     QString string;
-    int* intp;
+    int size;
+    int* message;
+    // constructors:
+    queueitem_t () {};
+    queueitem_t (ACTIONS a): nrpn(0), value(0) {
+        action=a;
+    };
+    queueitem_t (ACTIONS a, int n, int v) {
+        action=a; 
+        nrpn=n; 
+        value=v;
+    };
+    queueitem_t (ACTIONS a, QString s) {
+        action=a; 
+        string=s;
+    };
+    queueitem_t (ACTIONS a, int *m, int s) {
+        action=a; 
+        message=m; 
+        size=s;
+    };
 };  
 
 // ******************************************
@@ -63,5 +83,6 @@ class Editor : public QObject {
         void redrawAll();
         void finished();
         void midiOutputStatusChanged(bool);
+        void displayStatusbar(QString);
 };
 #endif

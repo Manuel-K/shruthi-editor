@@ -89,7 +89,7 @@ void shruthiEditorMainWindow::comboBoxChanged(int val) {
     QComboBox* s = (QComboBox*) sender();
     QString id = s->objectName();
     id.remove(0,1);
-    queueitem_t signal = {NRPN_PROCESS_EDITOR,id.toInt(),val,NULL,NULL};
+    queueitem_t signal (NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
 }
 
@@ -104,7 +104,7 @@ void shruthiEditorMainWindow::dialChanged(int val) {
     else
         qFindChild<QLabel*>(this, id)->setText(QString("%1").arg(val));
     id.remove(0,1);
-    queueitem_t signal = {NRPN_PROCESS_EDITOR,id.toInt(),val,NULL,NULL};
+    queueitem_t signal (NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
 }
 
@@ -112,7 +112,7 @@ void shruthiEditorMainWindow::dialChanged(int val) {
 void shruthiEditorMainWindow::patchNameChanged() {
 // ******************************************
     QString name = patch_name->text();
-    queueitem_t signal = {SET_PATCHNAME,0,0,patch_name->text(),NULL};
+    queueitem_t signal (SET_PATCHNAME,patch_name->text());
     emit enqueue(signal);
 }
 
@@ -121,7 +121,7 @@ void shruthiEditorMainWindow::loadPatch() {
 // ******************************************
     QString filename = QFileDialog::getOpenFileName(this, "Open patch", "*.sp", "Shruthi-Patches(*.sp)");
     if (filename!="") {
-        queueitem_t signal = {FILEIO_LOAD,0,0,filename,NULL};
+        queueitem_t signal (FILEIO_LOAD,filename);
         emit(enqueue(signal));        
     }
 }
@@ -131,7 +131,7 @@ void shruthiEditorMainWindow::savePatch() {
 // ******************************************
     QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches(*.sp)");
     if (filename!="") {
-        queueitem_t signal = {FILEIO_SAVE,0,0,filename,NULL};
+        queueitem_t signal (FILEIO_SAVE,filename);
         emit(enqueue(signal));      
     }
 }
@@ -139,14 +139,14 @@ void shruthiEditorMainWindow::savePatch() {
 // ******************************************
 void shruthiEditorMainWindow::fetchPatch() {
 // ******************************************
-    queueitem_t signal = {SYSEX_FETCH_PATCH,0,0,NULL,NULL};
+    queueitem_t signal (SYSEX_FETCH_PATCH);
     emit(enqueue(signal));   
 }
 
 // ******************************************
 void shruthiEditorMainWindow::sendPatch() {
 // ******************************************
-    queueitem_t signal = {SYSEX_SEND_PATCH,0,0,NULL,NULL};
+    queueitem_t signal (SYSEX_SEND_PATCH);
     emit(enqueue(signal));   
 }
 
@@ -166,14 +166,14 @@ void shruthiEditorMainWindow::changeMidiPorts() {
 // ******************************************
 void shruthiEditorMainWindow::resetPatch() {
 // ******************************************
-    queueitem_t signal = {RESET_PATCH,0,0,NULL,NULL};
+    queueitem_t signal (RESET_PATCH);
     emit(enqueue(signal));
 }
 
 // ******************************************
 void shruthiEditorMainWindow::randomizePatch() {
 // ******************************************
-    queueitem_t signal = {RANDOMIZE_PATCH,0,0,NULL,NULL};
+    queueitem_t signal (RANDOMIZE_PATCH);
     emit(enqueue(signal));
 }
 
@@ -256,4 +256,10 @@ void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
         status += "not ";
     status += "ready.";
     statusBar()->showMessage(status);
+}
+
+// ******************************************
+void shruthiEditorMainWindow::displayStatusbar(QString msg) {
+// ******************************************
+    statusBar()->showMessage(msg);
 }

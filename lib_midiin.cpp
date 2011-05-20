@@ -124,23 +124,10 @@ bool parserNRPN::parse(int b0, int b1, int b2) {
 // }
 
 
-// // ******************************************
-// void MidiIn::listen() {
-// // ******************************************
-//     std::vector<unsigned char> message;
-//   
-//     midiin->getMessage( &message );
-//     process(&message);
-//     if (message.size()>0)
-//         QTimer::singleShot(0, this, SLOT(listen()));
-// }
-
-
 // ******************************************
 void MidiIn::process ( std::vector< unsigned char > *message ) {
 // ******************************************
-    int size;
-    size = message->size();
+    int size = message->size();
 
     if (size>=4) {
         int b0 = (int)message->at(0);
@@ -150,16 +137,16 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
         int bl = (int)message->at(size-1);
         
         if (b0==240 && b1==0 && b2==32 && b3==119 && bl==247) {//SYSEX_HEAD
-            queueitem_t signal = {SYSEX_RECIEVED,size,0,NULL,NULL};
             int *msg = new int[size];
             for (int i=0; i<size;i++)
                 msg[i]=(int) message->at(i);
-            signal.intp=msg;
+            queueitem_t signal (SYSEX_RECIEVED,msg,size);
+            signal.message=msg;
             emit enqueue(signal);
         }
     } else if (size>=3) { 
         if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
-            queueitem_t signal = {NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue(),NULL,NULL};
+            queueitem_t signal (NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue());
             emit enqueue(signal);
         }
          
@@ -178,7 +165,7 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
 //             int *msg = new int[len];
 //             sysex.getSysex(msg);
 //             queueitem_t signal = {SYSEX_RECIEVED,len,0,NULL,NULL};
-//             signal.intp=msg;
+//             signal.message=msg;
 //             emit enqueue(signal);
 //         }
 //     } else {
@@ -206,7 +193,6 @@ MidiIn::MidiIn() {
     qDebug() << "MidiIn::MidiIn()";
 #endif
     opened = false;
-//     timer = new QTimer(this);
     input = -1;
     
     try {
@@ -217,8 +203,6 @@ MidiIn::MidiIn() {
         qWarning() << "MidiOut::MidiIn(): could not initilize midi device for writing.";
 //         exit( EXIT_FAILURE );
     }
-    
-//     connect(timer, SIGNAL(timeout()), this, SLOT(listen()));
 }
 
 
@@ -228,8 +212,6 @@ MidiIn::~MidiIn() {
 #ifdef DEBUG
     qDebug() << "MidiIn::~MidiIn()";
 #endif
-//     timer->stop();
-//     delete timer;
     delete midiin;
 }
 
@@ -254,7 +236,6 @@ bool MidiIn::open(unsigned int port) {
         return true;
 
     if (opened) {
-//         timer->stop();
         midiin->closePort();
     }
     
@@ -275,10 +256,9 @@ bool MidiIn::open(unsigned int port) {
 #endif
         opened = false;
     }
-    if (opened) {
-//         timer->start(100);
+    if (opened)
         input = port;
-    } else
+    else
         qWarning() << "MidiIn::open(): could not open midi device for reading.";
     return opened;
 }

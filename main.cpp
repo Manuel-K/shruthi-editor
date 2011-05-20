@@ -23,12 +23,8 @@
 #include "lib_midiin.h"
 #include "shruthi-editor.h"
 #include <QDebug>
-// #include "portmidi.h"
 #include "RtMidi.h"
 
-#ifdef __MINGW32__
-#define CLEANLOOKS
-#endif
 #ifdef CLEANLOOKS
 #include <QCleanlooksStyle>
 #endif
@@ -140,6 +136,7 @@ int main(int argc, char *argv[]) {
         main_window->setFixedSize(main_window->width(),main_window->height());
         main_window->statusBar()-> setSizeGripEnabled ( false );
         QObject::connect(&editor,SIGNAL(midiOutputStatusChanged(bool)),main_window, SLOT(midiOutputStatusChanged(bool)));
+        QObject::connect(&editor,SIGNAL(displayStatusbar(QString)),main_window, SLOT(displayStatusbar(QString)));
         // Start editor
         editorThread.start();
 

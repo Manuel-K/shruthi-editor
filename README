@@ -1,6 +1,7 @@
 Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
 informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
 Application icon: "saraswati" by Francois Barbut.
+Uses RtMidi 1.0.14 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
 
 What works:
  - Editing patches.
@@ -17,40 +18,15 @@ What doesn't work:
  - Loading/saving full patch sysex.
 
 
-Known bugs:
- - If you have a feedback loop (e.g. midi cable from active output to active
-   input) and you change the input and the output device at the same time, the
-   programm will crash. I don't know how to fix it. Reason: if you close a midi
-   output, portmidi flushes the output buffer. If you close the input at the
-   same time, portmidi will cause a segmentation fault on the next poll command.
-   Workaround: change only   input oder output device at a time if you have a
-   feedback loop.
-
-
 Prerequisites:
- Qt4: http://qt.nokia.com/products/
- PortMidi: http://portmedia.sourceforge.net/
+ Qt4: <http://qt.nokia.com/products/>
 
 
 Compiling under windows (Prerequisites):
-To compile it on windows, you need the mingw version of qt, mingw and portmidi.
-You can download the first two archives from
-http://qt.nokia.com/downloads/windows-cpp.
+To compile it on windows, you need the mingw version of qt and mingw.
+You can download them from <http://qt.nokia.com/downloads/windows-cpp>.
 
 Extract mingw first, then install qt. 
-
-Extract portmidi and copy the file "portmidi.pro" from the pm_qt subfolder to
-the portmidi folder. Edit "portmidi.pro" and change the line
-CONFIG += staticlib # replace this with DLL for dynamic link on Windows
-to
-CONFIG += DLL # replace this with DLL for dynamic link on Windows
-.Run 
-> qmake 
-and then 
-> make release
-.
-Copy the "portmidi.h" from the pm_common subfolder and the file "portmidi.dll"
-from the release subfolder into the shruthi-editor source folder. 
 
 
 Compiling:
@@ -65,3 +41,4 @@ v0.16 * support for dual VCF -> new ui layout
       * one minor bugfix
       * old ui layouts are currently broken (e.g. shruthi-editor-onepage.ui,
         shruthi-editor-tabs.ui)
+v0.17 * change from portmidi to RtMidi
