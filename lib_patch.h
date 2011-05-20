@@ -57,8 +57,6 @@ class Patch {
         void resetPatch();
         void randomizePatch();
         void parseFullSysex(std::vector< unsigned char > *message);
-//         void parseFullSysex(int* sysex, int len);
-//         void generateFullSysex(unsigned char res[]);
         void generateFullSysex(std::vector< unsigned char > *message);
         
 
