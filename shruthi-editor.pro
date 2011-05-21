@@ -29,8 +29,6 @@ target.path = release/
 icons.path = release/
 icons.files = shruthi-editor.png
 
-    DEFINES+=CLEANLOOKS
-
 
 unix {
     # alsa:
