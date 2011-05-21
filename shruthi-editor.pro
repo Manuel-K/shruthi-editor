@@ -29,6 +29,9 @@ target.path = release/
 icons.path = release/
 icons.files = shruthi-editor.png
 
+    DEFINES+=CLEANLOOKS
+
+
 unix {
     # alsa:
     DEFINES+=__LINUX_ALSASEQ__
@@ -40,6 +43,7 @@ unix {
 macx {
     DEFINES+=__MACOSX_CORE__
     LIBS+=-framework CoreMidi -framework CoreAudio -framework CoreFoundation
+    ICON = shruthi-editor.icns
 }
 win32 {
     DEFINES+=__WINDOWS_MM__
