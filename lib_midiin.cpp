@@ -197,6 +197,7 @@ MidiIn::MidiIn() {
     
     try {
         midiin = new RtMidiIn();
+        midiin->setCallback(&mycallback,this);
     }
     catch ( RtError &error ) {
         error.printMessage();
@@ -248,7 +249,6 @@ bool MidiIn::open(unsigned int port) {
         midiin->openPort( port );
         midiin->ignoreTypes( false, true, true );
         opened = true;
-        midiin->setCallback(&mycallback,this);
     }
     catch ( RtError &error ) {
 #ifdef DEBUG

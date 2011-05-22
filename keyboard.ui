@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
+    <width>352</width>
     <height>81</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>291</width>
+     <width>351</width>
      <height>81</height>
     </rect>
    </property>
@@ -268,6 +268,19 @@
      <string>Channel:</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="panic">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Panic</string>
+    </property>
+   </widget>
    <zorder>velocity</zorder>
    <zorder>n2</zorder>
    <zorder>n5</zorder>
@@ -284,8 +297,9 @@
    <zorder>label</zorder>
    <zorder>channel</zorder>
    <zorder>label_2</zorder>
-   <zorder>n10</zorder>
+   <zorder>panic</zorder>
    <zorder>n3</zorder>
+   <zorder>n10</zorder>
   </widget>
  </widget>
  <tabstops>

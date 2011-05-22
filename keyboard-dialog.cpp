@@ -39,6 +39,8 @@ keyboard::keyboard(QWidget *parent) {
     octave->setValue (noteOctave);
     connect(channel,SIGNAL(valueChanged(int)), this, SLOT(setChannel(int)));
     channel->setValue (noteChannel);
+    connect(panic,SIGNAL(pressed()), this, SLOT(panicPushed()));
+
     for (int i=0; i<=12; i++) {
         tmp = qFindChild<QPushButton*>(this, QString("n")+QString("%1").arg(i));
         connect(tmp,SIGNAL(pressed()), this, SLOT(push()));
@@ -66,6 +68,15 @@ void keyboard::push() {
     emit enqueue(signal);
 }
 
+// ******************************************
+void keyboard::panicPushed() {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "panic()" << note;
+#endif
+    queueitem_t signal (NOTE_PANIC,noteChannel,0,0);
+    emit enqueue(signal);
+}
 
 // ******************************************
 void keyboard::release() {

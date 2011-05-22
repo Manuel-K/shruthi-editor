@@ -38,6 +38,7 @@ class keyboard : public QDialog, private Ui::keyboard{
         void setVelocity(int);
         void setOctave(int);
         void setChannel(int);
+        void panicPushed();
     public slots:
         void showKeyboard();
     signals:

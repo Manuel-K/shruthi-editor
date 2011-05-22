@@ -101,6 +101,12 @@ void Editor::process(queueitem_t item) {
 #endif
             midiout.write((128|(item.noteChannel-1)),item.note,item.noteVelocity);
             break;
+            case NOTE_PANIC:
+#ifdef DEBUG
+            qDebug() << "NOTE_PANIC" << item.noteChannel << "," << item.note;
+#endif
+            midiout.write((176|(item.noteChannel-1)),123,0);
+            break;
         case SYSEX_RECIEVED:
 #ifdef DEBUG
             qDebug() << "SYSEX_RECIEVED";
