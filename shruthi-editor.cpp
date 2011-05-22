@@ -19,7 +19,6 @@
 #include <QtGui> 
 #include "shruthi-editor.h"
 #include "settings-dialog.h"
-#include "keyboard-dialog.h"
 
 
 #include "lib_labels.h"
