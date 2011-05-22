@@ -44,3 +44,4 @@ v0.16 * support for dual VCF -> new ui layout
 v0.17 * change from portmidi to RtMidi
       * made save format cross system compatible; this breaks backwards
         compatibility
+      * added keyboard with pacnic button
