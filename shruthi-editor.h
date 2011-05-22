@@ -32,6 +32,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         shruthiEditorMainWindow(Editor* edit, QWidget *parent = 0);
     private:
         void displayMidiStatusChanged(bool, bool);
+        void closeEvent (QCloseEvent* event);
     private slots:
         // local ui actions
         void comboBoxChanged(int);
@@ -60,6 +61,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
     signals:
         void enqueue(queueitem_t);
         void midiDeviceChanged(int,int);
+        void showKeyboard();
 
 };
  

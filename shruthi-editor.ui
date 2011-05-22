@@ -2445,7 +2445,7 @@
      <x>0</x>
      <y>0</y>
      <width>1001</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2475,8 +2475,15 @@
     <addaction name="actionAbout_Shruthi_Editor"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionKeyboard"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuMidi"/>
+   <addaction name="menuTools"/>
    <addaction name="menuAbout"/>
   </widget>
   <action name="actionLoad_Patch">
@@ -2527,6 +2534,11 @@
   <action name="actionRandomize_Patch">
    <property name="text">
     <string>Randomize Patch</string>
+   </property>
+  </action>
+  <action name="actionKeyboard">
+   <property name="text">
+    <string>Open Keyboard</string>
    </property>
   </action>
  </widget>

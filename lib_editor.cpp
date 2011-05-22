@@ -89,6 +89,18 @@ void Editor::process(queueitem_t item) {
             qDebug() << "NRPN_RECIEVED:" <<item.nrpn<<":"<<item.value;
 #endif
             break;
+        case NOTE_ON:
+#ifdef DEBUG
+            qDebug() << "NOTE_ON" << item.noteChannel << "," << item.note << "," << item.noteVelocity;
+#endif
+            midiout.write((144|(item.noteChannel-1)),item.note,item.noteVelocity);
+            break;
+        case NOTE_OFF:
+#ifdef DEBUG
+            qDebug() << "NOTE_OFF" << item.noteChannel << "," << item.note;
+#endif
+            midiout.write((128|(item.noteChannel-1)),item.note,item.noteVelocity);
+            break;
         case SYSEX_RECIEVED:
 #ifdef DEBUG
             qDebug() << "SYSEX_RECIEVED";

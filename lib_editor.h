@@ -30,7 +30,7 @@ enum ACTIONS
     {NRPN_PROCESS_EDITOR, SYSEX_FETCH_PATCH, 
     SYSEX_SEND_PATCH, NRPN_RECIEVED, SYSEX_RECIEVED, 
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE, 
-    RESET_PATCH, RANDOMIZE_PATCH};
+    RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF};
 
 // ******************************************
 struct queueitem_t {
@@ -41,6 +41,9 @@ struct queueitem_t {
     QString string;
     unsigned int size;
     unsigned char *message;
+    unsigned char noteChannel;
+    unsigned char noteVelocity;
+    unsigned char note;
     // constructors:
     queueitem_t () {};
     queueitem_t (ACTIONS a): nrpn(0), value(0) {
@@ -59,6 +62,12 @@ struct queueitem_t {
         action=a; 
         message=m; 
         size=s;
+    };
+    queueitem_t (ACTIONS a, unsigned char ch, unsigned char n, unsigned char vel) {
+        action=a;
+        noteChannel=ch;
+        note=n;
+        noteVelocity=vel;
     };
 };  
 

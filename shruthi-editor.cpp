@@ -19,6 +19,8 @@
 #include <QtGui> 
 #include "shruthi-editor.h"
 #include "settings-dialog.h"
+#include "keyboard-dialog.h"
+
 
 #include "lib_labels.h"
 #include "lib_patch.h"
@@ -67,9 +69,12 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor* edit, QWidget *parent) 
     connect(actionAbout_Shruthi_Editor,SIGNAL(triggered()), this, SLOT(aboutShruthiEditor()));
     connect(actionAbout_Qt,SIGNAL(triggered()), this, SLOT(aboutQt()));
     connect(actionRandomize_Patch,SIGNAL(triggered()), this, SLOT(randomizePatch()));
+    connect(actionKeyboard,SIGNAL(triggered()),this,SIGNAL(showKeyboard()));
 }
 
+// ******************************************
 void shruthiEditorMainWindow::setMidiDevices(int midiin, int midiout) {
+// ******************************************
 #ifdef DEBUG
     qDebug() << "shruthiEditorMainWindow::setMidiDevices";
 #endif
@@ -93,6 +98,7 @@ void shruthiEditorMainWindow::comboBoxChanged(int val) {
     emit(enqueue(signal));
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::dialChanged(int val) {
 // ******************************************
@@ -108,6 +114,7 @@ void shruthiEditorMainWindow::dialChanged(int val) {
     emit(enqueue(signal));
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::patchNameChanged() {
 // ******************************************
@@ -115,6 +122,7 @@ void shruthiEditorMainWindow::patchNameChanged() {
     queueitem_t signal (SET_PATCHNAME,patch_name->text());
     emit enqueue(signal);
 }
+
 
 // ******************************************
 void shruthiEditorMainWindow::loadPatch() {
@@ -126,6 +134,7 @@ void shruthiEditorMainWindow::loadPatch() {
     }
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::savePatch() {
 // ******************************************
@@ -136,6 +145,7 @@ void shruthiEditorMainWindow::savePatch() {
     }
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::fetchPatch() {
 // ******************************************
@@ -143,12 +153,14 @@ void shruthiEditorMainWindow::fetchPatch() {
     emit(enqueue(signal));   
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::sendPatch() {
 // ******************************************
     queueitem_t signal (SYSEX_SEND_PATCH);
     emit(enqueue(signal));   
 }
+
 
 // ******************************************
 void shruthiEditorMainWindow::changeMidiPorts() {
@@ -163,12 +175,14 @@ void shruthiEditorMainWindow::changeMidiPorts() {
     prefs.done(1);
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::resetPatch() {
 // ******************************************
     queueitem_t signal (RESET_PATCH);
     emit(enqueue(signal));
 }
+
 
 // ******************************************
 void shruthiEditorMainWindow::randomizePatch() {
@@ -181,7 +195,7 @@ void shruthiEditorMainWindow::randomizePatch() {
 // ******************************************
 void shruthiEditorMainWindow::quitShruthiEditor() {
 // ******************************************
-    QApplication::exit( 1);
+    QApplication::exit(1);
 }
 
 
@@ -192,11 +206,20 @@ void shruthiEditorMainWindow::aboutShruthiEditor() {
         QString::fromUtf8("Shruti-Editor Version "VERSION".\n\n Copyright (C) 2011 Manuel Krönig."));
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::aboutQt() {
 // ******************************************
     QMessageBox::aboutQt(this);
 }
+
+
+// ******************************************
+void shruthiEditorMainWindow::closeEvent (QCloseEvent* event) {
+// ******************************************
+      quitShruthiEditor();
+}
+
 
 // ******************************************
 // ******************************************
@@ -238,12 +261,14 @@ void shruthiEditorMainWindow::midiInputStatusChanged(bool st) {
     displayMidiStatusChanged(st, MIDI_OUTPUT_STATUS);
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::midiOutputStatusChanged(bool st) {
 // ******************************************
     MIDI_OUTPUT_STATUS=st;
     displayMidiStatusChanged(MIDI_INPUT_STATUS,st);
 }
+
 
 // ******************************************
 void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
@@ -258,8 +283,10 @@ void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
     statusBar()->showMessage(status);
 }
 
+
 // ******************************************
 void shruthiEditorMainWindow::displayStatusbar(QString msg) {
 // ******************************************
     statusBar()->showMessage(msg);
 }
+

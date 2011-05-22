@@ -24,6 +24,8 @@
 #include "shruthi-editor.h"
 #include <QDebug>
 #include "RtMidi.h"
+#include "keyboard-dialog.h"
+
 
 #ifdef CLEANLOOKS
 #include <QCleanlooksStyle>
@@ -135,6 +137,8 @@ int main(int argc, char *argv[]) {
         main_window->setWindowIcon(QIcon("shruthi-editor.png"));
         main_window->setFixedSize(main_window->width(),main_window->height());
         main_window->statusBar()-> setSizeGripEnabled ( false );
+        main_window->setAttribute(Qt::WA_DeleteOnClose, true);
+
         QObject::connect(&editor,SIGNAL(midiOutputStatusChanged(bool)),main_window, SLOT(midiOutputStatusChanged(bool)));
         QObject::connect(&editor,SIGNAL(displayStatusbar(QString)),main_window, SLOT(displayStatusbar(QString)));
         // Start editor
@@ -159,6 +163,16 @@ int main(int argc, char *argv[]) {
         midiin.connect(&sr, SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
         sr.connect(&midiin,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
 
+        
+        // Setup keyboard
+        keyboard keys;
+        keys.connect(main_window,SIGNAL(showKeyboard()),SLOT(showKeyboard()));
+//         main_window->connect(&keys,SIGNAL
+//         keys.show();
+        keys.setWindowIcon(QIcon("shruthi-editor.png"));
+        keys.setFixedSize(keys.width(),keys.height());
+//         keys.setAttribute(Qt::WA_DeleteOnClose, true);
+        sr.connect(&keys,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
         
         main_window->show();
         retVal= app.exec();

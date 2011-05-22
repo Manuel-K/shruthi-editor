@@ -16,25 +16,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SHRUTHI_MIDIOUT_H
-#define SHRUTHI_MIDIOUT_H
-#include "RtMidi.h"
+#ifndef KEYBOARD_DIALOG_H
+#define KEYBOARD_DIALOG_H
+ 
+#include "ui_keyboard.h"
+#include "lib_editor.h"
+ 
+class keyboard : public QDialog, private Ui::keyboard{
+    Q_OBJECT
 
-// ******************************************
-class MidiOut {
-// ******************************************
-    private:
-        RtMidiOut* midiout;
-        bool opened;
-        unsigned int output;
     public:
-        MidiOut();
-        ~MidiOut();
-        bool open(unsigned int channel);
-        void write(unsigned char sysex[]);
-        void write(std::vector<unsigned char> sysex);
-        void write(unsigned char c1,unsigned char c2,unsigned char c3);
-        void writeNRPN(int nrpn, int value);
+        keyboard(QWidget *parent = 0);
+    private:
+        unsigned char noteOctave;
+        unsigned char noteVelocity;
+        unsigned char noteChannel;
+        unsigned char calculateNote(int);
+    private slots:
+        void push();
+        void release();
+        void setVelocity(int);
+        void setOctave(int);
+        void setChannel(int);
+    public slots:
+        void showKeyboard();
+    signals:
+        void enqueue(queueitem_t);
 };
-
+ 
+ 
 #endif
