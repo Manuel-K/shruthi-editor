@@ -21,7 +21,6 @@
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
-#include <qapplication.h>
 #include "stdlib.h"
 #include "time.h"
 

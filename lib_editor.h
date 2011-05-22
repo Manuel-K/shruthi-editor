@@ -21,8 +21,8 @@
 
 #include "lib_patch.h"
 #include "lib_midiout.h"
-#include <QQueue>
 #include <QThread>
+
 
 // ******************************************
 enum ACTIONS  
@@ -33,6 +33,7 @@ enum ACTIONS
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF, 
     NOTE_PANIC};
 
+    
 // ******************************************
 struct queueitem_t {
 // ******************************************
@@ -70,7 +71,8 @@ struct queueitem_t {
         note=n;
         noteVelocity=vel;
     };
-};  
+};
+
 
 // ******************************************
 class Editor : public QObject {

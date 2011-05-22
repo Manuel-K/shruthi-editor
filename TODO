@@ -5,21 +5,3 @@ add checksum to save
   more used to the way the rotary knobs work in Logic - clicking on the
   button and sliding the mouse up and down rather than moving it in
   circle around the controller.
-- Maybe you could add a little floating palette (or at least some
-  keyboard shortcut like space or enter) to send some common MIDI
-  messages, like note on C3 / note off / all sounds off?
-
-
-
-DONE:
-implement send_patch
-fix fetch_patch: works only the first time -> mem alloc?
-implement midi recieving
-implement midi sending
-close threads
-
-
-
-
-
-

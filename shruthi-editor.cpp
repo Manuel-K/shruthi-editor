@@ -19,8 +19,6 @@
 #include <QtGui> 
 #include "shruthi-editor.h"
 #include "settings-dialog.h"
-
-
 #include "lib_labels.h"
 #include "lib_patch.h"
 
@@ -31,7 +29,7 @@ int MIDI_INPUT_DEVICE, MIDI_OUTPUT_DEVICE;
 bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
 
 // ******************************************
-shruthiEditorMainWindow::shruthiEditorMainWindow(Editor* edit, QWidget *parent) {
+shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) {
 // ******************************************
     setupUi(this); 
     editor = edit;
