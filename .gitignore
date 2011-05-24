@@ -1,0 +1,18 @@
+# Build Files
+Makefile
+moc_*
+*.moc
+*.o
+*.dll
+ui_*
+
+
+shruthi-editor
+*.exe
+
+# Archives
+*.tar.gz
+*.tar.bz2
+*.zip
+*.7z
+
