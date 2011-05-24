@@ -45,4 +45,5 @@ v0.17 * change from portmidi to RtMidi
       * made save format cross system compatible; this breaks backwards
         compatibility
       * added keyboard with panic button
-v0.18 
+v0.18 * refactored parts of the code
+      * added status bar messages to most actions

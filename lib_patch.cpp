@@ -307,20 +307,20 @@ unsigned char Patch::calculateChecksum(unsigned char sysex[], unsigned int start
 
 
 // ******************************************
-void Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
+bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
 // ******************************************
     // check if valid:
     if (!(sysex[0]==sysexHead[0] && sysex[1]==sysexHead[1] && sysex[2]==sysexHead[2] && sysex[3]==sysexHead[3] && sysex[4]==sysexHead[4] && sysex[5]==sysexHead[5])) {
         qDebug() << "Invalid sysex header.";
-        return;
+        return false;
     }
     if (!(sysexFoot==sysex[len-1])) {
         qDebug() << "Invalid sysex footer.";
-        return;
+        return false;
     }
     if (!(1==sysex[6]&&0==sysex[7])) {
         qDebug() << "Sysex is not a patch.";
-        return;
+        return false;
     }
     // combine nibbles to bytes:
     int j=8;
@@ -331,11 +331,11 @@ void Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
     
     if (!(33==sysex[len-3])) {
         qDebug() << "Invalid patch data.";
-        return;
+        return false;
     }
     if (!calculateChecksum(sysex,8,100)==sysex[len-2]) {
         qDebug() << "Invalid checksum.";
-        return;
+        return false;
     }
     
     // throw padding away:   
@@ -344,17 +344,18 @@ void Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
         tmp[i]=sysex[8+i];
 
     parseSysex(tmp);
+    return true;
 }
 
 
 // ******************************************
-void Patch::parseFullSysex(std::vector<unsigned char> message) {
+bool Patch::parseFullSysex(std::vector<unsigned char> message) {
 // ******************************************
     // copy to temporay array:
     unsigned char *sysex = new unsigned char[message.size()];
     for (unsigned int i=0; i<message.size();i++)
         sysex[i] = message.at(i); 
-    parseFullSysex(sysex, message.size());
+    return parseFullSysex(sysex, message.size());
 }
 
 

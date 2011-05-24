@@ -84,11 +84,11 @@ bool MidiOut::open(unsigned int port) {
 
 
 // ******************************************
-void MidiOut::write(unsigned char sysex[]) {
+bool MidiOut::write(unsigned char sysex[]) {
 // ******************************************
     if (!opened) {
         qDebug() << "MidiOut::write(unsigned char[]): could not send. Port not opened.";
-        return;
+        return false;
     }
     
     std::vector<unsigned char> message;
@@ -96,44 +96,46 @@ void MidiOut::write(unsigned char sysex[]) {
     for (i=0; sysex[i]!=247; i++)
         message.push_back(sysex[i]);
     message.push_back(sysex[i]);
-    write(message);
+    return write(message);
 }
 
 
 // ******************************************
-void MidiOut::write(std::vector<unsigned char> message) {
+bool MidiOut::write(std::vector<unsigned char> message) {
 // ******************************************
     if (!opened) {
         qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Port not opened.";
-        return;
+        return false;
     }
     
     try {
         midiout->sendMessage (&message);
+        return true;
     }
     catch ( RtError &error ) {
         qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Error on sending.";
         error.printMessage();
     }
+    return false;
 }
 
 
 // ******************************************
-void MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
+bool MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
 // ******************************************
     std::vector<unsigned char> message;
     message.push_back( c1 );
     message.push_back( c2 );
     message.push_back( c3 );
-    write( message );
+    return write( message );
 }
 
 // ******************************************
-void MidiOut::writeNRPN(int nrpn, int value) {
+bool MidiOut::writeNRPN(int nrpn, int value) {
 // ******************************************
     if (!opened) {
         qDebug() << "MidiOut::writeNRPN(): could not send. Port not opened.";
-        return;
+        return false;
     }
       
     int32_t nrpn_msb=nrpn>>7;
@@ -147,8 +149,8 @@ void MidiOut::writeNRPN(int nrpn, int value) {
       value_msb=value>>7;
       value_lsb=value%128;
     }
-    write(176, 99, nrpn_msb);
-    write(176, 98, nrpn_lsb);
-    write(176, 6, value_msb);
-    write(176, 38, value_lsb);
+    return (write(176, 99, nrpn_msb) && 
+            write(176, 98, nrpn_lsb) && 
+            write(176, 6, value_msb) && 
+            write(176, 38, value_lsb));
 }

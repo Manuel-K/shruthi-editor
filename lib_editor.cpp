@@ -129,7 +129,8 @@ void Editor::actionProcessEditor(int nrpn, int value) {
 #endif
     if (patch.getParam(nrpn) != value) {
         patch.setParam(nrpn,value);
-        midiout.writeNRPN(nrpn,value);
+        if (!midiout.writeNRPN(nrpn,value))
+            emit displayStatusbar("Could not send changes.");
     }
 }
 
@@ -139,7 +140,10 @@ void Editor::actionFetchPatch() {
 #ifdef DEBUG
     qDebug() << "Editor::actionFetchPatch()";
 #endif
-    midiout.write(Editor::transferRequest);
+    if (midiout.write(Editor::transferRequest))
+        emit displayStatusbar("Patch transfer request sent.");
+    else
+        emit displayStatusbar("Could not send patch transfer request.");
 }
 
 
@@ -151,7 +155,10 @@ void Editor::actionSendPatch() {
 #endif
     std::vector<unsigned char> temp;
     patch.generateFullSysex(&temp);
-    midiout.write(temp);
+    if (midiout.write(temp))
+        emit displayStatusbar("Patch sent.");
+    else
+        emit displayStatusbar("Could not send patch.");
 }
 
 
@@ -164,7 +171,7 @@ void Editor::actionNrpnRecieved(int nrpn, int value) {
     if (Patch::parameters[nrpn].min<0 && value>=127)
         value-=256; //2s complement
     patch.setParam(nrpn,value);
-    emit(redrawNRPN(nrpn));
+    emit redrawNRPN(nrpn);
 }
 
 
@@ -174,7 +181,8 @@ void Editor::actionNoteOn(unsigned char channel, unsigned char note, unsigned ch
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    midiout.write((144|(channel-1)),note,velocity);
+    if(!midiout.write((144|(channel-1)),note,velocity))
+        emit displayStatusbar("Could not send note on message.");
 }
 
 
@@ -184,7 +192,8 @@ void Editor::actionNoteOff(unsigned char channel, unsigned char note, unsigned c
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << "," << velocity << ")";
 #endif
-    midiout.write((128|(channel-1)),note,velocity);
+    if(!midiout.write((128|(channel-1)),note,velocity))
+        emit displayStatusbar("Could not send note off message.");
 }
 
 
@@ -194,7 +203,10 @@ void Editor::actionNotePanic(unsigned char channel) {
 #ifdef DEBUG
     qDebug() << "Editor::actionNotePanic(" << channel <<")";
 #endif
-    midiout.write((176|(channel-1)),123,0);
+    if (midiout.write((176|(channel-1)),123,0))
+        emit displayStatusbar("Sent all notes off message.");
+    else
+        emit displayStatusbar("Could not send all notes off message.");
 }
 
 
@@ -205,7 +217,10 @@ void Editor::actionSysexRecieved(unsigned int size, unsigned char* message) {
     qDebug() << "Editor::actionSysexRecieved(" << size << ",...)";
 #endif
     if (7<size && message[6]==1 && message[7]==0)
-        patch.parseFullSysex(message,size);
+        if (patch.parseFullSysex(message,size))
+            emit displayStatusbar("Recieved valid patch.");
+        else
+            emit displayStatusbar("Recieved invalid patch.");
     else {
         emit displayStatusbar("Recieved unknown sysex.");
 #ifdef DEBUG
@@ -224,6 +239,7 @@ void Editor::actionSetPatchname(QString name) {
     qDebug() << "Editor::actionSetPatchname(" << name << ")";
 #endif
     patch.setName(name);
+    emit displayStatusbar("Patch name set.");
 }
 
 
@@ -234,6 +250,10 @@ void Editor::actionLoadPatch(QString filename) {
 #ifdef DEBUG
     qDebug() << "Editor::actionLoadPatch(" << filename << "):" << status;
 #endif
+    if (status)
+        emit displayStatusbar("Patch loaded from disk.");
+    else
+        emit displayStatusbar("Could not load patch.");
     emit redrawAll();
 }
 
@@ -245,6 +265,10 @@ void Editor::actionSavePatch(QString filename) {
 #ifdef DEBUG
     qDebug() << "Editor::actionSavePatch(" << filename << "):" << status;
 #endif
+    if (status)
+        emit displayStatusbar("Patch saved to disk.");
+    else
+        emit displayStatusbar("Could not save patch.");
 }
 
 
@@ -256,6 +280,7 @@ void Editor::actionResetPatch() {
 #endif
     patch.resetPatch();
     emit redrawAll();
+    emit displayStatusbar("Patch reset.");
 }
 
 
@@ -267,4 +292,5 @@ void Editor::actionRandomizePatch() {
 #endif
     patch.randomizePatch();
     emit redrawAll();
+    emit displayStatusbar("Patch randomized.");
 }
