@@ -161,14 +161,14 @@ QStringList Labels::OscillatorAlgorithm = QStringList()
   <<"Naive square wave"
   <<"Filtered noise generator"
   <<"Vowel" //Low-tech formant synthesis
-  <<"Belish"
-  <<"Polatd"
+  <<"Bellish"
+  <<"Polated"
   <<"Cello"
-  <<"Clpswp"
+  <<"Clipsweep"
   <<"Female"
-  <<"Fmtvoc"
-  <<"Frmnt2"
-  <<"Res3hp"
+  <<"Fmntvocal"
+  <<"Formant2"
+  <<"Reso3hp"
   <<"Electp"
   <<"Vibes";
 
