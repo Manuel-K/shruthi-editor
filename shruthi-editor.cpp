@@ -135,7 +135,7 @@ void shruthiEditorMainWindow::loadPatch() {
 // ******************************************
 void shruthiEditorMainWindow::savePatch() {
 // ******************************************
-    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches (*.sp)");
+    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
         queueitem_t signal (FILEIO_SAVE,filename);
         emit(enqueue(signal));      

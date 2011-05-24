@@ -401,7 +401,7 @@ bool Patch::loadFromDisk(QString location) {
     }
 
     char tmp [195];
-    int readBytes = file.read(tmp,195);
+    unsigned int readBytes = file.read(tmp,195);
     file.close();
 
 #ifdef DEBUG
@@ -447,14 +447,23 @@ bool Patch::saveToDisk(QString location) {
         return false;
     }
 
-    unsigned char sysex[92] = {};
-    generateSysex(sysex);
-
-    char temp[92];
-    for (unsigned int i=0; i<92; i++) {
-        temp[i]=(char) sysex[i];
+    char temp[195];
+    unsigned int len;
+    if (location.endsWith(".syx")) {
+        std::vector<unsigned char> sysex;
+        generateFullSysex(&sysex);
+        len = 195;
+        for (unsigned int i=0; i<len; i++)
+            temp[i]=(char) sysex[i];
+    } else {
+        unsigned char sysex[92] = {};
+        generateSysex(sysex);
+        len = 92;
+        for (unsigned int i=0; i<len; i++)
+            temp[i]=(char) sysex[i];
     }
-    bool status = file.write(temp,92)==92;
+    
+    bool status = file.write(temp,len)==len;
 
     file.close();
     return status;
