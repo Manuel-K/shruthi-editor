@@ -103,29 +103,6 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
         }
          
     }
-
-
-//     if (b0==240 && b1==0 && b2==32 && b3==119) {//SYSEX_HEAD
-//         sysex.setRecieving();
-// #ifdef DEBUG
-//         qDebug() << "detected start of sysex message";
-// #endif
-//     }
-//     if (sysex.isRecieving()){
-//         if (sysex.parse(b0,b1,b2,b3)) {
-//             int len = sysex.getLen();
-//             int *msg = new int[len];
-//             sysex.getSysex(msg);
-//             queueitem_t signal = {SYSEX_RECIEVED,len,0,NULL,NULL};
-//             signal.message=msg;
-//             emit enqueue(signal);
-//         }
-//     } else {
-//         if (nrpn.parse(b0,b1,b2)) {
-//             queueitem_t signal = {NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue(),NULL,NULL};
-//             emit enqueue(signal);
-//         }
-//     }
 }
 
 // ******************************************
