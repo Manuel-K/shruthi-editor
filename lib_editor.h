@@ -81,6 +81,20 @@ class Editor : public QObject {
     private:
         Patch patch;
         MidiOut midiout;
+        void actionProcessEditor(int,int);
+        void actionFetchPatch();
+        void actionSendPatch();
+        void actionNrpnRecieved(int,int);
+        void actionNoteOn(unsigned char, unsigned char, unsigned char);
+        void actionNoteOff(unsigned char, unsigned char, unsigned char);
+        void actionNotePanic(unsigned char);
+        void actionSysexRecieved(unsigned int, unsigned char*);
+        void actionSetPatchname(QString);
+        void actionLoadPatch(QString);
+        void actionSavePatch(QString);
+        void actionResetPatch();
+        void actionRandomizePatch();
+        
     public:
         Editor();
         ~Editor();

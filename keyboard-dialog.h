@@ -21,8 +21,10 @@
  
 #include "ui_keyboard.h"
 #include "lib_editor.h"
- 
+
+// ******************************************
 class keyboard : public QDialog, private Ui::keyboard{
+// ******************************************
     Q_OBJECT
 
     public:
@@ -44,6 +46,4 @@ class keyboard : public QDialog, private Ui::keyboard{
     signals:
         void enqueue(queueitem_t);
 };
- 
- 
 #endif

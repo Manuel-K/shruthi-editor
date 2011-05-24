@@ -72,7 +72,7 @@ void keyboard::push() {
 void keyboard::panicPushed() {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "panic()" << note;
+    qDebug() << "panicPushed()";
 #endif
     queueitem_t signal (NOTE_PANIC,noteChannel,0,0);
     emit enqueue(signal);
