@@ -386,7 +386,7 @@ void Patch::generateFullSysex(std::vector<unsigned char> *message) {
 bool Patch::loadFromDisk(QString location) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Patch::loadFromDisk("<<location<<")";
+    qDebug() << "Patch::loadFromDisk(" << location << ")";
 #endif
     QFile file(location);
 
@@ -400,25 +400,37 @@ bool Patch::loadFromDisk(QString location) {
         return false;
     }
 
-    char  tmp [92];
-    bool status = (file.read(tmp,92)>=92);
+    char tmp [195];
+    int readBytes = file.read(tmp,195);
+    file.close();
 
-    unsigned char sysex[92] = {};
-    for (unsigned int i=0; i<92; i++) {
+#ifdef DEBUG
+    qDebug() << "Read" << readBytes << "bytes.";   
+#endif
+
+    unsigned char sysex[195] = {};
+    for (unsigned int i=0; i<readBytes; i++) {
          sysex[i] = (char) tmp[i];
 #ifdef DEBUG
         qDebug() << i << ":" << sysex[i];
 #endif
     }
-    
+
     // primitive check if patch is valid:
-    if (status && tmp[91]==33) // last field is !
+    if (readBytes==195) {
+#ifdef DEBUG
+        qDebug() << "Detected full patch sysex.";   
+#endif
+        return parseFullSysex(sysex,195);
+    } else if (readBytes==92 && tmp[91]==33) { // last field is !
+#ifdef DEBUG
+        qDebug() << "Detected light patch files.";   
+#endif
         parseSysex(sysex);
-    else
-        status = false;
-    
-    file.close();
-    return status;
+        return true;
+    } else {
+        return false;
+    }
 };
 
 
@@ -426,7 +438,7 @@ bool Patch::loadFromDisk(QString location) {
 bool Patch::saveToDisk(QString location) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Patch::saveToDisk("<<location<<")";
+    qDebug() << "Patch::saveToDisk(" << location << ")";
 #endif
     QFile file(location);
 
