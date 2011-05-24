@@ -198,7 +198,7 @@ QString Patch::getName() {
 // ******************************************
 void Patch::printPatch() {
 // ******************************************
-    qDebug() << "name: " << name; //qPrintable(name); //.toLocal8Bit().constData()
+    qDebug() << "name: " << name;
     for (int i=0; i < 108; i++) if (enabled(i)) {
         const param_t param = parameters[i];
         if (parameters[i].dropdown)
@@ -401,7 +401,7 @@ bool Patch::loadFromDisk(QString location) {
     }
 
     char  tmp [92];
-    file.read(tmp,92);
+    bool status = (file.read(tmp,92)>=92);
 
     unsigned char sysex[92] = {};
     for (unsigned int i=0; i<92; i++) {
@@ -410,10 +410,15 @@ bool Patch::loadFromDisk(QString location) {
         qDebug() << i << ":" << sysex[i];
 #endif
     }
-    parseSysex(sysex);
+    
+    // primitive check if patch is valid:
+    if (status && tmp[91]==33) // last field is !
+        parseSysex(sysex);
+    else
+        status = false;
     
     file.close();
-    return true;
+    return status;
 };
 
 
