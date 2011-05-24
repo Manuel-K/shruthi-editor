@@ -20,7 +20,7 @@
 #include <QDebug>
 
 // ******************************************
-parserNRPN::parserNRPN () {
+NRPN::NRPN () {
 // ******************************************
     nrpnMsb=0;
     nrpn=-1;
@@ -29,12 +29,12 @@ parserNRPN::parserNRPN () {
 }
 
 // ******************************************
-int parserNRPN::getValue(){
+int NRPN::getValue(){
 // ******************************************
     return value;
 }
 // ******************************************
-int parserNRPN::getNRPN(){
+int NRPN::getNRPN(){
 // ******************************************
     return nrpn;
 }
@@ -46,7 +46,7 @@ int parserNRPN::getNRPN(){
 //    176 6 1 (Data Entry MSB set to 1 -- value above 127 or negative)
 //    176 38 116 (Data Entry LSB set to 116, because 116 - 128 = -12)
 // ******************************************
-bool parserNRPN::parse(int b0, int b1, int b2) {
+bool NRPN::parse(int b0, int b1, int b2) {
 // ******************************************
     if (b0==176) switch(b1) {
         case 38://DATA_LSB
@@ -74,54 +74,6 @@ bool parserNRPN::parse(int b0, int b1, int b2) {
 #endif
     return false;
 }
-
-
-// // ******************************************
-// parserSysex::parserSysex () {
-// // ******************************************
-//     recieving=false;
-//     pos=0;
-// }
-// 
-// // ******************************************
-// bool parserSysex::isRecieving() {
-// // ******************************************
-//     return recieving;
-// }
-// // ******************************************
-// void parserSysex::setRecieving() {
-// // ******************************************
-//     recieving=true;
-//     pos=0;
-// }
-// 
-// // ******************************************
-// bool parserSysex::parse(int b0, int b1, int b2, int b3) {
-// // ******************************************
-//     buffer[pos++]=b0;
-//     if(b0!=247)
-//         buffer[pos++]=b1;
-//     if(b1!=247)
-//         buffer[pos++]=b2;
-//     if(b2!=247)
-//         buffer[pos++]=b3;
-//     if (b0==247||b1==247||b2==247||b3==247)  // end of sysex message
-//         recieving=false;
-//     return !recieving;
-// }
-// // ******************************************
-// int parserSysex::getSysex(int* sysex) {
-// // ******************************************
-//     for (int i=0; i<pos; i++)
-//         sysex[i]=buffer[i];
-//     return pos;
-// }
-// 
-// // ******************************************
-// int parserSysex::getLen() {
-// // ******************************************
-//     return pos;
-// }
 
 
 // ******************************************

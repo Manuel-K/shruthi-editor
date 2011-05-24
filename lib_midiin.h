@@ -25,7 +25,7 @@
 
 
 // ******************************************
-class parserNRPN {
+class NRPN {
 // ******************************************
     private:
         int nrpnMsb;
@@ -33,36 +33,18 @@ class parserNRPN {
         int valueMsb;
         int value;
     public:
-        parserNRPN();
+        NRPN();
         int getValue();
         int getNRPN();
         bool parse(int,int,int);
 };
-
-// // ******************************************
-// class parserSysex {
-// // ******************************************
-//     private:
-//         bool recieving;
-//         int buffer[1024];
-//         int pos;
-//     public:
-//         parserSysex();
-//         bool isRecieving();
-//         void setRecieving();
-//         bool parse(int b0, int b1, int b2, int b3);
-//         int getSysex(int *sysex);
-//         int getLen();
-// };
-
 
 // ******************************************
 class MidiIn : public QObject {
 // ******************************************
     Q_OBJECT
     private:
-        parserNRPN nrpn;
-//         parserSysex sysex;
+        NRPN nrpn;
         
         RtMidiIn* midiin;
         bool opened;
