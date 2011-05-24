@@ -1,6 +1,4 @@
-perform integrity check on load: test for ! and checksum 
-add checksum to save
-- save/load full sysex?
+- save/load full sysex
 - Does QDial support different mouse control modes? Personnally I am
   more used to the way the rotary knobs work in Logic - clicking on the
   button and sliding the mouse up and down rather than moving it in
