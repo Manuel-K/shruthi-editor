@@ -19,6 +19,7 @@
 #include "lib_midiin.h"
 #include <QDebug>
 
+
 // ******************************************
 NRPN::NRPN () {
 // ******************************************
@@ -28,11 +29,14 @@ NRPN::NRPN () {
     value=-1;
 }
 
+
 // ******************************************
 int NRPN::getValue(){
 // ******************************************
     return value;
 }
+
+
 // ******************************************
 int NRPN::getNRPN(){
 // ******************************************
@@ -105,14 +109,12 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
     }
 }
 
+
 // ******************************************
 void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData ) {
 // ******************************************
   ((MidiIn*) userData) -> process(message);
 }
-
-
-
 
 
 // ******************************************
@@ -155,6 +157,7 @@ void MidiIn::setMidiDevices(int in, int out) {
     open(in);
     emit midiInputStatusChanged(opened);
 }
+
 
 // ******************************************
 bool MidiIn::open(unsigned int port) {
