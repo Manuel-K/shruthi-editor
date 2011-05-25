@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     
 #ifdef CLEANLOOKS    
     QApplication::setStyle(new QCleanlooksStyle);
-#endif    
+#endif
     
     int retVal;
     
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         // Setup main_window
         QApplication app(argc, argv);
         shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
-        main_window->setWindowIcon(QIcon("shruthi-editor.png"));
+        main_window->setWindowIcon(QIcon(":shruthi-editor.png"));
         main_window->setFixedSize(main_window->width(),main_window->height());
         main_window->statusBar()-> setSizeGripEnabled ( false );
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
         // Setup keyboard
         keyboard keys;
         keys.connect(main_window,SIGNAL(showKeyboard()),SLOT(showKeyboard()));
-        keys.setWindowIcon(QIcon("shruthi-editor.png"));
+        keys.setWindowIcon(QIcon(":shruthi-editor.png"));
         keys.setFixedSize(keys.width(),keys.height());
         
         // Start editor
