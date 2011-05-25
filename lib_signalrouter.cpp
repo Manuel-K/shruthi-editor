@@ -19,8 +19,9 @@
 #include "lib_signalrouter.h"
 
 
-
+// ******************************************
 SignalRouter::SignalRouter() {
+// ******************************************
 #ifdef DEBUG
     qDebug() << "SignalRouter::SignalRouter()";
 #endif
@@ -28,7 +29,11 @@ SignalRouter::SignalRouter() {
     config = Config();
     config.load();
 }
+
+
+// ******************************************
 SignalRouter::~SignalRouter() {
+// ******************************************
 #ifdef DEBUG
     qDebug() << "SignalRouter::~SignalRouter()";
 #endif
@@ -36,12 +41,18 @@ SignalRouter::~SignalRouter() {
 }
 
 
+// ******************************************
 void SignalRouter::run() {
+// ******************************************
     emit setMidiDevices(config.getMidiInputDevice(),config.getMidiOutputDevice());
     editorEnabled=true;
     editorWorking=false;
 }
+
+
+// ******************************************
 void SignalRouter::enqueue(queueitem_t item) {
+// ******************************************
     if (editorWorking)
         queue.enqueue(item);
     else if (editorEnabled) {
@@ -50,7 +61,11 @@ void SignalRouter::enqueue(queueitem_t item) {
         emit editorProcess(item);
     }
 }
+
+
+// ******************************************
 void SignalRouter::editorFinished() {
+// ******************************************
     if (editorEnabled) {
         if (!queue.isEmpty())
             emit editorProcess(queue.dequeue());
@@ -60,7 +75,9 @@ void SignalRouter::editorFinished() {
 }
 
 
+// ******************************************
 void SignalRouter::midiDeviceChanged(int in, int out) {
+// ******************************************
 #ifdef DEBUG
     qDebug() << "midiDeviceChanged: in" << in << ", out:" <<out;
 #endif
