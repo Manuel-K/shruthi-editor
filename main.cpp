@@ -18,91 +18,18 @@
 
 #include <QApplication>
 #include <QtCore>
-#include "lib_editor.h"
-#include "lib_config.h"
-#include "lib_midiin.h"
-#include "shruthi-editor.h"
 #include <QDebug>
-#include "RtMidi.h"
+
+#include "shruthi-editor.h"
 #include "keyboard-dialog.h"
+
+#include "lib_editor.h"
+#include "lib_midiin.h"
+#include "lib_signalrouter.h"
 
 #ifdef CLEANLOOKS
 #include <QCleanlooksStyle>
 #endif
-// ******************************************
-class SignalRouter : public QObject {
-// ******************************************
-    Q_OBJECT
-
-    private:
-        Config config;
-    
-    public:
-        SignalRouter() {
-#ifdef DEBUG
-            qDebug() << "SignalRouter::SignalRouter()";
-#endif
-            // load config
-            config = Config();
-            config.load();
-        }
-        ~SignalRouter() {
-#ifdef DEBUG
-            qDebug() << "SignalRouter::~SignalRouter()";
-#endif
-            editorEnabled=false;
-        }
-        
-        bool editorWorking;
-        bool editorEnabled;
-        QQueue<queueitem_t> queue;
-
-    
-    public slots:
-        void run() {
-            emit setMidiDevices(config.getMidiInputDevice(),config.getMidiOutputDevice());
-            editorEnabled=true;
-            editorWorking=false;
-        }
-        void enqueue(queueitem_t item) {
-            if (editorWorking)
-                queue.enqueue(item);
-            else if (editorEnabled) {
-                editorWorking=true;
-                
-                emit editorProcess(item);
-            }
-        }
-        void editorFinished() {
-            if (editorEnabled) {
-                if (!queue.isEmpty())
-                    emit editorProcess(queue.dequeue());
-                else
-                    editorWorking=false;
-            }
-        }
-        
-        
-        void midiDeviceChanged(int in, int out) {
-#ifdef DEBUG
-            qDebug() << "midiDeviceChanged: in" << in << ", out:" <<out;
-#endif
-            emit setMidiDevices(in,out);
-            bool config_changed = (config.getMidiInputDevice() != in) || (config.getMidiOutputDevice() != out);
-            if (config_changed) {
-                config.setMidiInputDevice(in);
-                config.setMidiOutputDevice(out);
-#ifdef DEBUG
-                qDebug() << "Config was changed. Saving.";
-#endif
-                config.save();
-            }
-        }
-
-    signals:
-        void editorProcess(queueitem_t);
-        void setMidiDevices(int,int);
-};
 
 // ******************************************
 int main(int argc, char *argv[]) {
@@ -199,5 +126,3 @@ int main(int argc, char *argv[]) {
 #endif
     return retVal;
 }
-
-#include "main.moc"
