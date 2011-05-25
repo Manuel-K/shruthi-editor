@@ -26,7 +26,6 @@
 #include "RtMidi.h"
 #include "keyboard-dialog.h"
 
-
 #ifdef CLEANLOOKS
 #include <QCleanlooksStyle>
 #endif
@@ -114,7 +113,6 @@ int main(int argc, char *argv[]) {
     QApplication::setStyle(new QCleanlooksStyle);
 #endif    
     
-//     Pm_Initialize();
     int retVal;
     
     {
@@ -128,51 +126,51 @@ int main(int argc, char *argv[]) {
         Editor editor;
         QThread editorThread;
         editor.moveToThread(&editorThread);
-        // Setup main_window
-        QApplication app(argc, argv);
-        shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
-        QObject::connect(&editor,SIGNAL(redrawNRPN(int)),main_window, SLOT(redrawNRPN(int)));
-        QObject::connect(&editor,SIGNAL(redrawAll()),main_window,SLOT(redrawAll()));
-        QObject::connect(&sr,SIGNAL(setMidiDevices(int,int)),main_window,SLOT(setMidiDevices(int,int)));
-        main_window->setWindowIcon(QIcon("shruthi-editor.png"));
-        main_window->setFixedSize(main_window->width(),main_window->height());
-        main_window->statusBar()-> setSizeGripEnabled ( false );
-        main_window->setAttribute(Qt::WA_DeleteOnClose, true);
+        // editor: incoming signals
+        editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)),SLOT(process(queueitem_t)));
+        editor.connect(&sr, SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
 
-        QObject::connect(&editor,SIGNAL(midiOutputStatusChanged(bool)),main_window, SLOT(midiOutputStatusChanged(bool)));
-        QObject::connect(&editor,SIGNAL(displayStatusbar(QString)),main_window, SLOT(displayStatusbar(QString)));
-        // Start editor
-        editorThread.start();
-
-        // Start midiin
+        // Setup midiin
         MidiIn midiin;
         QThread midiinThread;
         midiin.moveToThread(&midiinThread);
         midiinThread.start();
-        QObject::connect(&midiin,SIGNAL(midiInputStatusChanged(bool)),main_window, SLOT(midiInputStatusChanged(bool)));
-        
-        // Setup signalrouter
-        sr.connect(main_window,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
-        sr.connect(main_window,SIGNAL(midiDeviceChanged(int,int)),SLOT(midiDeviceChanged(int,int)));
-        srThread.start();
-
-        sr.connect(&editor, SIGNAL(finished()),SLOT(editorFinished()));
-        editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)),SLOT(process(queueitem_t)));
-        editor.connect(&sr, SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
-        
+        // midiin: incoming signals
         midiin.connect(&sr, SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
-        sr.connect(&midiin,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
 
-        
+        // Setup main_window
+        QApplication app(argc, argv);
+        shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
+        main_window->setWindowIcon(QIcon("shruthi-editor.png"));
+        main_window->setFixedSize(main_window->width(),main_window->height());
+        main_window->statusBar()-> setSizeGripEnabled ( false );
+        main_window->setAttribute(Qt::WA_DeleteOnClose, true);
+        // main_window: incoming signals
+        main_window->connect(&editor,SIGNAL(redrawNRPN(int)),SLOT(redrawNRPN(int)));
+        main_window->connect(&editor,SIGNAL(redrawAll()),SLOT(redrawAll()));
+        main_window->connect(&sr,SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
+        main_window->connect(&editor,SIGNAL(midiOutputStatusChanged(bool)), SLOT(midiOutputStatusChanged(bool)));
+        main_window->connect(&editor,SIGNAL(displayStatusbar(QString)), SLOT(displayStatusbar(QString)));
+        main_window->connect(&midiin,SIGNAL(midiInputStatusChanged(bool)),SLOT(midiInputStatusChanged(bool)));
+
         // Setup keyboard
         keyboard keys;
         keys.connect(main_window,SIGNAL(showKeyboard()),SLOT(showKeyboard()));
-//         main_window->connect(&keys,SIGNAL
-//         keys.show();
         keys.setWindowIcon(QIcon("shruthi-editor.png"));
         keys.setFixedSize(keys.width(),keys.height());
-//         keys.setAttribute(Qt::WA_DeleteOnClose, true);
+        
+        // Start editor
+        editorThread.start();
+
+        // signalrouter: incoming signals
+        sr.connect(&editor, SIGNAL(finished()),SLOT(editorFinished()));
+        sr.connect(main_window,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
+        sr.connect(&midiin,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
         sr.connect(&keys,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
+        sr.connect(main_window,SIGNAL(midiDeviceChanged(int,int)),SLOT(midiDeviceChanged(int,int)));
+
+        // start signal router
+        srThread.start();
         
         main_window->show();
         retVal= app.exec();
@@ -195,10 +193,6 @@ int main(int argc, char *argv[]) {
         midiinThread.quit();
         midiinThread.wait(1000);
     }
-#ifdef DEBUG
-    qDebug() << "Pm_Terminate();";
-#endif
-//     Pm_Terminate();
     
 #ifdef DEBUG
     qDebug() << "return"<< retVal;
