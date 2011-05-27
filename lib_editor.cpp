@@ -94,7 +94,7 @@ void Editor::process(queueitem_t item) {
             actionNoteOn(item.int0,item.int1);
             break;
         case NOTE_OFF:
-            actionNoteOff(item.int0,item.int1);
+            actionNoteOff(item.int0);
             break;
         case NOTE_PANIC:
             actionNotePanic();
@@ -193,12 +193,12 @@ void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
 
 
 // ******************************************
-void Editor::actionNoteOff(unsigned char note, unsigned char velocity) {
+void Editor::actionNoteOff(unsigned char note) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Editor::actionNoteOff(" << channel << "," << note << "," << velocity << ")";
+    qDebug() << "Editor::actionNoteOff(" << channel << "," << note << ")";
 #endif
-    if(!midiout.noteOff(channel,note,velocity))
+    if(!midiout.noteOff(channel,note))
         emit displayStatusbar("Could not send note off message.");
 }
 

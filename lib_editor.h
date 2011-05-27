@@ -82,7 +82,7 @@ class Editor : public QObject {
         void actionSendPatch();
         void actionNrpnRecieved(int,int);
         void actionNoteOn(unsigned char, unsigned char);
-        void actionNoteOff(unsigned char, unsigned char);
+        void actionNoteOff(unsigned char);
         void actionNotePanic();
         void actionSysexRecieved(unsigned int, unsigned char*);
         void actionSetPatchname(QString);

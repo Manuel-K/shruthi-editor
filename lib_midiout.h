@@ -42,7 +42,7 @@ class MidiOut {
         // Wrappers:
         bool nrpn(int nrpn, int value);
         bool noteOn(unsigned char, unsigned char, unsigned char);
-        bool noteOff(unsigned char, unsigned char, unsigned char);
+        bool noteOff(unsigned char, unsigned char);
         bool allNotesOff(unsigned char);
         bool programChange(unsigned char, unsigned char);
         bool controlChange(unsigned char, unsigned char, unsigned char);

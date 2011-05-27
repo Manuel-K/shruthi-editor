@@ -83,7 +83,7 @@ void keyboard::release() {
 #ifdef DEBUG
     qDebug() << "release()" << note;
 #endif
-    queueitem_t signal (NOTE_OFF,note,0);
+    queueitem_t signal (NOTE_OFF,note);
     emit enqueue(signal);
 }
 

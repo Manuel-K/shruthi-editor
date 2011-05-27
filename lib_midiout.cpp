@@ -183,9 +183,9 @@ bool MidiOut::noteOn(unsigned char channel, unsigned char note, unsigned char ve
 
 
 // ******************************************
-bool MidiOut::noteOff(unsigned char channel, unsigned char note, unsigned char velocity) {
+bool MidiOut::noteOff(unsigned char channel, unsigned char note) {
 // ******************************************
-    return write((128|channel),note,velocity);
+    return write((128|channel),note,0);
 }
 
 
