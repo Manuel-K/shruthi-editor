@@ -20,6 +20,7 @@
 #define SHRUTHI_PATCH_H
 #include "lib_labels.h"
 #include <vector>
+#include "lib_midi.h"
 
 // ******************************************
 struct param_t {
@@ -36,11 +37,8 @@ class Patch {
     private:
         QString name;
         int data[108];
-        unsigned char calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end);
         void parseSysex(unsigned char *sysex);
         void generateSysex(unsigned char res[]);
-        static const unsigned char sysexHead[6];
-        static const unsigned char sysexFoot;
     public:
         static param_t parameters[];
         static unsigned char INIT_PATCH[];

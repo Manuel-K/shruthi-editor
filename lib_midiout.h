@@ -47,6 +47,7 @@ class MidiOut {
         bool programChange(unsigned char, unsigned char);
         bool controlChange(unsigned char, unsigned char, unsigned char);
         bool patchTransferRequest();
+//         bool patchWriteRequest();
 };
 
 #endif

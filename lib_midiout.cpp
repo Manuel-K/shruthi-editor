@@ -222,4 +222,10 @@ bool MidiOut::patchTransferRequest() {
 }
 
 
+// // ******************************************
+// bool MidiOut::patchWriteRequest() {
+// // ******************************************
+//     unsigned char patchTransferRequest[]={240,0,32,119,0,2,17,0,0,0,247};
+//     return write (patchWriteRequest); 
+// }
 

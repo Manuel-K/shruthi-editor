@@ -25,10 +25,6 @@
 #include "time.h"
 
 
-const unsigned char Patch::sysexHead[6]={240,0,32,119,0,2};
-const unsigned char Patch::sysexFoot=247;
-
-
 // ******************************************
 param_t Patch::parameters [108] = {
 // ******************************************
@@ -306,25 +302,16 @@ void Patch::generateSysex (unsigned char res[]) {
 
 
 // ******************************************
-unsigned char Patch::calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end) {
-// ******************************************
-    unsigned long chk=0;
-    for(unsigned int i=start; i<end;i++) {
-        chk+=sysex[i];
-    }
-    return (unsigned char) (chk % 256);
-}
-
-
-// ******************************************
 bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
 // ******************************************
     // check if valid:
-    if (!(sysex[0]==sysexHead[0] && sysex[1]==sysexHead[1] && sysex[2]==sysexHead[2] && sysex[3]==sysexHead[3] && sysex[4]==sysexHead[4] && sysex[5]==sysexHead[5])) {
+    if (!(sysex[0]==Midi::sysexHead[0] && sysex[1]==Midi::sysexHead[1] && 
+          sysex[2]==Midi::sysexHead[2] && sysex[3]==Midi::sysexHead[3] && 
+          sysex[4]==Midi::sysexHead[4] && sysex[5]==Midi::sysexHead[5])) {
         qDebug() << "Invalid sysex header.";
         return false;
     }
-    if (!(sysexFoot==sysex[len-1])) {
+    if (!(Midi::sysexFoot==sysex[len-1])) {
         qDebug() << "Invalid sysex footer.";
         return false;
     }
@@ -343,7 +330,7 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
         qDebug() << "Invalid patch data.";
         return false;
     }
-    if (!calculateChecksum(sysex,8,100)==sysex[len-2]) {
+    if (!Midi::calculateChecksum(sysex,8,100)==sysex[len-2]) {
         qDebug() << "Invalid checksum.";
         return false;
     }
@@ -378,17 +365,17 @@ void Patch::generateFullSysex(std::vector<unsigned char> *message) {
     generateSysex(temp);
     
     for (unsigned int i=0; i<6; i++)
-        message->push_back(sysexHead[i]);
+        message->push_back(Midi::sysexHead[i]);
     message->push_back(1);
     message->push_back(0);
-    temp[92]=calculateChecksum(temp,0,92);
+    temp[92]=Midi::calculateChecksum(temp,0,92);
     
     // expand bytes to nibbles:
     for (unsigned int i=0;i<93;i++) {
         message->push_back((temp[i]>>4)&0x0F);
         message->push_back(temp[i]&0x0F);
     }
-    message->push_back(Patch::sysexFoot);
+    message->push_back(Midi::sysexFoot);
 }
 
 
