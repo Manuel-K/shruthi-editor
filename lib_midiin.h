@@ -55,9 +55,9 @@ class MidiIn : public QObject {
     public:
         ~MidiIn();
         MidiIn();
-        void process ( std::vector< unsigned char > *message );
+        void process(std::vector< unsigned char > *message);
     public slots:
-        void setMidiPorts(int,int);
+        void setMidiInputPort(int);
     signals:
         void enqueue(queueitem_t);
         void midiInputStatusChanged(bool);

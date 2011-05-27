@@ -81,6 +81,7 @@ class Editor : public QObject {
     private:
         Patch patch;
         MidiOut midiout;
+        unsigned char channel;
         void actionProcessEditor(int,int);
         void actionFetchPatch();
         void actionSendPatch();
@@ -103,7 +104,8 @@ class Editor : public QObject {
 
     public slots:
         void process(queueitem_t);
-        bool setMidiPorts(int,int);
+        bool setMidiOutputPort(int);
+        void setMidiChannel(unsigned char);
 
     signals:
         void redrawNRPN(int);

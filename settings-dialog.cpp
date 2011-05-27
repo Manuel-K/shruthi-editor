@@ -116,12 +116,12 @@ int shruthiEditorSettings::getMidiOutputPort() {
 // ******************************************
 void shruthiEditorSettings::setMidiChannel(unsigned char channel) {
 // ******************************************
-    midiChannel->setValue(channel);
+    midiChannel->setValue(channel+1);
 }
 
 
 // ******************************************
 unsigned char shruthiEditorSettings::getMidiChannel() {
 // ******************************************
-    return midiChannel->value();
+    return midiChannel->value()-1;
 }

@@ -25,13 +25,16 @@ class Config {
     private:
         int midiInputPort;
         int midiOutputPort;
+        unsigned char midiChannel;
     
     public:
         void save();
         void load();
         void setMidiInputPort(int in);
-        void setMidiOutputPort(int out);
         int getMidiInputPort();
+        void setMidiOutputPort(int out);
         int getMidiOutputPort();
+        void setMidiChannel(unsigned char);
+        unsigned char getMidiChannel();
 };
 #endif

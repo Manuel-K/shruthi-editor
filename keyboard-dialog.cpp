@@ -116,9 +116,9 @@ void keyboard::setOctave(int oct) {
 // ******************************************
 void keyboard::setChannel(int ch) {
 // ******************************************
-    noteChannel = ch;
+    noteChannel = ch-1;
 #ifdef DEBUG
-    qDebug() << "setChannel()" << ch;
+    qDebug() << "setChannel()" << (ch-1);
 #endif
 }
 

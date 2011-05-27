@@ -55,7 +55,9 @@ int main(int argc, char *argv[]) {
         editor.moveToThread(&editorThread);
         // editor: incoming signals
         editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)),SLOT(process(queueitem_t)));
-        editor.connect(&sr, SIGNAL(setMidiPorts(int,int)),SLOT(setMidiPorts(int,int)));
+        editor.connect(&sr, SIGNAL(setMidiOutputPort(int)),SLOT(setMidiOutputPort(int)));
+        editor.connect(&sr,SIGNAL(setMidiChannel(unsigned char)),SLOT(setMidiChannel(unsigned char)));
+
 
         // Setup midiin
         MidiIn midiin;
@@ -63,7 +65,7 @@ int main(int argc, char *argv[]) {
         midiin.moveToThread(&midiinThread);
         midiinThread.start();
         // midiin: incoming signals
-        midiin.connect(&sr, SIGNAL(setMidiPorts(int,int)),SLOT(setMidiPorts(int,int)));
+        midiin.connect(&sr, SIGNAL(setMidiInputPort(int)),SLOT(setMidiInputPort(int)));
 
         // Setup main_window
         QApplication app(argc, argv);
@@ -75,7 +77,9 @@ int main(int argc, char *argv[]) {
         // main_window: incoming signals
         main_window->connect(&editor,SIGNAL(redrawNRPN(int)),SLOT(redrawNRPN(int)));
         main_window->connect(&editor,SIGNAL(redrawAll()),SLOT(redrawAll()));
-        main_window->connect(&sr,SIGNAL(setMidiPorts(int,int)),SLOT(setMidiPorts(int,int)));
+        main_window->connect(&sr,SIGNAL(setMidiInputPort(int)),SLOT(setMidiInputPort(int)));
+        main_window->connect(&sr,SIGNAL(setMidiOutputPort(int)),SLOT(setMidiOutputPort(int)));
+        main_window->connect(&sr,SIGNAL(setMidiChannel(unsigned char)),SLOT(setMidiChannel(unsigned char)));
         main_window->connect(&editor,SIGNAL(midiOutputStatusChanged(bool)), SLOT(midiOutputStatusChanged(bool)));
         main_window->connect(&editor,SIGNAL(displayStatusbar(QString)), SLOT(displayStatusbar(QString)));
         main_window->connect(&midiin,SIGNAL(midiInputStatusChanged(bool)),SLOT(midiInputStatusChanged(bool)));
@@ -94,7 +98,7 @@ int main(int argc, char *argv[]) {
         sr.connect(main_window,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
         sr.connect(&midiin,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
         sr.connect(&keys,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
-        sr.connect(main_window,SIGNAL(settingsChanged(int,int)),SLOT(settingsChanged(int,int)));
+        sr.connect(main_window,SIGNAL(settingsChanged(int,int,unsigned char)),SLOT(settingsChanged(int,int,unsigned char)));
 
         // start signal router
         srThread.start();

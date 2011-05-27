@@ -30,7 +30,7 @@ Editor::Editor() {
 
 
 // ******************************************
-bool Editor::setMidiPorts(int in, int out) {
+bool Editor::setMidiOutputPort(int out) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::setMidiPorts:" << out;
@@ -38,6 +38,16 @@ bool Editor::setMidiPorts(int in, int out) {
     bool status = midiout.open(out);
     emit midiOutputStatusChanged(status);
     return status;
+}
+
+
+// ******************************************
+void Editor::setMidiChannel(unsigned char channel) {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "Editor::setMidiChannel:" << channel;
+#endif
+    Editor::channel = channel;
 }
 
 
@@ -177,7 +187,7 @@ void Editor::actionNoteOn(unsigned char channel, unsigned char note, unsigned ch
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.noteOn(channel,note,velocity))
+    if(!midiout.noteOn(Editor::channel,note,velocity))
         emit displayStatusbar("Could not send note on message.");
 }
 
@@ -188,7 +198,7 @@ void Editor::actionNoteOff(unsigned char channel, unsigned char note, unsigned c
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.noteOff(channel,note,velocity))
+    if(!midiout.noteOff(Editor::channel,note,velocity))
         emit displayStatusbar("Could not send note off message.");
 }
 
@@ -199,7 +209,7 @@ void Editor::actionNotePanic(unsigned char channel) {
 #ifdef DEBUG
     qDebug() << "Editor::actionNotePanic(" << channel <<")";
 #endif
-    if (midiout.allNotesOff(channel))
+    if (midiout.allNotesOff(Editor::channel))
         emit displayStatusbar("Sent all notes off message.");
     else
         emit displayStatusbar("Could not send all notes off message.");

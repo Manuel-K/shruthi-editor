@@ -149,7 +149,7 @@ MidiIn::~MidiIn() {
 
 
 // ******************************************
-void MidiIn::setMidiPorts(int in, int out) {
+void MidiIn::setMidiInputPort(int in) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "MidiIn::setMidiPorts";

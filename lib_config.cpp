@@ -19,13 +19,16 @@
 #include <QSettings>
 #include "lib_config.h"
 
+
 // ******************************************
 void Config::save() {
 // ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     settings.setValue("midi/inputPort",midiInputPort);
     settings.setValue("midi/outputPort",midiOutputPort);
+    settings.setValue("midi/channel",midiChannel);
 };
+
 
 // ******************************************
 void Config::load() {
@@ -33,7 +36,9 @@ void Config::load() {
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     midiInputPort=settings.value("midi/inputPort",0).toInt();
     midiOutputPort=settings.value("midi/outputPort",0).toInt();
+    midiChannel=settings.value("midi/channel",0).toInt();
 };
+
 
 // ******************************************
 void Config::setMidiInputPort(int in) {
@@ -41,11 +46,6 @@ void Config::setMidiInputPort(int in) {
     midiInputPort=in;
 };
 
-// ******************************************
-void Config::setMidiOutputPort(int out) {
-// ******************************************
-    midiOutputPort=out;
-};
 
 // ******************************************
 int Config::getMidiInputPort() {
@@ -53,8 +53,30 @@ int Config::getMidiInputPort() {
     return midiInputPort;
 };
 
+
+// ******************************************
+void Config::setMidiOutputPort(int out) {
+// ******************************************
+    midiOutputPort=out;
+};
+
+
 // ******************************************
 int Config::getMidiOutputPort() {
 // ******************************************
     return midiOutputPort;
+};
+
+
+// ******************************************
+void Config::setMidiChannel(unsigned char channel) {
+// ******************************************
+    midiChannel=channel;
+};
+
+
+// ******************************************
+unsigned char Config::getMidiChannel() {
+// ******************************************
+    return midiChannel;
 };

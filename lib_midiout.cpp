@@ -178,14 +178,14 @@ bool MidiOut::nrpn(int nrpn, int value) {
 // ******************************************
 bool MidiOut::noteOn(unsigned char channel, unsigned char note, unsigned char velocity) {
 // ******************************************
-    return write((144|(channel-1)),note,velocity);
+    return write((144|channel),note,velocity);
 }
 
 
 // ******************************************
 bool MidiOut::noteOff(unsigned char channel, unsigned char note, unsigned char velocity) {
 // ******************************************
-    return write((128|(channel-1)),note,velocity);
+    return write((128|channel),note,velocity);
 }
 
 
@@ -200,9 +200,9 @@ bool MidiOut::allNotesOff(unsigned char channel) {
 bool MidiOut::programChange(unsigned char channel, unsigned char program) {
 // ******************************************
     if (program>127) {
-        return controlChange(channel,32,1) && write((192|(channel-1)),(program-128));
+        return controlChange(channel,32,1) && write((192|channel),(program-128));
     } else {
-        return controlChange(channel,32,0) && write((192|(channel-1)),program);
+        return controlChange(channel,32,0) && write((192|channel),program);
     }
 }
 
@@ -210,7 +210,7 @@ bool MidiOut::programChange(unsigned char channel, unsigned char program) {
 // ******************************************
 bool MidiOut::controlChange(unsigned char channel, unsigned char controller, unsigned char value) {
 // ******************************************
-    return write ((176|(channel-1)),controller,value); 
+    return write ((176|channel),controller,value); 
 }
 
 

@@ -41,13 +41,15 @@ class SignalRouter : public QObject {
 
     public slots:
         void run();
-        void enqueue(queueitem_t item);
+        void enqueue(queueitem_t);
         void editorFinished();
-        void settingsChanged(int in, int out);
+        void settingsChanged(int,int,unsigned char);
 
     signals:
         void editorProcess(queueitem_t);
-        void setMidiPorts(int,int);
+        void setMidiInputPort(int);
+        void setMidiOutputPort(int);
+        void setMidiChannel(unsigned char);
 };
 
 #endif
