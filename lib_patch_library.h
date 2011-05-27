@@ -25,6 +25,7 @@ class PatchLibrary {
 // ******************************************
     private:
         Patch lib[150];
+        bool changed[150];
         unsigned int num;
         bool recieving;
         unsigned int max;
@@ -36,8 +37,10 @@ class PatchLibrary {
 
         bool isRecieving();
         void reset();
+        bool isChanged(unsigned int);
         Patch getPatch(unsigned int);
         void setPatch(unsigned int,Patch);
+        void resetPatch(unsigned int);
         QString getName(unsigned int);
         bool parseFullSysex(unsigned char  *sysex, unsigned int len);
 };

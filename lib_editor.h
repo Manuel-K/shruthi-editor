@@ -32,8 +32,8 @@ enum ACTIONS
     SYSEX_SEND_PATCH, NRPN_RECIEVED, SYSEX_RECIEVED, 
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE, 
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF, 
-    NOTE_PANIC, LIBRARY_FETCH_PATCHES, LIBRARY_EDIT,
-    LIBRARY_STORE};
+    NOTE_PANIC, LIBRARY_FETCH_PATCHES, LIBRARY_EDIT_PATCH,
+    LIBRARY_STORE_PATCH, LIBRARY_RESET_PATCH};
 
     
 // ******************************************
@@ -95,8 +95,9 @@ class Editor : public QObject {
         void actionRandomizePatch();
         // library:
         void actionLibraryFetchPatches();
-        void actionLibraryEdit(unsigned int);
-        void actionLibraryStore(unsigned int);
+        void actionLibraryEditPatch(unsigned int);
+        void actionLibraryStorePatch(unsigned int);
+        void actionLibraryResetPatch(unsigned int);
         
     public:
         Editor();
@@ -105,7 +106,8 @@ class Editor : public QObject {
         QString getName();
         QString libraryGetPatchName(unsigned int);
         unsigned int libraryGetNumPatches();
-
+        bool libraryPatchIsChanged(unsigned int);
+        
     public slots:
         void process(queueitem_t);
         bool setMidiOutputPort(int);

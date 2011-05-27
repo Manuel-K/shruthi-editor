@@ -105,11 +105,14 @@ void Editor::process(queueitem_t item) {
         case SET_PATCHNAME:
             actionSetPatchname(item.string);
             break; 
-        case LIBRARY_EDIT:
-            actionLibraryEdit(item.int0);
+        case LIBRARY_EDIT_PATCH:
+            actionLibraryEditPatch(item.int0);
             break;
-        case LIBRARY_STORE:
-            actionLibraryStore(item.int0);
+        case LIBRARY_STORE_PATCH:
+            actionLibraryStorePatch(item.int0);
+            break;
+        case LIBRARY_RESET_PATCH:
+            actionLibraryResetPatch(item.int0);
             break;
         case FILEIO_LOAD:
             actionLoadPatch(item.string);
@@ -343,7 +346,7 @@ void Editor::actionLibraryFetchPatches() {
 
 
 // ******************************************
-void Editor::actionLibraryEdit(unsigned int n) {
+void Editor::actionLibraryEditPatch(unsigned int n) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::actionLibraryEdit(" << n << ")";
@@ -355,14 +358,24 @@ void Editor::actionLibraryEdit(unsigned int n) {
 
 
 // ******************************************
-void Editor::actionLibraryStore(unsigned int n) {
+void Editor::actionLibraryStorePatch(unsigned int n) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::actionLibraryStore(" << n << ")";
 #endif
     lib.setPatch(n,patch);
     emit redrawPatches();
-    emit redrawAll();
+}
+
+
+// ******************************************
+void Editor::actionLibraryResetPatch(unsigned int n) {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "Editor::actionLibraryResetPatch(" << n << ")";
+#endif
+    lib.resetPatch(n);
+    emit redrawPatches();
 }
 
 
@@ -377,4 +390,10 @@ QString Editor::libraryGetPatchName(unsigned int num) {
 unsigned int Editor::libraryGetNumPatches() {
 // ******************************************
     return lib.getNumPatches();
+}
+
+// ******************************************
+bool Editor::libraryPatchIsChanged(unsigned int num) {
+// ******************************************
+    return lib.isChanged(num);
 }

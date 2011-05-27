@@ -48,6 +48,8 @@ class Patch {
         
         Patch();
         
+        bool equals(Patch other);
+        
         void setParam(int param, int value);
         int getParam(int param);
         void setName(QString name);
