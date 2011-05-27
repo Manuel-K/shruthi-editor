@@ -129,7 +129,7 @@ void Editor::actionProcessEditor(int nrpn, int value) {
 #endif
     if (patch.getParam(nrpn) != value) {
         patch.setParam(nrpn,value);
-        if (!midiout.writeNRPN(nrpn,value))
+        if (!midiout.nrpn(nrpn,value))
             emit displayStatusbar("Could not send changes.");
     }
 }
@@ -181,7 +181,7 @@ void Editor::actionNoteOn(unsigned char channel, unsigned char note, unsigned ch
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.write((144|(channel-1)),note,velocity))
+    if(!midiout.noteOn(channel,note,velocity))
         emit displayStatusbar("Could not send note on message.");
 }
 
@@ -192,7 +192,7 @@ void Editor::actionNoteOff(unsigned char channel, unsigned char note, unsigned c
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.write((128|(channel-1)),note,velocity))
+    if(!midiout.noteOff(channel,note,velocity))
         emit displayStatusbar("Could not send note off message.");
 }
 
@@ -203,7 +203,7 @@ void Editor::actionNotePanic(unsigned char channel) {
 #ifdef DEBUG
     qDebug() << "Editor::actionNotePanic(" << channel <<")";
 #endif
-    if (midiout.write((176|(channel-1)),123,0))
+    if (midiout.allNotesOff(channel))
         emit displayStatusbar("Sent all notes off message.");
     else
         emit displayStatusbar("Could not send all notes off message.");

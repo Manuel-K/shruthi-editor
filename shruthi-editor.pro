@@ -31,9 +31,6 @@ CONFIG += qt #debug
 
 LIBS += -L. 
 target.path = release/
-icons.path = release/
-icons.files = shruthi-editor.png
-
 
 unix {
     # alsa:
@@ -53,9 +50,8 @@ win32 {
     LIBS+=-lwinmm
     DEFINES+=CLEANLOOKS
     RC_FILE     = shruthi-editor.rc
-    icons.files+=shruthi-editor.ico
 }
 
 
 # install
-INSTALLS += target icons
+INSTALLS += target

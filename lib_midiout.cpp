@@ -130,11 +130,29 @@ bool MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
     return write( message );
 }
 
+
 // ******************************************
-bool MidiOut::writeNRPN(int nrpn, int value) {
+bool MidiOut::write(unsigned char c1,unsigned char c2) {
+// ******************************************
+    std::vector<unsigned char> message;
+    message.push_back( c1 );
+    message.push_back( c2 );
+    return write( message );
+}
+
+
+// ******************************************
+// ******************************************
+// Wrappers:
+// ******************************************
+// ******************************************
+
+
+// ******************************************
+bool MidiOut::nrpn(int nrpn, int value) {
 // ******************************************
     if (!opened) {
-        qDebug() << "MidiOut::writeNRPN(): could not send. Port not opened.";
+        qDebug() << "MidiOut::nrpn(): could not send. Port not opened.";
         return false;
     }
       
@@ -153,4 +171,44 @@ bool MidiOut::writeNRPN(int nrpn, int value) {
             write(176, 98, nrpn_lsb) && 
             write(176, 6, value_msb) && 
             write(176, 38, value_lsb));
+}
+
+
+
+// ******************************************
+bool MidiOut::noteOn(unsigned char channel, unsigned char note, unsigned char velocity) {
+// ******************************************
+    return write((144|(channel-1)),note,velocity);
+}
+
+
+// ******************************************
+bool MidiOut::noteOff(unsigned char channel, unsigned char note, unsigned char velocity) {
+// ******************************************
+    return write((128|(channel-1)),note,velocity);
+}
+
+
+// ******************************************
+bool MidiOut::allNotesOff(unsigned char channel) {
+// ******************************************
+    return controlChange(channel,123,0);
+}
+
+
+// ******************************************
+bool MidiOut::programChange(unsigned char channel, unsigned char program) {
+// ******************************************
+    if (program>127) {
+        return controlChange(channel,32,1) && write((192|(channel-1)),(program-128));
+    } else {
+        return controlChange(channel,32,0) && write((192|(channel-1)),program);
+    }
+}
+
+
+// ******************************************
+bool MidiOut::controlChange(unsigned char channel, unsigned char controller, unsigned char value) {
+// ******************************************
+    return write ((176|(channel-1)),controller,value); 
 }

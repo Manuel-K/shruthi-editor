@@ -33,8 +33,17 @@ class MidiOut {
         bool open(unsigned int channel);
         bool write(unsigned char sysex[]);
         bool write(std::vector<unsigned char> sysex);
-        bool write(unsigned char c1,unsigned char c2,unsigned char c3);
-        bool writeNRPN(int nrpn, int value);
+        bool write(unsigned char,unsigned char,unsigned char);
+        bool write(unsigned char,unsigned char);
+        
+        // Wrappers:
+        bool nrpn(int nrpn, int value);
+        bool noteOn(unsigned char, unsigned char, unsigned char);
+        bool noteOff(unsigned char, unsigned char, unsigned char);
+        bool allNotesOff(unsigned char);
+        bool programChange(unsigned char, unsigned char);
+        bool controlChange(unsigned char, unsigned char, unsigned char);
+
 };
 
 #endif
