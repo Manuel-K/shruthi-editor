@@ -27,14 +27,17 @@ class MidiOut {
         RtMidiOut* midiout;
         bool opened;
         unsigned int output;
+        
+        // Wrappers:
+        bool write(unsigned char,unsigned char,unsigned char);
+        bool write(unsigned char,unsigned char);
+        bool write(unsigned char sysex[]);
+        
     public:
         MidiOut();
         ~MidiOut();
         bool open(unsigned int channel);
-        bool write(unsigned char sysex[]);
         bool write(std::vector<unsigned char> sysex);
-        bool write(unsigned char,unsigned char,unsigned char);
-        bool write(unsigned char,unsigned char);
         
         // Wrappers:
         bool nrpn(int nrpn, int value);
@@ -43,7 +46,7 @@ class MidiOut {
         bool allNotesOff(unsigned char);
         bool programChange(unsigned char, unsigned char);
         bool controlChange(unsigned char, unsigned char, unsigned char);
-
+        bool patchTransferRequest();
 };
 
 #endif

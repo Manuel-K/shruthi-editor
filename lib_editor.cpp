@@ -19,10 +19,6 @@
 #include "lib_editor.h"
 #include <QDebug>
 
-// ******************************************
-unsigned char Editor::patchTransferRequest[]={240,0,32,119,0,2,17,0,0,0,247};
-// ******************************************
-
 
 // ******************************************
 Editor::Editor() {
@@ -140,7 +136,7 @@ void Editor::actionFetchPatch() {
 #ifdef DEBUG
     qDebug() << "Editor::actionFetchPatch()";
 #endif
-    if (midiout.write(Editor::patchTransferRequest))
+    if (midiout.patchTransferRequest())
         emit displayStatusbar("Patch transfer request sent.");
     else
         emit displayStatusbar("Could not send patch transfer request.");

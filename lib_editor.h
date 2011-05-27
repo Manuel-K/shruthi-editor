@@ -100,10 +100,11 @@ class Editor : public QObject {
         ~Editor();
         int getParam(int);
         QString getName();
-        static unsigned char patchTransferRequest[];
+
     public slots:
         void process(queueitem_t);
         bool setMidiDevices(int,int);
+
     signals:
         void redrawNRPN(int);
         void redrawAll();

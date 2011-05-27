@@ -212,3 +212,14 @@ bool MidiOut::controlChange(unsigned char channel, unsigned char controller, uns
 // ******************************************
     return write ((176|(channel-1)),controller,value); 
 }
+
+
+// ******************************************
+bool MidiOut::patchTransferRequest() {
+// ******************************************
+    unsigned char patchTransferRequest[]={240,0,32,119,0,2,17,0,0,0,247};
+    return write (patchTransferRequest); 
+}
+
+
+
