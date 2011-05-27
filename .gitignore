@@ -1,6 +1,7 @@
 # Build Files
 Makefile
 moc_*
+qrc_*.cpp
 *.moc
 *.o
 *.dll
