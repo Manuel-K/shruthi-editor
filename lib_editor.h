@@ -21,7 +21,7 @@
 
 #include "lib_patch.h"
 #include "lib_midiout.h"
-#include "lib_patch_library.h"
+#include "lib_patchlibrary.h"
 #include <QThread>
 
 
