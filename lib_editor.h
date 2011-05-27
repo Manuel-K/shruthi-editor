@@ -103,7 +103,7 @@ class Editor : public QObject {
 
     public slots:
         void process(queueitem_t);
-        bool setMidiDevices(int,int);
+        bool setMidiPorts(int,int);
 
     signals:
         void redrawNRPN(int);

@@ -132,7 +132,7 @@ MidiIn::MidiIn() {
     }
     catch ( RtError &error ) {
         error.printMessage();
-        qWarning() << "MidiOut::MidiIn(): could not initilize midi device for writing.";
+        qWarning() << "MidiOut::MidiIn(): could not initilize midi port for writing.";
 //         exit( EXIT_FAILURE );
     }
 }
@@ -149,10 +149,10 @@ MidiIn::~MidiIn() {
 
 
 // ******************************************
-void MidiIn::setMidiDevices(int in, int out) {
+void MidiIn::setMidiPorts(int in, int out) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "MidiIn::setMidiDevices";
+    qDebug() << "MidiIn::setMidiPorts";
 #endif
     open(in);
     emit midiInputStatusChanged(opened);
@@ -173,7 +173,7 @@ bool MidiIn::open(unsigned int port) {
     }
     
     if (port >= midiin->getPortCount() ) {
-        qWarning() << "MidiIn::open(): trying to open midi device for reading which doesn't exist.";
+        qWarning() << "MidiIn::open(): trying to open midi port for reading which doesn't exist.";
         opened = false;
         return false;
     } 
@@ -191,6 +191,6 @@ bool MidiIn::open(unsigned int port) {
     if (opened)
         input = port;
     else
-        qWarning() << "MidiIn::open(): could not open midi device for reading.";
+        qWarning() << "MidiIn::open(): could not open midi port for reading.";
     return opened;
 }

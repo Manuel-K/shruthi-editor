@@ -25,12 +25,15 @@
 shruthiEditorSettings::shruthiEditorSettings(QWidget *parent) {
 // ******************************************
     setupUi(this);
-    shruthiEditorSettings::getDeviceInfo();
+    getPortInfo();
+    
+    midiChannel->setMinimum(1);
+    midiChannel->setMaximum(16);
 }
 
 
 // ******************************************
-void shruthiEditorSettings::getDeviceInfo() {
+void shruthiEditorSettings::getPortInfo() {
 // ******************************************
     RtMidiIn  *midiin = 0;
     RtMidiOut *midiout = 0;
@@ -40,46 +43,46 @@ void shruthiEditorSettings::getDeviceInfo() {
     try {
         midiin = new RtMidiIn();
     }
-    catch ( RtError &error ) {
+    catch (RtError &error) {
         error.printMessage();
-        exit( EXIT_FAILURE );
+        exit(EXIT_FAILURE);
     }
     unsigned int numdev = midiin->getPortCount();
     
-    std::cout << numdev << " midi input devices found.\n";
+    std::cout << numdev << " midi input ports found.\n";
 
     for (unsigned int i=0; i < numdev; i++) {
         try {
             name = QString::fromStdString(midiin->getPortName(i));
         }
-        catch ( RtError &error ) {
+        catch (RtError &error) {
             error.printMessage();
             goto cleanup;
         }
-        midi_input_device->addItem(name,i);
+        midiInputPort->addItem(name);
     }
     
     // Output ports:
     try {
         midiout = new RtMidiOut();
     }
-    catch ( RtError &error ) {
+    catch (RtError &error) {
         error.printMessage();
-        exit( EXIT_FAILURE );
+        exit(EXIT_FAILURE);
     }
     numdev = midiout->getPortCount();
     
-    std::cout << numdev << " midi output devices found.\n";
+    std::cout << numdev << " midi output ports found.\n";
 
     for (unsigned int i=0; i < numdev; i++) {
         try {
             name = QString::fromStdString(midiout->getPortName(i));
         }
-        catch ( RtError &error ) {
+        catch (RtError &error) {
             error.printMessage();
             goto cleanup;
         }
-        midi_output_device->addItem(name,i);
+        midiOutputPort->addItem(name);
     }
     
     cleanup:
@@ -87,21 +90,38 @@ void shruthiEditorSettings::getDeviceInfo() {
     delete midiout;
 }
 
-// ******************************************
-void shruthiEditorSettings::setChannels(int in, int out) {
-// ******************************************
-    midi_input_device->setCurrentIndex(midi_input_device->findData(in));
-    midi_output_device->setCurrentIndex(midi_output_device->findData(out));
-}
 
 // ******************************************
-int shruthiEditorSettings::getInputChannel() {
+void shruthiEditorSettings::setMidiPorts(int in, int out) {
 // ******************************************
-    return midi_input_device->itemData(midi_input_device->currentIndex()).toInt();
+    midiInputPort->setCurrentIndex(in);
+    midiOutputPort->setCurrentIndex(out);
 }
 
+
 // ******************************************
-int shruthiEditorSettings::getOutputChannel() {
+int shruthiEditorSettings::getMidiInputPort() {
 // ******************************************
-    return midi_output_device->itemData(midi_output_device->currentIndex()).toInt();   
+    return midiInputPort->currentIndex();
+}
+
+
+// ******************************************
+int shruthiEditorSettings::getMidiOutputPort() {
+// ******************************************
+    return midiOutputPort->currentIndex();   
+}
+
+
+// ******************************************
+void shruthiEditorSettings::setMidiChannel(unsigned char channel) {
+// ******************************************
+    midiChannel->setValue(channel);
+}
+
+
+// ******************************************
+unsigned char shruthiEditorSettings::getMidiChannel() {
+// ******************************************
+    return midiChannel->value();
 }

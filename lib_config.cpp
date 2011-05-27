@@ -23,38 +23,38 @@
 void Config::save() {
 // ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
-    settings.setValue("midi/inputDevice",midiInputDevice);
-    settings.setValue("midi/outputDevice",midiOutputDevice);
+    settings.setValue("midi/inputPort",midiInputPort);
+    settings.setValue("midi/outputPort",midiOutputPort);
 };
 
 // ******************************************
 void Config::load() {
 // ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
-    midiInputDevice=settings.value("midi/inputDevice",0).toInt();
-    midiOutputDevice=settings.value("midi/outputDevice",0).toInt();
+    midiInputPort=settings.value("midi/inputPort",0).toInt();
+    midiOutputPort=settings.value("midi/outputPort",0).toInt();
 };
 
 // ******************************************
-void Config::setMidiInputDevice(int in) {
+void Config::setMidiInputPort(int in) {
 // ******************************************
-    midiInputDevice=in;
+    midiInputPort=in;
 };
 
 // ******************************************
-void Config::setMidiOutputDevice(int out) {
+void Config::setMidiOutputPort(int out) {
 // ******************************************
-    midiOutputDevice=out;
+    midiOutputPort=out;
 };
 
 // ******************************************
-int Config::getMidiInputDevice() {
+int Config::getMidiInputPort() {
 // ******************************************
-    return midiInputDevice;
+    return midiInputPort;
 };
 
 // ******************************************
-int Config::getMidiOutputDevice() {
+int Config::getMidiOutputPort() {
 // ******************************************
-    return midiOutputDevice;
+    return midiOutputPort;
 };

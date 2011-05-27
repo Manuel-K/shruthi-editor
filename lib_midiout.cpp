@@ -32,7 +32,7 @@ MidiOut::MidiOut() {
     }
     catch ( RtError &error ) {
         error.printMessage();
-        qWarning() << "MidiOut::MidiOut(): could not initilize midi device for writing.";
+        qWarning() << "MidiOut::MidiOut(): could not initilize midi port for writing.";
 //         exit( EXIT_FAILURE );
     }
 }
@@ -61,7 +61,7 @@ bool MidiOut::open(unsigned int port) {
         midiout->closePort();
 
     if (port >= midiout->getPortCount() ) {
-        qWarning() << "MidiOut::open(): trying to open midi device for writing which doesn't exist.";
+        qWarning() << "MidiOut::open(): trying to open midi port for writing which doesn't exist.";
         opened = false;
         return false;
     } 
@@ -78,7 +78,7 @@ bool MidiOut::open(unsigned int port) {
     if (opened)
         output = port;
     else
-        qWarning() << "MidiOut::open(): could not open midi device for writing.";
+        qWarning() << "MidiOut::open(): could not open midi port for writing.";
     return opened;
 }
 

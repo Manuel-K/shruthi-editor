@@ -24,10 +24,6 @@
 
 #define VERSION "0.18"
 
-Editor* editor;
-int MIDI_INPUT_DEVICE, MIDI_OUTPUT_DEVICE; 
-bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
-
 // ******************************************
 shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) {
 // ******************************************
@@ -70,13 +66,13 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) 
 }
 
 // ******************************************
-void shruthiEditorMainWindow::setMidiDevices(int midiin, int midiout) {
+void shruthiEditorMainWindow::setMidiPorts(int midiin, int midiout) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "shruthiEditorMainWindow::setMidiDevices";
+    qDebug() << "shruthiEditorMainWindow::setMidiPorts";
 #endif
-    MIDI_INPUT_DEVICE = midiin;
-    MIDI_OUTPUT_DEVICE = midiout;
+    MIDI_INPUT_PORT = midiin;
+    MIDI_OUTPUT_PORT = midiout;
 }
 
 // ******************************************
@@ -163,11 +159,12 @@ void shruthiEditorMainWindow::sendPatch() {
 void shruthiEditorMainWindow::changeMidiPorts() {
 // ******************************************
     shruthiEditorSettings prefs;
-    prefs.setChannels(MIDI_INPUT_DEVICE, MIDI_OUTPUT_DEVICE);
+    prefs.setFixedSize(prefs.width(),prefs.height());
+    prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
     if (prefs.exec()) {
-        int in = prefs.getInputChannel();
-        int out = prefs.getOutputChannel(); 
-        emit midiDeviceChanged(in,out);
+        int in = prefs.getMidiInputPort();
+        int out = prefs.getMidiOutputPort(); 
+        emit settingsChanged(in,out);
     }
     prefs.done(1);
 }

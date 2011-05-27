@@ -30,10 +30,10 @@ Editor::Editor() {
 
 
 // ******************************************
-bool Editor::setMidiDevices(int in, int out) {
+bool Editor::setMidiPorts(int in, int out) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Editor::setMidiDevices:" << out;
+    qDebug() << "Editor::setMidiPorts:" << out;
 #endif
     bool status = midiout.open(out);
     emit midiOutputStatusChanged(status);

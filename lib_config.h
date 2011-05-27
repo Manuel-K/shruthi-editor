@@ -23,15 +23,15 @@
 class Config {
 // ******************************************
     private:
-        int midiInputDevice;
-        int midiOutputDevice;
+        int midiInputPort;
+        int midiOutputPort;
     
     public:
         void save();
         void load();
-        void setMidiInputDevice(int in);
-        void setMidiOutputDevice(int out);
-        int getMidiInputDevice();
-        int getMidiOutputDevice();
+        void setMidiInputPort(int in);
+        void setMidiOutputPort(int out);
+        int getMidiInputPort();
+        int getMidiOutputPort();
 };
 #endif

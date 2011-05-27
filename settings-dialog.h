@@ -27,14 +27,14 @@ class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
 
     public:
         shruthiEditorSettings(QWidget *parent = 0);
+        void getPortInfo();
 
-    public slots:
-        int getInputChannel();
-        int getOutputChannel();
-        void setChannels(int,int);
-
-    private slots:
-        void getDeviceInfo();
+    public:
+        int getMidiInputPort();
+        int getMidiOutputPort();
+        void setMidiPorts(int,int);
+        void setMidiChannel(unsigned char);
+        unsigned char getMidiChannel();
 };
  
  

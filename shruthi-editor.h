@@ -33,6 +33,11 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
     private:
         void displayMidiStatusChanged(bool, bool);
         void closeEvent (QCloseEvent* event);
+        
+        Editor* editor;
+        int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT; 
+        bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
+
     private slots:
         // local ui actions
         void comboBoxChanged(int);
@@ -53,16 +58,15 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         // redraw commands
         void redrawNRPN(int);
         void redrawAll();
-        void setMidiDevices(int midiin, int midiout);
+        void setMidiPorts(int midiin, int midiout);
         void midiInputStatusChanged(bool);
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString msg);
         
     signals:
         void enqueue(queueitem_t);
-        void midiDeviceChanged(int,int);
+        void settingsChanged(int,int);
         void showKeyboard();
-
 };
  
  

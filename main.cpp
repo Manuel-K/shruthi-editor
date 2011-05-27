@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
         editor.moveToThread(&editorThread);
         // editor: incoming signals
         editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)),SLOT(process(queueitem_t)));
-        editor.connect(&sr, SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
+        editor.connect(&sr, SIGNAL(setMidiPorts(int,int)),SLOT(setMidiPorts(int,int)));
 
         // Setup midiin
         MidiIn midiin;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
         midiin.moveToThread(&midiinThread);
         midiinThread.start();
         // midiin: incoming signals
-        midiin.connect(&sr, SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
+        midiin.connect(&sr, SIGNAL(setMidiPorts(int,int)),SLOT(setMidiPorts(int,int)));
 
         // Setup main_window
         QApplication app(argc, argv);
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
         // main_window: incoming signals
         main_window->connect(&editor,SIGNAL(redrawNRPN(int)),SLOT(redrawNRPN(int)));
         main_window->connect(&editor,SIGNAL(redrawAll()),SLOT(redrawAll()));
-        main_window->connect(&sr,SIGNAL(setMidiDevices(int,int)),SLOT(setMidiDevices(int,int)));
+        main_window->connect(&sr,SIGNAL(setMidiPorts(int,int)),SLOT(setMidiPorts(int,int)));
         main_window->connect(&editor,SIGNAL(midiOutputStatusChanged(bool)), SLOT(midiOutputStatusChanged(bool)));
         main_window->connect(&editor,SIGNAL(displayStatusbar(QString)), SLOT(displayStatusbar(QString)));
         main_window->connect(&midiin,SIGNAL(midiInputStatusChanged(bool)),SLOT(midiInputStatusChanged(bool)));
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
         sr.connect(main_window,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
         sr.connect(&midiin,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
         sr.connect(&keys,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
-        sr.connect(main_window,SIGNAL(midiDeviceChanged(int,int)),SLOT(midiDeviceChanged(int,int)));
+        sr.connect(main_window,SIGNAL(settingsChanged(int,int)),SLOT(settingsChanged(int,int)));
 
         // start signal router
         srThread.start();

@@ -44,7 +44,10 @@ SignalRouter::~SignalRouter() {
 // ******************************************
 void SignalRouter::run() {
 // ******************************************
-    emit setMidiDevices(config.getMidiInputDevice(),config.getMidiOutputDevice());
+#ifdef DEBUG
+    qDebug() << "SignalRouter::run()";
+#endif
+    emit setMidiPorts(config.getMidiInputPort(),config.getMidiOutputPort());
     editorEnabled=true;
     editorWorking=false;
 }
@@ -76,16 +79,16 @@ void SignalRouter::editorFinished() {
 
 
 // ******************************************
-void SignalRouter::midiDeviceChanged(int in, int out) {
+void SignalRouter::settingsChanged(int in, int out) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "midiDeviceChanged: in" << in << ", out:" <<out;
+    qDebug() << "SignalRouter::settingsChanged: in" << in << ", out:" <<out;
 #endif
-    emit setMidiDevices(in,out);
-    bool config_changed = (config.getMidiInputDevice() != in) || (config.getMidiOutputDevice() != out);
+    emit setMidiPorts(in,out);
+    bool config_changed = (config.getMidiInputPort() != in) || (config.getMidiOutputPort() != out);
     if (config_changed) {
-        config.setMidiInputDevice(in);
-        config.setMidiOutputDevice(out);
+        config.setMidiInputPort(in);
+        config.setMidiOutputPort(out);
 #ifdef DEBUG
         qDebug() << "Config was changed. Saving.";
 #endif

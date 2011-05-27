@@ -395,7 +395,7 @@ bool Patch::loadFromDisk(QString location) {
         return false;
     }
 
-    if( !file.open( QIODevice::ReadOnly ) ) {
+    if(!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Failed to open.";
         return false;
     }
