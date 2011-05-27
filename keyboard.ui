@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>281</width>
-    <height>81</height>
+    <width>244</width>
+    <height>93</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>281</width>
-     <height>81</height>
+     <width>241</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -34,7 +34,7 @@
       <x>0</x>
       <y>10</y>
       <width>23</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="value">
@@ -50,7 +50,7 @@
       <x>40</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -63,7 +63,7 @@
       <x>80</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -89,7 +89,7 @@
       <x>120</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -102,7 +102,7 @@
       <x>100</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -128,7 +128,7 @@
       <x>20</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -154,7 +154,7 @@
       <x>60</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -167,7 +167,7 @@
       <x>140</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -193,7 +193,7 @@
       <x>160</x>
       <y>10</y>
       <width>16</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -216,9 +216,9 @@
    <widget class="QSpinBox" name="octave">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>10</y>
-      <width>41</width>
+      <x>180</x>
+      <y>30</y>
+      <width>51</width>
       <height>22</height>
      </rect>
     </property>
@@ -231,20 +231,23 @@
      <rect>
       <x>180</x>
       <y>10</y>
-      <width>57</width>
+      <width>51</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Octave:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QPushButton" name="panic">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>40</y>
-      <width>41</width>
+      <x>180</x>
+      <y>60</y>
+      <width>51</width>
       <height>23</height>
      </rect>
     </property>

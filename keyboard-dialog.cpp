@@ -40,6 +40,10 @@ keyboard::keyboard(QWidget *parent) {
         tmp = qFindChild<QPushButton*>(this, QString("n")+QString("%1").arg(i));
         connect(tmp,SIGNAL(pressed()), this, SLOT(push()));
         connect(tmp,SIGNAL(released()), this, SLOT(release()));
+        if (i==1||i==3||i==6||i==8||i==10)
+            tmp->setStyleSheet("QPushButton { background-color: black }");
+        else
+            tmp->setStyleSheet("QPushButton { background-color: white }");
     }
 }
 
