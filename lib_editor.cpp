@@ -79,7 +79,7 @@ void Editor::process(queueitem_t item) {
 // ******************************************
     switch (item.action) {
         case NRPN_PROCESS_EDITOR:
-            actionProcessEditor(item.nrpn,item.value);
+            actionProcessEditor(item.int0,item.int1);
             break;
          case SYSEX_FETCH_PATCH:
             actionFetchPatch();
@@ -88,13 +88,13 @@ void Editor::process(queueitem_t item) {
             actionSendPatch();
             break;
         case NRPN_RECIEVED:
-            actionNrpnRecieved(item.nrpn,item.value);
+            actionNrpnRecieved(item.int0,item.int1);
             break;
         case NOTE_ON:
-            actionNoteOn(item.note,item.noteVelocity);
+            actionNoteOn(item.int0,item.int1);
             break;
         case NOTE_OFF:
-            actionNoteOff(item.note,item.noteVelocity);
+            actionNoteOff(item.int0,item.int1);
             break;
         case NOTE_PANIC:
             actionNotePanic();

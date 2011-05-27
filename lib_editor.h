@@ -38,22 +38,24 @@ enum ACTIONS
 struct queueitem_t {
 // ******************************************
     ACTIONS action;
-    int nrpn;
-    int value;
+    int int0;
+    int int1;
     QString string;
     unsigned int size;
     unsigned char *message;
-    unsigned char noteVelocity;
-    unsigned char note;
     // constructors:
     queueitem_t () {};
     queueitem_t (ACTIONS a) {
         action=a;
     };
-    queueitem_t (ACTIONS a, int n, int v) {
+    queueitem_t (ACTIONS a, int i0, int i1) {
         action=a; 
-        nrpn=n; 
-        value=v;
+        int0=i0; 
+        int1=i1;
+    };
+    queueitem_t (ACTIONS a, int i0) {
+        action=a; 
+        int0=i0; 
     };
     queueitem_t (ACTIONS a, QString s) {
         action=a; 
@@ -63,11 +65,6 @@ struct queueitem_t {
         action=a; 
         message=m; 
         size=s;
-    };
-    queueitem_t (ACTIONS a, unsigned char c, unsigned char n, unsigned char vel) {
-        action=a;
-        note=n;
-        noteVelocity=vel;
     };
 };
 
