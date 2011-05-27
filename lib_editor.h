@@ -21,6 +21,7 @@
 
 #include "lib_patch.h"
 #include "lib_midiout.h"
+#include "lib_patch_library.h"
 #include <QThread>
 
 
@@ -31,7 +32,8 @@ enum ACTIONS
     SYSEX_SEND_PATCH, NRPN_RECIEVED, SYSEX_RECIEVED, 
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE, 
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF, 
-    NOTE_PANIC};
+    NOTE_PANIC, LIBRARY_FETCH_PATCHES, LIBRARY_EDIT,
+    LIBRARY_STORE};
 
     
 // ******************************************
@@ -76,6 +78,7 @@ class Editor : public QObject {
     private:
         Patch patch;
         MidiOut midiout;
+        PatchLibrary lib;
         unsigned char channel;
         void actionProcessEditor(int,int);
         void actionFetchPatch();
@@ -90,12 +93,18 @@ class Editor : public QObject {
         void actionSavePatch(QString);
         void actionResetPatch();
         void actionRandomizePatch();
+        // library:
+        void actionLibraryFetchPatches();
+        void actionLibraryEdit(unsigned int);
+        void actionLibraryStore(unsigned int);
         
     public:
         Editor();
         ~Editor();
-        int getParam(int);
+        int getParam(unsigned int);
         QString getName();
+        QString libraryGetPatchName(unsigned int);
+        unsigned int libraryGetNumPatches();
 
     public slots:
         void process(queueitem_t);
@@ -108,5 +117,6 @@ class Editor : public QObject {
         void finished();
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString);
+        void redrawPatches();
 };
 #endif

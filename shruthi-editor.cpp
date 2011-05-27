@@ -63,6 +63,11 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) 
     connect(actionAbout_Qt,SIGNAL(triggered()), this, SLOT(aboutQt()));
     connect(actionRandomize_Patch,SIGNAL(triggered()), this, SLOT(randomizePatch()));
     connect(actionKeyboard,SIGNAL(triggered()),this,SIGNAL(showKeyboard()));
+    // Library Ui:
+    connect(libFetchPatches,SIGNAL(pressed()),this,SLOT(libraryFetchPatches()));
+    connect(libEdit,SIGNAL(pressed()),this,SLOT(libraryEdit()));
+    connect(libStore,SIGNAL(pressed()),this,SLOT(libraryStore()));
+    connect(libTest,SIGNAL(pressed()),this,SLOT(libraryTest()));
 }
 
 
@@ -307,3 +312,51 @@ void shruthiEditorMainWindow::displayStatusbar(QString msg) {
     statusBar()->showMessage(msg);
 }
 
+
+// ******************************************
+// ******************************************
+// Library
+// ******************************************
+// ******************************************
+
+// ******************************************
+void shruthiEditorMainWindow::libraryFetchPatches() {
+// ******************************************
+    queueitem_t signal (LIBRARY_FETCH_PATCHES);
+    emit enqueue(signal);
+}
+
+
+void shruthiEditorMainWindow::libraryTest() {
+}
+
+
+// ******************************************
+void shruthiEditorMainWindow::libraryEdit() {
+// ******************************************
+    queueitem_t signal (LIBRARY_EDIT,libraryPatches->currentRow());
+    emit enqueue(signal);
+    tabs->setCurrentIndex(1);
+}
+
+
+// ******************************************
+void shruthiEditorMainWindow::libraryStore() {
+// ******************************************
+    queueitem_t signal (LIBRARY_STORE,libraryPatches->currentRow());
+    emit enqueue(signal);
+}
+
+
+// ******************************************
+void shruthiEditorMainWindow::redrawPatches() {
+// ******************************************
+#ifdef DEBUG
+    qDebug() << "shruthiEditorMainWindow::libraryRefreshPatches()";
+#endif
+    libraryPatches->clear();
+    unsigned int n = editor->libraryGetNumPatches();
+        for (unsigned int i=0; i < n; i++) {
+            libraryPatches->addItem(QString("%1").arg(i+1)+".: "+editor->libraryGetPatchName(i));
+    }
+}
