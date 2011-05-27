@@ -7,6 +7,7 @@ qrc_*.cpp
 *.dll
 ui_*
 
+build
 
 shruthi-editor
 *.exe
