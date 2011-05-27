@@ -49,3 +49,5 @@ v0.18 * refactored parts of the code
       * added status bar messages to most actions
       * added simple check if patch file is valid
       * added ability to load/save patches in sysex format 
+v0.19 * tweaked the keyboard dialog. keys are now black/white
+
