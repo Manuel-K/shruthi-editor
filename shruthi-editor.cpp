@@ -22,7 +22,7 @@
 #include "lib_labels.h"
 #include "lib_patch.h"
 
-#define VERSION "0.17"
+#define VERSION "0.18"
 
 Editor* editor;
 int MIDI_INPUT_DEVICE, MIDI_OUTPUT_DEVICE; 
