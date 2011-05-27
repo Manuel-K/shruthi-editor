@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>352</width>
+    <width>281</width>
     <height>81</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>351</width>
+     <width>281</width>
      <height>81</height>
     </rect>
    </property>
@@ -216,7 +216,7 @@
    <widget class="QSpinBox" name="octave">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>230</x>
       <y>10</y>
       <width>41</width>
       <height>22</height>
@@ -239,41 +239,12 @@
      <string>Octave:</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="channel">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>40</y>
-      <width>41</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>16</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>40</y>
-      <width>57</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Channel:</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="panic">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>10</y>
-      <width>51</width>
+      <x>230</x>
+      <y>40</y>
+      <width>41</width>
       <height>23</height>
      </rect>
     </property>
@@ -295,8 +266,6 @@
    <zorder>n8</zorder>
    <zorder>octave</zorder>
    <zorder>label</zorder>
-   <zorder>channel</zorder>
-   <zorder>label_2</zorder>
    <zorder>panic</zorder>
    <zorder>n3</zorder>
    <zorder>n10</zorder>
@@ -305,7 +274,6 @@
  <tabstops>
   <tabstop>velocity</tabstop>
   <tabstop>octave</tabstop>
-  <tabstop>channel</tabstop>
   <tabstop>n0</tabstop>
   <tabstop>n1</tabstop>
   <tabstop>n2</tabstop>

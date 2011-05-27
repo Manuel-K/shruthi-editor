@@ -27,9 +27,6 @@ keyboard::keyboard(QWidget *parent) {
     
     noteOctave = 0;
     noteVelocity = 64;
-    noteChannel = 1;
-    channel->setMinimum(1);
-    channel->setMaximum(16);
     octave->setMinimum(-4);
     octave->setMaximum(4);
     
@@ -37,8 +34,6 @@ keyboard::keyboard(QWidget *parent) {
     velocity->setValue (noteVelocity);
     connect(octave,SIGNAL(valueChanged(int)), this, SLOT(setOctave(int)));
     octave->setValue (noteOctave);
-    connect(channel,SIGNAL(valueChanged(int)), this, SLOT(setChannel(int)));
-    channel->setValue (noteChannel);
     connect(panic,SIGNAL(pressed()), this, SLOT(panicPushed()));
 
     for (int i=0; i<=12; i++) {
@@ -64,7 +59,7 @@ void keyboard::push() {
 #ifdef DEBUG
     qDebug() << "push()" << note;
 #endif
-    queueitem_t signal (NOTE_ON,noteChannel,note,noteVelocity);
+    queueitem_t signal (NOTE_ON,0,note,noteVelocity);
     emit enqueue(signal);
 }
 
@@ -74,7 +69,7 @@ void keyboard::panicPushed() {
 #ifdef DEBUG
     qDebug() << "panicPushed()";
 #endif
-    queueitem_t signal (NOTE_PANIC,noteChannel,0,0);
+    queueitem_t signal (NOTE_PANIC);
     emit enqueue(signal);
 }
 
@@ -88,7 +83,7 @@ void keyboard::release() {
 #ifdef DEBUG
     qDebug() << "release()" << note;
 #endif
-    queueitem_t signal (NOTE_OFF,noteChannel,note,0);
+    queueitem_t signal (NOTE_OFF,0,note,0);
     emit enqueue(signal);
 }
 
@@ -109,16 +104,6 @@ void keyboard::setOctave(int oct) {
     noteOctave = oct;
 #ifdef DEBUG
     qDebug() << "setOctave()" << oct;
-#endif
-}
-
-
-// ******************************************
-void keyboard::setChannel(int ch) {
-// ******************************************
-    noteChannel = ch-1;
-#ifdef DEBUG
-    qDebug() << "setChannel()" << (ch-1);
 #endif
 }
 

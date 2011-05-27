@@ -43,12 +43,11 @@ struct queueitem_t {
     QString string;
     unsigned int size;
     unsigned char *message;
-    unsigned char noteChannel;
     unsigned char noteVelocity;
     unsigned char note;
     // constructors:
     queueitem_t () {};
-    queueitem_t (ACTIONS a): nrpn(0), value(0) {
+    queueitem_t (ACTIONS a) {
         action=a;
     };
     queueitem_t (ACTIONS a, int n, int v) {
@@ -65,9 +64,8 @@ struct queueitem_t {
         message=m; 
         size=s;
     };
-    queueitem_t (ACTIONS a, unsigned char ch, unsigned char n, unsigned char vel) {
+    queueitem_t (ACTIONS a, unsigned char c, unsigned char n, unsigned char vel) {
         action=a;
-        noteChannel=ch;
         note=n;
         noteVelocity=vel;
     };
@@ -86,9 +84,9 @@ class Editor : public QObject {
         void actionFetchPatch();
         void actionSendPatch();
         void actionNrpnRecieved(int,int);
-        void actionNoteOn(unsigned char, unsigned char, unsigned char);
-        void actionNoteOff(unsigned char, unsigned char, unsigned char);
-        void actionNotePanic(unsigned char);
+        void actionNoteOn(unsigned char, unsigned char);
+        void actionNoteOff(unsigned char, unsigned char);
+        void actionNotePanic();
         void actionSysexRecieved(unsigned int, unsigned char*);
         void actionSetPatchname(QString);
         void actionLoadPatch(QString);

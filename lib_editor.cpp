@@ -91,13 +91,13 @@ void Editor::process(queueitem_t item) {
             actionNrpnRecieved(item.nrpn,item.value);
             break;
         case NOTE_ON:
-            actionNoteOn(item.noteChannel,item.note,item.noteVelocity);
+            actionNoteOn(item.note,item.noteVelocity);
             break;
         case NOTE_OFF:
-            actionNoteOff(item.noteChannel,item.note,item.noteVelocity);
+            actionNoteOff(item.note,item.noteVelocity);
             break;
         case NOTE_PANIC:
-            actionNotePanic(item.noteChannel);
+            actionNotePanic();
             break;
         case SYSEX_RECIEVED:
             actionSysexRecieved(item.size,item.message);
@@ -182,34 +182,34 @@ void Editor::actionNrpnRecieved(int nrpn, int value) {
 
 
 // ******************************************
-void Editor::actionNoteOn(unsigned char channel, unsigned char note, unsigned char velocity) {
+void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.noteOn(Editor::channel,note,velocity))
+    if(!midiout.noteOn(channel,note,velocity))
         emit displayStatusbar("Could not send note on message.");
 }
 
 
 // ******************************************
-void Editor::actionNoteOff(unsigned char channel, unsigned char note, unsigned char velocity) {
+void Editor::actionNoteOff(unsigned char note, unsigned char velocity) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.noteOff(Editor::channel,note,velocity))
+    if(!midiout.noteOff(channel,note,velocity))
         emit displayStatusbar("Could not send note off message.");
 }
 
 
 // ******************************************
-void Editor::actionNotePanic(unsigned char channel) {
+void Editor::actionNotePanic() {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::actionNotePanic(" << channel <<")";
 #endif
-    if (midiout.allNotesOff(Editor::channel))
+    if (midiout.allNotesOff(channel))
         emit displayStatusbar("Sent all notes off message.");
     else
         emit displayStatusbar("Could not send all notes off message.");

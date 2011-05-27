@@ -32,14 +32,12 @@ class keyboard : public QDialog, private Ui::keyboard{
     private:
         unsigned char noteOctave;
         unsigned char noteVelocity;
-        unsigned char noteChannel;
         unsigned char calculateNote(int);
     private slots:
         void push();
         void release();
         void setVelocity(int);
         void setOctave(int);
-        void setChannel(int);
         void panicPushed();
     public slots:
         void showKeyboard();
