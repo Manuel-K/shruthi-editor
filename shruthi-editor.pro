@@ -34,6 +34,7 @@ LIBS += -L.
 target.path = release/
 
 unix {
+    message(RtMidi will use linux alsaseq.)
     # alsa:
     DEFINES+=__LINUX_ALSASEQ__
     LIBS+=-lasound
@@ -41,12 +42,15 @@ unix {
     #DEFINES+=__LINUX_JACK__
     #LIBS+=-ljack
 }
+
 macx {
+    message(RtMidi will use macosx core.)
     DEFINES+=__MACOSX_CORE__
     LIBS+=-framework CoreMidi -framework CoreAudio -framework CoreFoundation
     ICON = shruthi-editor.icns
 }
 win32 {
+    message(RtMidi will use windows mm.)
     DEFINES+=__WINDOWS_MM__
     LIBS+=-lwinmm
     DEFINES+=CLEANLOOKS
