@@ -27,6 +27,8 @@ SOURCES     = RtMidi.cpp settings-dialog.cpp shruthi-editor.cpp main.cpp \
 FORMS       = settings-dialog.ui shruthi-editor.ui keyboard.ui
 RESOURCES   = shruthi-editor.qrc
 
+QT += widgets
+
 CONFIG += qt #debug
 #DEFINES+=DEBUG
 

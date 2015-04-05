@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <QtGui> 
+#include <QtWidgets>
 #include "shruthi-editor.h"
 #include "settings-dialog.h"
 #include "lib_labels.h"
@@ -35,14 +35,14 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) 
     QComboBox* tmp_c;
     for (int i=0; i<100; i++) if (Patch::enabled(i)) {
         if (Patch::parameters[i].dropdown) {
-            tmp_c = qFindChild<QComboBox*>(this, QString("c")+QString("%1").arg(i));
+            tmp_c = this->findChild<QComboBox*>(QString("c")+QString("%1").arg(i));
             tmp_c -> addItems(*(Patch::parameters[i].dropdown));
             connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
         } else {
-            tmp_d = qFindChild<QDial*>(this, QString("c")+QString("%1").arg(i));
+            tmp_d = this->findChild<QDial*>(QString("c")+QString("%1").arg(i));
             tmp_d->setMinimum(Patch::parameters[i].min);
             tmp_d->setMaximum(Patch::parameters[i].max);
-            qFindChild<QLabel*>(this, QString("d")+QString("%1").arg(i))->setText("0");
+            this->findChild<QLabel*>(QString("d")+QString("%1").arg(i))->setText("0");
             connect (tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
         }
     }
@@ -126,9 +126,9 @@ void shruthiEditorMainWindow::dialChanged(int val) {
     QString id = s->objectName();
     id.replace(0,1,"d");
     if (id=="d25" || id == "d29")
-        qFindChild<QLabel*>(this, id)->setText(Labels::LfoRateFormatter(val));
+        this->findChild<QLabel*>(id)->setText(Labels::LfoRateFormatter(val));
     else
-        qFindChild<QLabel*>(this, id)->setText(QString("%1").arg(val));
+        this->findChild<QLabel*>(id)->setText(QString("%1").arg(val));
     id.remove(0,1);
     queueitem_t signal (NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
@@ -254,10 +254,10 @@ void shruthiEditorMainWindow::closeEvent (QCloseEvent* event) {
 void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
 // ******************************************
     if (Patch::parameters[nrpn].dropdown) {
-        qFindChild<QComboBox*>(this, QString("c")+QString("%1").arg(nrpn))
+        this->findChild<QComboBox*>(QString("c")+QString("%1").arg(nrpn))
           -> setCurrentIndex(editor->getParam(nrpn));
     } else {
-        qFindChild<QDial*>(this, QString("c")+QString("%1").arg(nrpn))
+        this->findChild<QDial*>(QString("c")+QString("%1").arg(nrpn))
           -> setValue(editor->getParam(nrpn));
     }
 }

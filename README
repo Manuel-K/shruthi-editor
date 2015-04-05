@@ -19,7 +19,7 @@ What doesn't work:
 
 
 Prerequisites:
- Qt4: <http://qt.nokia.com/products/>
+ Qt5: <http://www.qt.io/>
 
 
 Compiling under windows (Prerequisites):

@@ -293,7 +293,7 @@ void Patch::generateSysex (unsigned char res[]) {
     // set name:
     QString temp_name = QString("%1").arg(name, -8, ' '); // pad name
     for (unsigned int i=0; i<8; i++) //->(68,76):
-        temp[68+i]=temp_name.at(i).toAscii();
+        temp[68+i]=temp_name.at(i).toLatin1();
     
     // copy data
     for (unsigned int i=0; i<92 ;i++)
