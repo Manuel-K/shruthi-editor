@@ -69,9 +69,8 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         // library ui:
         void libraryFetchPatches();
         void libraryTest();
-        void libraryEditPatch();
-        void libraryStorePatch();
-        void libraryResetPatch();
+        void libraryEdit();
+        void libraryStore();
         void redrawPatches();
     signals:
         void enqueue(queueitem_t);

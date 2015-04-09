@@ -25,7 +25,7 @@ PatchLibrary::PatchLibrary() {
 // ******************************************
     num=0;
     recieving=false;
-//     max = 144;
+//    max = 144;
     max = 4;
 }
 
@@ -69,13 +69,6 @@ void PatchLibrary::reset() {
 
 
 // ******************************************
-bool PatchLibrary::isChanged(unsigned int i) {
-// ******************************************
-    return changed[i];
-}
-
-
-// ******************************************
 Patch PatchLibrary::getPatch(unsigned int i) {
 // ******************************************
     return lib[i];
@@ -85,18 +78,7 @@ Patch PatchLibrary::getPatch(unsigned int i) {
 // ******************************************
 void PatchLibrary::setPatch(unsigned int i, Patch p) {
 // ******************************************
-    if (!lib[i].equals(p)) {
-        changed[i]=true;
-        lib[i]=p;
-    }
-}
-
-
-// ******************************************
-void PatchLibrary::resetPatch(unsigned int i) {
-// ******************************************
-    lib[i].resetPatch();
-    changed[i]=true;
+    lib[i]=p;
 }
 
 
@@ -111,9 +93,8 @@ QString PatchLibrary::getName(unsigned int i) {
 bool PatchLibrary::parseFullSysex(unsigned char  *sysex, unsigned int len) {
 // ******************************************
     bool status = lib[num].parseFullSysex(sysex,len);
-    changed[num] = false;
     num++;
     if (num>=max)
-        recieving = false;
+        recieving=false;
     return status;
 }

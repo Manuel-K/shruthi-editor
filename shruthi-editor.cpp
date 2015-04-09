@@ -65,9 +65,8 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) 
     connect(actionKeyboard,SIGNAL(triggered()),this,SIGNAL(showKeyboard()));
     // Library Ui:
     connect(libFetchPatches,SIGNAL(pressed()),this,SLOT(libraryFetchPatches()));
-    connect(libEditPatch,SIGNAL(pressed()),this,SLOT(libraryEditPatch()));
-    connect(libStorePatch,SIGNAL(pressed()),this,SLOT(libraryStorePatch()));
-    connect(libResetPatch,SIGNAL(pressed()),this,SLOT(libraryResetPatch()));
+    connect(libEdit,SIGNAL(pressed()),this,SLOT(libraryEdit()));
+    connect(libStore,SIGNAL(pressed()),this,SLOT(libraryStore()));
     connect(libTest,SIGNAL(pressed()),this,SLOT(libraryTest()));
 }
 
@@ -333,26 +332,18 @@ void shruthiEditorMainWindow::libraryTest() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::libraryEditPatch() {
+void shruthiEditorMainWindow::libraryEdit() {
 // ******************************************
-    queueitem_t signal (LIBRARY_EDIT_PATCH,libraryPatches->currentRow());
+    queueitem_t signal (LIBRARY_EDIT,libraryPatches->currentRow());
     emit enqueue(signal);
     tabs->setCurrentIndex(1);
 }
 
 
 // ******************************************
-void shruthiEditorMainWindow::libraryStorePatch() {
+void shruthiEditorMainWindow::libraryStore() {
 // ******************************************
-    queueitem_t signal (LIBRARY_STORE_PATCH,libraryPatches->currentRow());
-    emit enqueue(signal);
-}
-
-
-// ******************************************
-void shruthiEditorMainWindow::libraryResetPatch() {
-// ******************************************
-    queueitem_t signal (LIBRARY_RESET_PATCH,libraryPatches->currentRow());
+    queueitem_t signal (LIBRARY_STORE,libraryPatches->currentRow());
     emit enqueue(signal);
 }
 
@@ -366,9 +357,6 @@ void shruthiEditorMainWindow::redrawPatches() {
     libraryPatches->clear();
     unsigned int n = editor->libraryGetNumPatches();
         for (unsigned int i=0; i < n; i++) {
-            QString line = QString("%1").arg(i+1)+".: "+editor->libraryGetPatchName(i);
-            if (editor->libraryPatchIsChanged(i))
-                line += " (unsaved changes)";
-            libraryPatches->addItem(line);
+            libraryPatches->addItem(QString("%1").arg(i+1)+".: "+editor->libraryGetPatchName(i));
     }
 }

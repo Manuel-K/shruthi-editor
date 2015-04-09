@@ -164,16 +164,6 @@ Patch::Patch() {
 
 
 // ******************************************
-bool Patch::equals(Patch p) {
-// ******************************************
-    for (unsigned int i=0; i<108; i++)
-        if (data[i]!=p.data[i])
-            return false;
-    return true;
-}
-
-
-// ******************************************
 void Patch::setParam(int param, int value) {
 // ******************************************
     data[param] = value;

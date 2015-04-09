@@ -28,29 +28,42 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabLibrary">
      <attribute name="title">
       <string>Library</string>
      </attribute>
+     <widget class="QPushButton" name="libTest">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>110</y>
+        <width>101</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>test</string>
+      </property>
+     </widget>
      <widget class="QGroupBox" name="groupBox_14">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>411</width>
+        <width>311</width>
         <height>611</height>
        </rect>
       </property>
       <property name="title">
        <string>Patches:</string>
       </property>
-      <widget class="QPushButton" name="libStorePatch">
+      <widget class="QPushButton" name="libStore">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>80</y>
+         <x>210</x>
+         <y>20</y>
          <width>91</width>
          <height>23</height>
         </rect>
@@ -75,139 +88,24 @@
       <widget class="QListWidget" name="libraryPatches">
        <property name="geometry">
         <rect>
-         <x>110</x>
-         <y>20</y>
+         <x>10</x>
+         <y>50</y>
          <width>291</width>
-         <height>581</height>
+         <height>551</height>
         </rect>
        </property>
       </widget>
-      <widget class="QPushButton" name="libEditPatch">
+      <widget class="QPushButton" name="libEdit">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>50</y>
+         <x>110</x>
+         <y>20</y>
          <width>91</width>
          <height>23</height>
         </rect>
        </property>
        <property name="text">
         <string>Edit</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="libSendChangedPatches">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>140</y>
-         <width>91</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Send chngd</string>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="libSendAllPatches">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>170</y>
-         <width>91</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Send all</string>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="libResetPatch">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>110</y>
-         <width>91</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Reset</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="libSavePatches">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>200</y>
-         <width>91</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Save Library</string>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="libLoadPatches">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>230</y>
-         <width>91</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Load Library</string>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_15">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>40</y>
-        <width>161</width>
-        <height>80</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Mysterious Button:</string>
-      </property>
-      <widget class="QPushButton" name="libTest">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>101</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>test</string>
        </property>
       </widget>
      </widget>
