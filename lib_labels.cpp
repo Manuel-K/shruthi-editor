@@ -234,7 +234,14 @@ QStringList Labels::Operator = QStringList()
   <<"XOR"
   <<"Fuzz"
   <<">>4"
-  <<">>8";
+  <<">>8"
+  <<"Fold"
+  <<"Bits"
+  <<"Duo"
+  <<"Ping Pong 2"
+  <<"Ping Pong 4"
+  <<"Ping Pong 8"
+  <<"Ping Pong Seq";
 
 // ******************************************
 QStringList Labels::CvOperator = QStringList() 
