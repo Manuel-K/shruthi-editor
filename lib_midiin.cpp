@@ -122,7 +122,7 @@ MidiIn::MidiIn() {
     input = -1;
     
     try {
-        midiin = new RtMidiIn();
+        midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
         midiin->setCallback(&mycallback,this);
     }
     catch ( RtMidiError &error ) {
@@ -173,7 +173,7 @@ bool MidiIn::open(unsigned int port) {
         return false;
     } 
     try {
-        midiin->openPort( port );
+        midiin->openPort( port, "In" );
         midiin->ignoreTypes( false, true, true );
         opened = true;
     }

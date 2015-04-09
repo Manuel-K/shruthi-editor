@@ -29,7 +29,7 @@ MidiOut::MidiOut() {
     opened=false;
     output=-1;
     try {
-        midiout = new RtMidiOut();
+        midiout = new RtMidiOut(RtMidi::UNSPECIFIED, "shruthi-editor");
     }
     catch ( RtMidiError &error ) {
         error.printMessage();
@@ -67,7 +67,7 @@ bool MidiOut::open(unsigned int port) {
         return false;
     } 
     try {
-        midiout->openPort( port );
+        midiout->openPort( port, "Out" );
         opened = true;
     }
     catch ( RtMidiError &error ) {
