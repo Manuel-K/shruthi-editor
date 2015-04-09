@@ -33,6 +33,9 @@ QT += widgets
 CONFIG += qt #debug
 #DEFINES+=DEBUG
 
+# Uncomment the following line if you use a firmware version prior to 0.94
+#DEFINES += PRE094SYSEXHEADER
+
 LIBS += -L. 
 target.path = release/
 

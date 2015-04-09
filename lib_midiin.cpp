@@ -17,6 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "lib_midiin.h"
+#include "lib_midi.h"
 #include <QDebug>
 
 
@@ -86,13 +87,7 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
     int size = message->size();
 
     if (size>=4) {
-        int b0 = (int)message->at(0);
-        int b1 = (int)message->at(1);
-        int b2 = (int)message->at(2);
-        int b3 = (int)message->at(3);
-        int bl = (int)message->at(size-1);
-        
-        if (b0==240 && b1==0 && b2==32 && b3==119 && bl==247) {//SYSEX_HEAD
+        if (Midi::checkSysexHeadFoot(message)) {
             unsigned char *msg = new unsigned char[size];
             for (int i=0; i<size;i++)
                 msg[i]= message->at(i);

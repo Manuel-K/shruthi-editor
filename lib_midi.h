@@ -19,11 +19,14 @@
 #ifndef SHRUTHI_MIDI_H
 #define SHRUTHI_MIDI_H
 
+#include <vector>
+
 class Midi {
     public:
         static const unsigned char sysexHead[6];
         static const unsigned char sysexFoot;
         static unsigned char calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end);
+        static bool checkSysexHeadFoot(const std::vector<unsigned char> *message);
 };
 
 #endif

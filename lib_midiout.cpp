@@ -17,6 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "lib_midiout.h"
+#include "lib_midi.h"
 #include <QDebug>
 
 // ******************************************
@@ -217,15 +218,11 @@ bool MidiOut::controlChange(unsigned char channel, unsigned char controller, uns
 // ******************************************
 bool MidiOut::patchTransferRequest() {
 // ******************************************
-    unsigned char patchTransferRequest[]={240,0,32,119,0,2,17,0,0,0,247};
+    unsigned char patchTransferRequest[]={Midi::sysexHead[0], Midi::sysexHead[1],
+                                          Midi::sysexHead[2], Midi::sysexHead[3],
+                                          Midi::sysexHead[4], Midi::sysexHead[5],
+                                          17, 0, 0, 0,
+                                          Midi::sysexFoot};
     return write (patchTransferRequest); 
 }
-
-
-// // ******************************************
-// bool MidiOut::patchWriteRequest() {
-// // ******************************************
-//     unsigned char patchTransferRequest[]={240,0,32,119,0,2,17,0,0,0,247};
-//     return write (patchWriteRequest); 
-// }
 

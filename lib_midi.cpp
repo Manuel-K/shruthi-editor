@@ -19,12 +19,16 @@
 #include "lib_midi.h"
 
 // ******************************************
-const unsigned char Midi::sysexHead[6]={240,0,32,119,0,2};
+#ifdef PRE094SYSEXHEADER
+const unsigned char Midi::sysexHead[6]={0xf0,0x00,0x20,0x77,0x00,0x02}; // pre 0.94
+#else
+const unsigned char Midi::sysexHead[6]={0xf0,0x00,0x21,0x02,0x00,0x02}; // post 0.94
+#endif
 // ******************************************
 
 
 // ******************************************
-const unsigned char Midi::sysexFoot=247;
+const unsigned char Midi::sysexFoot=0xf7;
 // ******************************************
 
 
@@ -37,3 +41,26 @@ unsigned char Midi::calculateChecksum(unsigned char sysex[], unsigned int start,
     }
     return (unsigned char) (chk % 256);
 }
+
+// ******************************************
+bool Midi::checkSysexHeadFoot(const std::vector<unsigned char> *message) {
+// ******************************************
+    const unsigned int size = message->size();
+
+    if (size>=7) {
+        // Check header:
+        for (int i = 0; i < 6; i ++) {
+            if ((int)message->at(i) != sysexHead[i]) {
+                return false;
+            }
+        }
+
+        // Check footer:
+        if ((int)message->at(size-1)==sysexFoot) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
