@@ -230,7 +230,7 @@ QStringList Labels::Operator = QStringList()
 // ******************************************
   <<"Sum"
   <<"Sync"
-  <<"Ring modulation"
+  <<"Ring mod."
   <<"XOR"
   <<"Fuzz"
   <<">>4"
@@ -241,7 +241,7 @@ QStringList Labels::Operator = QStringList()
   <<"Ping Pong 2"
   <<"Ping Pong 4"
   <<"Ping Pong 8"
-  <<"Ping Pong Seq";
+  <<"Ping Png Seq";
 
 // ******************************************
 QStringList Labels::CvOperator = QStringList() 
