@@ -69,9 +69,6 @@ bool NRPN::parse(int b0, int b1, int b2) {
            nrpnMsb=b2;
            return false;
         default:
-#ifdef DEBUG
-           qDebug() << "NRPN_Parser: Recieved unknown message:"<<b0<<","<<b1<<","<<b2;
-#endif
            break;
     } 
 #ifdef DEBUG
