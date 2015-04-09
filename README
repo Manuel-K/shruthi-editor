@@ -1,7 +1,7 @@
 Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+informations about the Shruthi, see <http://mutable-instruments.net/shruthi1>. 
 Application icon: "saraswati" by Francois Barbut.
-Uses RtMidi 1.0.14 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
+Uses RtMidi 2.1.0 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
 
 What works:
  - Editing patches.
@@ -11,11 +11,11 @@ What works:
  - Changes made to patch options on the shruthi change the settings of the
    editor.
  - Generate random patches.
+ - Loading/saving full patch sysex.
 
 
 What doesn't work:
  - Automatic fetching/sending, e.g. on loading/saving.
- - Loading/saving full patch sysex.
 
 
 Prerequisites:
