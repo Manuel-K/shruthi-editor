@@ -22,7 +22,7 @@
 #include "lib_labels.h"
 #include "lib_patch.h"
 
-#define VERSION "0.18"
+#define VERSION "0.19"
 
 // ******************************************
 shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) {
