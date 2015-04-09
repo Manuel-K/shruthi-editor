@@ -130,7 +130,7 @@ MidiIn::MidiIn() {
         midiin = new RtMidiIn();
         midiin->setCallback(&mycallback,this);
     }
-    catch ( RtError &error ) {
+    catch ( RtMidiError &error ) {
         error.printMessage();
         qWarning() << "MidiOut::MidiIn(): could not initilize midi port for writing.";
 //         exit( EXIT_FAILURE );
@@ -182,9 +182,9 @@ bool MidiIn::open(unsigned int port) {
         midiin->ignoreTypes( false, true, true );
         opened = true;
     }
-    catch ( RtError &error ) {
+    catch ( RtMidiError &error ) {
 #ifdef DEBUG
-        qDebug() << "MidiIn::open("<<port<<"): RtError on openPort().";
+        qDebug() << "MidiIn::open("<<port<<"): RtMidiError on openPort().";
 #endif
         opened = false;
     }

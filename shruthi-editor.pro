@@ -38,7 +38,7 @@ target.path = release/
 unix {
     message(RtMidi will use linux alsaseq.)
     # alsa:
-    DEFINES+=__LINUX_ALSASEQ__
+    DEFINES+=__LINUX_ALSA__
     LIBS+=-lasound
     # jack;
     #DEFINES+=__LINUX_JACK__

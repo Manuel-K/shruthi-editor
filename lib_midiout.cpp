@@ -30,7 +30,7 @@ MidiOut::MidiOut() {
     try {
         midiout = new RtMidiOut();
     }
-    catch ( RtError &error ) {
+    catch ( RtMidiError &error ) {
         error.printMessage();
         qWarning() << "MidiOut::MidiOut(): could not initilize midi port for writing.";
 //         exit( EXIT_FAILURE );
@@ -69,9 +69,9 @@ bool MidiOut::open(unsigned int port) {
         midiout->openPort( port );
         opened = true;
     }
-    catch ( RtError &error ) {
+    catch ( RtMidiError &error ) {
 #ifdef DEBUG
-        qDebug() << "MidiOut::open("<<port<<"): RtError on openPort().";
+        qDebug() << "MidiOut::open("<<port<<"): RtMidiError on openPort().";
 #endif
         opened = false;
     }
@@ -112,7 +112,7 @@ bool MidiOut::write(std::vector<unsigned char> message) {
         midiout->sendMessage (&message);
         return true;
     }
-    catch ( RtError &error ) {
+    catch ( RtMidiError &error ) {
         qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Error on sending.";
         error.printMessage();
     }
