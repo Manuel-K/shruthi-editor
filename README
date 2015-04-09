@@ -51,3 +51,5 @@ v0.18 * refactored parts of the code
 v0.19 * tweaked the keyboard dialog. keys are now black/white
       * updated to RtMidi 2.1.0
       * updated to Qt 5
+v0.20 * SysEx header for firmware versions >= 0.94
+      * updated patch definitions
