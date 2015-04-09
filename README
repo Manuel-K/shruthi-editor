@@ -23,10 +23,9 @@ Prerequisites:
 
 
 Compiling under windows (Prerequisites):
-To compile it on windows, you need the mingw version of qt and mingw.
-You can download them from <http://qt.nokia.com/downloads/windows-cpp>.
+To compile it on windows, you need the mingw version of qt.
+You can download it from <http://www.qt.io/download-open-source/>.
 
-Extract mingw first, then install qt. 
 
 
 Compiling:
@@ -50,4 +49,5 @@ v0.18 * refactored parts of the code
       * added simple check if patch file is valid
       * added ability to load/save patches in sysex format 
 v0.19 * tweaked the keyboard dialog. keys are now black/white
-
+      * updated to RtMidi 2.1.0
+      * updated to Qt 5
