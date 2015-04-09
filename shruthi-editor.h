@@ -66,12 +66,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void midiInputStatusChanged(bool);
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString msg);
-        // library ui:
-        void libraryFetchPatches();
-        void libraryTest();
-        void libraryEdit();
-        void libraryStore();
-        void redrawPatches();
+        
     signals:
         void enqueue(queueitem_t);
         void settingsChanged(int,int,unsigned char);

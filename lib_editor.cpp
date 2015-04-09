@@ -61,7 +61,7 @@ Editor::~Editor() {
 
 
 // ******************************************
-int Editor::getParam(unsigned int nrpn) {
+int Editor::getParam(int nrpn) {
 // ******************************************
     return patch.getParam(nrpn);
 };
@@ -105,12 +105,6 @@ void Editor::process(queueitem_t item) {
         case SET_PATCHNAME:
             actionSetPatchname(item.string);
             break; 
-        case LIBRARY_EDIT:
-            actionLibraryEdit(item.int0);
-            break;
-        case LIBRARY_STORE:
-            actionLibraryStore(item.int0);
-            break;
         case FILEIO_LOAD:
             actionLoadPatch(item.string);
             break;
@@ -123,12 +117,9 @@ void Editor::process(queueitem_t item) {
         case RANDOMIZE_PATCH:
             actionRandomizePatch();
             break;
-        case LIBRARY_FETCH_PATCHES:
-            actionLibraryFetchPatches();
-            break;
         default:
 #ifdef DEBUG
-            qDebug() << "Editor::process():" << item.action << ":" << item.int0 << "," << item.int1 << "," << item.string;
+            qDebug() << "Editor::process():" << item.action << ":" << item.nrpn << "," << item.value << "," << item.string;
 #endif
             break;
     }
@@ -231,31 +222,12 @@ void Editor::actionSysexRecieved(unsigned int size, unsigned char* message) {
 #ifdef DEBUG
     qDebug() << "Editor::actionSysexRecieved(" << size << ",...)";
 #endif
-    bool status;
-    bool libraryMode = lib.isRecieving();
-    if (7<size && message[6]==1 && message[7]==0) {
-      
-        if (libraryMode) {
-            status = lib.parseFullSysex(message,size);
-            if (lib.isRecieving()) {
-                midiout.programChange(channel,lib.getNumPatches());
-                actionFetchPatch();
-            } else {
-                emit redrawPatches();
-            }
-        } else {
-            status = patch.parseFullSysex(message,size);
-        }
-        
-        if (status) {
-            if (libraryMode)
-                emit displayStatusbar("Fetching patch library: Recieved valid patch. ("+QString("%1").arg(100*lib.getNumPatches()/lib.getMaxNumPatches())+"% done).");
-            else
-                emit displayStatusbar("Recieved valid patch.");
-        } else {
+    if (7<size && message[6]==1 && message[7]==0)
+        if (patch.parseFullSysex(message,size))
+            emit displayStatusbar("Recieved valid patch.");
+        else
             emit displayStatusbar("Recieved invalid patch.");
-        }
-    } else {
+    else {
         emit displayStatusbar("Recieved unknown sysex.");
 #ifdef DEBUG
         qDebug() << "unknown sysex type";
@@ -327,54 +299,4 @@ void Editor::actionRandomizePatch() {
     patch.randomizePatch();
     emit redrawAll();
     emit displayStatusbar("Patch randomized.");
-}
-
-
-// ******************************************
-void Editor::actionLibraryFetchPatches() {
-// ******************************************
-#ifdef DEBUG
-    qDebug() << "Editor::actionLibraryFetchPatches()";
-#endif
-    midiout.programChange(channel,0);
-    lib.reset();
-    actionFetchPatch();
-}
-
-
-// ******************************************
-void Editor::actionLibraryEdit(unsigned int n) {
-// ******************************************
-#ifdef DEBUG
-    qDebug() << "Editor::actionLibraryEdit(" << n << ")";
-#endif
-    midiout.programChange(channel,n);
-    patch = lib.getPatch(n);
-    emit redrawAll();
-}
-
-
-// ******************************************
-void Editor::actionLibraryStore(unsigned int n) {
-// ******************************************
-#ifdef DEBUG
-    qDebug() << "Editor::actionLibraryStore(" << n << ")";
-#endif
-    lib.setPatch(n,patch);
-    emit redrawPatches();
-    emit redrawAll();
-}
-
-
-// ******************************************
-QString Editor::libraryGetPatchName(unsigned int num) {
-// ******************************************
-    return lib.getName(num);
-}
-
-
-// ******************************************
-unsigned int Editor::libraryGetNumPatches() {
-// ******************************************
-    return lib.getNumPatches();
 }

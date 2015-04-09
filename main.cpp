@@ -77,7 +77,6 @@ int main(int argc, char *argv[]) {
         // main_window: incoming signals
         main_window->connect(&editor,SIGNAL(redrawNRPN(int)),SLOT(redrawNRPN(int)));
         main_window->connect(&editor,SIGNAL(redrawAll()),SLOT(redrawAll()));
-        main_window->connect(&editor,SIGNAL(redrawPatches()), SLOT(redrawPatches()));
         main_window->connect(&sr,SIGNAL(setMidiInputPort(int)),SLOT(setMidiInputPort(int)));
         main_window->connect(&sr,SIGNAL(setMidiOutputPort(int)),SLOT(setMidiOutputPort(int)));
         main_window->connect(&sr,SIGNAL(setMidiChannel(unsigned char)),SLOT(setMidiChannel(unsigned char)));
