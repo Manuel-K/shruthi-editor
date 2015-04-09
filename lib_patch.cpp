@@ -316,8 +316,12 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
     sysex[j]=sysex[len-1];
     len=j+1;
     
-    if (!(33==sysex[len-3])) {
-        qDebug() << "Invalid patch data.";
+#ifdef POST100
+    if (!(37==sysex[len-3])) {
+#else
+    if (!(33==sysex[len-3])) { // works up to 0.98
+#endif
+        qDebug() << "Invalid patch data." << sysex[len-3];
         return false;
     }
     if (!Midi::calculateChecksum(sysex,8,100)==sysex[len-2]) {
