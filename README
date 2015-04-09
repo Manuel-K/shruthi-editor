@@ -12,7 +12,7 @@ What works:
    editor.
  - Generate random patches.
  - Loading/saving full patch sysex.
-
+ - Editing up to (and including) firmware version 0.98
 
 What doesn't work:
  - Automatic fetching/sending, e.g. on loading/saving.
@@ -33,6 +33,14 @@ Run
 > qmake
 > make release
 inside the shruthi-editor source folder.
+
+Note:
+If you want to use firmware versions prior to 0.94, you have to open
+shruthi-editor.pro and change the line
+#DEFINES += PRE094SYSEXHEADER
+to
+DEFINES += PRE094SYSEXHEADER
+ 
 
 
 Changes:
