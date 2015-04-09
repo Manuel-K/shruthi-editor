@@ -79,6 +79,9 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
     <property name="text">
      <string/>
     </property>
