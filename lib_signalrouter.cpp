@@ -96,7 +96,7 @@ void SignalRouter::settingsChanged(int in, int out, unsigned char channel) {
     emit setMidiChannel(channel);
 
     bool writeConfig = false;
-    if ((config.getMidiInputPort() != in) || (config.getMidiOutputPort() != out)) {
+    if (config.getMidiInputPort() != in || config.getMidiOutputPort() != out) {
         config.setMidiInputPort(in);
         config.setMidiOutputPort(out);
         writeConfig = true;

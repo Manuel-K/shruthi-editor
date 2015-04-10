@@ -32,7 +32,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         shruthiEditorMainWindow(Editor* edit);
     private:
         void displayMidiStatusChanged(bool, bool);
-        void closeEvent (QCloseEvent* event);
+        void closeEvent(QCloseEvent* event);
 
         Editor* editor;
         int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT;

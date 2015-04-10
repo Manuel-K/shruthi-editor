@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
         shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
         main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
         main_window->setFixedSize(main_window->width(),main_window->height());
-        main_window->statusBar()-> setSizeGripEnabled ( false );
+        main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
         // main_window: incoming signals
         main_window->connect(&editor,SIGNAL(redrawNRPN(int)),SLOT(redrawNRPN(int)));

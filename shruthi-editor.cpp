@@ -36,14 +36,14 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     for (int i=0; i<100; i++) if (Patch::enabled(i)) {
         if (Patch::parameters[i].dropdown) {
             tmp_c = this->findChild<QComboBox*>(QString("c")+QString("%1").arg(i));
-            tmp_c -> addItems(*(Patch::parameters[i].dropdown));
+            tmp_c->addItems(*(Patch::parameters[i].dropdown));
             connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
         } else {
             tmp_d = this->findChild<QDial*>(QString("c")+QString("%1").arg(i));
             tmp_d->setMinimum(Patch::parameters[i].min);
             tmp_d->setMaximum(Patch::parameters[i].max);
             this->findChild<QLabel*>(QString("d")+QString("%1").arg(i))->setText("0");
-            connect (tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+            connect(tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
         }
     }
     connect(patch_name,SIGNAL(editingFinished()),this, SLOT(patchNameChanged()));
@@ -108,7 +108,7 @@ void shruthiEditorMainWindow::comboBoxChanged(int val) {
     QComboBox* s = (QComboBox*) sender();
     QString id = s->objectName();
     id.remove(0,1);
-    queueitem_t signal (NRPN_PROCESS_EDITOR,id.toInt(),val);
+    queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
 }
 
@@ -124,7 +124,7 @@ void shruthiEditorMainWindow::dialChanged(int val) {
     else
         this->findChild<QLabel*>(id)->setText(QString("%1").arg(val));
     id.remove(0,1);
-    queueitem_t signal (NRPN_PROCESS_EDITOR,id.toInt(),val);
+    queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
 }
 
@@ -133,7 +133,7 @@ void shruthiEditorMainWindow::dialChanged(int val) {
 void shruthiEditorMainWindow::patchNameChanged() {
 // ******************************************
     QString name = patch_name->text();
-    queueitem_t signal (SET_PATCHNAME,patch_name->text());
+    queueitem_t signal(SET_PATCHNAME,patch_name->text());
     emit enqueue(signal);
 }
 
@@ -143,7 +143,7 @@ void shruthiEditorMainWindow::loadPatch() {
 // ******************************************
     QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".sp", "All possible files (*.sp *.syx);;Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
-        queueitem_t signal (FILEIO_LOAD,filename);
+        queueitem_t signal(FILEIO_LOAD,filename);
         emit(enqueue(signal));
     }
 }
@@ -154,7 +154,7 @@ void shruthiEditorMainWindow::savePatch() {
 // ******************************************
     QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
-        queueitem_t signal (FILEIO_SAVE,filename);
+        queueitem_t signal(FILEIO_SAVE,filename);
         emit(enqueue(signal));
     }
 }
@@ -163,7 +163,7 @@ void shruthiEditorMainWindow::savePatch() {
 // ******************************************
 void shruthiEditorMainWindow::fetchPatch() {
 // ******************************************
-    queueitem_t signal (SYSEX_FETCH_PATCH);
+    queueitem_t signal(SYSEX_FETCH_PATCH);
     emit(enqueue(signal));
 }
 
@@ -171,7 +171,7 @@ void shruthiEditorMainWindow::fetchPatch() {
 // ******************************************
 void shruthiEditorMainWindow::sendPatch() {
 // ******************************************
-    queueitem_t signal (SYSEX_SEND_PATCH);
+    queueitem_t signal(SYSEX_SEND_PATCH);
     emit(enqueue(signal));
 }
 
@@ -196,7 +196,7 @@ void shruthiEditorMainWindow::changeMidiPorts() {
 // ******************************************
 void shruthiEditorMainWindow::resetPatch() {
 // ******************************************
-    queueitem_t signal (RESET_PATCH);
+    queueitem_t signal(RESET_PATCH);
     emit(enqueue(signal));
 }
 
@@ -204,7 +204,7 @@ void shruthiEditorMainWindow::resetPatch() {
 // ******************************************
 void shruthiEditorMainWindow::randomizePatch() {
 // ******************************************
-    queueitem_t signal (RANDOMIZE_PATCH);
+    queueitem_t signal(RANDOMIZE_PATCH);
     emit(enqueue(signal));
 }
 
@@ -232,7 +232,7 @@ void shruthiEditorMainWindow::aboutQt() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::closeEvent (QCloseEvent* event) {
+void shruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 // ******************************************
     Q_UNUSED(event);
     quitShruthiEditor();
@@ -250,10 +250,10 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
 // ******************************************
     if (Patch::parameters[nrpn].dropdown) {
         this->findChild<QComboBox*>(QString("c")+QString("%1").arg(nrpn))
-          -> setCurrentIndex(editor->getParam(nrpn));
+          ->setCurrentIndex(editor->getParam(nrpn));
     } else {
         this->findChild<QDial*>(QString("c")+QString("%1").arg(nrpn))
-          -> setValue(editor->getParam(nrpn));
+          ->setValue(editor->getParam(nrpn));
     }
 }
 
@@ -301,7 +301,7 @@ void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
     statusBar()->showMessage(status);
 
     // It's rather hacky to do this here, but it works:
-    if(in && out) {
+    if (in && out) {
         queueitem_t signal(SYSEX_VERSION_REQUEST);
         emit(enqueue(signal));
     }

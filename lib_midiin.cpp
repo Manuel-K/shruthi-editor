@@ -22,7 +22,7 @@
 
 
 // ******************************************
-NRPN::NRPN () {
+NRPN::NRPN() {
 // ******************************************
     nrpnMsb=0;
     nrpn=-1;
@@ -80,14 +80,14 @@ bool NRPN::parse(int b0, int b1, int b2) {
            break;
     }
 #ifdef DEBUG
-    qDebug()<< "NRPN_Parser: Received unknown message:"<<b0<<","<<b1<<","<<b2;
+    qDebug() << "NRPN_Parser: Received unknown message:" << b0 << "," << b1 << "," << b2;
 #endif
     return false;
 }
 
 
 // ******************************************
-void MidiIn::process ( std::vector< unsigned char > *message ) {
+void MidiIn::process(std::vector< unsigned char > *message) {
 // ******************************************
     int size = message->size();
 
@@ -126,7 +126,7 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
             unsigned char *msg = new unsigned char[size];
             for (int i=0; i<size;i++)
                 msg[i]= message->at(i);
-            queueitem_t signal (SYSEX_RECEIVED,msg,size);
+            queueitem_t signal(SYSEX_RECEIVED,msg,size);
             signal.message=msg;
             emit enqueue(signal);
         }
@@ -134,13 +134,13 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
         if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
             // Parse as NRPN
             if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
-                queueitem_t signal (NRPN_RECEIVED,nrpn.getNRPN(),nrpn.getValue());
+                queueitem_t signal(NRPN_RECEIVED,nrpn.getNRPN(),nrpn.getValue());
                 emit enqueue(signal);
             }
         } else {
             int nrpn = Patch::ccToNrpn(message->at(1));
             int value = Patch::parseCcValue(message->at(2), nrpn);
-            queueitem_t signal (NRPN_RECEIVED, nrpn, value);
+            queueitem_t signal(NRPN_RECEIVED, nrpn, value);
             emit enqueue(signal);
         }
     }
@@ -148,10 +148,10 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
 
 
 // ******************************************
-void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData ) {
+void mycallback(double deltatime, std::vector< unsigned char > *message, void *userData) {
 // ******************************************
     Q_UNUSED(deltatime);
-    ((MidiIn*) userData) -> process(message);
+    ((MidiIn*)userData)->process(message);
 }
 
 
@@ -169,10 +169,10 @@ MidiIn::MidiIn() {
         midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
         midiin->setCallback(&mycallback,this);
     }
-    catch ( RtMidiError &error ) {
+    catch (RtMidiError &error) {
         error.printMessage();
         qWarning() << "MidiOut::MidiIn(): could not initilize midi port for writing.";
-//         exit( EXIT_FAILURE );
+//         exit(EXIT_FAILURE);
     }
 }
 
@@ -202,7 +202,7 @@ void MidiIn::setMidiInputPort(int in) {
 bool MidiIn::open(unsigned int port) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "MidiIn::open("<<port<<")";
+    qDebug() << "MidiIn::open(" << port << ")";
 #endif
     if (input==port && opened)
         return true;
@@ -213,19 +213,19 @@ bool MidiIn::open(unsigned int port) {
 
     firmwareVersion = 0;
 
-    if (port >= midiin->getPortCount() ) {
+    if (port >= midiin->getPortCount()) {
         qWarning() << "MidiIn::open(): trying to open midi port for reading which doesn't exist.";
         opened = false;
         return false;
     }
     try {
-        midiin->openPort( port, "In" );
-        midiin->ignoreTypes( false, true, true );
+        midiin->openPort(port, "In");
+        midiin->ignoreTypes(false, true, true);
         opened = true;
     }
-    catch ( RtMidiError &error ) {
+    catch (RtMidiError &error) {
 #ifdef DEBUG
-        qDebug() << "MidiIn::open("<<port<<"): RtMidiError on openPort().";
+        qDebug() << "MidiIn::open(" << port << "): RtMidiError on openPort().";
 #endif
         opened = false;
     }

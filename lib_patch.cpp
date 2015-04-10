@@ -29,11 +29,11 @@
 // ******************************************
 param_t Patch::parameters [108] = {
 // ******************************************
-    /*0*/ {"Oscillator 1 shape", 0, 34,&Labels::OscillatorAlgorithm},
+    /*0*/ {"Oscillator 1 shape", 0, 34, &Labels::OscillatorAlgorithm},
     /*1*/ {"Oscillator 1 parameter", 0, 127, NULL},
     /*2*/ {"Oscillator 1 range",-24, 24, NULL},
     /*3*/ {"Modulation operator", 0, 13, &Labels::Operator},
-    /*4*/ {"Oscillator 2 shape", 0, 34,&Labels::OscillatorAlgorithm},
+    /*4*/ {"Oscillator 2 shape", 0, 34, &Labels::OscillatorAlgorithm},
     /*5*/ {"Oscillator 2 parameter", 0, 127, NULL},
     /*6*/ {"Oscillator 2 range",-24, 24, NULL},
     /*7*/ {"Oscillator 2 detune", 0, 127, NULL},
@@ -230,9 +230,11 @@ void Patch::resetPatch() {
 void Patch::randomizePatch() {
 // ******************************************
     parseSysex(INIT_PATCH);
-    for (int i=0; i < 108; i++) if (enabled(i)) {
-        const param_t param = parameters[i];
-        data[i]=(rand() % (param.max-param.min))+param.min;
+    for (int i=0; i < 108; i++) {
+        if (enabled(i)) {
+            const param_t param = parameters[i];
+            data[i] = (rand() %(param.max-param.min))+param.min;
+        }
     }
     name="random";
 }
@@ -275,7 +277,7 @@ void Patch::parseSysex(unsigned char sysex[]) {
 
 
 // ******************************************
-void Patch::generateSysex (unsigned char res[]) {
+void Patch::generateSysex(unsigned char res[]) {
 // ******************************************
     int temp[108];
     // copy data:
@@ -433,12 +435,12 @@ bool Patch::loadFromDisk(QString location) {
 #endif
     QFile file(location);
 
-    if(!file.exists()) {
+    if (!file.exists()) {
         qDebug() << "The file does not exist.";
         return false;
     }
 
-    if(!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Failed to open.";
         return false;
     }
@@ -485,7 +487,7 @@ bool Patch::saveToDisk(QString location) {
 #endif
     QFile file(location);
 
-    if(!file.open(QIODevice::WriteOnly)) {
+    if (!file.open(QIODevice::WriteOnly)) {
         qDebug() << "Could not open file for saving.";
         return false;
     }
@@ -497,13 +499,13 @@ bool Patch::saveToDisk(QString location) {
         generateFullSysex(&sysex);
         len = 195;
         for (unsigned int i=0; i<len; i++)
-            temp[i]=(char) sysex[i];
+            temp[i] = (char) sysex[i];
     } else {
         unsigned char sysex[92] = {};
         generateSysex(sysex);
         len = 92;
         for (unsigned int i=0; i<len; i++)
-            temp[i]=(char) sysex[i];
+            temp[i] = (char) sysex[i];
     }
 
     bool status = file.write(temp,len)==len;

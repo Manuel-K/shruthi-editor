@@ -31,9 +31,9 @@ keyboard::keyboard() {
     octave->setMaximum(4);
 
     connect(velocity,SIGNAL(sliderMoved(int)), this, SLOT(setVelocity(int)));
-    velocity->setValue (noteVelocity);
+    velocity->setValue(noteVelocity);
     connect(octave,SIGNAL(valueChanged(int)), this, SLOT(setOctave(int)));
-    octave->setValue (noteOctave);
+    octave->setValue(noteOctave);
     connect(panic,SIGNAL(pressed()), this, SLOT(panicPushed()));
 
     for (int i=0; i<=12; i++) {
@@ -63,7 +63,7 @@ void keyboard::push() {
 #ifdef DEBUG
     qDebug() << "push()" << note;
 #endif
-    queueitem_t signal (NOTE_ON,note,noteVelocity);
+    queueitem_t signal(NOTE_ON,note,noteVelocity);
     emit enqueue(signal);
 }
 
@@ -73,7 +73,7 @@ void keyboard::panicPushed() {
 #ifdef DEBUG
     qDebug() << "panicPushed()";
 #endif
-    queueitem_t signal (NOTE_PANIC);
+    queueitem_t signal(NOTE_PANIC);
     emit enqueue(signal);
 }
 
@@ -87,7 +87,7 @@ void keyboard::release() {
 #ifdef DEBUG
     qDebug() << "release()" << note;
 #endif
-    queueitem_t signal (NOTE_OFF,note);
+    queueitem_t signal(NOTE_OFF,note);
     emit enqueue(signal);
 }
 

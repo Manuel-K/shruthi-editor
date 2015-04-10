@@ -31,10 +31,10 @@ MidiOut::MidiOut() {
     try {
         midiout = new RtMidiOut(RtMidi::UNSPECIFIED, "shruthi-editor");
     }
-    catch ( RtMidiError &error ) {
+    catch (RtMidiError &error) {
         error.printMessage();
         qWarning() << "MidiOut::MidiOut(): could not initilize midi port for writing.";
-//         exit( EXIT_FAILURE );
+//         exit(EXIT_FAILURE);
     }
 }
 
@@ -53,7 +53,7 @@ MidiOut::~MidiOut() {
 bool MidiOut::open(unsigned int port) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "MidiOut::open("<<port<<")";
+    qDebug() << "MidiOut::open(" << port << ")";
 #endif
     if (output==port && opened)
         return true;
@@ -61,18 +61,18 @@ bool MidiOut::open(unsigned int port) {
     if (opened)
         midiout->closePort();
 
-    if (port >= midiout->getPortCount() ) {
+    if (port >= midiout->getPortCount()) {
         qWarning() << "MidiOut::open(): trying to open midi port for writing which doesn't exist.";
         opened = false;
         return false;
     }
     try {
-        midiout->openPort( port, "Out" );
+        midiout->openPort(port, "Out");
         opened = true;
     }
-    catch ( RtMidiError &error ) {
+    catch (RtMidiError &error) {
 #ifdef DEBUG
-        qDebug() << "MidiOut::open("<<port<<"): RtMidiError on openPort().";
+        qDebug() << "MidiOut::open(" << port << "): RtMidiError on openPort().";
 #endif
         opened = false;
     }
@@ -110,10 +110,10 @@ bool MidiOut::write(std::vector<unsigned char> message) {
     }
 
     try {
-        midiout->sendMessage (&message);
+        midiout->sendMessage(&message);
         return true;
     }
-    catch ( RtMidiError &error ) {
+    catch (RtMidiError &error) {
         qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Error on sending.";
         error.printMessage();
     }
@@ -125,10 +125,10 @@ bool MidiOut::write(std::vector<unsigned char> message) {
 bool MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
 // ******************************************
     std::vector<unsigned char> message;
-    message.push_back( c1 );
-    message.push_back( c2 );
-    message.push_back( c3 );
-    return write( message );
+    message.push_back(c1);
+    message.push_back(c2);
+    message.push_back(c3);
+    return write(message);
 }
 
 
@@ -136,9 +136,9 @@ bool MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
 bool MidiOut::write(unsigned char c1,unsigned char c2) {
 // ******************************************
     std::vector<unsigned char> message;
-    message.push_back( c1 );
-    message.push_back( c2 );
-    return write( message );
+    message.push_back(c1);
+    message.push_back(c2);
+    return write(message);
 }
 
 
@@ -157,7 +157,7 @@ bool MidiOut::request(unsigned char which) {
                                           Midi::sysexHead[4], Midi::sysexHead[5],
                                           which, 0, 0, 0,
                                           Midi::sysexFoot};
-    return write (patchTransferRequest);
+    return write(patchTransferRequest);
 }
 
 
@@ -223,7 +223,7 @@ bool MidiOut::programChange(unsigned char channel, unsigned char program) {
 // ******************************************
 bool MidiOut::controlChange(unsigned char channel, unsigned char controller, unsigned char value) {
 // ******************************************
-    return write ((176|channel),controller,value);
+    return write((176|channel),controller,value);
 }
 
 

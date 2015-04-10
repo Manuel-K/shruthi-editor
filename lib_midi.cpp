@@ -36,10 +36,10 @@ const unsigned char Midi::sysexFoot=0xf7;
 unsigned char Midi::calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end) {
 // ******************************************
     unsigned long chk=0;
-    for(unsigned int i=start; i<end;i++) {
+    for (unsigned int i=start; i<end;i++) {
         chk+=sysex[i];
     }
-    return (unsigned char) (chk % 256);
+    return (unsigned char)(chk % 256);
 }
 
 
@@ -48,10 +48,10 @@ unsigned char Midi::calculateChecksum(const std::vector<unsigned char> *message)
 // ******************************************
 {
     unsigned long chk = 0;
-    for(unsigned int i = 0; i < message->size(); i++) {
+    for (unsigned int i = 0; i < message->size(); i++) {
         chk += message->at(i);
     }
-    return (unsigned char) (chk % 256);
+    return (unsigned char)(chk % 256);
 }
 
 
@@ -82,6 +82,7 @@ bool Midi::checkSysexHeadFoot(const std::vector<unsigned char> *message) {
     return false;
 }
 
+
 // ******************************************
 unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1)
 // ******************************************
@@ -96,11 +97,11 @@ bool Midi::parseSysex(const std::vector<unsigned char> *message, std::vector<uns
 {
     const unsigned int size = message->size();
 
-    if(!checkSysexHeadFoot(message)) {
+    if (!checkSysexHeadFoot(message)) {
         return false;
     }
 
-    for  (unsigned int i = 8; i < size - 3; i += 2) {
+    for (unsigned int i = 8; i < size - 3; i += 2) {
         const unsigned char temp = nibbleToByte(message->at(i), message->at(i+1));
         data->push_back(temp);
     }

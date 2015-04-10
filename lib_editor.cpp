@@ -77,7 +77,7 @@ QString Editor::getName() {
 // ******************************************
 void Editor::process(queueitem_t item) {
 // ******************************************
-    switch (item.action) {
+    switch(item.action) {
         case NRPN_PROCESS_EDITOR:
             actionProcessEditor(item.int0,item.int1);
             break;
@@ -189,7 +189,7 @@ void Editor::actionVersionRequest()
 void Editor::actionNrpnReceived(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Editor::actionNrpnReceived("<<nrpn<<","<<value<<")";
+    qDebug() << "Editor::actionNrpnReceived(" << nrpn << "," << value << ")";
 #endif
     if (Patch::parameters[nrpn].min<0 && value>=127)
         value-=256; //2s complement
@@ -204,7 +204,7 @@ void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if(!midiout.noteOn(channel,note,velocity))
+    if (!midiout.noteOn(channel,note,velocity))
         emit displayStatusbar("Could not send note on message.");
 }
 
@@ -215,7 +215,7 @@ void Editor::actionNoteOff(unsigned char note) {
 #ifdef DEBUG
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << ")";
 #endif
-    if(!midiout.noteOff(channel,note))
+    if (!midiout.noteOff(channel,note))
         emit displayStatusbar("Could not send note off message.");
 }
 
@@ -224,7 +224,7 @@ void Editor::actionNoteOff(unsigned char note) {
 void Editor::actionNotePanic() {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Editor::actionNotePanic(" << channel <<")";
+    qDebug() << "Editor::actionNotePanic(" << channel << ")";
 #endif
     if (midiout.allNotesOff(channel))
         emit displayStatusbar("Sent all notes off message.");
