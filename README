@@ -18,7 +18,6 @@ What doesn't work:
  - Automatic fetching/sending, e.g. on loading/saving.
  - Receiving LFO 1/2 rates per CC
  - There might be some problems with the LFO rate label!
- - Turning knobs in the sequencer settings crashes the editor.
 
 Prerequisites:
  Qt5: <http://www.qt.io/>
@@ -68,3 +67,4 @@ v0.20 * SysEx header for firmware versions >= 0.94
       * detect shruthi firmware version
       * process cc (needed for firmwares >= 1.00)
       * added missing labels
+      * fixed crash during attempt to change unknown parameters
