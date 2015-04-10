@@ -45,6 +45,14 @@ int NRPN::getNRPN(){
 }
 
 
+// ******************************************
+const bool MidiIn::isNRPN(unsigned char n0, unsigned char n1)
+// ******************************************
+{
+    return n0 == 176 && (n1 == 6 || n1 == 38 || n1 == 98 || n1 == 99);
+}
+
+
 // Format:
 //    176 99 0 (NRPN MSB set to 0)
 //    176 98 2 (NRPN LSB set to 2, from the table below: Oscillator 1 range)
@@ -122,12 +130,19 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
             signal.message=msg;
             emit enqueue(signal);
         }
-    } else if (size>=3) { 
-        if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
-            queueitem_t signal (NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue());
+    } else if (size==3) {
+        if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
+            // Parse as NRPN
+            if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
+                queueitem_t signal (NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue());
+                emit enqueue(signal);
+            }
+        } else {
+            int nrpn = Patch::ccToNrpn(message->at(1));
+            int value = Patch::parseCcValue(message->at(2), nrpn);
+            queueitem_t signal (NRPN_RECIEVED, nrpn, value);
             emit enqueue(signal);
         }
-         
     }
 }
 
@@ -219,3 +234,5 @@ bool MidiIn::open(unsigned int port) {
         qWarning() << "MidiIn::open(): could not open midi port for reading.";
     return opened;
 }
+
+

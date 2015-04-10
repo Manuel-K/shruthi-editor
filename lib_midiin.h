@@ -60,6 +60,8 @@ class MidiIn : public QObject {
         //       identify themselves as 1.00.
         unsigned int firmwareVersion;
 
+        const bool isNRPN(unsigned char, unsigned char);
+
     public:
         ~MidiIn();
         MidiIn();

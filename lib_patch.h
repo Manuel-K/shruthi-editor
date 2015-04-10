@@ -62,5 +62,8 @@ class Patch {
 
         bool loadFromDisk(QString location);
         bool saveToDisk(QString location);
+
+        static unsigned char ccToNrpn(const unsigned char cc);
+        static int parseCcValue(const unsigned int val, int nrpn);
 };
 #endif

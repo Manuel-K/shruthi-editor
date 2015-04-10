@@ -23,6 +23,7 @@
 #include <QTextStream>
 #include "stdlib.h"
 #include "time.h"
+#include <math.h>
 
 
 // ******************************************
@@ -301,6 +302,42 @@ void Patch::generateSysex (unsigned char res[]) {
     // copy data
     for (unsigned int i=0; i<92 ;i++)
         res[i] = (char) temp[i];
+}
+
+
+// ******************************************
+unsigned char Patch::ccToNrpn(const unsigned char cc)
+// ******************************************
+{
+    if (cc >= 20 && cc <= 31) {
+        return cc - 20;
+    } else if (cc == 23) {
+        return 11;
+    } else if (cc == 14 || cc == 74) {
+        return 12;
+    } else if (cc == 15 || cc == 71) {
+        return 13;
+    } else if (cc >= 102 && cc <= 119) {
+        return cc - 88;
+    } else if (cc == 73) {
+        return 20;
+    } else if (cc == 75) {
+        return 100;
+    } else if (cc >= 76 && cc <= 81) {
+        return cc - 26;
+    }
+    return 0;
+}
+
+
+// ******************************************
+int Patch::parseCcValue(const unsigned int val, int nrpn)
+// ******************************************
+{
+    const int min = parameters[nrpn].min;
+    const int max = parameters[nrpn].max;
+    const double perc = val / 127.0;
+    return min + ceil(perc * (max - min));
 }
 
 
