@@ -332,9 +332,9 @@ unsigned char Patch::ccToNrpn(const unsigned char cc)
     } else if (cc == 75) {
         return 100;
     } else if (cc >= 76 && cc <= 81) {
-        return cc - 26;
+        return cc + 26;
     }
-    return 0;
+    return 255; // Not supported
 }
 
 
