@@ -49,7 +49,7 @@ void shruthiEditorSettings::getPortInfo() {
     }
     unsigned int numdev = midiin->getPortCount();
     
-    std::cout << numdev << " midi input ports found.\n";
+    std::cout << numdev << " midi input ports found." << std::endl;
 
     for (unsigned int i=0; i < numdev; i++) {
         try {
@@ -72,7 +72,7 @@ void shruthiEditorSettings::getPortInfo() {
     }
     numdev = midiout->getPortCount();
     
-    std::cout << numdev << " midi output ports found.\n";
+    std::cout << numdev << " midi output ports found." << std::endl;
 
     for (unsigned int i=0; i < numdev; i++) {
         try {
