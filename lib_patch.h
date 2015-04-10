@@ -37,6 +37,7 @@ class Patch {
     private:
         QString name;
         int data[108];
+        unsigned char version;
         void parseSysex(unsigned char *sysex);
         void generateSysex(unsigned char res[]);
     public:
@@ -50,6 +51,7 @@ class Patch {
         int getParam(int param);
         void setName(QString name);
         QString getName();
+        QString getVersionString();
 
         void printPatch();
         void resetPatch();

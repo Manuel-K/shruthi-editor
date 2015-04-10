@@ -150,6 +150,18 @@ bool MidiOut::write(unsigned char c1,unsigned char c2) {
 
 
 // ******************************************
+bool MidiOut::request(unsigned char which) {
+// ******************************************
+    unsigned char patchTransferRequest[]={Midi::sysexHead[0], Midi::sysexHead[1],
+                                          Midi::sysexHead[2], Midi::sysexHead[3],
+                                          Midi::sysexHead[4], Midi::sysexHead[5],
+                                          which, 0, 0, 0,
+                                          Midi::sysexFoot};
+    return write (patchTransferRequest);
+}
+
+
+// ******************************************
 bool MidiOut::nrpn(int nrpn, int value) {
 // ******************************************
     if (!opened) {
@@ -215,14 +227,27 @@ bool MidiOut::controlChange(unsigned char channel, unsigned char controller, uns
 }
 
 
+
+// ******************************************
+// ******************************************
+// Requests:
+// ******************************************
+// ******************************************
+
+
 // ******************************************
 bool MidiOut::patchTransferRequest() {
 // ******************************************
-    unsigned char patchTransferRequest[]={Midi::sysexHead[0], Midi::sysexHead[1],
-                                          Midi::sysexHead[2], Midi::sysexHead[3],
-                                          Midi::sysexHead[4], Midi::sysexHead[5],
-                                          17, 0, 0, 0,
-                                          Midi::sysexFoot};
-    return write (patchTransferRequest); 
+    return request(0x11);
 }
+
+
+// ******************************************
+bool MidiOut::versionRequest()
+// ******************************************
+{
+    return request(0x1c);
+}
+
+
 

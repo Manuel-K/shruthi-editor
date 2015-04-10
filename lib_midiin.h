@@ -52,6 +52,14 @@ class MidiIn : public QObject {
 
         bool open(unsigned int);
         
+        // The major part of the version number is multiplied by 1000 and the minor part is added,
+        // ie v0.98 = 98 and 1.01 = 1001
+        // Note: The required SysEx was introduced in firmware 0.98. If the shruthi doesn't answer
+        //       to the request, assume firmware version before 0.98.
+        //       Furthermore the version field isn't updated consistently: Versions 1.01 and 1.02
+        //       identify themselves as 1.00.
+        unsigned int firmwareVersion;
+
     public:
         ~MidiIn();
         MidiIn();

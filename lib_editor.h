@@ -31,7 +31,7 @@ enum ACTIONS
     SYSEX_SEND_PATCH, NRPN_RECIEVED, SYSEX_RECIEVED, 
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE, 
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF, 
-    NOTE_PANIC};
+    NOTE_PANIC, SYSEX_VERSION_REQUEST};
 
     
 // ******************************************
@@ -80,6 +80,7 @@ class Editor : public QObject {
         void actionProcessEditor(int,int);
         void actionFetchPatch();
         void actionSendPatch();
+        void actionVersionRequest();
         void actionNrpnRecieved(int,int);
         void actionNoteOn(unsigned char, unsigned char);
         void actionNoteOff(unsigned char);

@@ -32,7 +32,8 @@ class MidiOut {
         bool write(unsigned char,unsigned char,unsigned char);
         bool write(unsigned char,unsigned char);
         bool write(unsigned char sysex[]);
-        
+        bool request(unsigned char);
+
     public:
         MidiOut();
         ~MidiOut();
@@ -46,7 +47,10 @@ class MidiOut {
         bool allNotesOff(unsigned char);
         bool programChange(unsigned char, unsigned char);
         bool controlChange(unsigned char, unsigned char, unsigned char);
+
+        // Requests:
         bool patchTransferRequest();
+        bool versionRequest();
 };
 
 #endif

@@ -146,6 +146,7 @@ unsigned char Patch::INIT_PATCH[] =
     90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
     2, 8, 0, 10, 2, 0, 11, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
     105, 116, 32, 32, 32, 32, 1, 0, 12, 0, 13, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 33};
+    // Note: pairwise equal for 0.93 and 0.98
 
 
 // ******************************************
@@ -188,6 +189,18 @@ void Patch::setName(QString new_name) {
 QString Patch::getName() {
 // ******************************************
     return name;
+}
+
+// ******************************************
+QString Patch::getVersionString()
+// ******************************************
+{
+    if (version==33) {
+        return "0.9x";
+    } else if (version==37) {
+        return "1.xx";
+    }
+    return "Unknown";
 }
 
 
@@ -316,12 +329,12 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
     sysex[j]=sysex[len-1];
     len=j+1;
     
-#ifdef POST100
-    if (!(37==sysex[len-3])) {
-#else
-    if (!(33==sysex[len-3])) { // works up to 0.98
-#endif
-        qDebug() << "Invalid patch data." << sysex[len-3];
+    // The static '!' (33) field was changed to a version field.
+    // Post 1.00 versions use a '%' (37) as identifier.
+    unsigned char this_version = sysex[len-3];
+
+    if (this_version != 37 and this_version != 33) {
+        qDebug() << "Invalid patch data. Unknown version " << this_version << ".";
         return false;
     }
     if (!Midi::calculateChecksum(sysex,8,100)==sysex[len-2]) {
@@ -335,6 +348,8 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
         tmp[i]=sysex[8+i];
 
     parseSysex(tmp);
+    version = this_version;
+    qDebug() << "Received patch with version:" << version;
     return true;
 }
 

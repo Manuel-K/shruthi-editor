@@ -42,10 +42,28 @@ unsigned char Midi::calculateChecksum(unsigned char sysex[], unsigned int start,
     return (unsigned char) (chk % 256);
 }
 
+
+// ******************************************
+unsigned char Midi::calculateChecksum(const std::vector<unsigned char> *message)
+// ******************************************
+{
+    unsigned long chk = 0;
+    for(unsigned int i = 0; i < message->size(); i++) {
+        chk += message->at(i);
+    }
+    return (unsigned char) (chk % 256);
+}
+
+
 // ******************************************
 bool Midi::checkSysexHeadFoot(const std::vector<unsigned char> *message) {
 // ******************************************
     const unsigned int size = message->size();
+
+    // Check if data is even (note: header + footer are uneven)
+    if (size % 2 == 0) {
+        return false;
+    }
 
     if (size>=7) {
         // Check header:
@@ -62,5 +80,34 @@ bool Midi::checkSysexHeadFoot(const std::vector<unsigned char> *message) {
     }
 
     return false;
+}
+
+// ******************************************
+unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1)
+// ******************************************
+{
+    return n0<<4 | n1;
+}
+
+
+// ******************************************
+bool Midi::parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data)
+// ******************************************
+{
+    const unsigned int size = message->size();
+
+    if(!checkSysexHeadFoot(message)) {
+        return false;
+    }
+
+    for  (unsigned int i = 8; i < size - 3; i += 2) {
+        const unsigned char temp = nibbleToByte(message->at(i), message->at(i+1));
+        data->push_back(temp);
+    }
+
+    const unsigned char checksum = nibbleToByte(message->at(size-3), message->at(size-2));
+    const unsigned char calculated_checksum = calculateChecksum(data);
+
+    return checksum == calculated_checksum;
 }
 

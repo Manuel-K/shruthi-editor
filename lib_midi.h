@@ -26,7 +26,10 @@ class Midi {
         static const unsigned char sysexHead[6];
         static const unsigned char sysexFoot;
         static unsigned char calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end);
+        static unsigned char calculateChecksum(const std::vector<unsigned char> *message);
         static bool checkSysexHeadFoot(const std::vector<unsigned char> *message);
+        static bool parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data);
+        static unsigned char nibbleToByte(unsigned char n0, unsigned char n1);
 };
 
 #endif

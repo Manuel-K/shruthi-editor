@@ -87,6 +87,9 @@ void Editor::process(queueitem_t item) {
         case SYSEX_SEND_PATCH:
             actionSendPatch();
             break;
+        case SYSEX_VERSION_REQUEST:
+            actionVersionRequest();
+            break;
         case NRPN_RECIEVED:
             actionNrpnRecieved(item.int0,item.int1);
             break;
@@ -169,6 +172,20 @@ void Editor::actionSendPatch() {
 
 
 // ******************************************
+void Editor::actionVersionRequest()
+// ******************************************
+{
+#ifdef DEBUG
+    qDebug() << "Editor::actionVersionRequest()";
+#endif
+    if (midiout.versionRequest())
+        emit displayStatusbar("Version request sent.");
+    else
+        emit displayStatusbar("Could not send version request.");
+}
+
+
+// ******************************************
 void Editor::actionNrpnRecieved(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUG
@@ -224,7 +241,7 @@ void Editor::actionSysexRecieved(unsigned int size, unsigned char* message) {
 #endif
     if (7<size && message[6]==1 && message[7]==0)
         if (patch.parseFullSysex(message,size))
-            emit displayStatusbar("Recieved valid patch.");
+            emit displayStatusbar("Recieved valid patch (" + patch.getVersionString() + " format).");
         else
             emit displayStatusbar("Recieved invalid patch.");
     else {

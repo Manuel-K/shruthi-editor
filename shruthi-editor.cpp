@@ -298,6 +298,13 @@ void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
         status += "not ";
     status += "ready.";
     statusBar()->showMessage(status);
+
+    // It's rather hacky to do this here, but it works:
+    if(in && out) {
+        queueitem_t signal(SYSEX_VERSION_REQUEST);
+        emit(enqueue(signal));
+    }
+
 }
 
 

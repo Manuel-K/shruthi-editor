@@ -63,7 +63,7 @@ bool NRPN::parse(int b0, int b1, int b2) {
             return false;
         case 98://NRPN_LSB
             nrpn=b2 | (nrpnMsb << 7);
-            nrpnMsb=0; 
+            nrpnMsb=0;
             return false;
         case 99: //NRPN_MSB
            nrpnMsb=b2;
@@ -83,8 +83,38 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
 // ******************************************
     int size = message->size();
 
-    if (size>=4) {
+    // For debugging purposes:
+    // Version 0.98 version SysEx Message:
+    //std::vector<unsigned char> *message098 = new std::vector<unsigned char>;
+    //message098->push_back(240);
+    //message098->push_back(0);
+    //message098->push_back(33);
+    //message098->push_back(2);
+    //message098->push_back(0);
+    //message098->push_back(2);
+    //message098->push_back(12);
+    //message098->push_back(0);
+    //message098->push_back(0);
+    //message098->push_back(0);
+    //message098->push_back(6);
+    //message098->push_back(2);
+    //message098->push_back(6);
+    //message098->push_back(2);
+    //message098->push_back(247);
+
+
+    // version info has a size of 15
+    if (size == 15) {
+        std::vector<unsigned char> data;
+        if (message->at(6) == 0x0c && message->at(7) == 0 && Midi::parseSysex(message, &data)) {
+            firmwareVersion = data.at(0) * 1000 + data.at(1);
+            std::cout << "Firmware version:" << firmwareVersion << std::endl;
+            return;
+        }
+    } else if (size>=4) {
         if (Midi::checkSysexHeadFoot(message)) {
+
+            // patch has a size of 195
             unsigned char *msg = new unsigned char[size];
             for (int i=0; i<size;i++)
                 msg[i]= message->at(i);
@@ -117,6 +147,7 @@ MidiIn::MidiIn() {
 #endif
     opened = false;
     input = -1;
+    firmwareVersion = 0;
     
     try {
         midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
@@ -164,6 +195,8 @@ bool MidiIn::open(unsigned int port) {
         midiin->closePort();
     }
     
+    firmwareVersion = 0;
+
     if (port >= midiin->getPortCount() ) {
         qWarning() << "MidiIn::open(): trying to open midi port for reading which doesn't exist.";
         opened = false;
