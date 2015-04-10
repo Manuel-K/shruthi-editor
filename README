@@ -12,10 +12,11 @@ What works:
    editor.
  - Generate random patches.
  - Loading/saving full patch sysex.
- - Editing up to (and including) firmware version 0.98
+ - Editing up to (and including) firmware version 1.02
 
 What doesn't work:
  - Automatic fetching/sending, e.g. on loading/saving.
+ - Some labels are missing.
 
 
 Prerequisites:
@@ -62,3 +63,6 @@ v0.19 * tweaked the keyboard dialog. keys are now black/white
 v0.20 * SysEx header for firmware versions >= 0.94
       * updated patch definitions
       * set midi client/port names (no more default RtMidi names)
+      * detect patch version
+      * detect shruthi firmware version
+      * process cc (needed for firmwares >= 1.00)
