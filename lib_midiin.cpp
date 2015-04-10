@@ -80,7 +80,7 @@ bool NRPN::parse(int b0, int b1, int b2) {
            break;
     } 
 #ifdef DEBUG
-    qDebug()<< "NRPN_Parser: Recieved unknown message:"<<b0<<","<<b1<<","<<b2;
+    qDebug()<< "NRPN_Parser: Received unknown message:"<<b0<<","<<b1<<","<<b2;
 #endif
     return false;
 }
@@ -126,7 +126,7 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
             unsigned char *msg = new unsigned char[size];
             for (int i=0; i<size;i++)
                 msg[i]= message->at(i);
-            queueitem_t signal (SYSEX_RECIEVED,msg,size);
+            queueitem_t signal (SYSEX_RECEIVED,msg,size);
             signal.message=msg;
             emit enqueue(signal);
         }
@@ -134,13 +134,13 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
         if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
             // Parse as NRPN
             if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
-                queueitem_t signal (NRPN_RECIEVED,nrpn.getNRPN(),nrpn.getValue());
+                queueitem_t signal (NRPN_RECEIVED,nrpn.getNRPN(),nrpn.getValue());
                 emit enqueue(signal);
             }
         } else {
             int nrpn = Patch::ccToNrpn(message->at(1));
             int value = Patch::parseCcValue(message->at(2), nrpn);
-            queueitem_t signal (NRPN_RECIEVED, nrpn, value);
+            queueitem_t signal (NRPN_RECEIVED, nrpn, value);
             emit enqueue(signal);
         }
     }

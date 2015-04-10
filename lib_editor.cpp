@@ -90,8 +90,8 @@ void Editor::process(queueitem_t item) {
         case SYSEX_VERSION_REQUEST:
             actionVersionRequest();
             break;
-        case NRPN_RECIEVED:
-            actionNrpnRecieved(item.int0,item.int1);
+        case NRPN_RECEIVED:
+            actionNrpnReceived(item.int0,item.int1);
             break;
         case NOTE_ON:
             actionNoteOn(item.int0,item.int1);
@@ -102,8 +102,8 @@ void Editor::process(queueitem_t item) {
         case NOTE_PANIC:
             actionNotePanic();
             break;
-        case SYSEX_RECIEVED:
-            actionSysexRecieved(item.size,item.message);
+        case SYSEX_RECEIVED:
+            actionSysexReceived(item.size,item.message);
             break;
         case SET_PATCHNAME:
             actionSetPatchname(item.string);
@@ -186,10 +186,10 @@ void Editor::actionVersionRequest()
 
 
 // ******************************************
-void Editor::actionNrpnRecieved(int nrpn, int value) {
+void Editor::actionNrpnReceived(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Editor::actionNrpnRecieved("<<nrpn<<","<<value<<")";
+    qDebug() << "Editor::actionNrpnReceived("<<nrpn<<","<<value<<")";
 #endif
     if (Patch::parameters[nrpn].min<0 && value>=127)
         value-=256; //2s complement
@@ -234,18 +234,18 @@ void Editor::actionNotePanic() {
 
 
 // ******************************************
-void Editor::actionSysexRecieved(unsigned int size, unsigned char* message) {
+void Editor::actionSysexReceived(unsigned int size, unsigned char* message) {
 // ******************************************
 #ifdef DEBUG
-    qDebug() << "Editor::actionSysexRecieved(" << size << ",...)";
+    qDebug() << "Editor::actionSysexReceived(" << size << ",...)";
 #endif
     if (7<size && message[6]==1 && message[7]==0)
         if (patch.parseFullSysex(message,size))
-            emit displayStatusbar("Recieved valid patch (" + patch.getVersionString() + " format).");
+            emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
         else
-            emit displayStatusbar("Recieved invalid patch.");
+            emit displayStatusbar("Received invalid patch.");
     else {
-        emit displayStatusbar("Recieved unknown sysex.");
+        emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUG
         qDebug() << "unknown sysex type";
 #endif
