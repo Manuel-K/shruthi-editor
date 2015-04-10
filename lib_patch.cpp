@@ -311,8 +311,14 @@ void Patch::generateSysex(unsigned char res[]) {
 unsigned char Patch::ccToNrpn(const unsigned char cc)
 // ******************************************
 {
-    if (cc >= 20 && cc <= 31) {
+    if (cc >= 20 && cc <= 22) {
         return cc - 20;
+    } else if (cc == 28) {
+        return 3;
+    } else if (cc >= 24 && cc <= 27) {
+        return cc - 20;
+    } else if (cc >= 29 && cc <= 31) {
+        return cc - 21;
     } else if (cc == 23) {
         return 11;
     } else if (cc == 14 || cc == 74) {
