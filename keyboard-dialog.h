@@ -28,7 +28,7 @@ class keyboard : public QDialog, private Ui::keyboard{
     Q_OBJECT
 
     public:
-        keyboard(QWidget *parent = 0);
+        keyboard();
     private:
         unsigned char noteOctave;
         unsigned char noteVelocity;

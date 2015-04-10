@@ -26,7 +26,7 @@ class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
     Q_OBJECT
 
     public:
-        shruthiEditorSettings(QWidget *parent = 0);
+        shruthiEditorSettings();
         void getPortInfo();
 
     public:

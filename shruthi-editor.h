@@ -29,7 +29,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
     Q_OBJECT
 
     public:
-        shruthiEditorMainWindow(Editor* edit, QWidget *parent = 0);
+        shruthiEditorMainWindow(Editor* edit);
     private:
         void displayMidiStatusChanged(bool, bool);
         void closeEvent (QCloseEvent* event);

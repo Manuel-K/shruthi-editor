@@ -20,7 +20,7 @@
 #include "keyboard-dialog.h"
 
 // ******************************************
-keyboard::keyboard(QWidget *parent) {
+keyboard::keyboard() {
 // ******************************************
     setupUi(this);
     QPushButton *tmp;

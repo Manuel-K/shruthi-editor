@@ -22,7 +22,7 @@
 #include "RtMidi.h"
 
 // ******************************************
-shruthiEditorSettings::shruthiEditorSettings(QWidget *parent) {
+shruthiEditorSettings::shruthiEditorSettings() {
 // ******************************************
     setupUi(this);
     getPortInfo();

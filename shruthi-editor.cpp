@@ -25,7 +25,7 @@
 #define VERSION "0.19"
 
 // ******************************************
-shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) {
+shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
 // ******************************************
     setupUi(this);
     editor = edit;
