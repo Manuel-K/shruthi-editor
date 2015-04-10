@@ -359,6 +359,15 @@ int Patch::parseCcValue(const unsigned int val, int nrpn)
     const int min = parameters[nrpn].min;
     const int max = parameters[nrpn].max;
     const double perc = val / 127.0;
+
+    // Try to emulate Shruthi's LFO rate extrapolation:
+    if (nrpn == 25  || nrpn == 29) {
+        int temp = min + floor(perc * (max - min));
+        if (temp == 143)
+            return 142;
+        return temp;
+    }
+
     return min + ceil(perc * (max - min));
 }
 
