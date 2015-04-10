@@ -38,8 +38,8 @@ QStringList Labels::ModulationSource = QStringList()
   << "CV 4"
   << "CC A (16)"
   << "CC B (17)"
-  << "CC C (18)"
-  << "CC D (19)"
+  << "CC C (18) Breath"
+  << "CC D (19) Pedal"
   << "Noise"
   << "Env 1"
   << "Env 2"
@@ -49,7 +49,11 @@ QStringList Labels::ModulationSource = QStringList()
   << "Gate"
   << "Audio"
   << "Operator 1"
-  << "Operator 2";
+  << "Operator 2"
+  << "=4"
+  << "=8"
+  << "=16"
+  << "=32";
 
 
 // ******************************************
