@@ -234,6 +234,7 @@ void shruthiEditorMainWindow::aboutQt() {
 // ******************************************
 void shruthiEditorMainWindow::closeEvent (QCloseEvent* event) {
 // ******************************************
+    Q_UNUSED(event);
     quitShruthiEditor();
 }
 

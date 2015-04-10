@@ -150,7 +150,8 @@ void MidiIn::process ( std::vector< unsigned char > *message ) {
 // ******************************************
 void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData ) {
 // ******************************************
-  ((MidiIn*) userData) -> process(message);
+    Q_UNUSED(deltatime);
+    ((MidiIn*) userData) -> process(message);
 }
 
 
