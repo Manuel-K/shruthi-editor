@@ -608,7 +608,7 @@ void MidiInCore :: openPort( unsigned int portNumber, const std::string portName
 
   MIDIPortRef port;
   CoreMidiData *data = static_cast<CoreMidiData *> (apiData_);
-  OSStatus result = MIDIInputPortCreate( data->client, 
+  OSStatus result = MIDIInputPortCreate( data->client,
                                          CFStringCreateWithCString( NULL, portName.c_str(), kCFStringEncodingASCII ),
                                          midiInputCallback, (void *)&inputData_, &port );
   if ( result != noErr ) {
@@ -798,7 +798,7 @@ static CFStringRef ConnectedEndpointName( MIDIEndpointRef endpoint )
   if ( anyStrings )
     return result;
 
-  // Here, either the endpoint had no connections, or we failed to obtain names 
+  // Here, either the endpoint had no connections, or we failed to obtain names
   return EndpointName( endpoint, false );
 }
 
@@ -892,7 +892,7 @@ std::string MidiOutCore :: getPortName( unsigned int portNumber )
   nameRef = ConnectedEndpointName(portRef);
   CFStringGetCString( nameRef, name, sizeof(name), CFStringGetSystemEncoding());
   CFRelease( nameRef );
-  
+
   return stringName = name;
 }
 
@@ -922,7 +922,7 @@ void MidiOutCore :: openPort( unsigned int portNumber, const std::string portNam
 
   MIDIPortRef port;
   CoreMidiData *data = static_cast<CoreMidiData *> (apiData_);
-  OSStatus result = MIDIOutputPortCreate( data->client, 
+  OSStatus result = MIDIOutputPortCreate( data->client,
                                           CFStringCreateWithCString( NULL, portName.c_str(), kCFStringEncodingASCII ),
                                           &port );
   if ( result != noErr ) {
@@ -995,7 +995,7 @@ void MidiOutCore :: sendMessage( std::vector<unsigned char> *message )
   // messages.  Otherwise, we use a single CoreMidi MIDIPacket.
   unsigned int nBytes = message->size();
   if ( nBytes == 0 ) {
-    errorString_ = "MidiOutCore::sendMessage: no data in message argument!";      
+    errorString_ = "MidiOutCore::sendMessage: no data in message argument!";
     error( RtMidiError::WARNING, errorString_ );
     return;
   }
@@ -1053,7 +1053,7 @@ void MidiOutCore :: sendMessage( std::vector<unsigned char> *message )
   MIDIPacket *packet = MIDIPacketListInit( &packetList );
   packet = MIDIPacketListAdd( &packetList, sizeof(packetList), packet, timeStamp, nBytes, (const Byte *) &message->at( 0 ) );
   if ( !packet ) {
-    errorString_ = "MidiOutCore::sendMessage: could not allocate packet list";      
+    errorString_ = "MidiOutCore::sendMessage: could not allocate packet list";
     error( RtMidiError::DRIVER_ERROR, errorString_ );
     return;
   }
@@ -1509,12 +1509,12 @@ void MidiInAlsa :: openPort( unsigned int portNumber, const std::string portName
     snd_seq_port_info_set_midi_channels(pinfo, 16);
 #ifndef AVOID_TIMESTAMPING
     snd_seq_port_info_set_timestamping(pinfo, 1);
-    snd_seq_port_info_set_timestamp_real(pinfo, 1);    
+    snd_seq_port_info_set_timestamp_real(pinfo, 1);
     snd_seq_port_info_set_timestamp_queue(pinfo, data->queue_id);
 #endif
     snd_seq_port_info_set_name(pinfo,  portName.c_str() );
     data->vport = snd_seq_create_port(data->seq, pinfo);
-  
+
     if ( data->vport < 0 ) {
       errorString_ = "MidiInAlsa::openPort: ALSA error creating input port.";
       error( RtMidiError::DRIVER_ERROR, errorString_ );
@@ -1588,7 +1588,7 @@ void MidiInAlsa :: openVirtualPort( std::string portName )
     snd_seq_port_info_set_midi_channels(pinfo, 16);
 #ifndef AVOID_TIMESTAMPING
     snd_seq_port_info_set_timestamping(pinfo, 1);
-    snd_seq_port_info_set_timestamp_real(pinfo, 1);    
+    snd_seq_port_info_set_timestamp_real(pinfo, 1);
     snd_seq_port_info_set_timestamp_queue(pinfo, data->queue_id);
 #endif
     snd_seq_port_info_set_name(pinfo, portName.c_str());
@@ -1941,7 +1941,7 @@ struct WinMidiData {
 //*********************************************************************//
 
 static void CALLBACK midiInputCallback( HMIDIIN /*hmin*/,
-                                        UINT inputStatus, 
+                                        UINT inputStatus,
                                         DWORD_PTR instancePtr,
                                         DWORD_PTR midiMessage,
                                         DWORD timestamp )
@@ -1991,8 +1991,8 @@ static void CALLBACK midiInputCallback( HMIDIIN /*hmin*/,
     for ( int i=0; i<nBytes; ++i ) apiData->message.bytes.push_back( *ptr++ );
   }
   else { // Sysex message ( MIM_LONGDATA or MIM_LONGERROR )
-    MIDIHDR *sysex = ( MIDIHDR *) midiMessage; 
-    if ( !( data->ignoreFlags & 0x01 ) && inputStatus != MIM_LONGERROR ) {  
+    MIDIHDR *sysex = ( MIDIHDR *) midiMessage;
+    if ( !( data->ignoreFlags & 0x01 ) && inputStatus != MIM_LONGERROR ) {
       // Sysex message and we're not ignoring it
       for ( int i=0; i<(int)sysex->dwBytesRecorded; ++i )
         apiData->message.bytes.push_back( sysex->lpData[i] );
@@ -2211,7 +2211,7 @@ std::string MidiInWinMM :: getPortName( unsigned int portNumber )
   stringName = std::string( deviceCaps.szPname );
 #endif
 
-  // Next lines added to add the portNumber to the name so that 
+  // Next lines added to add the portNumber to the name so that
   // the device's names are sure to be listed with individual names
   // even when they have the same brand name
   std::ostringstream os;
@@ -2374,7 +2374,7 @@ void MidiOutWinMM :: sendMessage( std::vector<unsigned char> *message )
     sysex.lpData = (LPSTR) buffer;
     sysex.dwBufferLength = nBytes;
     sysex.dwFlags = 0;
-    result = midiOutPrepareHeader( data->outHandle,  &sysex, sizeof(MIDIHDR) ); 
+    result = midiOutPrepareHeader( data->outHandle,  &sysex, sizeof(MIDIHDR) );
     if ( result != MMSYSERR_NOERROR ) {
       free( buffer );
       errorString_ = "MidiOutWinMM::sendMessage: error preparing sysex header.";

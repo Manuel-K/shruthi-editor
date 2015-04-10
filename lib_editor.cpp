@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -107,7 +107,7 @@ void Editor::process(queueitem_t item) {
             break;
         case SET_PATCHNAME:
             actionSetPatchname(item.string);
-            break; 
+            break;
         case FILEIO_LOAD:
             actionLoadPatch(item.string);
             break;

@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -66,7 +66,7 @@ void SignalRouter::enqueue(queueitem_t item) {
         queue.enqueue(item);
     else if (editorEnabled) {
         editorWorking=true;
-        
+
         emit editorProcess(item);
     }
 }

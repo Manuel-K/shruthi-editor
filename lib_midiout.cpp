@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -65,7 +65,7 @@ bool MidiOut::open(unsigned int port) {
         qWarning() << "MidiOut::open(): trying to open midi port for writing which doesn't exist.";
         opened = false;
         return false;
-    } 
+    }
     try {
         midiout->openPort( port, "Out" );
         opened = true;
@@ -91,7 +91,7 @@ bool MidiOut::write(unsigned char sysex[]) {
         qDebug() << "MidiOut::write(unsigned char[]): could not send. Port not opened.";
         return false;
     }
-    
+
     std::vector<unsigned char> message;
     int i;
     for (i=0; sysex[i]!=247; i++)
@@ -108,7 +108,7 @@ bool MidiOut::write(std::vector<unsigned char> message) {
         qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Port not opened.";
         return false;
     }
-    
+
     try {
         midiout->sendMessage (&message);
         return true;
@@ -168,7 +168,7 @@ bool MidiOut::nrpn(int nrpn, int value) {
         qDebug() << "MidiOut::nrpn(): could not send. Port not opened.";
         return false;
     }
-      
+
     int32_t nrpn_msb=nrpn>>7;
     int32_t nrpn_lsb=nrpn%128;
     int32_t value_msb;
@@ -180,9 +180,9 @@ bool MidiOut::nrpn(int nrpn, int value) {
       value_msb=value>>7;
       value_lsb=value%128;
     }
-    return (write(176, 99, nrpn_msb) && 
-            write(176, 98, nrpn_lsb) && 
-            write(176, 6, value_msb) && 
+    return (write(176, 99, nrpn_msb) &&
+            write(176, 98, nrpn_lsb) &&
+            write(176, 6, value_msb) &&
             write(176, 38, value_lsb));
 }
 
@@ -223,7 +223,7 @@ bool MidiOut::programChange(unsigned char channel, unsigned char program) {
 // ******************************************
 bool MidiOut::controlChange(unsigned char channel, unsigned char controller, unsigned char value) {
 // ******************************************
-    return write ((176|channel),controller,value); 
+    return write ((176|channel),controller,value);
 }
 
 

@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -24,12 +24,12 @@ keyboard::keyboard(QWidget *parent) {
 // ******************************************
     setupUi(this);
     QPushButton *tmp;
-    
+
     noteOctave = 0;
     noteVelocity = 64;
     octave->setMinimum(-4);
     octave->setMaximum(4);
-    
+
     connect(velocity,SIGNAL(sliderMoved(int)), this, SLOT(setVelocity(int)));
     velocity->setValue (noteVelocity);
     connect(octave,SIGNAL(valueChanged(int)), this, SLOT(setOctave(int)));

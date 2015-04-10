@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -27,7 +27,7 @@
 // ******************************************
 shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) {
 // ******************************************
-    setupUi(this); 
+    setupUi(this);
     editor = edit;
 
     // Setup Dials/ComboBoxes:
@@ -50,7 +50,7 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit, QWidget *parent) 
 
     // Now that everything is set up, update all UI elements:
     redrawAll();
-    
+
     // other UI Signals:
     connect(actionLoad_Patch,SIGNAL(triggered()), this, SLOT(loadPatch()));
     connect(actionSave_Patch,SIGNAL(triggered()), this, SLOT(savePatch()));
@@ -144,7 +144,7 @@ void shruthiEditorMainWindow::loadPatch() {
     QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".sp", "All possible files (*.sp *.syx);;Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
         queueitem_t signal (FILEIO_LOAD,filename);
-        emit(enqueue(signal));        
+        emit(enqueue(signal));
     }
 }
 
@@ -155,7 +155,7 @@ void shruthiEditorMainWindow::savePatch() {
     QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
         queueitem_t signal (FILEIO_SAVE,filename);
-        emit(enqueue(signal));      
+        emit(enqueue(signal));
     }
 }
 
@@ -164,7 +164,7 @@ void shruthiEditorMainWindow::savePatch() {
 void shruthiEditorMainWindow::fetchPatch() {
 // ******************************************
     queueitem_t signal (SYSEX_FETCH_PATCH);
-    emit(enqueue(signal));   
+    emit(enqueue(signal));
 }
 
 
@@ -172,7 +172,7 @@ void shruthiEditorMainWindow::fetchPatch() {
 void shruthiEditorMainWindow::sendPatch() {
 // ******************************************
     queueitem_t signal (SYSEX_SEND_PATCH);
-    emit(enqueue(signal));   
+    emit(enqueue(signal));
 }
 
 

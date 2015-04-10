@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -25,15 +25,15 @@
 
 
 // ******************************************
-enum ACTIONS  
+enum ACTIONS
 // ******************************************
-    {NRPN_PROCESS_EDITOR, SYSEX_FETCH_PATCH, 
-    SYSEX_SEND_PATCH, NRPN_RECEIVED, SYSEX_RECEIVED, 
-    SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE, 
-    RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF, 
+    {NRPN_PROCESS_EDITOR, SYSEX_FETCH_PATCH,
+    SYSEX_SEND_PATCH, NRPN_RECEIVED, SYSEX_RECEIVED,
+    SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE,
+    RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF,
     NOTE_PANIC, SYSEX_VERSION_REQUEST};
 
-    
+
 // ******************************************
 struct queueitem_t {
 // ******************************************
@@ -49,21 +49,21 @@ struct queueitem_t {
         action=a;
     }
     queueitem_t (ACTIONS a, int i0, int i1) {
-        action=a; 
-        int0=i0; 
+        action=a;
+        int0=i0;
         int1=i1;
     }
     queueitem_t (ACTIONS a, int i0) {
-        action=a; 
-        int0=i0; 
+        action=a;
+        int0=i0;
     }
     queueitem_t (ACTIONS a, QString s) {
-        action=a; 
+        action=a;
         string=s;
     }
     queueitem_t (ACTIONS a, unsigned char *m, unsigned int s) {
-        action=a; 
-        message=m; 
+        action=a;
+        message=m;
         size=s;
     }
 };
@@ -91,7 +91,7 @@ class Editor : public QObject {
         void actionSavePatch(QString);
         void actionResetPatch();
         void actionRandomizePatch();
-        
+
     public:
         Editor();
         ~Editor();

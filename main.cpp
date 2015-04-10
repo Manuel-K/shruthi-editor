@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -35,20 +35,20 @@
 int main(int argc, char *argv[]) {
 // ******************************************
     qRegisterMetaType<queueitem_t>("queueitem_t");
-    
-#ifdef CLEANLOOKS    
+
+#ifdef CLEANLOOKS
     QApplication::setStyle(new QCleanlooksStyle);
 #endif
-    
+
     int retVal;
-    
+
     {
         // Setup signalrouter
         SignalRouter sr;
         QThread srThread;
         sr.connect(&srThread, SIGNAL(started()),SLOT(run()));
         sr.moveToThread(&srThread);
-        
+
         // Setup editor
         Editor editor;
         QThread editorThread;
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
         keys.connect(main_window,SIGNAL(showKeyboard()),SLOT(showKeyboard()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
         keys.setFixedSize(keys.width(),keys.height());
-        
+
         // Start editor
         editorThread.start();
 
@@ -102,12 +102,12 @@ int main(int argc, char *argv[]) {
 
         // start signal router
         srThread.start();
-        
+
         main_window->show();
         retVal= app.exec();
 #ifdef DEBUG
         qDebug() << "main: shutting down...";
-        
+
         qDebug() << "srThread.quit()";
 #endif
         srThread.quit();
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
         midiinThread.quit();
         midiinThread.wait(1000);
     }
-    
+
 #ifdef DEBUG
     qDebug() << "return"<< retVal;
 #endif

@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -45,13 +45,13 @@ class MidiIn : public QObject {
     Q_OBJECT
     private:
         NRPN nrpn;
-        
+
         RtMidiIn* midiin;
         bool opened;
         unsigned int input;
 
         bool open(unsigned int);
-        
+
         // The major part of the version number is multiplied by 1000 and the minor part is added,
         // ie v0.98 = 98 and 1.01 = 1001
         // Note: The required SysEx was introduced in firmware 0.98. If the shruthi doesn't answer

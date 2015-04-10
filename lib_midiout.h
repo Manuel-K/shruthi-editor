@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -27,7 +27,7 @@ class MidiOut {
         RtMidiOut* midiout;
         bool opened;
         unsigned int output;
-        
+
         // Wrappers:
         bool write(unsigned char,unsigned char,unsigned char);
         bool write(unsigned char,unsigned char);
@@ -39,7 +39,7 @@ class MidiOut {
         ~MidiOut();
         bool open(unsigned int channel);
         bool write(std::vector<unsigned char> sysex);
-        
+
         // Wrappers:
         bool nrpn(int nrpn, int value);
         bool noteOn(unsigned char, unsigned char, unsigned char);

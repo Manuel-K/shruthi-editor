@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -78,7 +78,7 @@ bool NRPN::parse(int b0, int b1, int b2) {
            return false;
         default:
            break;
-    } 
+    }
 #ifdef DEBUG
     qDebug()<< "NRPN_Parser: Received unknown message:"<<b0<<","<<b1<<","<<b2;
 #endif
@@ -163,7 +163,7 @@ MidiIn::MidiIn() {
     opened = false;
     input = -1;
     firmwareVersion = 0;
-    
+
     try {
         midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
         midiin->setCallback(&mycallback,this);
@@ -209,14 +209,14 @@ bool MidiIn::open(unsigned int port) {
     if (opened) {
         midiin->closePort();
     }
-    
+
     firmwareVersion = 0;
 
     if (port >= midiin->getPortCount() ) {
         qWarning() << "MidiIn::open(): trying to open midi port for reading which doesn't exist.";
         opened = false;
         return false;
-    } 
+    }
     try {
         midiin->openPort( port, "In" );
         midiin->ignoreTypes( false, true, true );

@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -18,10 +18,10 @@
 
 #ifndef SETTINGS_DIALOG_H
 #define SETTINGS_DIALOG_H
- 
+
 #include "ui_settings-dialog.h"
- 
- 
+
+
 class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
     Q_OBJECT
 
@@ -36,6 +36,6 @@ class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
         void setMidiChannel(unsigned char);
         unsigned char getMidiChannel();
 };
- 
- 
+
+
 #endif

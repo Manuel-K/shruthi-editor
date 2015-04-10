@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -44,9 +44,9 @@ class Patch {
         static param_t parameters[];
         static unsigned char INIT_PATCH[];
         static bool enabled(int);
-        
+
         Patch();
-        
+
         void setParam(int param, int value);
         int getParam(int param);
         void setName(QString name);

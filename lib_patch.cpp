@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -141,7 +141,7 @@ param_t Patch::parameters [108] = {
 
 
 // ******************************************
-unsigned char Patch::INIT_PATCH[] = 
+unsigned char Patch::INIT_PATCH[] =
 // ******************************************
     {1, 0, 0, 0, 2, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
     90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
@@ -242,13 +242,13 @@ void Patch::randomizePatch() {
 void Patch::parseSysex(unsigned char sysex[]) {
 // ******************************************
     int temp[108];
-    
+
     // copy sysex data:
     for (int i=0; i<92 ;i++)
         temp[i] = sysex[i];
     for (int i=100; i<108 ;i++)
         temp[i] = 0;
-    
+
     // uncompress data:
     temp[92] = temp[86]>>4; // filter_1_mode_
     temp[93] = temp[86]%16; // filter_2_mode_
@@ -260,7 +260,7 @@ void Patch::parseSysex(unsigned char sysex[]) {
     temp[99] = temp[90]%8; // op 2 out
 
     // fix negative values (2s complement):
-    for (int i=0; i < 108; i++) if (enabled(i)) 
+    for (int i=0; i < 108; i++) if (enabled(i))
         if (parameters[i].min < 0)
             temp[i] -= (temp[i]>>7)*256;
     // store patch
@@ -281,10 +281,10 @@ void Patch::generateSysex (unsigned char res[]) {
     // copy data:
     for (int i=0; i<108 ;i++)
         temp[i] = data[i];
-    
+
     // fix negative values (2s complement):
-    for (unsigned int i=0; i < 92; i++) if (enabled(i)) 
-        if (parameters[i].min < 0 && temp[i]<0)        
+    for (unsigned int i=0; i < 92; i++) if (enabled(i))
+        if (parameters[i].min < 0 && temp[i]<0)
             temp[i]+=256;
     // compress data
     temp[86] = (temp[92]<<4) | temp[93];
@@ -293,12 +293,12 @@ void Patch::generateSysex (unsigned char res[]) {
     temp[89] = temp[97];
     temp[90] = (temp[98]<<3) | temp[99];
     temp[91] = 33; // ascii value of !
-    
+
     // set name:
     QString temp_name = QString("%1").arg(name, -8, ' '); // pad name
     for (unsigned int i=0; i<8; i++) //->(68,76):
         temp[68+i]=temp_name.at(i).toLatin1();
-    
+
     // copy data
     for (unsigned int i=0; i<92 ;i++)
         res[i] = (char) temp[i];
@@ -345,8 +345,8 @@ int Patch::parseCcValue(const unsigned int val, int nrpn)
 bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
 // ******************************************
     // check if valid:
-    if (!(sysex[0]==Midi::sysexHead[0] && sysex[1]==Midi::sysexHead[1] && 
-          sysex[2]==Midi::sysexHead[2] && sysex[3]==Midi::sysexHead[3] && 
+    if (!(sysex[0]==Midi::sysexHead[0] && sysex[1]==Midi::sysexHead[1] &&
+          sysex[2]==Midi::sysexHead[2] && sysex[3]==Midi::sysexHead[3] &&
           sysex[4]==Midi::sysexHead[4] && sysex[5]==Midi::sysexHead[5])) {
         qDebug() << "Invalid sysex header.";
         return false;
@@ -365,7 +365,7 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
         sysex[j++] = sysex[i]<<4|sysex[i+1];
     sysex[j]=sysex[len-1];
     len=j+1;
-    
+
     // The static '!' (33) field was changed to a version field.
     // Post 1.00 versions use a '%' (37) as identifier.
     unsigned char this_version = sysex[len-3];
@@ -378,8 +378,8 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
         qDebug() << "Invalid checksum.";
         return false;
     }
-    
-    // throw padding away:   
+
+    // throw padding away:
     unsigned char tmp[92];
     for (int i=0; i<92;i++)
         tmp[i]=sysex[8+i];
@@ -397,7 +397,7 @@ bool Patch::parseFullSysex(std::vector<unsigned char> message) {
     // copy to temporay array:
     unsigned char *sysex = new unsigned char[message.size()];
     for (unsigned int i=0; i<message.size();i++)
-        sysex[i] = message.at(i); 
+        sysex[i] = message.at(i);
     return parseFullSysex(sysex, message.size());
 }
 
@@ -406,16 +406,16 @@ bool Patch::parseFullSysex(std::vector<unsigned char> message) {
 void Patch::generateFullSysex(std::vector<unsigned char> *message) {
 // ******************************************
     message->reserve(195); // Note: must have at least 195 entries.
-    
+
     unsigned char temp[93];
     generateSysex(temp);
-    
+
     for (unsigned int i=0; i<6; i++)
         message->push_back(Midi::sysexHead[i]);
     message->push_back(1);
     message->push_back(0);
     temp[92]=Midi::calculateChecksum(temp,0,92);
-    
+
     // expand bytes to nibbles:
     for (unsigned int i=0;i<93;i++) {
         message->push_back((temp[i]>>4)&0x0F);
@@ -448,7 +448,7 @@ bool Patch::loadFromDisk(QString location) {
     file.close();
 
 #ifdef DEBUG
-    qDebug() << "Read" << readBytes << "bytes.";   
+    qDebug() << "Read" << readBytes << "bytes.";
 #endif
 
     unsigned char sysex[195] = {};
@@ -462,12 +462,12 @@ bool Patch::loadFromDisk(QString location) {
     // primitive check if patch is valid:
     if (readBytes==195) {
 #ifdef DEBUG
-        qDebug() << "Detected full patch sysex.";   
+        qDebug() << "Detected full patch sysex.";
 #endif
         return parseFullSysex(sysex,195);
     } else if (readBytes==92 && tmp[91]==33) { // last field is !
 #ifdef DEBUG
-        qDebug() << "Detected light patch files.";   
+        qDebug() << "Detected light patch files.";
 #endif
         parseSysex(sysex);
         return true;
@@ -505,7 +505,7 @@ bool Patch::saveToDisk(QString location) {
         for (unsigned int i=0; i<len; i++)
             temp[i]=(char) sysex[i];
     }
-    
+
     bool status = file.write(temp,len)==len;
 
     file.close();

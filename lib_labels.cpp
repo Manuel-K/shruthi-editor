@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -20,7 +20,7 @@
 #include <QStringList>
 
 // ******************************************
-QStringList Labels::ModulationSource = QStringList() 
+QStringList Labels::ModulationSource = QStringList()
 // ******************************************
   <<"Lfo 1"
   <<"Lfo 2"
@@ -53,7 +53,7 @@ QStringList Labels::ModulationSource = QStringList()
 
 
 // ******************************************
-QStringList Labels::ModulationDestination = QStringList() 
+QStringList Labels::ModulationDestination = QStringList()
 // ******************************************
   <<"Filter cutoff"
   <<"VCA gain"
@@ -81,52 +81,52 @@ QStringList Labels::PatchParameter = QStringList();
 //   <<"PRM_OSC_PARAMETER_1"
 //   <<"PRM_OSC_RANGE_1"
 //   <<"PRM_OSC_OPTION_1"
-// 
+//
 //   <<"PRM_OSC_SHAPE_2"
 //   <<"PRM_OSC_PARAMETER_2"
 //   <<"PRM_OSC_RANGE_2"
 //   <<"PRM_OSC_OPTION_2"
-// 
+//
 //   <<"PRM_MIX_BALANCE"
 //   <<"PRM_MIX_SUB_OSC"
 //   <<"PRM_MIX_NOISE"
 //   <<"PRM_MIX_SUB_OSC_SHAPE"
-// 
+//
 //   <<"PRM_FILTER_CUTOFF"
 //   <<"PRM_FILTER_RESONANCE"
 //   <<"PRM_FILTER_ENV"
 //   <<"PRM_FILTER_LFO"
-// 
+//
 //   <<"PRM_ENV_ATTACK_1"
 //   <<"PRM_ENV_DECAY_1"
 //   <<"PRM_ENV_SUSTAIN_1"
 //   <<"PRM_ENV_RELEASE_1"
-// 
+//
 //   <<"PRM_ENV_ATTACK_2"
 //   <<"PRM_ENV_DECAY_2"
 //   <<"PRM_ENV_SUSTAIN_2"
 //   <<"PRM_ENV_RELEASE_2"
-// 
+//
 //   <<"PRM_LFO_WAVE_1"
 //   <<"PRM_LFO_RATE_1"
 //   <<"PRM_LFO_ATTACK_1"
 //   <<"PRM_LFO_RETRIGGER_1"
-// 
+//
 //   <<"PRM_LFO_WAVE_2"
 //   <<"PRM_LFO_RATE_2"
 //   <<"PRM_LFO_ATTACK_2"
 //   <<"PRM_LFO_RETRIGGER_2"
-// 
+//
 //   <<"PRM_MOD_SOURCE"
 //   <<"PRM_MOD_DESTINATION"
 //   <<"PRM_MOD_AMOUNT"
 //   <<"PRM_MOD_ROW"
-//   
+//
 //   <<"PRM_FILTER_CUTOFF_2 = 84"
 //   <<"PRM_FILTER_RESONANCE_2 = 85"
 //   <<"PRM_FILTER_MODE_1 = 92"
 //   <<"PRM_FILTER_MODE_2 = 93"
-//   
+//
 //   <<"PRM_OP_OP1 = 94"
 //   <<"PRM_OP_OP2 = 95"
 //   <<"PRM_OP_OPERATOR = 96"
@@ -134,7 +134,7 @@ QStringList Labels::PatchParameter = QStringList();
 
 
 // ******************************************
-QStringList Labels::OscillatorAlgorithm = QStringList() 
+QStringList Labels::OscillatorAlgorithm = QStringList()
 // ******************************************
   <<"Silence"
   <<"Sawtooth"
@@ -173,9 +173,9 @@ QStringList Labels::OscillatorAlgorithm = QStringList()
   <<"Vibes";
 
 // ******************************************
-QStringList Labels::SubOscillatorAlgorithm = QStringList() 
+QStringList Labels::SubOscillatorAlgorithm = QStringList()
 // ******************************************
-  <<"square, 1 octave below" 
+  <<"square, 1 octave below"
   <<"triangle, 1 octave below"
   <<"25% pulse, 1 octave below"
   <<"square, 2 octaves below"
@@ -185,10 +185,10 @@ QStringList Labels::SubOscillatorAlgorithm = QStringList()
   <<"glitch"
   <<"blow"
   <<"high-pitched click"
-  <<"low-pitched discontinuity"; 
+  <<"low-pitched discontinuity";
 
 // ******************************************
-QStringList Labels::LfoWave = QStringList() 
+QStringList Labels::LfoWave = QStringList()
 // ******************************************
   <<"Triangle"
   <<"Square"
@@ -213,20 +213,20 @@ QStringList Labels::LfoWave = QStringList()
   <<"Wave 16";
 
 // ******************************************
-QStringList Labels::LfoMode = QStringList() 
+QStringList Labels::LfoMode = QStringList()
 // ******************************************
   <<"Free"
   <<"Slave"
   <<"Master";
 
 // ******************************************
-QStringList Labels::Status = QStringList() 
+QStringList Labels::Status = QStringList()
 // ******************************************
   <<"OFF"
   <<"ON";
 
 // ******************************************
-QStringList Labels::Operator = QStringList() 
+QStringList Labels::Operator = QStringList()
 // ******************************************
   <<"Sum"
   <<"Sync"
@@ -244,7 +244,7 @@ QStringList Labels::Operator = QStringList()
   <<"Ping Png Seq";
 
 // ******************************************
-QStringList Labels::CvOperator = QStringList() 
+QStringList Labels::CvOperator = QStringList()
 // ******************************************
   <<"Off"
   <<"Sum"
@@ -256,14 +256,14 @@ QStringList Labels::CvOperator = QStringList()
   <<"<=";
 
 // ******************************************
-QStringList Labels::MainFilterMode = QStringList() 
+QStringList Labels::MainFilterMode = QStringList()
 // ******************************************
   <<"Lowpass"
   <<"Bandpass"
   <<"Highpass";
 
 // ******************************************
-QStringList Labels::SecondaryFilterMode = QStringList() 
+QStringList Labels::SecondaryFilterMode = QStringList()
 // ******************************************
   <<"Lowpass (parallel)"
   <<"Bandpass (parallel)"
@@ -291,11 +291,11 @@ QStringList Labels::LFORate = QStringList()
   <<"x14"
   <<"x15"
   <<"x16";
-  
+
 // ******************************************
 QString Labels::LfoRateFormatter(int value) {  // used for labels
 // ******************************************
-    if (value < 16) 
+    if (value < 16)
         return LFORate.at(value);
     else
         return QString("%1").arg(value-16);

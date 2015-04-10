@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -26,7 +26,7 @@ shruthiEditorSettings::shruthiEditorSettings(QWidget *parent) {
 // ******************************************
     setupUi(this);
     getPortInfo();
-    
+
     midiChannel->setMinimum(1);
     midiChannel->setMaximum(16);
 }
@@ -38,7 +38,7 @@ void shruthiEditorSettings::getPortInfo() {
     RtMidiIn  *midiin = 0;
     RtMidiOut *midiout = 0;
     QString name;
-  
+
     // Input ports:
     try {
         midiin = new RtMidiIn();
@@ -48,7 +48,7 @@ void shruthiEditorSettings::getPortInfo() {
         exit(EXIT_FAILURE);
     }
     unsigned int numdev = midiin->getPortCount();
-    
+
     std::cout << numdev << " midi input ports found." << std::endl;
 
     for (unsigned int i=0; i < numdev; i++) {
@@ -61,7 +61,7 @@ void shruthiEditorSettings::getPortInfo() {
         }
         midiInputPort->addItem(name);
     }
-    
+
     // Output ports:
     try {
         midiout = new RtMidiOut();
@@ -71,7 +71,7 @@ void shruthiEditorSettings::getPortInfo() {
         exit(EXIT_FAILURE);
     }
     numdev = midiout->getPortCount();
-    
+
     std::cout << numdev << " midi output ports found." << std::endl;
 
     for (unsigned int i=0; i < numdev; i++) {
@@ -84,7 +84,7 @@ void shruthiEditorSettings::getPortInfo() {
         }
         midiOutputPort->addItem(name);
     }
-    
+
     cleanup:
     delete midiin;
     delete midiout;
@@ -109,7 +109,7 @@ int shruthiEditorSettings::getMidiInputPort() {
 // ******************************************
 int shruthiEditorSettings::getMidiOutputPort() {
 // ******************************************
-    return midiOutputPort->currentIndex();   
+    return midiOutputPort->currentIndex();
 }
 
 

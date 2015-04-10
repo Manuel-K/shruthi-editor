@@ -1,5 +1,5 @@
-// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>. 
+// Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+// informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
 // Copyright (C) 2011-2015 Manuel Krönig
 //
@@ -18,24 +18,24 @@
 
 #ifndef SHRUTHI_EDITOR_H
 #define SHRUTHI_EDITOR_H
- 
+
 #include "ui_shruthi-editor.h"
 
 #include "lib_editor.h"
 
- 
+
 class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
- 
+
     public:
         shruthiEditorMainWindow(Editor* edit, QWidget *parent = 0);
     private:
         void displayMidiStatusChanged(bool, bool);
         void closeEvent (QCloseEvent* event);
-        
+
         Editor* editor;
-        int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT; 
+        int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT;
         unsigned char MIDI_CHANNEL;
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
 
@@ -54,7 +54,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void quitShruthiEditor();
         void aboutShruthiEditor();
         void aboutQt();
-        
+
     public slots:
         // redraw commands:
         void redrawNRPN(int);
@@ -66,12 +66,12 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void midiInputStatusChanged(bool);
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString msg);
-        
+
     signals:
         void enqueue(queueitem_t);
         void settingsChanged(int,int,unsigned char);
         void showKeyboard();
 };
- 
- 
+
+
 #endif
