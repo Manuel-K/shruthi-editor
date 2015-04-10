@@ -73,9 +73,19 @@ QStringList Labels::ModulationDestination = QStringList()
   << "Resonance"
   << "CV 1"
   << "CV 2"
-  << "Attack"
+  << "Attack 1+2"
   << "Lfo 1"
-  << "Lfo 2";
+  << "Lfo 2"
+  << "Trig. Env. 1"
+  << "Trig. Env. 2"
+  << "Attack 1"
+  << "Decay 1"
+  << "Sustain 1"
+  << "Release 1"
+  << "Attack 2"
+  << "Decay 2"
+  << "Sustain 2"
+  << "Release 2";
 
 
 // ******************************************
