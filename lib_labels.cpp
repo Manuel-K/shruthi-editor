@@ -217,7 +217,8 @@ QStringList Labels::LfoMode = QStringList()
 // ******************************************
   << "Free"
   << "Slave"
-  << "Master";
+  << "Master"
+  << "Oneshot";
 
 // ******************************************
 QStringList Labels::Status = QStringList()
@@ -253,7 +254,9 @@ QStringList Labels::CvOperator = QStringList()
   << "Min"
   << "XOR"
   << ">="
-  << "<=";
+  << "<="
+  << "qtz"
+  << "lag";
 
 // ******************************************
 QStringList Labels::MainFilterMode = QStringList()
