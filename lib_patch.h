@@ -41,9 +41,11 @@ class Patch {
         void parseSysex(unsigned char *sysex);
         void generateSysex(unsigned char res[]);
     public:
+        static const unsigned char parameterCount;
         static param_t parameters[];
         static unsigned char INIT_PATCH[];
         static bool enabled(int);
+        static bool hasUI(int);
 
         Patch();
 

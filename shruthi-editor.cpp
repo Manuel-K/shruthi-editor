@@ -33,17 +33,19 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     // Setup Dials/ComboBoxes:
     QDial* tmp_d;
     QComboBox* tmp_c;
-    for (int i=0; i<100; i++) if (Patch::enabled(i)) {
-        if (Patch::parameters[i].dropdown) {
-            tmp_c = this->findChild<QComboBox*>(QString("c")+QString("%1").arg(i));
-            tmp_c->addItems(*(Patch::parameters[i].dropdown));
-            connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
-        } else {
-            tmp_d = this->findChild<QDial*>(QString("c")+QString("%1").arg(i));
-            tmp_d->setMinimum(Patch::parameters[i].min);
-            tmp_d->setMaximum(Patch::parameters[i].max);
-            this->findChild<QLabel*>(QString("d")+QString("%1").arg(i))->setText("0");
-            connect(tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+    for (int i=0; i<100; i++) {
+        if (Patch::hasUI(i)) {
+            if (Patch::parameters[i].dropdown) {
+                tmp_c = this->findChild<QComboBox*>(QString("c")+QString("%1").arg(i));
+                tmp_c->addItems(*(Patch::parameters[i].dropdown));
+                connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
+            } else {
+                tmp_d = this->findChild<QDial*>(QString("c")+QString("%1").arg(i));
+                tmp_d->setMinimum(Patch::parameters[i].min);
+                tmp_d->setMaximum(Patch::parameters[i].max);
+                this->findChild<QLabel*>(QString("d")+QString("%1").arg(i))->setText("0");
+                connect(tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+            }
         }
     }
     connect(patch_name,SIGNAL(editingFinished()),this, SLOT(patchNameChanged()));
@@ -260,8 +262,11 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
 // ******************************************
 void shruthiEditorMainWindow::redrawAll() {
 // ******************************************
-    for (int i=0; i<100; i++) if (Patch::enabled(i))
-        redrawNRPN(i);
+    for (int i=0; i<100; i++) {
+        if (Patch::hasUI(i)) {
+            redrawNRPN(i);
+        }
+    }
     patch_name->setText(editor->getName());
 }
 

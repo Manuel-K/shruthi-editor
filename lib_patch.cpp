@@ -27,6 +27,11 @@
 
 
 // ******************************************
+const unsigned char Patch::parameterCount = 108;
+// ******************************************
+
+
+// ******************************************
 param_t Patch::parameters [108] = {
 // ******************************************
     /*0*/ {"Oscillator 1 shape", 0, 34, &Labels::OscillatorAlgorithm},
@@ -153,7 +158,14 @@ unsigned char Patch::INIT_PATCH[] =
 // ******************************************
 bool Patch::enabled(int i) {
 // ******************************************
-    return (i<68 || i==84 || i==85 || i>=92);
+    return (i<68 || i==84 || i==85 || (i>=92 && i<parameterCount));
+}
+
+
+// ******************************************
+bool Patch::hasUI(int i) {
+// ******************************************
+    return (i<68 || i==84 || i==85 || (i>=92 && i<=99));
 }
 
 
@@ -209,7 +221,7 @@ QString Patch::getVersionString()
 void Patch::printPatch() {
 // ******************************************
     qDebug() << "name: " << name;
-    for (int i=0; i < 108; i++) if (enabled(i)) {
+    for (int i=0; i < parameterCount; i++) if (enabled(i)) {
         const param_t param = parameters[i];
         if (parameters[i].dropdown)
             qDebug() << param.name << ": " << (*param.dropdown).at(data[i]);
@@ -230,7 +242,7 @@ void Patch::resetPatch() {
 void Patch::randomizePatch() {
 // ******************************************
     parseSysex(INIT_PATCH);
-    for (int i=0; i < 108; i++) {
+    for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) {
             const param_t param = parameters[i];
             data[i] = (rand() %(param.max-param.min))+param.min;
@@ -342,6 +354,8 @@ unsigned char Patch::ccToNrpn(const unsigned char cc)
 int Patch::parseCcValue(const unsigned int val, int nrpn)
 // ******************************************
 {
+    if (nrpn >= parameterCount)
+        return 255; // Not supported
     const int min = parameters[nrpn].min;
     const int max = parameters[nrpn].max;
     const double perc = val / 127.0;

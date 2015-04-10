@@ -194,10 +194,16 @@ void Editor::actionNrpnReceived(int nrpn, int value) {
 #ifdef DEBUG
     qDebug() << "Editor::actionNrpnReceived(" << nrpn << "," << value << ")";
 #endif
+    if (!Patch::enabled(nrpn)) {
+        return;
+    }
+
     if (Patch::parameters[nrpn].min<0 && value>=127)
         value-=256; //2s complement
     patch.setParam(nrpn,value);
-    emit redrawNRPN(nrpn);
+    if (Patch::hasUI(nrpn)) {
+        emit redrawNRPN(nrpn);
+    }
 }
 
 
