@@ -178,10 +178,13 @@ void Editor::actionVersionRequest()
 #ifdef DEBUG
     qDebug() << "Editor::actionVersionRequest()";
 #endif
-    if (midiout.versionRequest())
-        emit displayStatusbar("Version request sent.");
-    else
-        emit displayStatusbar("Could not send version request.");
+    if (midiout.versionRequest()) {
+        //emit displayStatusbar("Version request sent.");
+        std::cout  << "Version request sent." << std::endl;
+    } else {
+        //emit displayStatusbar("Could not send version request.");
+        std::cout  << "Could not send version request." << std::endl;
+    }
 }
 
 
