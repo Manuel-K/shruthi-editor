@@ -26,7 +26,7 @@ Editor::Editor() {
 #ifdef DEBUG
     qDebug("Editor::Editor()");
 #endif
-};
+}
 
 
 // ******************************************
@@ -64,14 +64,14 @@ Editor::~Editor() {
 int Editor::getParam(int nrpn) {
 // ******************************************
     return patch.getParam(nrpn);
-};
+}
 
 
 // ******************************************
 QString Editor::getName() {
 // ******************************************
     return patch.getName();
-};
+}
 
 
 // ******************************************
@@ -127,7 +127,7 @@ void Editor::process(queueitem_t item) {
             break;
     }
     emit finished();
-};
+}
 
 
 // ******************************************

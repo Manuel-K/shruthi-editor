@@ -474,7 +474,7 @@ bool Patch::loadFromDisk(QString location) {
     } else {
         return false;
     }
-};
+}
 
 
 // ******************************************
@@ -510,4 +510,4 @@ bool Patch::saveToDisk(QString location) {
 
     file.close();
     return status;
-};
+}

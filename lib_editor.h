@@ -44,28 +44,28 @@ struct queueitem_t {
     unsigned int size;
     unsigned char *message;
     // constructors:
-    queueitem_t () {};
+    queueitem_t () {}
     queueitem_t (ACTIONS a) {
         action=a;
-    };
+    }
     queueitem_t (ACTIONS a, int i0, int i1) {
         action=a; 
         int0=i0; 
         int1=i1;
-    };
+    }
     queueitem_t (ACTIONS a, int i0) {
         action=a; 
         int0=i0; 
-    };
+    }
     queueitem_t (ACTIONS a, QString s) {
         action=a; 
         string=s;
-    };
+    }
     queueitem_t (ACTIONS a, unsigned char *m, unsigned int s) {
         action=a; 
         message=m; 
         size=s;
-    };
+    }
 };
 
 

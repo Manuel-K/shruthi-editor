@@ -27,7 +27,7 @@ void Config::save() {
     settings.setValue("midi/inputPort",midiInputPort);
     settings.setValue("midi/outputPort",midiOutputPort);
     settings.setValue("midi/channel",midiChannel);
-};
+}
 
 
 // ******************************************
@@ -37,46 +37,46 @@ void Config::load() {
     midiInputPort=settings.value("midi/inputPort",0).toInt();
     midiOutputPort=settings.value("midi/outputPort",0).toInt();
     midiChannel=settings.value("midi/channel",0).toInt();
-};
+}
 
 
 // ******************************************
 void Config::setMidiInputPort(int in) {
 // ******************************************
     midiInputPort=in;
-};
+}
 
 
 // ******************************************
 int Config::getMidiInputPort() {
 // ******************************************
     return midiInputPort;
-};
+}
 
 
 // ******************************************
 void Config::setMidiOutputPort(int out) {
 // ******************************************
     midiOutputPort=out;
-};
+}
 
 
 // ******************************************
 int Config::getMidiOutputPort() {
 // ******************************************
     return midiOutputPort;
-};
+}
 
 
 // ******************************************
 void Config::setMidiChannel(unsigned char channel) {
 // ******************************************
     midiChannel=channel;
-};
+}
 
 
 // ******************************************
 unsigned char Config::getMidiChannel() {
 // ******************************************
     return midiChannel;
-};
+}
