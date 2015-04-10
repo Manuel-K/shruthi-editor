@@ -46,7 +46,7 @@ int NRPN::getNRPN(){
 
 
 // ******************************************
-const bool MidiIn::isNRPN(unsigned char n0, unsigned char n1)
+bool MidiIn::isNRPN(unsigned char n0, unsigned char n1)
 // ******************************************
 {
     return n0 == 176 && (n1 == 6 || n1 == 38 || n1 == 98 || n1 == 99);
