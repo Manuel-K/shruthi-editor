@@ -93,6 +93,7 @@ void SignalRouter::settingsChanged(int in, int out, unsigned char channel) {
     // setMidiInputPort and setMidiOutputPort have to be emited, even if the value didn't change.
     emit setMidiInputPort(in);
     emit setMidiOutputPort(out);
+    emit setMidiChannel(channel);
 
     bool writeConfig = false;
     if ((config.getMidiInputPort() != in) || (config.getMidiOutputPort() != out)) {
@@ -103,7 +104,6 @@ void SignalRouter::settingsChanged(int in, int out, unsigned char channel) {
     if (config.getMidiChannel() != channel) {
         config.setMidiChannel(channel);
         writeConfig = true;
-        emit setMidiChannel(channel);
     }
     if (writeConfig) {
 #ifdef DEBUG
