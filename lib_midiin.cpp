@@ -140,6 +140,13 @@ void MidiIn::process(std::vector< unsigned char > *message) {
         } else {
             int nrpn = Patch::ccToNrpn(message->at(1));
             int value = Patch::parseCcValue(message->at(2), nrpn);
+            if (!warnedCC) {
+                if (nrpn == 25  || nrpn == 29) {
+                    std::cout << "Received LFO Rate per CC. That's a bad idea...\nFurther warnings will be suppressed."
+                              << std::endl; // << (int) message->at(2) << std::endl;
+                    warnedCC = true;
+                }
+            }
             queueitem_t signal(NRPN_RECEIVED, nrpn, value);
             emit enqueue(signal);
         }
@@ -164,6 +171,8 @@ MidiIn::MidiIn() {
     opened = false;
     input = -1;
     firmwareVersion = 0;
+
+    warnedCC = false;
 
     try {
         midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
