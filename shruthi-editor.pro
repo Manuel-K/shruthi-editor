@@ -38,6 +38,9 @@ CONFIG += qt
 LIBS += -L. 
 target.path = release/
 
+# Comment the following line if you don't want to force the Fusion style
+DEFINES += FUSION
+
 unix {
     message(RtMidi will use linux alsaseq.)
     # alsa:
@@ -59,7 +62,6 @@ win32 {
     message(RtMidi will use windows mm.)
     DEFINES += __WINDOWS_MM__
     LIBS += -lwinmm
-    DEFINES += FUSION
     RC_FILE = shruthi-editor.rc
 }
 
