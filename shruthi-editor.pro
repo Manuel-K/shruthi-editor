@@ -30,8 +30,7 @@ RESOURCES   = shruthi-editor.qrc
 
 QT += widgets
 
-CONFIG += qt #debug
-#DEFINES+=DEBUG
+CONFIG += qt
 
 # Uncomment the following line if you use a firmware version prior to 0.94
 #DEFINES += PRE094SYSEXHEADER
@@ -42,25 +41,26 @@ target.path = release/
 unix {
     message(RtMidi will use linux alsaseq.)
     # alsa:
-    DEFINES+=__LINUX_ALSA__
-    LIBS+=-lasound
-    # jack;
-    #DEFINES+=__LINUX_JACK__
-    #LIBS+=-ljack
+    DEFINES += __LINUX_ALSA__
+    LIBS += -lasound
+    # jack:
+    #DEFINES += __LINUX_JACK__
+    #LIBS += -ljack
 }
 
 macx {
     message(RtMidi will use macosx core.)
-    DEFINES+=__MACOSX_CORE__
-    LIBS+=-framework CoreMidi -framework CoreAudio -framework CoreFoundation
+    DEFINES += __MACOSX_CORE__
+    LIBS += -framework CoreMidi -framework CoreAudio -framework CoreFoundation
     ICON = shruthi-editor.icns
 }
+
 win32 {
     message(RtMidi will use windows mm.)
-    DEFINES+=__WINDOWS_MM__
-    LIBS+=-lwinmm
-    DEFINES+=FUSION
-    RC_FILE     = shruthi-editor.rc
+    DEFINES += __WINDOWS_MM__
+    LIBS += -lwinmm
+    DEFINES += FUSION
+    RC_FILE = shruthi-editor.rc
 }
 
 
