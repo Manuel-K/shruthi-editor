@@ -22,7 +22,7 @@
 #include "lib_labels.h"
 #include "lib_patch.h"
 
-#define VERSION "0.19"
+#define VERSION "0.21"
 
 // ******************************************
 shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
