@@ -3,36 +3,39 @@ informations about the Shruthi, see <http://mutable-instruments.net/shruthi1>.
 Application icon: "saraswati" by Francois Barbut.
 Uses RtMidi 2.1.0 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
 
+
 What works:
  - Editing patches.
- - Remotely changing patch options on the shruthi.
+ - Remotely changing patch options on the Shruthi.
  - Loading/saving patches from/to disk.
- - Fetching/sending patches from/to the shruthi.
- - Changes made to patch options on the shruthi change the settings of the
+ - Fetching/sending patches from/to the Shruthi.
+ - Changes made to patch options on the Shruthi change the settings of the
    editor.
  - Generate random patches.
  - Loading/saving full patch sysex.
  - Editing up to (and including) firmware version 1.02
 
+
 What doesn't work:
  - Automatic fetching/sending, e.g. on loading/saving.
  - Receiving LFO 1/2 rates per CC is strange
+
 
 Prerequisites:
  Qt5: <http://www.qt.io/>
 
 
 Compiling under windows (Prerequisites):
-To compile it on windows, you need the mingw version of qt.
+To compile it on windows, you need the mingw version of Qt 5.
 You can download it from <http://www.qt.io/download-open-source/>.
-
 
 
 Compiling:
 Run 
-> qmake
-> make release
+> qmake -config release
+> make
 inside the shruthi-editor source folder.
+
 
 Note:
 If you want to use firmware versions prior to 0.94, you have to open
@@ -41,7 +44,6 @@ shruthi-editor.pro and change the line
 to
 DEFINES += PRE094SYSEXHEADER
  
-
 
 Changes:
 v0.16 * support for dual VCF -> new ui layout
@@ -63,9 +65,9 @@ v0.20 skipped
 v0.21 * SysEx header for firmware versions >= 0.94
       * updated patch definitions
       * set midi client/port names (no more default RtMidi names)
-      * detect patch version
-      * detect shruthi firmware version
-      * process cc (needed for firmwares >= 1.00)
+      * detect patch version (pre 1.00, post 1.00)
+      * detect Shruthi firmware version (pre 0.98, 0.98 and post 1.00)
+      * process CC (needed for firmwares >= 1.00)
       * added missing labels
       * fixed crash during attempt to change unknown parameters
       * try to emulate Shruthi's LFO rate mapping
