@@ -37,7 +37,7 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>Oscillator 2/Patch Name</string>
+        <string>Oscillator 2/Patch Name:</string>
        </property>
        <widget class="QDial" name="c6">
         <property name="geometry">
@@ -225,7 +225,7 @@
      <item row="0" column="1">
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>Oscillator 1</string>
+        <string>Oscillator 1:</string>
        </property>
        <widget class="QDial" name="c1">
         <property name="geometry">
@@ -407,7 +407,7 @@
      <item row="3" column="1">
       <widget class="QGroupBox" name="groupBox_9">
        <property name="title">
-        <string>LFO 1</string>
+        <string>LFO 1:</string>
        </property>
        <widget class="QComboBox" name="c24">
         <property name="geometry">
@@ -559,7 +559,7 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>LFO 2</string>
+        <string>LFO 2:</string>
        </property>
        <widget class="QDial" name="c29">
         <property name="geometry">
@@ -989,7 +989,7 @@
      <item row="0" column="4">
       <widget class="QGroupBox" name="groupBox_4">
        <property name="title">
-        <string>Filter</string>
+        <string>Filter:</string>
        </property>
        <widget class="QLabel" name="label_13">
         <property name="geometry">
@@ -1318,7 +1318,7 @@
      <item row="3" column="4">
       <widget class="QGroupBox" name="groupBox_12">
        <property name="title">
-        <string>Operator 1/2</string>
+        <string>Operator 1/2:</string>
        </property>
        <widget class="QComboBox" name="c94">
         <property name="geometry">
@@ -1947,7 +1947,7 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>Envelope 1</string>
+        <string>Envelope 1:</string>
        </property>
        <widget class="QLabel" name="d17">
         <property name="geometry">
@@ -2134,7 +2134,7 @@
      <item row="1" column="4">
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string>Mixer</string>
+        <string>Mixer:</string>
        </property>
        <widget class="QComboBox" name="c3">
         <property name="geometry">
@@ -2254,7 +2254,7 @@
      <item row="1" column="3">
       <widget class="QGroupBox" name="groupBox_6">
        <property name="title">
-        <string>Envelope 2</string>
+        <string>Envelope 2:</string>
        </property>
        <widget class="QDial" name="c20">
         <property name="geometry">
