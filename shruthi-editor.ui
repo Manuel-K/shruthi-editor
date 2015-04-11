@@ -68,14 +68,17 @@
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>0</x>
           <y>20</y>
-          <width>71</width>
+          <width>81</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Waveform:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QDial" name="c5">
@@ -263,14 +266,17 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>0</x>
           <y>20</y>
-          <width>71</width>
+          <width>81</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Waveform:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QLabel" name="label_2">
@@ -422,14 +428,17 @@
        <widget class="QLabel" name="label_28">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>0</x>
           <y>20</y>
-          <width>71</width>
+          <width>81</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Waveform:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QComboBox" name="c27">
@@ -590,14 +599,17 @@
        <widget class="QLabel" name="label_32">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>0</x>
           <y>20</y>
-          <width>71</width>
+          <width>81</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Waveform:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QLabel" name="d29">
@@ -1205,15 +1217,12 @@
          <rect>
           <x>80</x>
           <y>90</y>
-          <width>81</width>
+          <width>91</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Resonance2:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
         </property>
        </widget>
        <widget class="QDial" name="c84">
