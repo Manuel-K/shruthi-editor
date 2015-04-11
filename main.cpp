@@ -27,18 +27,14 @@
 #include "lib_midiin.h"
 #include "lib_signalrouter.h"
 
-#ifdef CLEANLOOKS
-#include <QCleanlooksStyle>
+#ifdef FUSION
+#include <QStyleFactory>
 #endif
 
 // ******************************************
 int main(int argc, char *argv[]) {
 // ******************************************
     qRegisterMetaType<queueitem_t>("queueitem_t");
-
-#ifdef CLEANLOOKS
-    QApplication::setStyle(new QCleanlooksStyle);
-#endif
 
     int retVal;
 
@@ -69,6 +65,9 @@ int main(int argc, char *argv[]) {
 
         // Setup main_window
         QApplication app(argc, argv);
+#ifdef FUSION
+        app.setStyle(QStyleFactory::create("Fusion"));
+#endif
         shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
         main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
         main_window->setFixedSize(main_window->width(),main_window->height());

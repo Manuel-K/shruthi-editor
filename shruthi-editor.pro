@@ -59,7 +59,7 @@ win32 {
     message(RtMidi will use windows mm.)
     DEFINES+=__WINDOWS_MM__
     LIBS+=-lwinmm
-    DEFINES+=CLEANLOOKS
+    DEFINES+=FUSION
     RC_FILE     = shruthi-editor.rc
 }
 
