@@ -169,10 +169,10 @@ bool MidiOut::nrpn(int nrpn, int value) {
         return false;
     }
 
-    int32_t nrpn_msb=nrpn>>7;
-    int32_t nrpn_lsb=nrpn%128;
-    int32_t value_msb;
-    int32_t value_lsb;
+    int nrpn_msb=nrpn>>7;
+    int nrpn_lsb=nrpn%128;
+    int value_msb;
+    int value_lsb;
     if (value<0) {
       value_msb=1;
       value_lsb=(value+128)%128;
