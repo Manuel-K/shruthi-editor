@@ -34,11 +34,11 @@ class Labels {
         static QStringList Status;
         static QStringList Operator;
         static QStringList CvOperator;
-        static QStringList MainFilterMode;
-        static QStringList SecondaryFilterMode;
         static QString LfoRateFormatter(int value); // used for labels
         // The following labels are used for the filter boards:
         static QStringList FilterBoard;
+        static QStringList FilterSVFMode1;
+        static QStringList FilterSVFMode2;
         static QStringList FilterDSPMode;
         static QStringList FilterDSPFx;
         static QStringList FilterPolivoksMode;

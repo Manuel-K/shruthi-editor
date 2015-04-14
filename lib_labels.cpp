@@ -272,25 +272,6 @@ QStringList Labels::CvOperator = QStringList()
   << "qtz"
   << "lag";
 
-// ******************************************
-QStringList Labels::MainFilterMode = QStringList()
-// ******************************************
-  << "Lowpass"
-  << "Bandpass"
-  << "Highpass"
-  << "Lowpass <"
-  << "Bandpass <"
-  << "Highpass <";
-
-// ******************************************
-QStringList Labels::SecondaryFilterMode = QStringList()
-// ******************************************
-  << "Lowpass (parallel)"
-  << "Bandpass (parallel)"
-  << "Highpass (parallel)"
-  << "Lowpass > (serial)"
-  << "Bandpass > (serial)"
-  << "Highpass > (serial)";
 
 // ******************************************
 QStringList Labels::LFORate = QStringList()
@@ -333,6 +314,28 @@ QStringList Labels::FilterBoard = QStringList()
 /* Filter 5*/ << "4pm"
 /* Filter 6*/ << "LP2+delay"
 /* Filter 7*/ << "sp";
+
+
+// ******************************************
+QStringList Labels::FilterSVFMode1 = QStringList()
+// ******************************************
+  << "Lowpass"
+  << "Bandpass"
+  << "Highpass"
+  << "Lowpass <"
+  << "Bandpass <"
+  << "Highpass <";
+
+
+// ******************************************
+QStringList Labels::FilterSVFMode2 = QStringList()
+// ******************************************
+  << "Lowpass (parallel)"
+  << "Bandpass (parallel)"
+  << "Highpass (parallel)"
+  << "Lowpass > (serial)"
+  << "Bandpass > (serial)"
+  << "Highpass > (serial)";
 
 
 // ******************************************
