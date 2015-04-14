@@ -178,7 +178,7 @@ param_t Patch::parameter92 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 2, NULL},
 /*Filter 1*/ {NULL, 0, 2, NULL},
-/*Filter 2*/ {"Mode 1", 0, 2, &Labels::MainFilterMode},
+/*Filter 2*/ {"Mode 1", 0, 5, &Labels::MainFilterMode},
 /*Filter 3*/ {"Mode", 0, Labels::FilterDSPMode.size() - 1, &Labels::FilterDSPMode},
 /*Filter 4*/ {"Mode", 0, 1, &Labels::FilterPolivoksMode},
 /*Filter 5*/ {"Mode", 0, Labels::Filter4PMMode.size() - 1, &Labels::Filter4PMMode},
