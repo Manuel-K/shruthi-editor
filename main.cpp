@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         // Setup signalrouter
         SignalRouter sr;
         QThread srThread;
-        sr.connect(&srThread, SIGNAL(started()),SLOT(run()));
+        sr.connect(&srThread, SIGNAL(started()), SLOT(run()));
         sr.moveToThread(&srThread);
 
         // Setup editor
@@ -50,9 +50,9 @@ int main(int argc, char *argv[]) {
         QThread editorThread;
         editor.moveToThread(&editorThread);
         // editor: incoming signals
-        editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)),SLOT(process(queueitem_t)));
-        editor.connect(&sr, SIGNAL(setMidiOutputPort(int)),SLOT(setMidiOutputPort(int)));
-        editor.connect(&sr,SIGNAL(setMidiChannel(unsigned char)),SLOT(setMidiChannel(unsigned char)));
+        editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)), SLOT(process(queueitem_t)));
+        editor.connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
+        editor.connect(&sr, SIGNAL(setMidiChannel(unsigned char)), SLOT(setMidiChannel(unsigned char)));
         editor.connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
 
 
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
         midiin.moveToThread(&midiinThread);
         midiinThread.start();
         // midiin: incoming signals
-        midiin.connect(&sr, SIGNAL(setMidiInputPort(int)),SLOT(setMidiInputPort(int)));
+        midiin.connect(&sr, SIGNAL(setMidiInputPort(int)), SLOT(setMidiInputPort(int)));
         midiin.connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
 
         // Setup main_window
@@ -72,23 +72,23 @@ int main(int argc, char *argv[]) {
 #endif
         shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
         main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
-        main_window->setFixedSize(main_window->width(),main_window->height());
+        main_window->setFixedSize(main_window->width(), main_window->height());
         main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
         // main_window: incoming signals
-        main_window->connect(&editor,SIGNAL(redrawNRPN(int)),SLOT(redrawNRPN(int)));
-        main_window->connect(&editor,SIGNAL(redrawAll()),SLOT(redrawAll()));
-        main_window->connect(&sr,SIGNAL(setMidiInputPort(int)),SLOT(setMidiInputPort(int)));
-        main_window->connect(&sr,SIGNAL(setMidiOutputPort(int)),SLOT(setMidiOutputPort(int)));
-        main_window->connect(&sr,SIGNAL(setMidiChannel(unsigned char)),SLOT(setMidiChannel(unsigned char)));
+        main_window->connect(&editor, SIGNAL(redrawNRPN(int)), SLOT(redrawNRPN(int)));
+        main_window->connect(&editor, SIGNAL(redrawAll()), SLOT(redrawAll()));
+        main_window->connect(&sr, SIGNAL(setMidiInputPort(int)), SLOT(setMidiInputPort(int)));
+        main_window->connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
+        main_window->connect(&sr, SIGNAL(setMidiChannel(unsigned char)), SLOT(setMidiChannel(unsigned char)));
         main_window->connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
-        main_window->connect(&editor,SIGNAL(midiOutputStatusChanged(bool)), SLOT(midiOutputStatusChanged(bool)));
-        main_window->connect(&editor,SIGNAL(displayStatusbar(QString)), SLOT(displayStatusbar(QString)));
-        main_window->connect(&midiin,SIGNAL(midiInputStatusChanged(bool)),SLOT(midiInputStatusChanged(bool)));
+        main_window->connect(&editor, SIGNAL(midiOutputStatusChanged(bool)), SLOT(midiOutputStatusChanged(bool)));
+        main_window->connect(&editor, SIGNAL(displayStatusbar(QString)), SLOT(displayStatusbar(QString)));
+        main_window->connect(&midiin, SIGNAL(midiInputStatusChanged(bool)), SLOT(midiInputStatusChanged(bool)));
 
         // Setup keyboard
         keyboard keys;
-        keys.connect(main_window,SIGNAL(showKeyboard()),SLOT(showKeyboard()));
+        keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(showKeyboard()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
         keys.setFixedSize(keys.width(),keys.height());
 
@@ -96,10 +96,10 @@ int main(int argc, char *argv[]) {
         editorThread.start();
 
         // signalrouter: incoming signals
-        sr.connect(&editor, SIGNAL(finished()),SLOT(editorFinished()));
-        sr.connect(main_window,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
-        sr.connect(&midiin,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
-        sr.connect(&keys,SIGNAL(enqueue(queueitem_t)),SLOT(enqueue(queueitem_t)));
+        sr.connect(&editor, SIGNAL(finished()), SLOT(editorFinished()));
+        sr.connect(main_window, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
+        sr.connect(&midiin, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
+        sr.connect(&keys, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
         sr.connect(main_window, SIGNAL(settingsChanged(int,int,unsigned char,int)), SLOT(settingsChanged(int,int,unsigned char,int)));
 
         // start signal router
