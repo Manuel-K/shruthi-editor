@@ -48,7 +48,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void savePatch();
         void fetchPatch();
         void sendPatch();
-        void changeMidiPorts();
+        void openSettings();
         void resetPatch();
         void resetPatchPre100();
         void randomizePatch();

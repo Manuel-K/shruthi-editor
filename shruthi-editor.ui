@@ -2562,7 +2562,7 @@
     <addaction name="actionFetch_Patch"/>
     <addaction name="actionSend_Patch"/>
     <addaction name="separator"/>
-    <addaction name="actionChange_Midi_Ports"/>
+    <addaction name="actionOpenSettings"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -2602,9 +2602,9 @@
     <string>&amp;Send Patch</string>
    </property>
   </action>
-  <action name="actionChange_Midi_Ports">
+  <action name="actionOpenSettings">
    <property name="text">
-    <string>&amp;Change Midi Ports...</string>
+    <string>&amp;Settings...</string>
    </property>
   </action>
   <action name="actionReset_Patch">

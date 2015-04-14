@@ -74,7 +74,7 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     connect(actionSave_Patch,SIGNAL(triggered()), this, SLOT(savePatch()));
     connect(actionFetch_Patch,SIGNAL(triggered()), this, SLOT(fetchPatch()));
     connect(actionSend_Patch,SIGNAL(triggered()), this, SLOT(sendPatch()));
-    connect(actionChange_Midi_Ports,SIGNAL(triggered()), this, SLOT(changeMidiPorts()));
+    connect(actionOpenSettings, SIGNAL(triggered()), this, SLOT(openSettings()));
     connect(actionReset_Patch,SIGNAL(triggered()), this, SLOT(resetPatch()));
     connect(actionReset_Patch_pre_1_00,SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
     connect(actionQuit,SIGNAL(triggered()), this, SLOT(quitShruthiEditor()));
@@ -355,7 +355,7 @@ void shruthiEditorMainWindow::sendPatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::changeMidiPorts() {
+void shruthiEditorMainWindow::openSettings() {
 // ******************************************
     shruthiEditorSettings prefs;
     prefs.setFixedSize(prefs.width(),prefs.height());
