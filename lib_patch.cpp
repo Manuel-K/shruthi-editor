@@ -126,8 +126,8 @@ param_t Patch::parameters [108] = {
     /*89*/ {NULL, 0, 0, NULL},
     /*90*/ {NULL, 0, 0, NULL},
     /*91*/ {NULL, 0, 0, NULL}, //91: exclamation_mark_
-    /*92*/ {"Filter 1 mode", 0, 5, &Labels::MainFilterMode},
-    /*93*/ {"Filter 2 mode", 0, 5, &Labels::SecondaryFilterMode},
+    /*92*/ {"Filter 1 mode", 0, 5, &Labels::FilterSVFMode1},
+    /*93*/ {"Filter 2 mode", 0, 5, &Labels::FilterSVFMode2},
     /*94*/ {"Operator 1 in1", 0, 31, &Labels::ModulationSource},
     /*95*/ {"Operator 1 in2", 0, 31, &Labels::ModulationSource},
     /*96*/ {"Operator 1 out", 0, 9, &Labels::CvOperator},
@@ -178,7 +178,7 @@ param_t Patch::parameter92 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 2, NULL},
 /*Filter 1*/ {NULL, 0, 2, NULL},
-/*Filter 2*/ {"Mode 1", 0, 5, &Labels::MainFilterMode},
+/*Filter 2*/ {"Mode 1", 0, 5, &Labels::FilterSVFMode1},
 /*Filter 3*/ {"Mode", 0, 4, &Labels::FilterDSPMode},
 /*Filter 4*/ {"Mode", 0, 1, &Labels::FilterPolivoksMode},
 /*Filter 5*/ {"Mode", 0, 14, &Labels::Filter4PMMode},
@@ -192,7 +192,7 @@ param_t Patch::parameter93 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 5, NULL},
 /*Filter 1*/ {NULL, 0, 5, NULL},
-/*Filter 2*/ {"Mode 2", 0, 5, &Labels::SecondaryFilterMode},
+/*Filter 2*/ {"Mode 2", 0, 5, &Labels::FilterSVFMode2 },
 /*Filter 3*/ {"Fx Prog.", 0, 15, &Labels::FilterDSPFx},
 /*Filter 4*/ {NULL, 0, 127, NULL},
 /*Filter 5*/ {"Res. Flavor", 0, 3, &Labels::Filter4PMFeedbackFlavor},
