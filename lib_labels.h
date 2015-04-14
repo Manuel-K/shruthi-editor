@@ -26,7 +26,6 @@ class Labels {
     public:
         static QStringList ModulationSource;
         static QStringList ModulationDestination;
-        static QStringList PatchParameter;
         static QStringList OscillatorAlgorithm;
         static QStringList SubOscillatorAlgorithm;
         static QStringList LfoWave;

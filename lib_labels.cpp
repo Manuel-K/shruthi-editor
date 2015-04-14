@@ -89,65 +89,6 @@ QStringList Labels::ModulationDestination = QStringList()
 
 
 // ******************************************
-QStringList Labels::PatchParameter = QStringList();
-// ******************************************
-//   << "PRM_OSC_SHAPE_1"
-//   << "PRM_OSC_PARAMETER_1"
-//   << "PRM_OSC_RANGE_1"
-//   << "PRM_OSC_OPTION_1"
-//
-//   << "PRM_OSC_SHAPE_2"
-//   << "PRM_OSC_PARAMETER_2"
-//   << "PRM_OSC_RANGE_2"
-//   << "PRM_OSC_OPTION_2"
-//
-//   << "PRM_MIX_BALANCE"
-//   << "PRM_MIX_SUB_OSC"
-//   << "PRM_MIX_NOISE"
-//   << "PRM_MIX_SUB_OSC_SHAPE"
-//
-//   << "PRM_FILTER_CUTOFF"
-//   << "PRM_FILTER_RESONANCE"
-//   << "PRM_FILTER_ENV"
-//   << "PRM_FILTER_LFO"
-//
-//   << "PRM_ENV_ATTACK_1"
-//   << "PRM_ENV_DECAY_1"
-//   << "PRM_ENV_SUSTAIN_1"
-//   << "PRM_ENV_RELEASE_1"
-//
-//   << "PRM_ENV_ATTACK_2"
-//   << "PRM_ENV_DECAY_2"
-//   << "PRM_ENV_SUSTAIN_2"
-//   << "PRM_ENV_RELEASE_2"
-//
-//   << "PRM_LFO_WAVE_1"
-//   << "PRM_LFO_RATE_1"
-//   << "PRM_LFO_ATTACK_1"
-//   << "PRM_LFO_RETRIGGER_1"
-//
-//   << "PRM_LFO_WAVE_2"
-//   << "PRM_LFO_RATE_2"
-//   << "PRM_LFO_ATTACK_2"
-//   << "PRM_LFO_RETRIGGER_2"
-//
-//   << "PRM_MOD_SOURCE"
-//   << "PRM_MOD_DESTINATION"
-//   << "PRM_MOD_AMOUNT"
-//   << "PRM_MOD_ROW"
-//
-//   << "PRM_FILTER_CUTOFF_2 = 84"
-//   << "PRM_FILTER_RESONANCE_2 = 85"
-//   << "PRM_FILTER_MODE_1 = 92"
-//   << "PRM_FILTER_MODE_2 = 93"
-//
-//   << "PRM_OP_OP1 = 94"
-//   << "PRM_OP_OP2 = 95"
-//   << "PRM_OP_OPERATOR = 96"
-//   << "PRM_OP_ROW = 97";
-
-
-// ******************************************
 QStringList Labels::OscillatorAlgorithm = QStringList()
 // ******************************************
   << "Silence"

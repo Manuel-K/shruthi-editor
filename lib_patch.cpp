@@ -110,14 +110,14 @@ param_t Patch::parameters [108] = {
     /*73*/ {NULL, 0, 0, NULL},
     /*74*/ {NULL, 0, 0, NULL},
     /*75*/ {NULL, 0, 0, NULL},
-    /*76*/ {"Performance 1 id", 0,9, &Labels::PatchParameter}, //check max value
-    /*77*/ {"Performance 1 subpage", 0,9 , NULL}, //check max value
-    /*78*/ {"Performance 2 id", 0,9, &Labels::PatchParameter}, //check max value
-    /*79*/ {"Performance 1 subpage", 0,9 , NULL}, //check max value
-    /*80*/ {"Performance 3 id", 0,9, &Labels::PatchParameter}, //check max value
-    /*81*/ {"Performance 1 subpage", 0,9 , NULL}, //check max value
-    /*82*/ {"Performance 4 id", 0,9, &Labels::PatchParameter}, //check max value
-    /*83*/ {"Performance 1 subpage", 0,9 , NULL}, //check max value
+    /*76*/ {"extra_data[0]", 0, 9, NULL}, // (system_settings.legato ? 0x40 : 0x00) |= system_settings.portamento
+    /*77*/ {"extra_data[1]", 0, 9 , NULL}, // seq_mode
+    /*78*/ {"extra_data[2]", 0, 9, NULL}, // seq_tempo
+    /*79*/ {"extra_data[3]", 0,9 , NULL}, // seq_groove_template
+    /*80*/ {"extra_data[4]", 0, 9, NULL}, // seq_groove_amount
+    /*81*/ {"extra_data[5]", 0,9 , NULL}, // (arp_direction << 4) | arp_range;
+    /*82*/ {"extra_data[6]", 0, 9, NULL}, // arp_pattern
+    /*83*/ {"extra_data[7]", 0, 9 , NULL}, // arp_clock_division
     /*84*/ {"Filter cutoff 2", 0, 127, NULL},
     /*85*/ {"Filter resonance 2", 0, 63, NULL},
     /*86*/ {NULL, 0, 0, NULL}, //86: filter_topology_ (92<<4 | 93)
