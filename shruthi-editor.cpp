@@ -439,11 +439,24 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
         forceDial = true;
     }
 
-
+    // Deactivate element before setting value to prevent sending
+    // the change back (i.e. debouncing)!
     if (!forceDial && param.dropdown) {
-        this->findChild<QComboBox*>(id)->setCurrentIndex(editor->getParam(nrpn));
+        QComboBox* temp = this->findChild<QComboBox*>(id);
+        bool wasEnabled = temp->isEnabled();
+        if (wasEnabled)
+            temp->setEnabled(false);
+        temp->setCurrentIndex(editor->getParam(nrpn));
+        if (wasEnabled)
+            temp->setEnabled(true);
     } else {
-        this->findChild<QDial*>(id)->setValue(editor->getParam(nrpn));
+        QDial* temp = this->findChild<QDial*>(id);
+        bool wasEnabled = temp->isEnabled();
+        if (wasEnabled)
+            temp->setEnabled(false);
+        temp->setValue(editor->getParam(nrpn));
+        if (wasEnabled)
+            temp->setEnabled(true);
     }
 }
 
