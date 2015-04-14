@@ -268,12 +268,13 @@ void shruthiEditorMainWindow::comboBoxChanged(int val) {
         return;
 
     QComboBox* s = (QComboBox*) sender();
-    QString id = s->objectName();
-    id.remove(0,1);
 
     // Don't send changed signal if element is disabled:
     if (!s->isEnabled())
         return;
+
+    QString id = s->objectName();
+    id.remove(0,1);
 
     queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
@@ -284,11 +285,12 @@ void shruthiEditorMainWindow::comboBoxChanged(int val) {
 void shruthiEditorMainWindow::dialChanged(int val) {
 // ******************************************
     QDial* s = (QDial*) sender();
-    QString id = s->objectName();
 
     // Don't send changed signal if element is disabled:
     if (!s->isEnabled())
         return;
+
+    QString id = s->objectName();
 
     // Fix for additional dials (parameter 92/93):
     if (id.endsWith('d')) {
