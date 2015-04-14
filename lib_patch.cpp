@@ -323,29 +323,59 @@ void Patch::generateSysex(unsigned char res[]) {
 unsigned char Patch::ccToNrpn(const unsigned char cc)
 // ******************************************
 {
+    // Oscillator 1
     if (cc >= 20 && cc <= 22) {
         return cc - 20;
-    } else if (cc == 28) {
+    }
+    // Modulation operator
+    if (cc == 28) {
         return 3;
-    } else if (cc >= 24 && cc <= 27) {
+    }
+    // Oscillator 2
+    if (cc >= 24 && cc <= 27) {
         return cc - 20;
-    } else if (cc >= 29 && cc <= 31) {
+    }
+    // Oscillator ballance, Sub volume, Noise volume
+    if (cc >= 29 && cc <= 31) {
         return cc - 21;
-    } else if (cc == 23) {
+    }
+    // Sub shape
+    if (cc == 23) {
         return 11;
-    } else if (cc == 14 || cc == 74) {
+    }
+    // Filter cutoff
+    if (cc == 14 || cc == 74) {
         return 12;
-    } else if (cc == 15 || cc == 71) {
+    }
+    // Filter resonance
+    if (cc == 15 || cc == 71) {
         return 13;
-    } else if (cc >= 102 && cc <= 119) {
+    }
+    // Envelope 1/Envelope 2/LFO
+    if (cc >= 102 && cc <= 119) {
         return cc - 88;
-    } else if (cc == 73) {
+    }
+    // Envelope 2 attack alias
+    if (cc == 73) {
         return 20;
-    } else if (cc == 75) {
+    }
+    // Sequencer Mode
+    if (cc == 75) {
         return 100;
-    } else if (cc >= 76 && cc <= 81) {
+    }
+    // Groove template/amount, Arpeggiator dir/range/pattern, Seq clock devision
+    if (cc >= 76 && cc <= 81) {
         return cc + 26;
     }
+    //SVF filter cutoff2/resonance2
+    if (cc == 12 || cc == 13) {
+        return cc + 72;
+    }
+    //SVF filter mode 1/2
+    if (cc == 85 || cc == 86) {
+        return cc + 7;
+    }
+
     return 255; // Not supported
 }
 
