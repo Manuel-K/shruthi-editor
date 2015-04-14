@@ -37,7 +37,7 @@ keyboard::keyboard() {
     connect(panic,SIGNAL(pressed()), this, SLOT(panicPushed()));
 
     for (int i=0; i<=12; i++) {
-        tmp = this->findChild<QPushButton*>(QString("n")+QString("%1").arg(i));
+        tmp = this->findChild<QPushButton*>(QString("n%1").arg(i));
         connect(tmp,SIGNAL(pressed()), this, SLOT(push()));
         connect(tmp,SIGNAL(released()), this, SLOT(release()));
         if (i==1||i==3||i==6||i==8||i==10)
