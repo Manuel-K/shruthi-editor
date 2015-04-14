@@ -126,8 +126,8 @@ param_t Patch::parameters [108] = {
     /*89*/ {NULL, 0, 0, NULL},
     /*90*/ {NULL, 0, 0, NULL},
     /*91*/ {NULL, 0, 0, NULL}, //91: exclamation_mark_
-    /*92*/ {"Filter 1 mode", 0, 2, &Labels::MainFilterMode}, // check
-    /*93*/ {"Filter 2 mode", 0, 2, &Labels::SecondaryFilterMode}, // check
+    /*92*/ {"Filter 1 mode", 0, 5, &Labels::MainFilterMode},
+    /*93*/ {"Filter 2 mode", 0, 5, &Labels::SecondaryFilterMode},
     /*94*/ {"Operator 1 in1", 0, 31, &Labels::ModulationSource},
     /*95*/ {"Operator 1 in2", 0, 31, &Labels::ModulationSource},
     /*96*/ {"Operator 1 out", 0, 9, &Labels::CvOperator},

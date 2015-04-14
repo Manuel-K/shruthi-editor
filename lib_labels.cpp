@@ -277,7 +277,10 @@ QStringList Labels::MainFilterMode = QStringList()
 // ******************************************
   << "Lowpass"
   << "Bandpass"
-  << "Highpass";
+  << "Highpass"
+  << "Lowpass <"
+  << "Bandpass <"
+  << "Highpass <";
 
 // ******************************************
 QStringList Labels::SecondaryFilterMode = QStringList()
@@ -285,9 +288,9 @@ QStringList Labels::SecondaryFilterMode = QStringList()
   << "Lowpass (parallel)"
   << "Bandpass (parallel)"
   << "Highpass (parallel)"
-  << "Lowpass (serial)"
-  << "Bandpass (serial)"
-  << "Highpass (serial)";
+  << "Lowpass > (serial)"
+  << "Bandpass > (serial)"
+  << "Highpass > (serial)";
 
 // ******************************************
 QStringList Labels::LFORate = QStringList()
