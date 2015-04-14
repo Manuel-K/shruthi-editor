@@ -179,9 +179,9 @@ param_t Patch::parameter92 [8] = {
 /*Filter 0*/ {NULL, 0, 2, NULL},
 /*Filter 1*/ {NULL, 0, 2, NULL},
 /*Filter 2*/ {"Mode 1", 0, 5, &Labels::MainFilterMode},
-/*Filter 3*/ {"Mode", 0, Labels::FilterDSPMode.size() - 1, &Labels::FilterDSPMode},
+/*Filter 3*/ {"Mode", 0, 4, &Labels::FilterDSPMode},
 /*Filter 4*/ {"Mode", 0, 1, &Labels::FilterPolivoksMode},
-/*Filter 5*/ {"Mode", 0, Labels::Filter4PMMode.size() - 1, &Labels::Filter4PMMode},
+/*Filter 5*/ {"Mode", 0, 14, &Labels::Filter4PMMode},
 /*Filter 6*/ {"Feedback", 0, 15, NULL},
 /*Filter 7*/ {"Mode", 0, 3, &Labels::FilterSPMode},
 };
@@ -193,9 +193,9 @@ param_t Patch::parameter93 [8] = {
 /*Filter 0*/ {NULL, 0, 5, NULL},
 /*Filter 1*/ {NULL, 0, 5, NULL},
 /*Filter 2*/ {"Mode 2", 0, 5, &Labels::SecondaryFilterMode},
-/*Filter 3*/ {"Fx Prog.", 0, Labels::FilterDSPFx.size() - 1, &Labels::FilterDSPFx},
+/*Filter 3*/ {"Fx Prog.", 0, 15, &Labels::FilterDSPFx},
 /*Filter 4*/ {NULL, 0, 127, NULL},
-/*Filter 5*/ {"Res. Flavor", 0, Labels::Filter4PMFeedbackFlavor.size() - 1, &Labels::Filter4PMFeedbackFlavor},
+/*Filter 5*/ {"Res. Flavor", 0, 3, &Labels::Filter4PMFeedbackFlavor},
 /*Filter 6*/ {"EQ Flavor", 0, 15, NULL},
 /*Filter 7*/ {NULL, 0, 127, NULL},
 };
