@@ -151,7 +151,7 @@ param_t Patch::parameter84 [8] = {
 /*Filter 0*/ {NULL, 0, 127, NULL},
 /*Filter 1*/ {"High Pass", 0, 127, NULL},
 /*Filter 2*/ {"Cutoff2", 0, 127, NULL},
-/*Filter 3*/ {"Parameter 1", 0, 127, NULL},
+/*Filter 3*/ {"Param. 1", 0, 127, NULL},
 /*Filter 4*/ {"Overdrive", 0, 1, NULL}, // &Labels::OffOn
 /*Filter 5*/ {NULL, 0, 127, NULL},
 /*Filter 6*/ {"Time", 0, 127, NULL},
@@ -165,8 +165,8 @@ param_t Patch::parameter85 [8] = {
 /*Filter 0*/ {NULL, 0, 127, NULL},
 /*Filter 1*/ {NULL, 0, 127, NULL},
 /*Filter 2*/ {"Res2", 0, 127, NULL},
-/*Filter 3*/ {"Parameter 2", 0, 63, NULL},
-/*Filter 4*/ {"Fm feedback", 0, 1, NULL}, // &Labels::OffOn
+/*Filter 3*/ {"Param. 2", 0, 63, NULL},
+/*Filter 4*/ {"Fm feedbk.", 0, 1, NULL}, // &Labels::OffOn
 /*Filter 5*/ {NULL, 0, 127, NULL},
 /*Filter 6*/ {"Level", 0, 127, NULL},
 /*Filter 7*/ {NULL, 0, 127, NULL},
@@ -179,7 +179,7 @@ param_t Patch::parameter92 [8] = {
 /*Filter 0*/ {NULL, 0, 2, NULL},
 /*Filter 1*/ {NULL, 0, 2, NULL},
 /*Filter 2*/ {"Mode 1", 0, 5, &Labels::FilterSVFMode1},
-/*Filter 3*/ {"Mode", 0, 4, &Labels::FilterDSPMode},
+/*Filter 3*/ {"FX Mode", 0, 4, &Labels::FilterDSPMode},
 /*Filter 4*/ {"Mode", 0, 1, &Labels::FilterPolivoksMode},
 /*Filter 5*/ {"Mode", 0, 14, &Labels::Filter4PMMode},
 /*Filter 6*/ {"Feedback", 0, 15, NULL},
@@ -192,10 +192,10 @@ param_t Patch::parameter93 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 5, NULL},
 /*Filter 1*/ {NULL, 0, 5, NULL},
-/*Filter 2*/ {"Mode 2", 0, 5, &Labels::FilterSVFMode2 },
-/*Filter 3*/ {"Fx Prog.", 0, 15, &Labels::FilterDSPFx},
+/*Filter 2*/ {"Mode 2", 0, 5, &Labels::FilterSVFMode2},
+/*Filter 3*/ {"FX Program", 0, 15, &Labels::FilterDSPFx},
 /*Filter 4*/ {NULL, 0, 127, NULL},
-/*Filter 5*/ {"Res. Flavor", 0, 3, &Labels::Filter4PMFeedbackFlavor},
+/*Filter 5*/ {"Resonance Flavor", 0, 3, &Labels::Filter4PMResonanceFlavor},
 /*Filter 6*/ {"EQ Flavor", 0, 15, NULL},
 /*Filter 7*/ {NULL, 0, 127, NULL},
 };

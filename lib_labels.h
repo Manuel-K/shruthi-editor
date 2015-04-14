@@ -43,7 +43,7 @@ class Labels {
         static QStringList FilterDSPFx;
         static QStringList FilterPolivoksMode;
         static QStringList Filter4PMMode;
-        static QStringList Filter4PMFeedbackFlavor;
+        static QStringList Filter4PMResonanceFlavor;
         static QStringList FilterSPMode;
         static QStringList OffOn;
 };

@@ -397,7 +397,7 @@ QStringList Labels::Filter4PMMode = QStringList()
 
 
 // ******************************************
-QStringList Labels::Filter4PMFeedbackFlavor = QStringList()
+QStringList Labels::Filter4PMResonanceFlavor = QStringList()
 // ******************************************
         << "liquid"
         << "ms"

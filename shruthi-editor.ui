@@ -7,7 +7,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1004</width>
+    <width>1000</width>
     <height>693</height>
    </rect>
   </property>
@@ -68,17 +68,14 @@
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>30</y>
-          <width>81</width>
+          <width>71</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Waveform:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <string>Shape:</string>
         </property>
        </widget>
        <widget class="QDial" name="c5">
@@ -202,7 +199,7 @@
          <rect>
           <x>10</x>
           <y>140</y>
-          <width>51</width>
+          <width>71</width>
           <height>21</height>
          </rect>
         </property>
@@ -266,17 +263,14 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>30</y>
-          <width>81</width>
+          <width>71</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Waveform:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <string>Shape:</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_2">
@@ -428,24 +422,21 @@
        <widget class="QLabel" name="label_28">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>30</y>
-          <width>81</width>
+          <width>71</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Waveform:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <string>Shape:</string>
         </property>
        </widget>
        <widget class="QComboBox" name="c27">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>70</y>
+          <y>80</y>
           <width>121</width>
           <height>24</height>
          </rect>
@@ -545,7 +536,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>50</y>
+          <y>60</y>
           <width>81</width>
           <height>21</height>
          </rect>
@@ -599,17 +590,14 @@
        <widget class="QLabel" name="label_32">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>30</y>
-          <width>81</width>
+          <width>71</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Waveform:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <string>Shape:</string>
         </property>
        </widget>
        <widget class="QLabel" name="d29">
@@ -658,7 +646,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>50</y>
+          <y>60</y>
           <width>81</width>
           <height>21</height>
          </rect>
@@ -674,7 +662,7 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>70</y>
+          <y>80</y>
           <width>121</width>
           <height>24</height>
          </rect>
@@ -1296,20 +1284,17 @@
        <widget class="QLabel" name="l93">
         <property name="geometry">
          <rect>
-          <x>160</x>
+          <x>180</x>
           <y>140</y>
-          <width>81</width>
+          <width>141</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Mode2:</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
        </widget>
-       <widget class="QLabel" name="l92">
+       <widget class="QLabel" name="l92d">
         <property name="geometry">
          <rect>
           <x>160</x>
@@ -1397,6 +1382,19 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="l92">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>100</y>
+          <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Mode2:</string>
         </property>
        </widget>
       </widget>
@@ -2539,7 +2537,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1004</width>
+     <width>1000</width>
      <height>27</height>
     </rect>
    </property>
@@ -2604,7 +2602,7 @@
   </action>
   <action name="actionOpenSettings">
    <property name="text">
-    <string>&amp;Settings...</string>
+    <string>S&amp;ettings...</string>
    </property>
   </action>
   <action name="actionReset_Patch">
@@ -2639,7 +2637,7 @@
   </action>
   <action name="actionReset_Patch_pre_1_00">
    <property name="text">
-    <string>Reset Patch (pre 1.00)</string>
+    <string>Reset Patch (pre &amp;1.00)</string>
    </property>
   </action>
  </widget>

@@ -189,6 +189,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     // dial visibility
     d92->setHidden(!p92dial);
     c92d->setHidden(!p92dial);
+    l92d->setHidden(!p92dial);
 
     // combo box visibility
     bool p92hidden = true;
@@ -199,7 +200,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         p92hidden = false;
     }
 
-    l92->setHidden(p92hidden && !p92dial);
+    l92->setHidden(p92hidden);
     c92->setHidden(p92hidden);
 
 
