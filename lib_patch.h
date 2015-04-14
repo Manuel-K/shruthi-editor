@@ -31,6 +31,12 @@ struct param_t {
     QStringList* dropdown;
 };
 
+
+// ******************************************
+static const param_t param_blank = {NULL, 0, 0, NULL};
+// ******************************************
+
+
 // ******************************************
 class Patch {
 // ******************************************
@@ -40,12 +46,20 @@ class Patch {
         unsigned char version;
         void parseSysex(unsigned char *sysex);
         void generateSysex(unsigned char res[]);
+
+        static param_t parameter84[];
+        static param_t parameter85[];
+        static param_t parameter92[];
+        static param_t parameter93[];
+
     public:
         static const unsigned char parameterCount;
-        static param_t parameters[];
         static unsigned char INIT_PATCH[];
         static bool enabled(int);
         static bool hasUI(int);
+
+        static param_t parameters[]; // use this with caution
+        static param_t parameter(int id, int filter = 0);
 
         Patch();
 
@@ -57,7 +71,7 @@ class Patch {
 
         void printPatch();
         void resetPatch();
-        void randomizePatch();
+        void randomizePatch(int);
         bool parseFullSysex(unsigned char  *sysex, unsigned int len);
         bool parseFullSysex(std::vector<unsigned char> message);
         void generateFullSysex(std::vector<unsigned char> *message);
@@ -65,7 +79,7 @@ class Patch {
         bool loadFromDisk(QString location);
         bool saveToDisk(QString location);
 
-        static unsigned char ccToNrpn(const unsigned char cc);
-        static int parseCcValue(const unsigned int val, int nrpn);
+        static unsigned char ccToNrpn(const unsigned char cc, const int filter);
+        static int parseCcValue(const unsigned int val, int nrpn, const int filter);
 };
 #endif

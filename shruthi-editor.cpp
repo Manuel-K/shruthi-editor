@@ -30,6 +30,11 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     setupUi(this);
     editor = edit;
 
+    MIDI_CHANNEL = 1;
+    MIDI_INPUT_PORT = 0;
+    MIDI_OUTPUT_PORT = 0;
+    SHRUTHI_FILTER_BOARD = 0;
+
     // Setup Dials/ComboBoxes:
     QDial* tmp_d;
     QComboBox* tmp_c;
@@ -48,6 +53,17 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
             }
         }
     }
+    // Setup additional dials for parameters 92 and 93:
+    for (int i = 92; i <= 93; i++) {
+        if (Patch::hasUI(i)) {
+                tmp_d = this->findChild<QDial*>(QString("c%1d").arg(i));
+                tmp_d->setMinimum(Patch::parameters[i].min);
+                tmp_d->setMaximum(Patch::parameters[i].max);
+                this->findChild<QLabel*>(QString("d%1").arg(i))->setText("0");
+                connect(tmp_d, SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+        }
+    }
+
     connect(patch_name,SIGNAL(editingFinished()),this, SLOT(patchNameChanged()));
 
     // Now that everything is set up, update all UI elements:
@@ -99,6 +115,144 @@ void shruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 
 
 // ******************************************
+void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
+// ******************************************
+{
+#ifdef DEBUG
+    qDebug() << "shruthiEditorMainWindow::setShruthiFilterBoard(" << filter << ")";
+#endif
+    SHRUTHI_FILTER_BOARD = filter;
+
+    //
+    // Hide all unnecessary ui elements and show the rest:
+    //
+
+    // Disable all relevant elements:
+    c84->setEnabled(false);
+    c85->setEnabled(false);
+    c92d->setEnabled(false);
+    c92->setEnabled(false);
+    c93d->setEnabled(false);
+    c93->setEnabled(false);
+
+    // Paramter 84:
+    bool p84dial = false;
+    const param_t p84 = Patch::parameter(84, filter);
+    if (p84.name != NULL) {
+        l84->setText(p84.name + ":");
+        if (p84.dropdown == NULL) {
+            p84dial = true;
+            c84->setMinimum(p84.min);
+            c84->setMaximum(p84.max);
+        }
+    }
+
+    // dial visibility
+    l84->setHidden(!p84dial);
+    d84->setHidden(!p84dial);
+    c84->setHidden(!p84dial);
+
+    // Parameter 85:
+    bool p85dial = false;
+    const param_t p85 = Patch::parameter(85, filter);
+    if (p85.name != NULL) {
+        l85->setText(p85.name + ":");
+        if (p85.dropdown == NULL) {
+            p85dial = true;
+            c85->setMinimum(p85.min);
+            c85->setMaximum(p85.max);
+        }
+    }
+
+    // dial visibility
+    l85->setHidden(!p85dial);
+    d85->setHidden(!p85dial);
+    c85->setHidden(!p85dial);
+
+    // Parameter 92:
+    QStringList *p92combo = NULL;
+    bool p92dial = false;
+
+    const param_t p92 = Patch::parameter(92, filter);
+    if (p92.name != NULL) {
+        l92->setText(p92.name + ":");
+        if (p92.dropdown == NULL) {
+            p92dial = true;
+            c92d->setMinimum(p92.min);
+            c92d->setMaximum(p92.max);
+        } else {
+            p92combo = p92.dropdown;
+        }
+    }
+
+    // dial visibility
+    d92->setHidden(!p92dial);
+    c92d->setHidden(!p92dial);
+
+    // combo box visibility
+    bool p92hidden = true;
+    if (p92combo) {
+        c92->clear();
+        c92->addItems(*p92combo);
+        // need to set index?
+        p92hidden = false;
+    }
+
+    l92->setHidden(p92hidden && !p92dial);
+    c92->setHidden(p92hidden);
+
+
+    // Parameter 93:
+    QStringList *p93combo = NULL;
+    bool p93dial = false;
+
+    const param_t p93 = Patch::parameter(93, filter);
+    if (p93.name != NULL) {
+        if (p93.dropdown == NULL) {
+            l93d->setText(p93.name + ":");
+            p93dial = true;
+            c93d->setMinimum(p93.min);
+            c93d->setMaximum(p93.max);
+        } else {
+            l93->setText(p93.name + ":");
+            p93combo = p93.dropdown;
+        }
+    }
+
+    // dial visibility
+    d93->setHidden(!p93dial);
+    c93d->setHidden(!p93dial);
+    l93d->setHidden(!p93dial);
+
+    // combo box visibility
+    bool p93hidden = true;
+    if (p93combo) {
+        c93->clear();
+        c93->addItems(*p93combo);
+        // need to set index?
+        p93hidden = false;
+    }
+    l93->setHidden(p93hidden);
+    c93->setHidden(p93hidden);
+
+    // Force display update:
+    redrawNRPN(84);
+    redrawNRPN(85);
+    redrawNRPN(92);
+    redrawNRPN(93);
+
+
+    // Enable active elements:
+    c84->setEnabled(p84dial);
+    c85->setEnabled(p85dial);
+    c92d->setEnabled(p92dial);
+    c92->setEnabled(!p92hidden);
+    c93d->setEnabled(p93dial);
+    c93->setEnabled(!p93hidden);
+}
+
+
+// ******************************************
 // ******************************************
 // Local UI Signal Handlers
 // ******************************************
@@ -107,9 +261,18 @@ void shruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 // ******************************************
 void shruthiEditorMainWindow::comboBoxChanged(int val) {
 // ******************************************
+    // Never send 'no current item set' i.e. -1:
+    if (val == -1)
+        return;
+
     QComboBox* s = (QComboBox*) sender();
     QString id = s->objectName();
     id.remove(0,1);
+
+    // Don't send changed signal if element is disabled:
+    if (!s->isEnabled())
+        return;
+
     queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
 }
@@ -120,12 +283,24 @@ void shruthiEditorMainWindow::dialChanged(int val) {
 // ******************************************
     QDial* s = (QDial*) sender();
     QString id = s->objectName();
+
+    // Don't send changed signal if element is disabled:
+    if (!s->isEnabled())
+        return;
+
+    // Fix for additional dials (parameter 92/93):
+    if (id.endsWith('d')) {
+        id.chop(1);
+    }
+
+    // Update label:
     id.replace(0,1,"d");
     if (id=="d25" || id == "d29")
         this->findChild<QLabel*>(id)->setText(Labels::LfoRateFormatter(val));
     else
         this->findChild<QLabel*>(id)->setText(QString("%1").arg(val));
     id.remove(0,1);
+
     queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
 }
@@ -185,11 +360,13 @@ void shruthiEditorMainWindow::changeMidiPorts() {
     prefs.setFixedSize(prefs.width(),prefs.height());
     prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
     prefs.setMidiChannel(MIDI_CHANNEL);
+    prefs.setShruthiFilterBoard(SHRUTHI_FILTER_BOARD);
     if (prefs.exec()) {
         int in = prefs.getMidiInputPort();
         int out = prefs.getMidiOutputPort();
         unsigned char channel = prefs.getMidiChannel();
-        emit settingsChanged(in,out,channel);
+        int filterboard = prefs.getShruthiFilterBoard();
+        emit settingsChanged(in, out, channel, filterboard);
     }
     prefs.done(1);
 }
@@ -250,12 +427,23 @@ void shruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 // ******************************************
 void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
 // ******************************************
-    if (Patch::parameters[nrpn].dropdown) {
-        this->findChild<QComboBox*>(QString("c")+QString("%1").arg(nrpn))
-          ->setCurrentIndex(editor->getParam(nrpn));
+    const param_t param = Patch::parameter(nrpn, SHRUTHI_FILTER_BOARD);
+
+    QString id = QString("c%1").arg(nrpn);
+
+    bool forceDial = false;
+
+    // Fix for additional dials (parameter 92/93):
+    if ((nrpn == 92 || nrpn == 93) && param.dropdown == NULL) {
+        id.append("d");
+        forceDial = true;
+    }
+
+
+    if (!forceDial && param.dropdown) {
+        this->findChild<QComboBox*>(id)->setCurrentIndex(editor->getParam(nrpn));
     } else {
-        this->findChild<QDial*>(QString("c")+QString("%1").arg(nrpn))
-          ->setValue(editor->getParam(nrpn));
+        this->findChild<QDial*>(id)->setValue(editor->getParam(nrpn));
     }
 }
 

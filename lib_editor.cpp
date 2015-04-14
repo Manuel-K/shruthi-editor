@@ -26,6 +26,7 @@ Editor::Editor() {
 #ifdef DEBUG
     qDebug("Editor::Editor()");
 #endif
+    shruthiFilterBoard = 0;
 }
 
 
@@ -48,6 +49,17 @@ void Editor::setMidiChannel(unsigned char channel) {
     qDebug() << "Editor::setMidiChannel:" << channel;
 #endif
     Editor::channel = channel;
+}
+
+
+// ******************************************
+void Editor::setShruthiFilterBoard(int filter)
+// ******************************************
+{
+#ifdef DEBUG
+    qDebug() << "Editor::setShruthiFilterBoard:" << filter;
+#endif
+    Editor::shruthiFilterBoard = filter;
 }
 
 
@@ -322,7 +334,7 @@ void Editor::actionRandomizePatch() {
 #ifdef DEBUG
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
-    patch.randomizePatch();
+    patch.randomizePatch(shruthiFilterBoard);
     emit redrawAll();
     emit displayStatusbar("Patch randomized.");
 }

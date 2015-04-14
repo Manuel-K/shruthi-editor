@@ -35,7 +35,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void closeEvent(QCloseEvent* event);
 
         Editor* editor;
-        int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT;
+        int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT, SHRUTHI_FILTER_BOARD;
         unsigned char MIDI_CHANNEL;
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
 
@@ -63,13 +63,14 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void setMidiInputPort(int);
         void setMidiOutputPort(int);
         void setMidiChannel(unsigned char);
+        void setShruthiFilterBoard(int);
         void midiInputStatusChanged(bool);
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString msg);
 
     signals:
         void enqueue(queueitem_t);
-        void settingsChanged(int,int,unsigned char);
+        void settingsChanged(int, int, unsigned char, int);
         void showKeyboard();
 };
 

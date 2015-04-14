@@ -22,11 +22,12 @@
 
 // ******************************************
 void Config::save() {
-// ******************************************
+    // ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     settings.setValue("midi/inputPort",midiInputPort);
     settings.setValue("midi/outputPort",midiOutputPort);
     settings.setValue("midi/channel",midiChannel);
+    settings.setValue("shruthi/filterBoard", shruthiFilterBoard);
 }
 
 
@@ -37,6 +38,7 @@ void Config::load() {
     midiInputPort=settings.value("midi/inputPort",0).toInt();
     midiOutputPort=settings.value("midi/outputPort",0).toInt();
     midiChannel=settings.value("midi/channel",0).toInt();
+    shruthiFilterBoard=settings.value("shruthi/filterBoard", 0).toInt();
 }
 
 
@@ -79,4 +81,20 @@ void Config::setMidiChannel(unsigned char channel) {
 unsigned char Config::getMidiChannel() {
 // ******************************************
     return midiChannel;
+}
+
+
+// ******************************************
+int Config::getShruthiFilterBoard() const
+// ******************************************
+{
+    return shruthiFilterBoard;
+}
+
+
+// ******************************************
+void Config::setShruthiFilterBoard(int value)
+// ******************************************
+{
+    shruthiFilterBoard = value;
 }

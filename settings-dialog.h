@@ -35,6 +35,8 @@ class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
         void setMidiPorts(int,int);
         void setMidiChannel(unsigned char);
         unsigned char getMidiChannel();
+        int getShruthiFilterBoard();
+        void setShruthiFilterBoard(int);
 };
 
 

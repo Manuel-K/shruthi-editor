@@ -43,13 +43,14 @@ class SignalRouter : public QObject {
         void run();
         void enqueue(queueitem_t);
         void editorFinished();
-        void settingsChanged(int,int,unsigned char);
+        void settingsChanged(int, int, unsigned char, int);
 
     signals:
         void editorProcess(queueitem_t);
         void setMidiInputPort(int);
         void setMidiOutputPort(int);
         void setMidiChannel(unsigned char);
+        void setShruthiFilterBoard(int);
 };
 
 #endif

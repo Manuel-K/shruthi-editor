@@ -37,5 +37,14 @@ class Labels {
         static QStringList MainFilterMode;
         static QStringList SecondaryFilterMode;
         static QString LfoRateFormatter(int value); // used for labels
+        // The following labels are used for the filter boards:
+        static QStringList FilterBoard;
+        static QStringList FilterDSPMode;
+        static QStringList FilterDSPFx;
+        static QStringList FilterPolivoksMode;
+        static QStringList Filter4PMMode;
+        static QStringList Filter4PMFeedbackFlavor;
+        static QStringList FilterSPMode;
+        static QStringList OffOn;
 };
 #endif

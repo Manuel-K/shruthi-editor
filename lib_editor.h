@@ -77,6 +77,7 @@ class Editor : public QObject {
         Patch patch;
         MidiOut midiout;
         unsigned char channel;
+        int shruthiFilterBoard;
         void actionProcessEditor(int,int);
         void actionFetchPatch();
         void actionSendPatch();
@@ -102,6 +103,7 @@ class Editor : public QObject {
         void process(queueitem_t);
         bool setMidiOutputPort(int);
         void setMidiChannel(unsigned char);
+        void setShruthiFilterBoard(int);
 
     signals:
         void redrawNRPN(int);

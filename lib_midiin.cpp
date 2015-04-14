@@ -138,8 +138,8 @@ void MidiIn::process(std::vector< unsigned char > *message) {
                 emit enqueue(signal);
             }
         } else {
-            int nrpn = Patch::ccToNrpn(message->at(1));
-            int value = Patch::parseCcValue(message->at(2), nrpn);
+            int nrpn = Patch::ccToNrpn(message->at(1), shruthiFilterBoard);
+            int value = Patch::parseCcValue(message->at(2), nrpn, shruthiFilterBoard);
             if (!warnedCC) {
                 if (nrpn == 25  || nrpn == 29) {
                     std::cout << "Received LFO Rate per CC. That's a bad idea...\nFurther warnings will be suppressed."
@@ -174,6 +174,8 @@ MidiIn::MidiIn() {
 
     warnedCC = false;
 
+    shruthiFilterBoard = 0;
+
     try {
         midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
         midiin->setCallback(&mycallback,this);
@@ -204,6 +206,17 @@ void MidiIn::setMidiInputPort(int in) {
 #endif
     open(in);
     emit midiInputStatusChanged(opened);
+}
+
+
+// ******************************************
+void MidiIn::setShruthiFilterBoard(int filter)
+// ******************************************
+{
+#ifdef DEBUG
+    qDebug() << "MidiIn::setShruthiFilterBoard:" << filter;
+#endif
+    MidiIn::shruthiFilterBoard = filter;
 }
 
 

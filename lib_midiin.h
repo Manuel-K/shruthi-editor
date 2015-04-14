@@ -64,12 +64,15 @@ class MidiIn : public QObject {
 
         bool isNRPN(unsigned char, unsigned char);
 
+        int shruthiFilterBoard;
+
     public:
         ~MidiIn();
         MidiIn();
         void process(std::vector< unsigned char > *message);
     public slots:
         void setMidiInputPort(int);
+        void setShruthiFilterBoard(int);
     signals:
         void enqueue(queueitem_t);
         void midiInputStatusChanged(bool);

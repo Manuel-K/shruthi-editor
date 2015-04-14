@@ -20,6 +20,7 @@
 #include "settings-dialog.h"
 #include <iostream>
 #include "RtMidi.h"
+#include "lib_labels.h"
 
 // ******************************************
 shruthiEditorSettings::shruthiEditorSettings() {
@@ -29,6 +30,8 @@ shruthiEditorSettings::shruthiEditorSettings() {
 
     midiChannel->setMinimum(1);
     midiChannel->setMaximum(16);
+
+    shruthiFilterBoard->addItems(Labels::FilterBoard);
 }
 
 
@@ -124,4 +127,17 @@ void shruthiEditorSettings::setMidiChannel(unsigned char channel) {
 unsigned char shruthiEditorSettings::getMidiChannel() {
 // ******************************************
     return midiChannel->value()-1;
+}
+
+// ******************************************
+void shruthiEditorSettings::setShruthiFilterBoard(int index) {
+// ******************************************
+    shruthiFilterBoard->setCurrentIndex(index);
+}
+
+
+// ******************************************
+int shruthiEditorSettings::getShruthiFilterBoard() {
+// ******************************************
+    return shruthiFilterBoard->currentIndex();
 }

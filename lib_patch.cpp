@@ -146,6 +146,109 @@ param_t Patch::parameters [108] = {
 
 
 // ******************************************
+param_t Patch::parameter84 [8] = {
+// ******************************************
+/*Filter 0*/ {NULL, 0, 127, NULL},
+/*Filter 1*/ {"High Pass", 0, 127, NULL},
+/*Filter 2*/ {"Cutoff2", 0, 127, NULL},
+/*Filter 3*/ {"Parameter 1", 0, 127, NULL},
+/*Filter 4*/ {"Overdrive", 0, 1, NULL}, // &Labels::OffOn
+/*Filter 5*/ {NULL, 0, 127, NULL},
+/*Filter 6*/ {"Time", 0, 127, NULL},
+/*Filter 7*/ {"Feedback", 0, 127, NULL},
+};
+
+
+// ******************************************
+param_t Patch::parameter85 [8] = {
+// ******************************************
+/*Filter 0*/ {NULL, 0, 127, NULL},
+/*Filter 1*/ {NULL, 0, 127, NULL},
+/*Filter 2*/ {"Res2", 0, 127, NULL},
+/*Filter 3*/ {"Parameter 2", 0, 63, NULL},
+/*Filter 4*/ {"Fm feedback", 0, 1, NULL}, // &Labels::OffOn
+/*Filter 5*/ {NULL, 0, 127, NULL},
+/*Filter 6*/ {"Level", 0, 127, NULL},
+/*Filter 7*/ {NULL, 0, 127, NULL},
+};
+
+
+// ******************************************
+param_t Patch::parameter92 [8] = {
+// ******************************************
+/*Filter 0*/ {NULL, 0, 2, NULL},
+/*Filter 1*/ {NULL, 0, 2, NULL},
+/*Filter 2*/ {"Mode 1", 0, 2, &Labels::MainFilterMode},
+/*Filter 3*/ {"Mode", 0, Labels::FilterDSPMode.size() - 1, &Labels::FilterDSPMode},
+/*Filter 4*/ {"Mode", 0, 1, &Labels::FilterPolivoksMode},
+/*Filter 5*/ {"Mode", 0, Labels::Filter4PMMode.size() - 1, &Labels::Filter4PMMode},
+/*Filter 6*/ {"Feedback", 0, 15, NULL},
+/*Filter 7*/ {"Mode", 0, 3, &Labels::FilterSPMode},
+};
+
+
+// ******************************************
+param_t Patch::parameter93 [8] = {
+// ******************************************
+/*Filter 0*/ {NULL, 0, 5, NULL},
+/*Filter 1*/ {NULL, 0, 5, NULL},
+/*Filter 2*/ {"Mode 2", 0, 5, &Labels::SecondaryFilterMode},
+/*Filter 3*/ {"Fx Prog.", 0, Labels::FilterDSPFx.size() - 1, &Labels::FilterDSPFx},
+/*Filter 4*/ {NULL, 0, 127, NULL},
+/*Filter 5*/ {"Res. Flavor", 0, Labels::Filter4PMFeedbackFlavor.size() - 1, &Labels::Filter4PMFeedbackFlavor},
+/*Filter 6*/ {"EQ Flavor", 0, 15, NULL},
+/*Filter 7*/ {NULL, 0, 127, NULL},
+};
+
+
+/*
+ * Notes on other filter boards:
+ * DSP FX param 1 (cc 12) uses param 84
+ * DSP FX param 2 (cc 12) uses param 85
+ * DSP FX mode (cc 87) uses param 92
+ * DSP FX program (cc 88) uses param 93
+ * Polivoks filter mode (cc 89) uses param 92
+ * Polivoks overdrive (cc 90) uses param 84
+ * Polivoks Fm feedback (cc 91) uses param 85
+ * 4PM filter mode (cc 92) uses param 92
+ * 4PM resonance flavor (cc 93) uses param 93
+ * Delay time (cc 12) uses SVF param 84
+ * Delay level (cc 13) uses param 85
+ * Delay feedback (cc 94) uses param 92
+ * Delay EQ flavor (cc 95) uses param 93
+ * SP Mode (cc 96) uses param 92
+ * SP Feedback uses param 84
+ */
+
+
+// ******************************************
+param_t Patch::parameter(int id, int filter)
+// ******************************************
+{
+    if (id > 107 || filter > 7) {
+#ifdef DEBUG
+        qDebug() << "Patch::parameter() called with invalid arguments." << id << filter;
+#endif
+        return param_blank;
+    }
+
+    // Handle different filters:
+    switch (id) {
+    case 84:
+        return parameter84[filter];
+    case 85:
+        return parameter85[filter];
+    case 92:
+        return parameter92[filter];
+    case 93:
+        return parameter93[filter];
+    default:
+        return parameters[id];
+    }
+}
+
+
+// ******************************************
 unsigned char Patch::INIT_PATCH[] =
 // ******************************************
     {1, 0, 0, 0, 2, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
@@ -239,12 +342,12 @@ void Patch::resetPatch() {
 
 
 // ******************************************
-void Patch::randomizePatch() {
+void Patch::randomizePatch(int filter) {
 // ******************************************
     parseSysex(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) {
-            const param_t param = parameters[i];
+            const param_t param = parameter(i, filter);
             data[i] = (rand() %(param.max-param.min))+param.min;
         }
     }
@@ -320,7 +423,7 @@ void Patch::generateSysex(unsigned char res[]) {
 
 
 // ******************************************
-unsigned char Patch::ccToNrpn(const unsigned char cc)
+unsigned char Patch::ccToNrpn(const unsigned char cc, int filter)
 // ******************************************
 {
     // Oscillator 1
@@ -375,19 +478,36 @@ unsigned char Patch::ccToNrpn(const unsigned char cc)
     if (cc == 85 || cc == 86) {
         return cc + 7;
     }
+    // other filters (see Labels::FilterBoard for indices):
+    // DSP FX mode, Polivoks filter mode, 4PM filter mode, Delay feedback, SP mode
+    if ((filter == 3 && cc == 87) || (filter == 4 && cc == 89) || (filter == 5 && cc == 92) || (filter == 6 && cc == 94) || (filter == 7 && cc == 96)) {
+        return 92;
+    }
+    // DSP FX program, 4PM resonance flavor, Delay EQ flavor
+    if ((filter == 3 && cc == 88) || (filter == 5 && cc == 93) || (filter == 6 && cc == 95)) {
+        return 93;
+    }
+    // Polivoks overdrive
+    if ((filter == 4 && cc == 90)) {
+        return 84;
+    }
+    // Polivoks Fm feedback
+    if ((filter == 4 && cc == 91)) {
+        return 85;
+    }
 
     return 255; // Not supported
 }
 
 
 // ******************************************
-int Patch::parseCcValue(const unsigned int val, int nrpn)
+int Patch::parseCcValue(const unsigned int val, int nrpn, const int filter)
 // ******************************************
 {
     if (nrpn >= parameterCount)
         return 255; // Not supported
-    const int min = parameters[nrpn].min;
-    const int max = parameters[nrpn].max;
+    const int min = parameter(nrpn, filter).min;
+    const int max = parameter(nrpn, filter).max;
     const double perc = val / 127.0;
 
     // Try to emulate Shruthi's LFO rate extrapolation:

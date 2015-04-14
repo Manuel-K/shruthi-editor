@@ -320,3 +320,99 @@ QString Labels::LfoRateFormatter(int value) {  // used for labels
     else
         return QString("%1").arg(value-16);
 }
+
+
+// ******************************************
+QStringList Labels::FilterBoard = QStringList()
+// ******************************************
+/* Filter 0*/ << "SMR4 (lpf)"
+/* Filter 1*/ << "SSM2044 (ssm)"
+/* Filter 2*/ << "Dual SVF (svf)"
+/* Filter 3*/ << "Digital (dsp)"
+/* Filter 4*/ << "Polivoks (pvk)"
+/* Filter 5*/ << "4pm"
+/* Filter 6*/ << "LP2+delay"
+/* Filter 7*/ << "sp";
+
+
+// ******************************************
+QStringList Labels::FilterDSPMode = QStringList()
+// ******************************************
+        << "l>f"
+        << "h>f"
+        << "f>l"
+        << "f>h"
+        << ">fx";
+
+
+// ******************************************
+QStringList Labels::FilterDSPFx = QStringList()
+// ******************************************
+        << "distrt"
+        << "crushr"
+        << "+cmbfl"
+        << "-cmbfl"
+        << "ringmd"
+        << "delay"
+        << "fb dly"
+        << "dubdly"
+        << "!fbdly"
+        << "!dbdly"
+        << "/16 dl"
+        << "/12 dl"
+        << "/8 dly"
+        << "3/16dl"
+        << "looper"
+        << "pitch";
+
+
+// ******************************************
+QStringList Labels::FilterPolivoksMode = QStringList()
+// ******************************************
+        << "Lowpass"
+        << "Bandpass";
+
+
+// ******************************************
+QStringList Labels::Filter4PMMode = QStringList()
+// ******************************************
+        << "lp4"
+        << "lp3"
+        << "lp2"
+        << "lp1"
+        << "hp1"
+        << "hp2"
+        << "hp3"
+        << "bp2"
+        << "bp4"
+        << "notch"
+        << "phaser"
+        << "h21p"
+        << "h31p"
+        << "n+lp"
+        << "p+lp";
+
+
+// ******************************************
+QStringList Labels::Filter4PMFeedbackFlavor = QStringList()
+// ******************************************
+        << "liquid"
+        << "ms"
+        << "wobbly"
+        << "whacky";
+
+
+// ******************************************
+QStringList Labels::FilterSPMode = QStringList()
+// ******************************************
+        << "Lowpass"
+        << "Bandpass"
+        << "Highpass"
+        << "ap";
+
+
+// ******************************************
+QStringList Labels::OffOn = QStringList()
+// ******************************************
+        << "Off"
+        << "On";
