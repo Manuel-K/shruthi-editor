@@ -76,6 +76,7 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     connect(actionSend_Patch,SIGNAL(triggered()), this, SLOT(sendPatch()));
     connect(actionChange_Midi_Ports,SIGNAL(triggered()), this, SLOT(changeMidiPorts()));
     connect(actionReset_Patch,SIGNAL(triggered()), this, SLOT(resetPatch()));
+    connect(actionReset_Patch_pre_1_00,SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
     connect(actionQuit,SIGNAL(triggered()), this, SLOT(quitShruthiEditor()));
     connect(actionAbout_Shruthi_Editor,SIGNAL(triggered()), this, SLOT(aboutShruthiEditor()));
     connect(actionAbout_Qt,SIGNAL(triggered()), this, SLOT(aboutQt()));
@@ -376,6 +377,16 @@ void shruthiEditorMainWindow::changeMidiPorts() {
 void shruthiEditorMainWindow::resetPatch() {
 // ******************************************
     queueitem_t signal(RESET_PATCH);
+    signal.int0 = 1000;
+    emit(enqueue(signal));
+}
+
+
+// ******************************************
+void shruthiEditorMainWindow::resetPatchPre100() {
+// ******************************************
+    queueitem_t signal(RESET_PATCH);
+    signal.int0 = 98;
     emit(enqueue(signal));
 }
 

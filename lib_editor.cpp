@@ -127,7 +127,7 @@ void Editor::process(queueitem_t item) {
             actionSavePatch(item.string);
             break;
         case RESET_PATCH:
-            actionResetPatch();
+            actionResetPatch(item.int0);
             break;
         case RANDOMIZE_PATCH:
             actionRandomizePatch();
@@ -317,12 +317,12 @@ void Editor::actionSavePatch(QString filename) {
 
 
 // ******************************************
-void Editor::actionResetPatch() {
+void Editor::actionResetPatch(unsigned int version) {
 // ******************************************
 #ifdef DEBUG
     qDebug() << "Editor::actionResetPatch()";
 #endif
-    patch.resetPatch();
+    patch.resetPatch(version);
     emit redrawAll();
     emit displayStatusbar("Patch reset.");
 }

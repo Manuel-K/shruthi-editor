@@ -55,6 +55,7 @@ class Patch {
     public:
         static const unsigned char parameterCount;
         static unsigned char INIT_PATCH[];
+        static unsigned char INIT_PATCH_PRE100[];
         static bool enabled(int);
         static bool hasUI(int);
 
@@ -70,7 +71,7 @@ class Patch {
         QString getVersionString();
 
         void printPatch();
-        void resetPatch();
+        void resetPatch(unsigned int version = 1000);
         void randomizePatch(int);
         bool parseFullSysex(unsigned char  *sysex, unsigned int len);
         bool parseFullSysex(std::vector<unsigned char> message);

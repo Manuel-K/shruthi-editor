@@ -90,7 +90,7 @@ class Editor : public QObject {
         void actionSetPatchname(QString);
         void actionLoadPatch(QString);
         void actionSavePatch(QString);
-        void actionResetPatch();
+        void actionResetPatch(unsigned int version);
         void actionRandomizePatch();
 
     public:

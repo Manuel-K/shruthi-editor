@@ -2548,6 +2548,7 @@
      <string>Fi&amp;le</string>
     </property>
     <addaction name="actionReset_Patch"/>
+    <addaction name="actionReset_Patch_pre_1_00"/>
     <addaction name="actionLoad_Patch"/>
     <addaction name="actionSave_Patch"/>
     <addaction name="actionRandomize_Patch"/>
@@ -2634,6 +2635,11 @@
   <action name="actionKeyboard">
    <property name="text">
     <string>&amp;Open Keyboard</string>
+   </property>
+  </action>
+  <action name="actionReset_Patch_pre_1_00">
+   <property name="text">
+    <string>Reset Patch (pre 1.00)</string>
    </property>
   </action>
  </widget>
