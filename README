@@ -71,3 +71,5 @@ v0.21 * SysEx header for firmware versions >= 0.94
       * added missing labels
       * fixed crash during attempt to change unknown parameters
       * try to emulate Shruthi's LFO rate mapping
+      * support for all filter boards (firmware version 1.02)
+      * added debouncing
