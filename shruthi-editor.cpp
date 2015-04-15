@@ -286,10 +286,6 @@ void shruthiEditorMainWindow::dialChanged(int val) {
 // ******************************************
     QDial* s = (QDial*) sender();
 
-    // Don't send changed signal if element is disabled:
-    if (!s->isEnabled())
-        return;
-
     QString id = s->objectName();
 
     // Fix for additional dials (parameter 92/93):
@@ -304,6 +300,10 @@ void shruthiEditorMainWindow::dialChanged(int val) {
     else
         this->findChild<QLabel*>(id)->setText(QString("%1").arg(val));
     id.remove(0,1);
+
+    // Don't send changed signal if element is disabled:
+    if (!s->isEnabled())
+        return;
 
     queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
     emit(enqueue(signal));
