@@ -252,9 +252,9 @@ QStringList Labels::FilterBoard = QStringList()
 /* Filter 2*/ << "Dual SVF (svf)"
 /* Filter 3*/ << "Digital (dsp)"
 /* Filter 4*/ << "Polivoks (pvk)"
-/* Filter 5*/ << "4pm"
-/* Filter 6*/ << "LP2+delay"
-/* Filter 7*/ << "sp";
+/* Filter 5*/ << "4-Pole Mission (4pm)"
+/* Filter 6*/ << "LP2+Delay"
+/* Filter 7*/ << "Shruthacon (sp)";
 
 
 // ******************************************
@@ -282,32 +282,32 @@ QStringList Labels::FilterSVFMode2 = QStringList()
 // ******************************************
 QStringList Labels::FilterDSPMode = QStringList()
 // ******************************************
-        << "l>f"
-        << "h>f"
-        << "f>l"
-        << "f>h"
-        << ">fx";
+        << "LP > FX"
+        << "HP > FX"
+        << "FX > LP"
+        << "FX > HP"
+        << "FX";
 
 
 // ******************************************
 QStringList Labels::FilterDSPFx = QStringList()
 // ******************************************
-        << "distrt"
-        << "crushr"
-        << "+cmbfl"
-        << "-cmbfl"
-        << "ringmd"
-        << "delay"
-        << "fb dly"
-        << "dubdly"
-        << "!fbdly"
-        << "!dbdly"
-        << "/16 dl"
-        << "/12 dl"
-        << "/8 dly"
-        << "3/16dl"
-        << "looper"
-        << "pitch";
+        << "Distortion (distrt)"
+        << "Bit crusher (crushr)"
+        << "Comb/pos. fb. (+cmbfl)"
+        << "Comb/neg. fb. (-cmbfl)"
+        << "Ring modulator (ringmd)"
+        << "Simple delay"
+        << "Delay/30% fb. (fb dly)"
+        << "Delay/80% fb. (dubdly)"
+        << "Delay/30%/no AA (!fbdly)"
+        << "Delay/80%/no AA (!dbdly)"
+        << "1/16 tempo-sync. delay"
+        << "1/12 tempo-sync. delay"
+        << "1/8 tempo-sync. delay"
+        << "3/16 tempo-sync. delay"
+        << "Looper"
+        << "Pitch shifter";
 
 
 // ******************************************
@@ -320,30 +320,30 @@ QStringList Labels::FilterPolivoksMode = QStringList()
 // ******************************************
 QStringList Labels::Filter4PMMode = QStringList()
 // ******************************************
-        << "lp4"
-        << "lp3"
-        << "lp2"
-        << "lp1"
-        << "hp1"
-        << "hp2"
-        << "hp3"
-        << "bp2"
-        << "bp4"
-        << "notch"
-        << "phaser"
-        << "h21p"
-        << "h31p"
-        << "n+lp"
-        << "p+lp";
+        << "4-pole LP"
+        << "3-pole LP"
+        << "2-pole LP"
+        << "1-pole LP"
+        << "1-pole HP"
+        << "2-pole HP"
+        << "3-pole HP"
+        << "2-pole BP"
+        << "4-pole BP"
+        << "Notch filter"
+        << "Phaser"
+        << "2-p HP + 1-p LP (h21p)"
+        << "3-p HP + 1-p LP (h31p)"
+        << "Notch + 1-p LP (n+lp)"
+        << "Allpass + 1-p LP (p+lp)";
 
 
 // ******************************************
 QStringList Labels::Filter4PMResonanceFlavor = QStringList()
 // ******************************************
-        << "liquid"
-        << "ms"
-        << "wobbly"
-        << "whacky";
+        << "Liquid"
+        << "MS"
+        << "Wobbly"
+        << "Whacky";
 
 
 // ******************************************
@@ -352,7 +352,7 @@ QStringList Labels::FilterSPMode = QStringList()
         << "Lowpass"
         << "Bandpass"
         << "Highpass"
-        << "ap";
+        << "Allpass";
 
 
 // ******************************************
