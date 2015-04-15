@@ -22,7 +22,7 @@
 
 // ******************************************
 void Config::save() {
-    // ******************************************
+// ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     settings.setValue("midi/inputPort",midiInputPort);
     settings.setValue("midi/outputPort",midiOutputPort);
