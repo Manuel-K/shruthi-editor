@@ -110,14 +110,14 @@ param_t Patch::parameters [108] = {
     /*73*/ {NULL, 0, 0, NULL},
     /*74*/ {NULL, 0, 0, NULL},
     /*75*/ {NULL, 0, 0, NULL},
-    /*76*/ {"extra_data[0]", 0, 9, NULL}, // (system_settings.legato ? 0x40 : 0x00) |= system_settings.portamento
-    /*77*/ {"extra_data[1]", 0, 9 , NULL}, // seq_mode
-    /*78*/ {"extra_data[2]", 0, 9, NULL}, // seq_tempo
-    /*79*/ {"extra_data[3]", 0,9 , NULL}, // seq_groove_template
-    /*80*/ {"extra_data[4]", 0, 9, NULL}, // seq_groove_amount
-    /*81*/ {"extra_data[5]", 0,9 , NULL}, // (arp_direction << 4) | arp_range;
-    /*82*/ {"extra_data[6]", 0, 9, NULL}, // arp_pattern
-    /*83*/ {"extra_data[7]", 0, 9 , NULL}, // arp_clock_division
+    /*76*/ {NULL, 0, 0, NULL}, // (system_settings.legato ? 0x40 : 0x00) | system_settings.portamento
+    /*77*/ {NULL, 0, 0, NULL}, // seq_mode
+    /*78*/ {NULL, 0, 0, NULL}, // seq_tempo
+    /*79*/ {NULL, 0, 0, NULL}, // seq_groove_template
+    /*80*/ {NULL, 0, 9, NULL}, // seq_groove_amount
+    /*81*/ {NULL, 0, 0, NULL}, // (arp_direction << 4) | arp_range
+    /*82*/ {NULL, 0, 0, NULL}, // arp_pattern
+    /*83*/ {NULL, 0, 0, NULL}, // arp_clock_division
     /*84*/ {"Filter cutoff 2", 0, 127, NULL},
     /*85*/ {"Filter resonance 2", 0, 63, NULL},
     /*86*/ {NULL, 0, 0, NULL}, //86: filter_topology_ (92<<4 | 93)
@@ -134,14 +134,16 @@ param_t Patch::parameters [108] = {
     /*97*/ {"Operator 2 in1", 0, 31, &Labels::ModulationSource},
     /*98*/ {"Operator 2 in2", 0, 31, &Labels::ModulationSource},
     /*99*/ {"Operator 2 out", 0, 9, &Labels::CvOperator},
-    /*100*/ {"Sequencer mode", 0, 2, NULL},
-    /*101*/ {"Tempo",35, 248, NULL},
-    /*102*/ {"Groove template", 0, 5, NULL},
+    /*100*/ {"Sequencer mode", 0, 2, &Labels::SequencerMode},
+    /*101*/ {"Tempo", 39, 240, NULL}, // 35..248 according to manual; (<40 external); min with encoder is 39, with poti it's 38
+    /*102*/ {"Groove template", 0, 5, &Labels::GrooveTemplate},
     /*103*/ {"Groove amount", 0, 127, NULL},
-    /*104*/ {"Arpeggiator direction", 0, 3, NULL},
-    /*105*/ {"Arpeggiator range", 1,4, NULL},
-    /*106*/ {"Arpeggiator pattern", 0, 15, NULL},
-    /*107*/ {"Sequencer Clock Division", 0, 11, NULL}
+    /*104*/ {"Arpeggiator direction", 0, 4, &Labels::ArpeggiatorDirection}, // 0..3 according to manual
+    /*105*/ {"Arpeggiator range", 1, 4, NULL},
+    /*106*/ {"Arpeggiator pattern", 0, 15, NULL}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
+    /*107*/ {"Sequencer Clock Division", 0, 11, &Labels::SequencerClockDivision}
+    /* portamento 0..63 */
+    /* legato  off/on */
 };
 
 
@@ -304,6 +306,37 @@ int Patch::getParam(int param) {
 
 
 // ******************************************
+QString Patch::getParamFancy(int param)
+// ******************************************
+{
+    return formatParameterValue(param, data[param]);
+}
+
+
+// ******************************************
+QString Patch::formatParameterValue(int param, int value, int filter)
+// ******************************************
+{
+    switch (param) {
+    case 25:
+    case 29:
+        return Labels::LfoRateFormatter(value);
+    case 101:
+        return Labels::TempoFormatter(value);
+    case 106:
+        return Labels::ArpeggiatorPatternFormatter(value);
+    default:
+        param_t param_entry = parameter(param, filter);
+        if (param_entry.dropdown) {
+            return (*param_entry.dropdown).at(value);
+        } else {
+            return QString("%1").arg(value);
+        }
+    }
+}
+
+
+// ******************************************
 void Patch::setName(QString new_name) {
 // ******************************************
     name=new_name;
@@ -332,13 +365,12 @@ QString Patch::getVersionString()
 // ******************************************
 void Patch::printPatch() {
 // ******************************************
-    qDebug() << "name: " << name;
-    for (int i=0; i < parameterCount; i++) if (enabled(i)) {
-        const param_t param = parameters[i];
-        if (parameters[i].dropdown)
-            qDebug() << param.name << ": " << (*param.dropdown).at(data[i]);
-        else
-            qDebug() << param.name << ": " << data[i];
+    std::cout << "name: " << name.toUtf8().constData() << std::endl;
+    for (int i=0; i < parameterCount; i++) {
+        if (enabled(i)) {
+            std::cout << parameters[i].name.toUtf8().constData() << ": "
+                      << getParamFancy(i).toUtf8().constData() << std::endl;
+        }
     }
 }
 
@@ -388,6 +420,30 @@ void Patch::parseSysex(unsigned char sysex[]) {
     temp[97] = temp[89]; // op 2 in 1
     temp[98] = temp[90]>>3; // op 2 in 2
     temp[99] = temp[90]%8; // op 2 out
+    version = temp[91];
+    std::cout << "Parsed patch with version " << version << "/" << (int)version << "." << std::endl;
+    // uncompress v1.00 data:
+    if (version == 37) {
+        // temp[76] holds (system_settings.legato ? 0x40 : 0x00) | system_settings.portamento
+        sys_legato = (temp[76] & 0x40) > 0;
+        sys_portamento = temp[76] % 64;
+        temp[100] = temp[77]; // seq_mode
+        temp[101] = temp[78]; // seq_tempo
+        temp[102] = temp[79]; // seq_groove_template
+        temp[103] = temp[80]; // seq_groove_amount
+        // temp[81] holds (arp_direction << 4) | arp_range;
+        temp[104] = temp[81] >> 4; // arp_direction
+        temp[105] = temp[81] % 16; // arp_range
+        temp[106] = temp[82]; // arp_pattern
+        temp[107] = temp[83]; // arp_clock_division
+
+        //for (int i = 100; i < 108; i++) {
+        //    std::cout << i << " " << parameters[i].name.toUtf8().constData() << ": "
+        //              << formatParameterValue(i, temp[i]).toUtf8().constData() << std::endl;
+        //}
+        //std::cout << "    Legato: " << sys_legato << std::endl;
+        //std::cout << "    Portamento: " << sys_portamento << std::endl;
+    }
 
     // fix negative values (2s complement):
     for (int i=0; i < 108; i++) if (enabled(i))
@@ -422,7 +478,18 @@ void Patch::generateSysex(unsigned char res[]) {
     temp[88] = (temp[95]<<3) | temp[96];
     temp[89] = temp[97];
     temp[90] = (temp[98]<<3) | temp[99];
-    temp[91] = 33; // ascii value of !
+    temp[91] = version; // ascii value of ! or %
+    // compress v1.00 data:
+    if (version == 37) {
+        temp[76] = (sys_legato ? 0x40 : 0x00) | sys_portamento;
+        temp[77] = temp[100]; // seq_mode
+        temp[78] = temp[101]; // seq_tempo
+        temp[79] = temp[102]; // seq_groove_template
+        temp[80] = temp[103]; // seq_groove_amount
+        temp[81] = (temp[104] << 4) | temp[105]; // (arp_direction << 4) | arp_range
+        temp[82] = temp[106]; // arp_pattern
+        temp[83] = temp[107]; // arp_clock_division
+    }
 
     // set name:
     QString temp_name = QString("%1").arg(name, -8, ' '); // pad name
@@ -579,8 +646,6 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
         tmp[i]=sysex[8+i];
 
     parseSysex(tmp);
-    version = this_version;
-    qDebug() << "Received patch with version:" << version;
     return true;
 }
 

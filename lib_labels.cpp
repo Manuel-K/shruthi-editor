@@ -245,6 +245,13 @@ QString Labels::LfoRateFormatter(int value) {  // used for labels
 
 
 // ******************************************
+QStringList Labels::OffOn = QStringList()
+// ******************************************
+        << "Off"
+        << "On";
+
+
+// ******************************************
 QStringList Labels::FilterBoard = QStringList()
 // ******************************************
 /* Filter 0*/ << "SMR4 (lpf)"
@@ -356,7 +363,71 @@ QStringList Labels::FilterSPMode = QStringList()
 
 
 // ******************************************
-QStringList Labels::OffOn = QStringList()
+QStringList Labels::SequencerMode = QStringList()
 // ******************************************
-        << "Off"
-        << "On";
+        << "Step"
+        << "Arpeggiator"
+        << "Sequence";
+
+
+// ******************************************
+QStringList Labels::ArpeggiatorDirection = QStringList()
+// ******************************************
+        << "Up"
+        << "Down"
+        << "Up/Down"
+        << "?"
+        << "Played";
+
+
+// ******************************************
+QStringList Labels::GrooveTemplate = QStringList()
+// ******************************************
+        << "Swing"
+        << "Shuffle"
+        << "Push"
+        << "Lag"
+        << "Human"
+        << "Monkey";
+
+
+// ******************************************
+QStringList Labels::SequencerClockDivision = QStringList()
+// ******************************************
+        << "1/1"
+        << "1/2"
+        << "1/3"
+        << "1/4"
+        << "1/6"
+        << "1/8"
+        << "1/12"
+        << "1/16"
+        << "1/24"
+        << "1/32"
+        << "1/48"
+        << "1/96";
+
+
+
+// ******************************************
+QString Labels::TempoFormatter(int value)
+// ******************************************
+{
+    if (value < 40) {
+        return QString("External %1").arg(value);
+    } else {
+        return QString("%1").arg(value);
+    }
+}
+
+
+// ******************************************
+QString Labels::ArpeggiatorPatternFormatter(int value)
+// ******************************************
+{
+    if (value < 15) {
+        return QString("%1").arg(value + 1);
+    } else {
+        return "Sequence";
+    }
+}

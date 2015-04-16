@@ -288,24 +288,25 @@ void shruthiEditorMainWindow::dialChanged(int val) {
 
     QString id = s->objectName();
 
-    // Fix for additional dials (parameter 92/93):
+    // Fix for additional dials (e.g. parameter 92/93):
     if (id.endsWith('d')) {
         id.chop(1);
     }
 
+    QString temp = id;
+    temp.remove(0, 1);
+    int param = temp.toInt();
+
     // Update label:
     id.replace(0,1,"d");
-    if (id=="d25" || id == "d29")
-        this->findChild<QLabel*>(id)->setText(Labels::LfoRateFormatter(val));
-    else
-        this->findChild<QLabel*>(id)->setText(QString("%1").arg(val));
-    id.remove(0,1);
+
+    this->findChild<QLabel*>(id)->setText(Patch::formatParameterValue(param, val, SHRUTHI_FILTER_BOARD));
 
     // Don't send changed signal if element is disabled:
     if (!s->isEnabled())
         return;
 
-    queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
+    queueitem_t signal(NRPN_PROCESS_EDITOR, param, val);
     emit(enqueue(signal));
 }
 

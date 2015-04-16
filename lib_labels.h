@@ -34,6 +34,7 @@ class Labels {
         static QStringList Operator;
         static QStringList CvOperator;
         static QString LfoRateFormatter(int value); // used for labels
+        static QStringList OffOn;
         // The following labels are used for the filter boards:
         static QStringList FilterBoard;
         static QStringList FilterSVFMode1;
@@ -44,6 +45,13 @@ class Labels {
         static QStringList Filter4PMMode;
         static QStringList Filter4PMResonanceFlavor;
         static QStringList FilterSPMode;
-        static QStringList OffOn;
+        // The following labels are used for the sequencer:
+        static QStringList SequencerMode;
+        static QStringList ArpeggiatorDirection;
+        static QStringList GrooveTemplate;
+        static QStringList SequencerClockDivision;
+        static QString TempoFormatter(int value); // used for labels
+        static QString ArpeggiatorPatternFormatter(int value); // used for labels
+
 };
 #endif

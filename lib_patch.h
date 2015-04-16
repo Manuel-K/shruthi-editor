@@ -52,6 +52,8 @@ class Patch {
         static param_t parameter92[];
         static param_t parameter93[];
 
+        int sys_legato, sys_portamento; // not the right place, but we have to store them somewhere
+
     public:
         static const unsigned char parameterCount;
         static unsigned char INIT_PATCH[];
@@ -66,6 +68,8 @@ class Patch {
 
         void setParam(int param, int value);
         int getParam(int param);
+        QString getParamFancy(int param);
+        static QString formatParameterValue(int param, int value, int filter = 0);
         void setName(QString name);
         QString getName();
         QString getVersionString();
