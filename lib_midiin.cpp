@@ -116,7 +116,7 @@ void MidiIn::process(std::vector< unsigned char > *message) {
         std::vector<unsigned char> data;
         if (message->at(6) == 0x0c && message->at(7) == 0 && Midi::parseSysex(message, &data)) {
             firmwareVersion = data.at(0) * 1000 + data.at(1);
-            std::cout << "Firmware version:" << firmwareVersion << std::endl;
+            std::cout << "Firmware version: " << firmwareVersion << std::endl;
             return;
         }
     } else if (size>=4) {
