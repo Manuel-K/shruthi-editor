@@ -409,7 +409,7 @@ void shruthiEditorMainWindow::randomizePatch() {
 // ******************************************
 void shruthiEditorMainWindow::quitShruthiEditor() {
 // ******************************************
-    QApplication::exit(1);
+    QApplication::exit(0);
 }
 
 
