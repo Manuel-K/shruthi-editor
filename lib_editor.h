@@ -21,7 +21,6 @@
 
 #include "lib_patch.h"
 #include "lib_midiout.h"
-#include <QThread>
 
 
 // ******************************************
@@ -104,6 +103,7 @@ class Editor : public QObject {
         bool setMidiOutputPort(int);
         void setMidiChannel(unsigned char);
         void setShruthiFilterBoard(int);
+        void run();
 
     signals:
         void redrawNRPN(int);
@@ -111,5 +111,6 @@ class Editor : public QObject {
         void finished();
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString);
+        void setStatusbarVersionLabel(QString);
 };
 #endif

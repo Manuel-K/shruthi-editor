@@ -48,7 +48,9 @@ int main(int argc, char *argv[]) {
         // Setup editor
         Editor editor;
         QThread editorThread;
+        editor.connect(&editorThread, SIGNAL(started()), SLOT(run()));
         editor.moveToThread(&editorThread);
+
         // editor: incoming signals
         editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)), SLOT(process(queueitem_t)));
         editor.connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
@@ -84,6 +86,7 @@ int main(int argc, char *argv[]) {
         main_window->connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
         main_window->connect(&editor, SIGNAL(midiOutputStatusChanged(bool)), SLOT(midiOutputStatusChanged(bool)));
         main_window->connect(&editor, SIGNAL(displayStatusbar(QString)), SLOT(displayStatusbar(QString)));
+        main_window->connect(&editor, SIGNAL(setStatusbarVersionLabel(QString)), SLOT(setStatusbarVersionLabel(QString)));
         main_window->connect(&midiin, SIGNAL(midiInputStatusChanged(bool)), SLOT(midiInputStatusChanged(bool)));
 
         // Setup keyboard

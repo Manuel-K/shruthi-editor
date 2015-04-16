@@ -31,6 +31,17 @@ Editor::Editor() {
 
 
 // ******************************************
+void Editor::run()
+// ******************************************
+{
+#ifdef DEBUG
+    qDebug("Editor::run()");
+#endif
+    emit setStatusbarVersionLabel(patch.getVersionString());
+}
+
+
+// ******************************************
 bool Editor::setMidiOutputPort(int out) {
 // ******************************************
 #ifdef DEBUG
@@ -273,6 +284,7 @@ void Editor::actionSysexReceived(unsigned int size, unsigned char* message) {
     }
     delete message;
     emit redrawAll();
+    emit setStatusbarVersionLabel(patch.getVersionString());
 }
 
 
@@ -299,6 +311,7 @@ void Editor::actionLoadPatch(QString filename) {
     else
         emit displayStatusbar("Could not load patch.");
     emit redrawAll();
+    emit setStatusbarVersionLabel(patch.getVersionString());
 }
 
 
@@ -325,6 +338,7 @@ void Editor::actionResetPatch(unsigned int version) {
     patch.resetPatch(version);
     emit redrawAll();
     emit displayStatusbar("Patch reset.");
+    emit setStatusbarVersionLabel(patch.getVersionString());
 }
 
 
@@ -337,4 +351,6 @@ void Editor::actionRandomizePatch() {
     patch.randomizePatch(shruthiFilterBoard);
     emit redrawAll();
     emit displayStatusbar("Patch randomized.");
+    emit setStatusbarVersionLabel(patch.getVersionString());
 }
+

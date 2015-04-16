@@ -38,6 +38,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT, SHRUTHI_FILTER_BOARD;
         unsigned char MIDI_CHANNEL;
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
+        QLabel *statusbarVersionLabel;
 
     private slots:
         // local ui actions
@@ -68,6 +69,7 @@ class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
         void midiInputStatusChanged(bool);
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString msg);
+        void setStatusbarVersionLabel(QString text);
 
     signals:
         void enqueue(queueitem_t);

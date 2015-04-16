@@ -35,6 +35,9 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     MIDI_OUTPUT_PORT = 0;
     SHRUTHI_FILTER_BOARD = 0;
 
+    statusbarVersionLabel = new QLabel("Version ");
+    statusBar()->addPermanentWidget(statusbarVersionLabel);
+
     // Setup Dials/ComboBoxes:
     QDial* tmp_d;
     QComboBox* tmp_c;
@@ -534,5 +537,13 @@ void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
 void shruthiEditorMainWindow::displayStatusbar(QString msg) {
 // ******************************************
     statusBar()->showMessage(msg);
+}
+
+
+// ******************************************
+void shruthiEditorMainWindow::setStatusbarVersionLabel(QString text)
+// ******************************************
+{
+    statusbarVersionLabel->setText(text + " ");
 }
 
