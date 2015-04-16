@@ -74,3 +74,4 @@ v0.21 * SysEx header for firmware versions >= 0.94
       * support for all filter boards (firmware version 1.02)
       * added debouncing
       * updated init patch (old version can be reached via menu)
+      * added patch version display to statusbar
