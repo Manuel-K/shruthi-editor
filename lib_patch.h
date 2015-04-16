@@ -56,6 +56,7 @@ class Patch {
 
     public:
         static const unsigned char parameterCount;
+        static const unsigned char filterBoardCount;
         static unsigned char INIT_PATCH[];
         static unsigned char INIT_PATCH_PRE100[];
         static bool enabled(int);

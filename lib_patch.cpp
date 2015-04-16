@@ -148,6 +148,11 @@ param_t Patch::parameters [108] = {
 
 
 // ******************************************
+const unsigned char Patch::filterBoardCount = 8;
+// ******************************************
+
+
+// ******************************************
 param_t Patch::parameter84 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 127, NULL},
@@ -227,7 +232,7 @@ param_t Patch::parameter93 [8] = {
 param_t Patch::parameter(int id, int filter)
 // ******************************************
 {
-    if (id > 107 || filter > 7) {
+    if (id >= parameterCount || filter >= filterBoardCount) {
 #ifdef DEBUG
         qDebug() << "Patch::parameter() called with invalid arguments." << id << filter;
 #endif
