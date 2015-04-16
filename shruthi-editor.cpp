@@ -37,6 +37,8 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
 
     statusbarVersionLabel = new QLabel("Version ");
     statusBar()->addPermanentWidget(statusbarVersionLabel);
+    // The label is reparented (made a child of the statusbar), so it will get
+    // deleted automatically when the statusbar is destroyed.
 
     // Setup Dials/ComboBoxes:
     QDial* tmp_d;
