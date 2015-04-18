@@ -6,276 +6,302 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>273</width>
-    <height>93</height>
+    <width>289</width>
+    <height>109</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Keyboard</string>
   </property>
-  <widget class="QFrame" name="frame">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>271</width>
-     <height>91</height>
-    </rect>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>9</number>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
+   <property name="topMargin">
+    <number>9</number>
    </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
+   <property name="rightMargin">
+    <number>9</number>
    </property>
-   <widget class="QSlider" name="velocity">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>23</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>64</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n2">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n5">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n10">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>10</y>
-      <width>22</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="locale">
-     <locale language="English" country="UnitedKingdom"/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n9">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n7">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n3">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>10</y>
-      <width>22</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n0">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n1">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>10</y>
-      <width>22</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n4">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n11">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n6">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>10</y>
-      <width>22</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n12">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>10</y>
-      <width>22</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="n8">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>10</y>
-      <width>22</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="octave">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>60</y>
-      <width>51</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="maximum">
-     <number>9</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>40</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Octave:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="panic">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>10</y>
-      <width>51</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Panic</string>
-    </property>
-   </widget>
-   <zorder>velocity</zorder>
-   <zorder>n2</zorder>
-   <zorder>n5</zorder>
-   <zorder>n9</zorder>
-   <zorder>n7</zorder>
-   <zorder>n0</zorder>
-   <zorder>n1</zorder>
-   <zorder>n4</zorder>
-   <zorder>n11</zorder>
-   <zorder>n6</zorder>
-   <zorder>n12</zorder>
-   <zorder>n8</zorder>
-   <zorder>octave</zorder>
-   <zorder>label</zorder>
-   <zorder>panic</zorder>
-   <zorder>n3</zorder>
-   <zorder>n10</zorder>
-  </widget>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>271</width>
+       <height>91</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>271</width>
+       <height>91</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QSlider" name="velocity">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>23</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>64</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n2">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n5">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n10">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>22</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedKingdom"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n9">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n7">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n3">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>22</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n0">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n1">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>22</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n4">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n11">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n6">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>10</y>
+        <width>22</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n12">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>10</y>
+        <width>22</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="n8">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>10</y>
+        <width>22</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="octave">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>60</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>9</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>40</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Octave:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="panic">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>10</y>
+        <width>51</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Panic</string>
+      </property>
+     </widget>
+     <zorder>velocity</zorder>
+     <zorder>n2</zorder>
+     <zorder>n5</zorder>
+     <zorder>n9</zorder>
+     <zorder>n7</zorder>
+     <zorder>n0</zorder>
+     <zorder>n1</zorder>
+     <zorder>n4</zorder>
+     <zorder>n11</zorder>
+     <zorder>n6</zorder>
+     <zorder>n12</zorder>
+     <zorder>n8</zorder>
+     <zorder>octave</zorder>
+     <zorder>label</zorder>
+     <zorder>panic</zorder>
+     <zorder>n3</zorder>
+     <zorder>n10</zorder>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <tabstops>
   <tabstop>velocity</tabstop>
