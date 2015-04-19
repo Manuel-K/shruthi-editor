@@ -204,12 +204,13 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
     const param_t p92 = Patch::parameter(92, filter);
     if (p92.name != NULL) {
-        l92->setText(p92.name + ":");
         if (p92.dropdown == NULL) {
+            l92d->setText(p92.name + ":");
             p92dial = true;
             c92d->setMinimum(p92.min);
             c92d->setMaximum(p92.max);
         } else {
+            l92->setText(p92.name + ":");
             p92combo = p92.dropdown;
         }
     }
