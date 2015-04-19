@@ -145,7 +145,7 @@ void Editor::process(queueitem_t item) {
             break;
         default:
 #ifdef DEBUG
-            qDebug() << "Editor::process():" << item.action << ":" << item.nrpn << "," << item.value << "," << item.string;
+            qDebug() << "Editor::process():" << item.action << ":" << item.int0 << "," << item.int1 << "," << item.string;
 #endif
             break;
     }
