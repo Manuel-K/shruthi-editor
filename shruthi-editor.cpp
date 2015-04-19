@@ -43,17 +43,32 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     // Setup Dials/ComboBoxes:
     QDial* tmp_d;
     QComboBox* tmp_c;
+    QLabel *tmp_l;
     for (int i=0; i<100; i++) {
         if (Patch::hasUI(i)) {
             if (Patch::parameters[i].dropdown) {
                 tmp_c = this->findChild<QComboBox*>(QString("c%1").arg(i));
+                if (!tmp_c) {
+                    qDebug() << "ComboBox" << QString("c%1").arg(i) << "could not be found!";
+                    continue;
+                }
                 tmp_c->addItems(*(Patch::parameters[i].dropdown));
                 connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
             } else {
                 tmp_d = this->findChild<QDial*>(QString("c%1").arg(i));
+                if (!tmp_d) {
+                    qDebug() << "Dial" << QString("c%1").arg(i) << "could not be found!";
+                    continue;
+                }
                 tmp_d->setMinimum(Patch::parameters[i].min);
                 tmp_d->setMaximum(Patch::parameters[i].max);
-                this->findChild<QLabel*>(QString("d%1").arg(i))->setText("0");
+                tmp_l = this->findChild<QLabel*>(QString("d%1").arg(i));
+                if (tmp_l) {
+                    tmp_l->setText("0");
+                } else {
+                    qDebug() << "Label" << QString("d%1").arg(i) << "could not be found!";
+                    continue;
+                }
                 connect(tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
             }
         }
@@ -62,9 +77,19 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
     for (int i = 92; i <= 93; i++) {
         if (Patch::hasUI(i)) {
                 tmp_d = this->findChild<QDial*>(QString("c%1d").arg(i));
+                if (!tmp_d) {
+                    qDebug() << "Dial" << QString("c%1d").arg(i) << "could not be found!";
+                    continue;
+                }
                 tmp_d->setMinimum(Patch::parameters[i].min);
                 tmp_d->setMaximum(Patch::parameters[i].max);
-                this->findChild<QLabel*>(QString("d%1").arg(i))->setText("0");
+                tmp_l = this->findChild<QLabel*>(QString("d%1").arg(i));
+                if (tmp_l) {
+                    tmp_l->setText("0");
+                } else {
+                    qDebug() << "Label" << QString("d%1").arg(i) << "could not be found!";
+                    continue;
+                }
                 connect(tmp_d, SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
         }
     }
@@ -297,7 +322,12 @@ void shruthiEditorMainWindow::dialChanged(int val) {
     // Update label:
     id.replace(0,1,"d");
 
-    this->findChild<QLabel*>(id)->setText(Patch::formatParameterValue(param, val, SHRUTHI_FILTER_BOARD));
+    QLabel *temp2 = this->findChild<QLabel*>(id);;
+    if (temp2) {
+        temp2->setText(Patch::formatParameterValue(param, val, SHRUTHI_FILTER_BOARD));
+    } else {
+        qDebug() << "Label" << id << "could not be found!";
+    }
 
     // Don't send changed signal if element is disabled:
     if (!s->isEnabled())
@@ -456,6 +486,10 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
     // the change back (i.e. debouncing)!
     if (!forceDial && param.dropdown) {
         QComboBox* temp = this->findChild<QComboBox*>(id);
+        if (!temp) {
+            qDebug() << "ComboBox" << id << "could not be found!";
+            return;
+        }
         bool wasEnabled = temp->isEnabled();
         if (wasEnabled)
             temp->setEnabled(false);
@@ -464,6 +498,10 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
             temp->setEnabled(true);
     } else {
         QDial* temp = this->findChild<QDial*>(id);
+        if (!temp) {
+            qDebug() << "Dial" << id << "could not be found!";
+            return;
+        }
         bool wasEnabled = temp->isEnabled();
         if (wasEnabled)
             temp->setEnabled(false);

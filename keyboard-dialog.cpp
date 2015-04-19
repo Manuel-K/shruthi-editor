@@ -38,6 +38,10 @@ keyboard::keyboard() {
 
     for (int i=0; i<=12; i++) {
         tmp = this->findChild<QPushButton*>(QString("n%1").arg(i));
+        if (!tmp) {
+            qDebug() << "Keyboard PushButton" << QString("n%1").arg(i) << "could not be found!";
+            continue;
+        }
         connect(tmp,SIGNAL(pressed()), this, SLOT(push()));
         connect(tmp,SIGNAL(released()), this, SLOT(release()));
         if (i==1||i==3||i==6||i==8||i==10)
