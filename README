@@ -4,6 +4,30 @@ Application icon: "saraswati" by Francois Barbut.
 Uses RtMidi 2.1.0 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
 
 
+The newest version of the source code can be found at 
+<https://github.com/Manuel-K/shruthi-editor>.
+
+
+Using the editor:
+The version of the current patch is displayed at the right side of the status 
+bar. It shows "1.xx" for Shruthi firmware versions greater than 1.00 and "0.9x"
+for versions before 1.00. You can switch modes by using the two different reset
+patch entries in the menu, by loading a patch from a file or by receiving a 
+patch from the Shruthi.
+
+If you use a Shruthi firmware version before 1.00, you have to use the 
+"File"->"Reset Patch (pre 1.00)" menu entry, or by loading/receiving an old 
+version patch. Converting an new version patch to the old version is not 
+supported. 
+
+If you use an up-to-date Shruthi firmware and want to convert an old patch,
+you have to send it to the Shruthi and fetch it back by clicking 
+"Shruthi"->"Send Patch" and "Shruthi"->"Fetch Patch".
+
+Using "File"->"Randomize Patch" will not change the patch version.
+
+
+
 What works:
  - Editing patches.
  - Remotely changing patch options on the Shruthi.
@@ -15,19 +39,16 @@ What works:
  - Loading/saving full patch sysex.
  - Editing up to (and including) firmware version 1.02
 
-
 What doesn't work:
  - Automatic fetching/sending, e.g. on loading/saving.
- - Receiving LFO 1/2 rates per CC is strange
+ - Receiving LFO 1/2 rates per CC (used by firmware version 1.01 and 1.02) is 
+   strange.
+
 
 
 Prerequisites:
- Qt5: <http://www.qt.io/>
-
-
-Compiling under windows (Prerequisites):
-To compile it on windows, you need the mingw version of Qt 5.
-You can download it from <http://www.qt.io/download-open-source/>.
+You need Qt5 <http://www.qt.io/download-open-source/>.
+If you want to compile the editor on windows, choose the mingw version.
 
 
 Compiling:
@@ -44,6 +65,7 @@ shruthi-editor.pro and change the line
 to
 DEFINES += PRE094SYSEXHEADER
  
+
 
 Changes:
 v0.16 * support for dual VCF -> new ui layout
