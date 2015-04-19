@@ -233,7 +233,7 @@ param_t Patch::parameter(int id, int filter)
 // ******************************************
 {
     if (id >= parameterCount || filter >= filterBoardCount) {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "Patch::parameter() called with invalid arguments." << id << filter;
 #endif
         return param_blank;
@@ -692,7 +692,7 @@ void Patch::generateFullSysex(std::vector<unsigned char> *message) {
 // ******************************************
 bool Patch::loadFromDisk(QString location) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Patch::loadFromDisk(" << location << ")";
 #endif
     QFile file(location);
@@ -711,26 +711,26 @@ bool Patch::loadFromDisk(QString location) {
     unsigned int readBytes = file.read(tmp,195);
     file.close();
 
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Read" << readBytes << "bytes.";
 #endif
 
     unsigned char sysex[195] = {};
     for (unsigned int i=0; i<readBytes; i++) {
          sysex[i] = (char) tmp[i];
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << i << ":" << sysex[i];
 #endif
     }
 
     // primitive check if patch is valid:
     if (readBytes==195) {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "Detected full patch sysex.";
 #endif
         return parseFullSysex(sysex,195);
     } else if (readBytes==92 && tmp[91]==33) { // last field is !
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "Detected light patch files.";
 #endif
         parseSysex(sysex);
@@ -744,7 +744,7 @@ bool Patch::loadFromDisk(QString location) {
 // ******************************************
 bool Patch::saveToDisk(QString location) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Patch::saveToDisk(" << location << ")";
 #endif
     QFile file(location);

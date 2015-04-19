@@ -18,7 +18,7 @@
 
 #include "lib_signalrouter.h"
 
-// #ifdef DEBUG
+// #ifdef DEBUGMSGS
 #include <QDebug>
 // #endif
 
@@ -26,7 +26,7 @@
 // ******************************************
 SignalRouter::SignalRouter() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "SignalRouter::SignalRouter()";
 #endif
     // load config
@@ -38,7 +38,7 @@ SignalRouter::SignalRouter() {
 // ******************************************
 SignalRouter::~SignalRouter() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "SignalRouter::~SignalRouter()";
 #endif
     editorEnabled=false;
@@ -48,7 +48,7 @@ SignalRouter::~SignalRouter() {
 // ******************************************
 void SignalRouter::run() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "SignalRouter::run()";
 #endif
     emit setMidiInputPort(config.getMidiInputPort());
@@ -88,7 +88,7 @@ void SignalRouter::editorFinished() {
 // ******************************************
 void SignalRouter::settingsChanged(int in, int out, unsigned char channel, int filter) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "SignalRouter::settingsChanged: in" << in << ", out:" << out << ", channel:" << channel;
 #endif
     // setMidiInputPort and setMidiOutputPort have to be emited, even if the value didn't change.
@@ -112,7 +112,7 @@ void SignalRouter::settingsChanged(int in, int out, unsigned char channel, int f
         writeConfig = true;
     }
     if (writeConfig) {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "Config was changed. Saving.";
 #endif
         config.save();

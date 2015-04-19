@@ -79,7 +79,7 @@ bool NRPN::parse(int b0, int b1, int b2) {
         default:
            break;
     }
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "NRPN_Parser: Received unknown message:" << b0 << "," << b1 << "," << b2;
 #endif
     return false;
@@ -165,7 +165,7 @@ void mycallback(double deltatime, std::vector< unsigned char > *message, void *u
 // ******************************************
 MidiIn::MidiIn() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiIn::MidiIn()";
 #endif
     opened = false;
@@ -191,7 +191,7 @@ MidiIn::MidiIn() {
 // ******************************************
 MidiIn::~MidiIn() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiIn::~MidiIn()";
 #endif
     delete midiin;
@@ -201,7 +201,7 @@ MidiIn::~MidiIn() {
 // ******************************************
 void MidiIn::setMidiInputPort(int in) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiIn::setMidiPorts";
 #endif
     open(in);
@@ -213,7 +213,7 @@ void MidiIn::setMidiInputPort(int in) {
 void MidiIn::setShruthiFilterBoard(int filter)
 // ******************************************
 {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiIn::setShruthiFilterBoard:" << filter;
 #endif
     MidiIn::shruthiFilterBoard = filter;
@@ -223,7 +223,7 @@ void MidiIn::setShruthiFilterBoard(int filter)
 // ******************************************
 bool MidiIn::open(unsigned int port) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiIn::open(" << port << ")";
 #endif
     if (input==port && opened)
@@ -246,7 +246,7 @@ bool MidiIn::open(unsigned int port) {
         opened = true;
     }
     catch (RtMidiError &error) {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "MidiIn::open(" << port << "): RtMidiError on openPort().";
 #endif
         opened = false;

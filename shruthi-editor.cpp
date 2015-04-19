@@ -93,7 +93,7 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
 // ******************************************
 void shruthiEditorMainWindow::setMidiInputPort(int midiin) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiInputPort(" << midiin << ")";
 #endif
     MIDI_INPUT_PORT = midiin;
@@ -103,7 +103,7 @@ void shruthiEditorMainWindow::setMidiInputPort(int midiin) {
 // ******************************************
 void shruthiEditorMainWindow::setMidiOutputPort(int midiout) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiOutputPort(" << midiout << ")";
 #endif
     MIDI_OUTPUT_PORT = midiout;
@@ -113,7 +113,7 @@ void shruthiEditorMainWindow::setMidiOutputPort(int midiout) {
 // ******************************************
 void shruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiChannel(" << channel << ")";
 #endif
     MIDI_CHANNEL = channel;
@@ -124,7 +124,7 @@ void shruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 // ******************************************
 {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setShruthiFilterBoard(" << filter << ")";
 #endif
     SHRUTHI_FILTER_BOARD = filter;

@@ -60,7 +60,7 @@ void keyboard::push() {
     QString id = s->objectName();
     id.remove(0,1);
     unsigned char note = calculateNote(id.toInt());
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "push()" << note;
 #endif
     queueitem_t signal(NOTE_ON,note,noteVelocity);
@@ -70,7 +70,7 @@ void keyboard::push() {
 // ******************************************
 void keyboard::panicPushed() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "panicPushed()";
 #endif
     queueitem_t signal(NOTE_PANIC);
@@ -84,7 +84,7 @@ void keyboard::release() {
     QString id = s->objectName();
     id.remove(0,1);
     unsigned char note = calculateNote(id.toInt());
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "release()" << note;
 #endif
     queueitem_t signal(NOTE_OFF,note);
@@ -96,7 +96,7 @@ void keyboard::release() {
 void keyboard::setVelocity(int vel) {
 // ******************************************
     noteVelocity = vel;
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "setVelocity()" << vel;
 #endif
 }
@@ -106,7 +106,7 @@ void keyboard::setVelocity(int vel) {
 void keyboard::setOctave(int oct) {
 // ******************************************
     noteOctave = oct;
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "setOctave()" << oct;
 #endif
 }

@@ -32,6 +32,8 @@ QT += widgets
 
 CONFIG += qt
 
+#DEFINES += DEBUGMSGS
+
 # Uncomment the following line if you use a firmware version prior to 0.94
 #DEFINES += PRE094SYSEXHEADER
 

@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 
         main_window->show();
         retVal= app.exec();
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "main: shutting down...";
 
         qDebug() << "srThread.quit()";
@@ -118,19 +118,19 @@ int main(int argc, char *argv[]) {
         srThread.quit();
         srThread.wait(1000);
 
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "editorThread.quit()";
 #endif
         editorThread.quit();
         editorThread.wait(1000);
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "midiinThread.quit()";
 #endif
         midiinThread.quit();
         midiinThread.wait(1000);
     }
 
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "return"<< retVal;
 #endif
     return retVal;

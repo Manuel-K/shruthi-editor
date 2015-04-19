@@ -23,7 +23,7 @@
 // ******************************************
 MidiOut::MidiOut() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiOut::MidiOut()";
 #endif
     opened=false;
@@ -42,7 +42,7 @@ MidiOut::MidiOut() {
 // ******************************************
 MidiOut::~MidiOut() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiOut::~MidiOut()";
 #endif
     delete midiout;
@@ -52,7 +52,7 @@ MidiOut::~MidiOut() {
 // ******************************************
 bool MidiOut::open(unsigned int port) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "MidiOut::open(" << port << ")";
 #endif
     if (output==port && opened)
@@ -71,7 +71,7 @@ bool MidiOut::open(unsigned int port) {
         opened = true;
     }
     catch (RtMidiError &error) {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "MidiOut::open(" << port << "): RtMidiError on openPort().";
 #endif
         opened = false;

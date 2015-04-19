@@ -23,7 +23,7 @@
 // ******************************************
 Editor::Editor() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug("Editor::Editor()");
 #endif
     shruthiFilterBoard = 0;
@@ -34,7 +34,7 @@ Editor::Editor() {
 void Editor::run()
 // ******************************************
 {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug("Editor::run()");
 #endif
     emit setStatusbarVersionLabel(patch.getVersionString());
@@ -44,7 +44,7 @@ void Editor::run()
 // ******************************************
 bool Editor::setMidiOutputPort(int out) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::setMidiPorts:" << out;
 #endif
     bool status = midiout.open(out);
@@ -56,7 +56,7 @@ bool Editor::setMidiOutputPort(int out) {
 // ******************************************
 void Editor::setMidiChannel(unsigned char channel) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::setMidiChannel:" << channel;
 #endif
     Editor::channel = channel;
@@ -67,7 +67,7 @@ void Editor::setMidiChannel(unsigned char channel) {
 void Editor::setShruthiFilterBoard(int filter)
 // ******************************************
 {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::setShruthiFilterBoard:" << filter;
 #endif
     Editor::shruthiFilterBoard = filter;
@@ -77,7 +77,7 @@ void Editor::setShruthiFilterBoard(int filter)
 // ******************************************
 Editor::~Editor() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::~Editor()";
 #endif
 }
@@ -144,7 +144,7 @@ void Editor::process(queueitem_t item) {
             actionRandomizePatch();
             break;
         default:
-#ifdef DEBUG
+#ifdef DEBUGMSGS
             qDebug() << "Editor::process():" << item.action << ":" << item.int0 << "," << item.int1 << "," << item.string;
 #endif
             break;
@@ -156,7 +156,7 @@ void Editor::process(queueitem_t item) {
 // ******************************************
 void Editor::actionProcessEditor(int nrpn, int value) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionProcessEditor(" << nrpn << "," << value << ")";
 #endif
     if (patch.getParam(nrpn) != value) {
@@ -169,7 +169,7 @@ void Editor::actionProcessEditor(int nrpn, int value) {
 // ******************************************
 void Editor::actionFetchPatch() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionFetchPatch()";
 #endif
     if (midiout.patchTransferRequest())
@@ -182,7 +182,7 @@ void Editor::actionFetchPatch() {
 // ******************************************
 void Editor::actionSendPatch() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionSendPatch()";
 #endif
     std::vector<unsigned char> temp;
@@ -198,7 +198,7 @@ void Editor::actionSendPatch() {
 void Editor::actionVersionRequest()
 // ******************************************
 {
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionVersionRequest()";
 #endif
     if (midiout.versionRequest()) {
@@ -214,7 +214,7 @@ void Editor::actionVersionRequest()
 // ******************************************
 void Editor::actionNrpnReceived(int nrpn, int value) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionNrpnReceived(" << nrpn << "," << value << ")";
 #endif
     if (!Patch::enabled(nrpn)) {
@@ -233,7 +233,7 @@ void Editor::actionNrpnReceived(int nrpn, int value) {
 // ******************************************
 void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
     if (!midiout.noteOn(channel,note,velocity))
@@ -244,7 +244,7 @@ void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
 // ******************************************
 void Editor::actionNoteOff(unsigned char note) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << ")";
 #endif
     if (!midiout.noteOff(channel,note))
@@ -255,7 +255,7 @@ void Editor::actionNoteOff(unsigned char note) {
 // ******************************************
 void Editor::actionNotePanic() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionNotePanic(" << channel << ")";
 #endif
     if (midiout.allNotesOff(channel))
@@ -268,7 +268,7 @@ void Editor::actionNotePanic() {
 // ******************************************
 void Editor::actionSysexReceived(unsigned int size, unsigned char* message) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionSysexReceived(" << size << ",...)";
 #endif
     if (7<size && message[6]==1 && message[7]==0)
@@ -278,7 +278,7 @@ void Editor::actionSysexReceived(unsigned int size, unsigned char* message) {
             emit displayStatusbar("Received invalid patch.");
     else {
         emit displayStatusbar("Received unknown sysex.");
-#ifdef DEBUG
+#ifdef DEBUGMSGS
         qDebug() << "unknown sysex type";
 #endif
     }
@@ -291,7 +291,7 @@ void Editor::actionSysexReceived(unsigned int size, unsigned char* message) {
 // ******************************************
 void Editor::actionSetPatchname(QString name) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionSetPatchname(" << name << ")";
 #endif
     patch.setName(name);
@@ -303,7 +303,7 @@ void Editor::actionSetPatchname(QString name) {
 void Editor::actionLoadPatch(QString filename) {
 // ******************************************
     bool status = patch.loadFromDisk(filename);
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionLoadPatch(" << filename << "):" << status;
 #endif
     if (status)
@@ -319,7 +319,7 @@ void Editor::actionLoadPatch(QString filename) {
 void Editor::actionSavePatch(QString filename) {
 // ******************************************
     bool status = patch.saveToDisk(filename);
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionSavePatch(" << filename << "):" << status;
 #endif
     if (status)
@@ -332,7 +332,7 @@ void Editor::actionSavePatch(QString filename) {
 // ******************************************
 void Editor::actionResetPatch(unsigned int version) {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionResetPatch()";
 #endif
     patch.resetPatch(version);
@@ -345,7 +345,7 @@ void Editor::actionResetPatch(unsigned int version) {
 // ******************************************
 void Editor::actionRandomizePatch() {
 // ******************************************
-#ifdef DEBUG
+#ifdef DEBUGMSGS
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
     patch.randomizePatch(shruthiFilterBoard);
