@@ -729,7 +729,7 @@ bool Patch::loadFromDisk(QString location) {
         qDebug() << "Detected full patch sysex.";
 #endif
         return parseFullSysex(sysex,195);
-    } else if (readBytes==92 && tmp[91]==33) { // last field is !
+    } else if (readBytes==92 && (tmp[91]==33 || tmp[91]==37)) { // last field is ! or %
 #ifdef DEBUGMSGS
         qDebug() << "Detected light patch files.";
 #endif
