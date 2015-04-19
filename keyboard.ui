@@ -304,8 +304,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>velocity</tabstop>
-  <tabstop>octave</tabstop>
   <tabstop>n0</tabstop>
   <tabstop>n1</tabstop>
   <tabstop>n2</tabstop>
@@ -319,6 +317,9 @@
   <tabstop>n10</tabstop>
   <tabstop>n11</tabstop>
   <tabstop>n12</tabstop>
+  <tabstop>velocity</tabstop>
+  <tabstop>octave</tabstop>
+  <tabstop>panic</tabstop>
  </tabstops>
  <resources/>
  <connections/>
