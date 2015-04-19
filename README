@@ -9,6 +9,15 @@ The newest version of the source code can be found at
 
 
 Using the editor:
+Make sure to select the midi device, midi channel and the filter board of the 
+Shruthi in the settings dialog.
+
+The editor has bidirectional communication: Changing a parameter in the editor 
+changes the same parameter on the Shruthi instantly and vice versa.
+
+After loading a patch you have to send the patch manually by using the
+"Shruthi">"Send Patch" menu option.
+
 The version of the current patch is displayed at the right side of the status 
 bar. It shows "1.xx" for Shruthi firmware versions greater than 1.00 and "0.9x"
 for versions before 1.00. You can switch modes by using the two different reset
@@ -40,7 +49,7 @@ What works:
  - Editing up to (and including) firmware version 1.02
 
 What doesn't work:
- - Automatic fetching/sending, e.g. on loading/saving.
+ - Optional automatic fetching/sending, e.g. on loading/saving.
  - Receiving LFO 1/2 rates per CC (used by firmware version 1.01 and 1.02) is 
    strange.
 
