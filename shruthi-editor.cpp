@@ -130,10 +130,10 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     SHRUTHI_FILTER_BOARD = filter;
 
     //
-    // Hide all unnecessary ui elements and show the rest:
+    // Hide all unnecessary GUI elements and show the rest:
     //
 
-    // Disable all relevant elements:
+    // Disable all relevant widgets:
     c84->setEnabled(false);
     c85->setEnabled(false);
     c92d->setEnabled(false);
@@ -141,7 +141,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     c93d->setEnabled(false);
     c93->setEnabled(false);
 
-    // Paramter 84:
+    // Parameter 84:
     bool p84dial = false;
     const param_t p84 = Patch::parameter(84, filter);
     if (p84.name != NULL) {
@@ -154,9 +154,8 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
 
     // dial visibility
-    l84->setHidden(!p84dial);
-    d84->setHidden(!p84dial);
-    c84->setHidden(!p84dial);
+    w84->setHidden(!p84dial);
+
 
     // Parameter 85:
     bool p85dial = false;
@@ -171,9 +170,8 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
 
     // dial visibility
-    l85->setHidden(!p85dial);
-    d85->setHidden(!p85dial);
-    c85->setHidden(!p85dial);
+    w85->setHidden(!p85dial);
+
 
     // Parameter 92:
     QStringList *p92combo = NULL;
@@ -192,9 +190,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
 
     // dial visibility
-    d92->setHidden(!p92dial);
-    c92d->setHidden(!p92dial);
-    l92d->setHidden(!p92dial);
+    w92->setHidden(!p92dial);
 
     // combo box visibility
     bool p92hidden = true;
@@ -205,8 +201,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         p92hidden = false;
     }
 
-    l92->setHidden(p92hidden);
-    c92->setHidden(p92hidden);
+    w92cb->setHidden(p92hidden);
 
 
     // Parameter 93:
@@ -227,9 +222,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
 
     // dial visibility
-    d93->setHidden(!p93dial);
-    c93d->setHidden(!p93dial);
-    l93d->setHidden(!p93dial);
+    w93->setHidden(!p93dial);
 
     // combo box visibility
     bool p93hidden = true;
@@ -239,8 +232,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         // need to set index?
         p93hidden = false;
     }
-    l93->setHidden(p93hidden);
-    c93->setHidden(p93hidden);
+    w93cb->setHidden(p93hidden);
 
     // Force display update:
     redrawNRPN(84);
@@ -249,7 +241,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     redrawNRPN(93);
 
 
-    // Enable active elements:
+    // Enable active widgets:
     c84->setEnabled(p84dial);
     c85->setEnabled(p85dial);
     c92d->setEnabled(p92dial);
