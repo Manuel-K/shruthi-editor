@@ -21,15 +21,16 @@
 
 #include "ui_settings-dialog.h"
 
-
-class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
+// ******************************************
+class ShruthiEditorSettings : public QDialog {
+// ******************************************
     Q_OBJECT
 
     public:
-        shruthiEditorSettings();
+        ShruthiEditorSettings(QWidget *parent = 0);
+        ~ShruthiEditorSettings();
         void getPortInfo();
 
-    public:
         int getMidiInputPort();
         int getMidiOutputPort();
         void setMidiPorts(int,int);
@@ -37,6 +38,9 @@ class shruthiEditorSettings : public QDialog, private Ui::SettingsDialog {
         unsigned char getMidiChannel();
         int getShruthiFilterBoard();
         void setShruthiFilterBoard(int);
+
+    private:
+        Ui::SettingsDialog *ui;
 };
 
 

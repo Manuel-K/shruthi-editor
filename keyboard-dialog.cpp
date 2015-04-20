@@ -20,21 +20,23 @@
 #include "keyboard-dialog.h"
 
 // ******************************************
-keyboard::keyboard() {
+Keyboard::Keyboard(QWidget *parent):
+    QDialog(parent),
+    ui(new Ui::keyboard) {
 // ******************************************
-    setupUi(this);
+    ui->setupUi(this);
     QPushButton *tmp;
 
     noteOctave = 0;
     noteVelocity = 64;
-    octave->setMinimum(-4);
-    octave->setMaximum(4);
+    ui->octave->setMinimum(-4);
+    ui->octave->setMaximum(4);
 
-    connect(velocity,SIGNAL(sliderMoved(int)), this, SLOT(setVelocity(int)));
-    velocity->setValue(noteVelocity);
-    connect(octave,SIGNAL(valueChanged(int)), this, SLOT(setOctave(int)));
-    octave->setValue(noteOctave);
-    connect(panic,SIGNAL(pressed()), this, SLOT(panicPushed()));
+    connect(ui->velocity, SIGNAL(sliderMoved(int)), this, SLOT(setVelocity(int)));
+    ui->velocity->setValue(noteVelocity);
+    connect(ui->octave, SIGNAL(valueChanged(int)), this, SLOT(setOctave(int)));
+    ui->octave->setValue(noteOctave);
+    connect(ui->panic, SIGNAL(pressed()), this, SLOT(panicPushed()));
 
     for (int i=0; i<=12; i++) {
         tmp = this->findChild<QPushButton*>(QString("n%1").arg(i));
@@ -51,14 +53,23 @@ keyboard::keyboard() {
     }
 }
 
+
 // ******************************************
-void keyboard::showKeyboard() {
+Keyboard::~Keyboard()
+// ******************************************
+{
+    delete ui;
+}
+
+
+// ******************************************
+void Keyboard::showKeyboard() {
 // ******************************************
     show();
 }
 
 // ******************************************
-void keyboard::push() {
+void Keyboard::push() {
 // ******************************************
     QPushButton* s = (QPushButton*) sender();
     QString id = s->objectName();
@@ -72,7 +83,7 @@ void keyboard::push() {
 }
 
 // ******************************************
-void keyboard::panicPushed() {
+void Keyboard::panicPushed() {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "panicPushed()";
@@ -82,7 +93,7 @@ void keyboard::panicPushed() {
 }
 
 // ******************************************
-void keyboard::release() {
+void Keyboard::release() {
 // ******************************************
     QPushButton* s = (QPushButton*) sender();
     QString id = s->objectName();
@@ -97,7 +108,7 @@ void keyboard::release() {
 
 
 // ******************************************
-void keyboard::setVelocity(int vel) {
+void Keyboard::setVelocity(int vel) {
 // ******************************************
     noteVelocity = vel;
 #ifdef DEBUGMSGS
@@ -107,7 +118,7 @@ void keyboard::setVelocity(int vel) {
 
 
 // ******************************************
-void keyboard::setOctave(int oct) {
+void Keyboard::setOctave(int oct) {
 // ******************************************
     noteOctave = oct;
 #ifdef DEBUGMSGS
@@ -117,7 +128,7 @@ void keyboard::setOctave(int oct) {
 
 
 // ******************************************
-unsigned char keyboard::calculateNote(int key) {
+unsigned char Keyboard::calculateNote(int key) {
 // ******************************************
     return 48 + key + 12 * noteOctave;
 }

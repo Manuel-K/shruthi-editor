@@ -23,20 +23,30 @@
 #include "lib_labels.h"
 
 // ******************************************
-shruthiEditorSettings::shruthiEditorSettings() {
+ShruthiEditorSettings::ShruthiEditorSettings(QWidget *parent):
+    QDialog(parent),
+    ui(new Ui::SettingsDialog) {
 // ******************************************
-    setupUi(this);
+    ui->setupUi(this);
     getPortInfo();
 
-    midiChannel->setMinimum(1);
-    midiChannel->setMaximum(16);
+    ui->midiChannel->setMinimum(1);
+    ui->midiChannel->setMaximum(16);
 
-    shruthiFilterBoard->addItems(Labels::FilterBoard);
+    ui->shruthiFilterBoard->addItems(Labels::FilterBoard);
 }
 
 
 // ******************************************
-void shruthiEditorSettings::getPortInfo() {
+ShruthiEditorSettings::~ShruthiEditorSettings()
+// ******************************************
+{
+    delete ui;
+}
+
+
+// ******************************************
+void ShruthiEditorSettings::getPortInfo() {
 // ******************************************
     RtMidiIn  *midiin = 0;
     RtMidiOut *midiout = 0;
@@ -62,7 +72,7 @@ void shruthiEditorSettings::getPortInfo() {
             error.printMessage();
             goto cleanup;
         }
-        midiInputPort->addItem(name);
+        ui->midiInputPort->addItem(name);
     }
 
     // Output ports:
@@ -85,7 +95,7 @@ void shruthiEditorSettings::getPortInfo() {
             error.printMessage();
             goto cleanup;
         }
-        midiOutputPort->addItem(name);
+        ui->midiOutputPort->addItem(name);
     }
 
     cleanup:
@@ -95,49 +105,49 @@ void shruthiEditorSettings::getPortInfo() {
 
 
 // ******************************************
-void shruthiEditorSettings::setMidiPorts(int in, int out) {
+void ShruthiEditorSettings::setMidiPorts(int in, int out) {
 // ******************************************
-    midiInputPort->setCurrentIndex(in);
-    midiOutputPort->setCurrentIndex(out);
+    ui->midiInputPort->setCurrentIndex(in);
+    ui->midiOutputPort->setCurrentIndex(out);
 }
 
 
 // ******************************************
-int shruthiEditorSettings::getMidiInputPort() {
+int ShruthiEditorSettings::getMidiInputPort() {
 // ******************************************
-    return midiInputPort->currentIndex();
+    return ui->midiInputPort->currentIndex();
 }
 
 
 // ******************************************
-int shruthiEditorSettings::getMidiOutputPort() {
+int ShruthiEditorSettings::getMidiOutputPort() {
 // ******************************************
-    return midiOutputPort->currentIndex();
+    return ui->midiOutputPort->currentIndex();
 }
 
 
 // ******************************************
-void shruthiEditorSettings::setMidiChannel(unsigned char channel) {
+void ShruthiEditorSettings::setMidiChannel(unsigned char channel) {
 // ******************************************
-    midiChannel->setValue(channel+1);
+    ui->midiChannel->setValue(channel+1);
 }
 
 
 // ******************************************
-unsigned char shruthiEditorSettings::getMidiChannel() {
+unsigned char ShruthiEditorSettings::getMidiChannel() {
 // ******************************************
-    return midiChannel->value()-1;
+    return ui->midiChannel->value()-1;
 }
 
 // ******************************************
-void shruthiEditorSettings::setShruthiFilterBoard(int index) {
+void ShruthiEditorSettings::setShruthiFilterBoard(int index) {
 // ******************************************
-    shruthiFilterBoard->setCurrentIndex(index);
+    ui->shruthiFilterBoard->setCurrentIndex(index);
 }
 
 
 // ******************************************
-int shruthiEditorSettings::getShruthiFilterBoard() {
+int ShruthiEditorSettings::getShruthiFilterBoard() {
 // ******************************************
-    return shruthiFilterBoard->currentIndex();
+    return ui->shruthiFilterBoard->currentIndex();
 }

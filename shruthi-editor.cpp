@@ -25,9 +25,11 @@
 #define VERSION "0.21"
 
 // ******************************************
-shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
+ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
+    QMainWindow(parent),
+    ui(new Ui::MainWindow) {
 // ******************************************
-    setupUi(this);
+    ui->setupUi(this);
     editor = edit;
 
     MIDI_CHANNEL = 1;
@@ -94,29 +96,37 @@ shruthiEditorMainWindow::shruthiEditorMainWindow(Editor *edit) {
         }
     }
 
-    connect(patch_name,SIGNAL(editingFinished()),this, SLOT(patchNameChanged()));
+    connect(ui->patch_name, SIGNAL(editingFinished()), this, SLOT(patchNameChanged()));
 
     // Now that everything is set up, update all UI elements:
     redrawAll();
 
     // other UI Signals:
-    connect(actionLoad_Patch,SIGNAL(triggered()), this, SLOT(loadPatch()));
-    connect(actionSave_Patch,SIGNAL(triggered()), this, SLOT(savePatch()));
-    connect(actionFetch_Patch,SIGNAL(triggered()), this, SLOT(fetchPatch()));
-    connect(actionSend_Patch,SIGNAL(triggered()), this, SLOT(sendPatch()));
-    connect(actionOpenSettings, SIGNAL(triggered()), this, SLOT(openSettings()));
-    connect(actionReset_Patch,SIGNAL(triggered()), this, SLOT(resetPatch()));
-    connect(actionReset_Patch_pre_1_00,SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
-    connect(actionQuit,SIGNAL(triggered()), this, SLOT(quitShruthiEditor()));
-    connect(actionAbout_Shruthi_Editor,SIGNAL(triggered()), this, SLOT(aboutShruthiEditor()));
-    connect(actionAbout_Qt,SIGNAL(triggered()), this, SLOT(aboutQt()));
-    connect(actionRandomize_Patch,SIGNAL(triggered()), this, SLOT(randomizePatch()));
-    connect(actionKeyboard,SIGNAL(triggered()),this,SIGNAL(showKeyboard()));
+    connect(ui->actionLoad_Patch, SIGNAL(triggered()), this, SLOT(loadPatch()));
+    connect(ui->actionSave_Patch, SIGNAL(triggered()), this, SLOT(savePatch()));
+    connect(ui->actionFetch_Patch, SIGNAL(triggered()), this, SLOT(fetchPatch()));
+    connect(ui->actionSend_Patch, SIGNAL(triggered()), this, SLOT(sendPatch()));
+    connect(ui->actionOpenSettings, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(ui->actionReset_Patch, SIGNAL(triggered()), this, SLOT(resetPatch()));
+    connect(ui->actionReset_Patch_pre_1_00, SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
+    connect(ui->actionQuit,SIGNAL(triggered()), this, SLOT(quitShruthiEditor()));
+    connect(ui->actionAbout_Shruthi_Editor, SIGNAL(triggered()), this, SLOT(aboutShruthiEditor()));
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()));
+    connect(ui->actionRandomize_Patch, SIGNAL(triggered()), this, SLOT(randomizePatch()));
+    connect(ui->actionKeyboard, SIGNAL(triggered()), this, SIGNAL(showKeyboard()));
 }
 
 
 // ******************************************
-void shruthiEditorMainWindow::setMidiInputPort(int midiin) {
+ShruthiEditorMainWindow::~ShruthiEditorMainWindow()
+// ******************************************
+{
+    delete ui;
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::setMidiInputPort(int midiin) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiInputPort(" << midiin << ")";
@@ -126,7 +136,7 @@ void shruthiEditorMainWindow::setMidiInputPort(int midiin) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::setMidiOutputPort(int midiout) {
+void ShruthiEditorMainWindow::setMidiOutputPort(int midiout) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiOutputPort(" << midiout << ")";
@@ -136,7 +146,7 @@ void shruthiEditorMainWindow::setMidiOutputPort(int midiout) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
+void ShruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiChannel(" << channel << ")";
@@ -146,7 +156,7 @@ void shruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
+void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 // ******************************************
 {
 #ifdef DEBUGMSGS
@@ -159,43 +169,43 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     //
 
     // Disable all relevant widgets:
-    c84->setEnabled(false);
-    c85->setEnabled(false);
-    c92d->setEnabled(false);
-    c92->setEnabled(false);
-    c93d->setEnabled(false);
-    c93->setEnabled(false);
+    ui->c84->setEnabled(false);
+    ui->c85->setEnabled(false);
+    ui->c92d->setEnabled(false);
+    ui->c92->setEnabled(false);
+    ui->c93d->setEnabled(false);
+    ui->c93->setEnabled(false);
 
     // Parameter 84:
     bool p84dial = false;
     const param_t p84 = Patch::parameter(84, filter);
     if (p84.name != NULL) {
-        l84->setText(p84.name + ":");
+        ui->l84->setText(p84.name + ":");
         if (p84.dropdown == NULL) {
             p84dial = true;
-            c84->setMinimum(p84.min);
-            c84->setMaximum(p84.max);
+            ui->c84->setMinimum(p84.min);
+            ui->c84->setMaximum(p84.max);
         }
     }
 
     // dial visibility
-    w84->setHidden(!p84dial);
+    ui->w84->setHidden(!p84dial);
 
 
     // Parameter 85:
     bool p85dial = false;
     const param_t p85 = Patch::parameter(85, filter);
     if (p85.name != NULL) {
-        l85->setText(p85.name + ":");
+        ui->l85->setText(p85.name + ":");
         if (p85.dropdown == NULL) {
             p85dial = true;
-            c85->setMinimum(p85.min);
-            c85->setMaximum(p85.max);
+            ui->c85->setMinimum(p85.min);
+            ui->c85->setMaximum(p85.max);
         }
     }
 
     // dial visibility
-    w85->setHidden(!p85dial);
+    ui->w85->setHidden(!p85dial);
 
 
     // Parameter 92:
@@ -205,29 +215,29 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     const param_t p92 = Patch::parameter(92, filter);
     if (p92.name != NULL) {
         if (p92.dropdown == NULL) {
-            l92d->setText(p92.name + ":");
+            ui->l92d->setText(p92.name + ":");
             p92dial = true;
-            c92d->setMinimum(p92.min);
-            c92d->setMaximum(p92.max);
+            ui->c92d->setMinimum(p92.min);
+            ui->c92d->setMaximum(p92.max);
         } else {
-            l92->setText(p92.name + ":");
+            ui->l92->setText(p92.name + ":");
             p92combo = p92.dropdown;
         }
     }
 
     // dial visibility
-    w92->setHidden(!p92dial);
+    ui->w92->setHidden(!p92dial);
 
     // combo box visibility
     bool p92hidden = true;
     if (p92combo) {
-        c92->clear();
-        c92->addItems(*p92combo);
+        ui->c92->clear();
+        ui->c92->addItems(*p92combo);
         // need to set index?
         p92hidden = false;
     }
 
-    w92cb->setHidden(p92hidden);
+    ui->w92cb->setHidden(p92hidden);
 
 
     // Parameter 93:
@@ -237,33 +247,33 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     const param_t p93 = Patch::parameter(93, filter);
     if (p93.name != NULL) {
         if (p93.dropdown == NULL) {
-            l93d->setText(p93.name + ":");
+            ui->l93d->setText(p93.name + ":");
             p93dial = true;
-            c93d->setMinimum(p93.min);
-            c93d->setMaximum(p93.max);
+            ui->c93d->setMinimum(p93.min);
+            ui->c93d->setMaximum(p93.max);
         } else {
-            l93->setText(p93.name + ":");
+            ui->l93->setText(p93.name + ":");
             p93combo = p93.dropdown;
         }
     }
 
     // dial visibility
-    w93->setHidden(!p93dial);
+    ui->w93->setHidden(!p93dial);
 
     // combo box visibility
     bool p93hidden = true;
     if (p93combo) {
-        c93->clear();
-        c93->addItems(*p93combo);
+        ui->c93->clear();
+        ui->c93->addItems(*p93combo);
         // need to set index?
         p93hidden = false;
     }
-    w93cb->setHidden(p93hidden);
+    ui->w93cb->setHidden(p93hidden);
 
 
     // change p92/p93 page:
     // page 0 contains the dials, page 1 the comboboxes
-    sw9293->setCurrentIndex(!p92hidden || !p93hidden);
+    ui->sw9293->setCurrentIndex(!p92hidden || !p93hidden);
 
 
     // Force display update:
@@ -274,12 +284,12 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
 
     // Enable active widgets:
-    c84->setEnabled(p84dial);
-    c85->setEnabled(p85dial);
-    c92d->setEnabled(p92dial);
-    c92->setEnabled(!p92hidden);
-    c93d->setEnabled(p93dial);
-    c93->setEnabled(!p93hidden);
+    ui->c84->setEnabled(p84dial);
+    ui->c85->setEnabled(p85dial);
+    ui->c92d->setEnabled(p92dial);
+    ui->c92->setEnabled(!p92hidden);
+    ui->c93d->setEnabled(p93dial);
+    ui->c93->setEnabled(!p93hidden);
 }
 
 
@@ -290,7 +300,7 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 // ******************************************
 
 // ******************************************
-void shruthiEditorMainWindow::comboBoxChanged(int val) {
+void ShruthiEditorMainWindow::comboBoxChanged(int val) {
 // ******************************************
     // Never send 'no current item set' i.e. -1:
     if (val == -1)
@@ -311,7 +321,7 @@ void shruthiEditorMainWindow::comboBoxChanged(int val) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::dialChanged(int val) {
+void ShruthiEditorMainWindow::dialChanged(int val) {
 // ******************************************
     QDial* s = (QDial*) sender();
 
@@ -346,16 +356,16 @@ void shruthiEditorMainWindow::dialChanged(int val) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::patchNameChanged() {
+void ShruthiEditorMainWindow::patchNameChanged() {
 // ******************************************
-    QString name = patch_name->text();
-    queueitem_t signal(SET_PATCHNAME,patch_name->text());
+    QString name = ui->patch_name->text();
+    queueitem_t signal(SET_PATCHNAME, name);
     emit enqueue(signal);
 }
 
 
 // ******************************************
-void shruthiEditorMainWindow::loadPatch() {
+void ShruthiEditorMainWindow::loadPatch() {
 // ******************************************
     QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".sp", "All possible files (*.sp *.syx);;Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
@@ -366,7 +376,7 @@ void shruthiEditorMainWindow::loadPatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::savePatch() {
+void ShruthiEditorMainWindow::savePatch() {
 // ******************************************
     QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
     if (filename!="") {
@@ -377,7 +387,7 @@ void shruthiEditorMainWindow::savePatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::fetchPatch() {
+void ShruthiEditorMainWindow::fetchPatch() {
 // ******************************************
     queueitem_t signal(SYSEX_FETCH_PATCH);
     emit(enqueue(signal));
@@ -385,7 +395,7 @@ void shruthiEditorMainWindow::fetchPatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::sendPatch() {
+void ShruthiEditorMainWindow::sendPatch() {
 // ******************************************
     queueitem_t signal(SYSEX_SEND_PATCH);
     emit(enqueue(signal));
@@ -393,9 +403,9 @@ void shruthiEditorMainWindow::sendPatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::openSettings() {
+void ShruthiEditorMainWindow::openSettings() {
 // ******************************************
-    shruthiEditorSettings prefs;
+    ShruthiEditorSettings prefs(this);
     prefs.setFixedSize(prefs.width(),prefs.height());
     prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
     prefs.setMidiChannel(MIDI_CHANNEL);
@@ -413,7 +423,7 @@ void shruthiEditorMainWindow::openSettings() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::resetPatch() {
+void ShruthiEditorMainWindow::resetPatch() {
 // ******************************************
     queueitem_t signal(RESET_PATCH);
     signal.int0 = 1000;
@@ -422,7 +432,7 @@ void shruthiEditorMainWindow::resetPatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::resetPatchPre100() {
+void ShruthiEditorMainWindow::resetPatchPre100() {
 // ******************************************
     queueitem_t signal(RESET_PATCH);
     signal.int0 = 98;
@@ -431,7 +441,7 @@ void shruthiEditorMainWindow::resetPatchPre100() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::randomizePatch() {
+void ShruthiEditorMainWindow::randomizePatch() {
 // ******************************************
     queueitem_t signal(RANDOMIZE_PATCH);
     emit(enqueue(signal));
@@ -439,14 +449,14 @@ void shruthiEditorMainWindow::randomizePatch() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::quitShruthiEditor() {
+void ShruthiEditorMainWindow::quitShruthiEditor() {
 // ******************************************
     QApplication::exit(0);
 }
 
 
 // ******************************************
-void shruthiEditorMainWindow::aboutShruthiEditor() {
+void ShruthiEditorMainWindow::aboutShruthiEditor() {
 // ******************************************
     QMessageBox::about(this,"About Shruthi-Editor",
         QString::fromUtf8("Shruti-Editor Version "VERSION".\n\n Copyright (C) 2011-2015 Manuel Krönig."));
@@ -454,14 +464,14 @@ void shruthiEditorMainWindow::aboutShruthiEditor() {
 
 
 // ******************************************
-void shruthiEditorMainWindow::aboutQt() {
+void ShruthiEditorMainWindow::aboutQt() {
 // ******************************************
     QMessageBox::aboutQt(this);
 }
 
 
 // ******************************************
-void shruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
+void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 // ******************************************
     Q_UNUSED(event);
     quitShruthiEditor();
@@ -475,7 +485,7 @@ void shruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 // ******************************************
 
 // ******************************************
-void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
+void ShruthiEditorMainWindow::redrawNRPN(int nrpn) {
 // ******************************************
     const param_t param = Patch::parameter(nrpn, SHRUTHI_FILTER_BOARD);
 
@@ -519,14 +529,14 @@ void shruthiEditorMainWindow::redrawNRPN(int nrpn) {
 }
 
 // ******************************************
-void shruthiEditorMainWindow::redrawAll() {
+void ShruthiEditorMainWindow::redrawAll() {
 // ******************************************
     for (int i=0; i<100; i++) {
         if (Patch::hasUI(i)) {
             redrawNRPN(i);
         }
     }
-    patch_name->setText(editor->getName());
+    ui->patch_name->setText(editor->getName());
 }
 
 
@@ -537,7 +547,7 @@ void shruthiEditorMainWindow::redrawAll() {
 // ******************************************
 
 // ******************************************
-void shruthiEditorMainWindow::midiInputStatusChanged(bool st) {
+void ShruthiEditorMainWindow::midiInputStatusChanged(bool st) {
 // ******************************************
     MIDI_INPUT_STATUS=st;
     displayMidiStatusChanged(st, MIDI_OUTPUT_STATUS);
@@ -545,7 +555,7 @@ void shruthiEditorMainWindow::midiInputStatusChanged(bool st) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::midiOutputStatusChanged(bool st) {
+void ShruthiEditorMainWindow::midiOutputStatusChanged(bool st) {
 // ******************************************
     MIDI_OUTPUT_STATUS=st;
     displayMidiStatusChanged(MIDI_INPUT_STATUS,st);
@@ -553,7 +563,7 @@ void shruthiEditorMainWindow::midiOutputStatusChanged(bool st) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
+void ShruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
 // ******************************************
     QString status = "MidiIn: ";
     if (!in)
@@ -574,14 +584,14 @@ void shruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
 
 
 // ******************************************
-void shruthiEditorMainWindow::displayStatusbar(QString msg) {
+void ShruthiEditorMainWindow::displayStatusbar(QString msg) {
 // ******************************************
     statusBar()->showMessage(msg);
 }
 
 
 // ******************************************
-void shruthiEditorMainWindow::setStatusbarVersionLabel(QString text)
+void ShruthiEditorMainWindow::setStatusbarVersionLabel(QString text)
 // ******************************************
 {
     statusbarVersionLabel->setText(text + " ");

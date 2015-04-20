@@ -23,17 +23,20 @@
 
 #include "lib_editor.h"
 
-
-class shruthiEditorMainWindow : public QMainWindow, private Ui::MainWindow
-{
+// ******************************************
+class ShruthiEditorMainWindow : public QMainWindow {
+// ******************************************
     Q_OBJECT
 
     public:
-        shruthiEditorMainWindow(Editor* edit);
+        ShruthiEditorMainWindow(Editor* edit, QWidget *parent = 0);
+        ~ShruthiEditorMainWindow();
+
     private:
         void displayMidiStatusChanged(bool, bool);
         void closeEvent(QCloseEvent* event);
 
+        Ui::MainWindow *ui;
         Editor* editor;
         int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT, SHRUTHI_FILTER_BOARD;
         unsigned char MIDI_CHANNEL;

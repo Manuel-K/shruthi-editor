@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 #ifdef FUSION
         app.setStyle(QStyleFactory::create("Fusion"));
 #endif
-        shruthiEditorMainWindow *main_window = new shruthiEditorMainWindow(&editor);
+        ShruthiEditorMainWindow *main_window = new ShruthiEditorMainWindow(&editor);
         main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
         main_window->setFixedSize(main_window->width(), main_window->height());
         main_window->statusBar()->setSizeGripEnabled(false);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
         main_window->connect(&midiin, SIGNAL(midiInputStatusChanged(bool)), SLOT(midiInputStatusChanged(bool)));
 
         // Setup keyboard
-        keyboard keys;
+        Keyboard keys;
         keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(showKeyboard()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
         keys.setFixedSize(keys.width(),keys.height());

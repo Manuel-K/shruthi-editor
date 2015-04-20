@@ -23,24 +23,30 @@
 #include "lib_editor.h"
 
 // ******************************************
-class keyboard : public QDialog, private Ui::keyboard{
+class Keyboard : public QDialog {
 // ******************************************
     Q_OBJECT
 
     public:
-        keyboard();
+        explicit Keyboard(QWidget *parent = 0);
+        ~Keyboard();
+
     private:
+        Ui::keyboard *ui;
         unsigned char noteOctave;
         unsigned char noteVelocity;
         unsigned char calculateNote(int);
+
     private slots:
         void push();
         void release();
         void setVelocity(int);
         void setOctave(int);
         void panicPushed();
+
     public slots:
         void showKeyboard();
+
     signals:
         void enqueue(queueitem_t);
 };
