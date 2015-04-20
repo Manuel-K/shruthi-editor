@@ -260,6 +260,12 @@ void shruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
     w93cb->setHidden(p93hidden);
 
+
+    // change p92/p93 page:
+    // page 0 contains the dials, page 1 the comboboxes
+    sw9293->setCurrentIndex(!p92hidden || !p93hidden);
+
+
     // Force display update:
     redrawNRPN(84);
     redrawNRPN(85);

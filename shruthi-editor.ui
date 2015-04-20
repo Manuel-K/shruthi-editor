@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1002</width>
-    <height>693</height>
+    <width>1000</width>
+    <height>691</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -812,192 +812,201 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="w92" native="true">
+      <widget class="QStackedWidget" name="sw9293">
        <property name="geometry">
         <rect>
          <x>160</x>
          <y>100</y>
-         <width>81</width>
-         <height>71</height>
+         <width>171</width>
+         <height>91</height>
         </rect>
        </property>
-       <property name="visible">
-        <bool>true</bool>
+       <property name="currentIndex">
+        <number>1</number>
        </property>
-       <widget class="QLabel" name="l92d">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Mode1:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
+       <widget class="QWidget" name="sw9293_d">
+        <widget class="QWidget" name="w93" native="true">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>0</y>
+           <width>81</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="l93d">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>81</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Mode2:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="d93">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>20</y>
+            <width>31</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+         <widget class="QDial" name="c93d">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>20</y>
+            <width>51</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="w92" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>81</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="l92d">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>81</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Mode1:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QDial" name="c92d">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>20</y>
+            <width>51</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="d92">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>20</y>
+            <width>31</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </widget>
+        <zorder>w92</zorder>
+        <zorder>w93</zorder>
        </widget>
-       <widget class="QDial" name="c92d">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d92">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="w93" native="true">
-       <property name="geometry">
-        <rect>
-         <x>240</x>
-         <y>100</y>
-         <width>81</width>
-         <height>71</height>
-        </rect>
-       </property>
-       <property name="visible">
-        <bool>true</bool>
-       </property>
-       <widget class="QLabel" name="l93d">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Mode2:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d93">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c93d">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="w92cb" native="true">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>100</y>
-         <width>161</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="visible">
-        <bool>true</bool>
-       </property>
-       <widget class="QComboBox" name="c92">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>20</y>
-          <width>141</width>
-          <height>24</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l92">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>161</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Mode1:</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="w93cb" native="true">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>140</y>
-         <width>161</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="visible">
-        <bool>true</bool>
-       </property>
-       <widget class="QLabel" name="l93">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>161</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Mode2:</string>
-        </property>
-       </widget>
-       <widget class="QComboBox" name="c93">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>20</y>
-          <width>141</width>
-          <height>24</height>
-         </rect>
-        </property>
+       <widget class="QWidget" name="sw9293_cb">
+        <widget class="QWidget" name="w93cb" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>40</y>
+           <width>161</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="l93">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>161</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Mode2:</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="c93">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>141</width>
+            <height>24</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="w92cb" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>161</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <widget class="QComboBox" name="c92">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>141</width>
+            <height>24</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="l92">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>161</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Mode1:</string>
+          </property>
+         </widget>
+        </widget>
+        <zorder>w92cb</zorder>
+        <zorder>w93cb</zorder>
        </widget>
       </widget>
      </widget>
@@ -2939,7 +2948,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1002</width>
+     <width>1000</width>
      <height>27</height>
     </rect>
    </property>
