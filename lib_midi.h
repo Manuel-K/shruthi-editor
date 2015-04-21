@@ -20,6 +20,8 @@
 #define SHRUTHI_MIDI_H
 
 #include <vector>
+typedef std::vector<unsigned char> Message;
+
 
 class Midi {
     public:
@@ -30,6 +32,8 @@ class Midi {
         static bool checkSysexHeadFoot(const std::vector<unsigned char> *message);
         static bool parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data);
         static unsigned char nibbleToByte(unsigned char n0, unsigned char n1);
+        static unsigned char getCommand(const Message *message);
+        static unsigned char getArgument(const Message *message);
 };
 
 #endif

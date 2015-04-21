@@ -85,7 +85,7 @@ class Editor : public QObject {
         void actionNoteOn(unsigned char, unsigned char);
         void actionNoteOff(unsigned char);
         void actionNotePanic();
-        void actionSysexReceived(unsigned int, unsigned char*);
+        void actionSysexReceived(unsigned int, unsigned int, unsigned int, unsigned char*);
         void actionSetPatchname(QString);
         void actionLoadPatch(QString);
         void actionSavePatch(QString);

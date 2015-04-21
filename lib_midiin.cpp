@@ -87,7 +87,7 @@ bool NRPN::parse(int b0, int b1, int b2) {
 
 
 // ******************************************
-void MidiIn::process(std::vector< unsigned char > *message) {
+void MidiIn::process(const std::vector<unsigned char> *message) {
 // ******************************************
     int size = message->size();
 
@@ -111,25 +111,36 @@ void MidiIn::process(std::vector< unsigned char > *message) {
     //message098->push_back(247);
 
 
-    // version info has a size of 15
-    if (size == 15) {
-        std::vector<unsigned char> data;
-        if (message->at(6) == 0x0c && message->at(7) == 0 && Midi::parseSysex(message, &data)) {
-            firmwareVersion = data.at(0) * 1000 + data.at(1);
-            std::cout << "Firmware version: " << firmwareVersion << std::endl;
+    if (size >= 4) {
+        std::vector<unsigned char> payload;
+        if (!Midi::parseSysex(message, &payload)) {
+            // We have a problem! Do something. Warn the user or make a cup of tea.
+            queueitem_t signal(SYSEX_RECEIVED);
+            signal.int0 = Midi::getCommand(message);
+            signal.int1 = Midi::getArgument(message);
+            signal.size = 0;
+            signal.message = NULL;
+            emit enqueue(signal);
             return;
         }
-    } else if (size>=4) {
-        if (Midi::checkSysexHeadFoot(message)) {
 
-            // patch has a size of 195
-            unsigned char *msg = new unsigned char[size];
-            for (int i=0; i<size;i++)
-                msg[i]= message->at(i);
-            queueitem_t signal(SYSEX_RECEIVED,msg,size);
-            signal.message=msg;
-            emit enqueue(signal);
+        // version info has a SysEx size of 15/2 bytes payload
+        if (payload.size() == 2 && Midi::getCommand(message) == 0x0c && Midi::getArgument(message) == 0x00) {
+            firmwareVersion = payload.at(0) * 1000 + payload.at(1);
+            std::cout << "Firmware version: " << firmwareVersion << std::endl;
         }
+
+        unsigned char *msg = new unsigned char[payload.size()];
+        for (unsigned int i=0; i < payload.size(); i++) {
+            msg[i] = payload.at(i);
+        }
+
+        queueitem_t signal(SYSEX_RECEIVED);
+        signal.int0 = Midi::getCommand(message);
+        signal.int1 = Midi::getArgument(message);
+        signal.message = msg;
+        signal.size = payload.size();
+        emit enqueue(signal);
     } else if (size==3) {
         if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
             // Parse as NRPN
@@ -155,10 +166,11 @@ void MidiIn::process(std::vector< unsigned char > *message) {
 
 
 // ******************************************
-void mycallback(double deltatime, std::vector< unsigned char > *message, void *userData) {
+void mycallback(double deltatime, std::vector<unsigned char> *message, void *userData) {
 // ******************************************
     Q_UNUSED(deltatime);
     ((MidiIn*)userData)->process(message);
+    // TODO: where is the message deleted?
 }
 
 

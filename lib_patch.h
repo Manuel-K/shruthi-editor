@@ -43,8 +43,9 @@ class Patch {
         QString name;
         int data[108];
         unsigned char version;
-        void parseSysex(unsigned char *sysex);
         void generateSysex(unsigned char res[]);
+        bool parseFullSysex(unsigned char  *sysex, unsigned int len);
+        bool parseFullSysex(const std::vector<unsigned char> *message);
 
         static param_t parameter84[];
         static param_t parameter85[];
@@ -77,8 +78,8 @@ class Patch {
         void printPatch();
         void resetPatch(unsigned int version = 1000);
         void randomizePatch(int);
-        bool parseFullSysex(unsigned char *sysex, unsigned int len);
-        bool parseFullSysex(const std::vector<unsigned char> *message);
+
+        void parseSysex(unsigned char *sysex);
         void generateFullSysex(std::vector<unsigned char> *message);
 
         bool loadFromDisk(QString location);

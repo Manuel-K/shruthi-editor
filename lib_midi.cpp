@@ -92,6 +92,28 @@ unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1)
 
 
 // ******************************************
+unsigned char Midi::getCommand(const Message *message)
+// ******************************************
+{
+    if (message->size() < 6) {
+        return 0;
+    }
+    return message->at(6);
+}
+
+
+// ******************************************
+unsigned char Midi::getArgument(const Message *message)
+// ******************************************
+{
+    if (message->size() < 7) {
+        return 0;
+    }
+    return message->at(7);
+}
+
+
+// ******************************************
 bool Midi::parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data)
 // ******************************************
 {

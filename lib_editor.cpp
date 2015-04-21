@@ -126,7 +126,7 @@ void Editor::process(queueitem_t item) {
             actionNotePanic();
             break;
         case SYSEX_RECEIVED:
-            actionSysexReceived(item.size,item.message);
+            actionSysexReceived(item.int0, item.int1, item.size, item.message);
             break;
         case SET_PATCHNAME:
             actionSetPatchname(item.string);
@@ -266,23 +266,35 @@ void Editor::actionNotePanic() {
 
 
 // ******************************************
-void Editor::actionSysexReceived(unsigned int size, unsigned char* message) {
+void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
+                                 unsigned int size, unsigned char* message) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSysexReceived(" << size << ",...)";
 #endif
-    if (7<size && message[6]==1 && message[7]==0)
-        if (patch.parseFullSysex(message,size))
+    if (size == 0 && command == 0 && argument == 0) {
+        emit displayStatusbar("Received invalid SysEx.");
+    } else if (command == 0x0c && argument == 0x00) {
+        // Version info
+        //if (size == 2) {
+        //    firmwareVersion = message.at(0) * 1000 + message.at(1);
+        //}
+    } else if (command == 0x01 && argument == 0x00) {
+        if (size == 92) {
+            patch.parseSysex(message);
             emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
-        else
+        } else {
             emit displayStatusbar("Received invalid patch.");
-    else {
+        }
+    } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
         qDebug() << "unknown sysex type";
 #endif
     }
-    delete message;
+    if (message) { // TODO: is it a good idea to check if size > 0
+        delete message;
+    }
     emit redrawAll();
     emit setStatusbarVersionLabel(patch.getVersionString());
 }

@@ -69,7 +69,7 @@ class MidiIn : public QObject {
     public:
         ~MidiIn();
         MidiIn();
-        void process(std::vector< unsigned char > *message);
+        void process(const std::vector<unsigned char> *message);
     public slots:
         void setMidiInputPort(int);
         void setShruthiFilterBoard(int);
