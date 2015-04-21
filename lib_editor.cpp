@@ -177,6 +177,7 @@ void Editor::actionFetchPatch() {
         emit displayStatusbar("Patch transfer request sent.");
     else
         emit displayStatusbar("Could not send patch transfer request.");
+    midiout.sequenceTransferRequest();
 }
 
 
@@ -286,6 +287,8 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         } else {
             emit displayStatusbar("Received invalid patch.");
         }
+    } else if (command == 0x02 && argument == 0x00) {
+        sequence.unpackData(message);
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS

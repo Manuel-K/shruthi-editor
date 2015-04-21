@@ -243,6 +243,14 @@ bool MidiOut::patchTransferRequest() {
 
 
 // ******************************************
+bool MidiOut::sequenceTransferRequest()
+// ******************************************
+{
+    return request(0x12);
+}
+
+
+// ******************************************
 bool MidiOut::versionRequest()
 // ******************************************
 {

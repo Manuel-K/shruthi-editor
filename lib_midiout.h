@@ -50,6 +50,7 @@ class MidiOut {
 
         // Requests:
         bool patchTransferRequest();
+        bool sequenceTransferRequest();
         bool versionRequest();
 };
 

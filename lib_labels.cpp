@@ -18,6 +18,7 @@
 
 #include "lib_labels.h"
 #include <QStringList>
+#include <QDebug>
 
 // ******************************************
 QStringList Labels::ModulationSource = QStringList()
@@ -431,3 +432,49 @@ QString Labels::ArpeggiatorPatternFormatter(int value)
         return "Sequence";
     }
 }
+
+
+// ******************************************
+QStringList Labels::Notes = QStringList()
+// ******************************************
+        << "C"
+        << "C#"
+        << "D"
+        << "D#"
+        << "E"
+        << "F"
+        << "F#"
+        << "G"
+        << "G#"
+        << "A"
+        << "A#"
+        << "B";
+
+
+// ******************************************
+QString Labels::NoteFormatter(int value)
+// ******************************************
+{
+    return Notes.at(value%12) + QString("%1").arg(value/12 - 1);
+}
+
+
+// ******************************************
+QStringList Labels::HexValues = QStringList()
+// ******************************************
+        << "0"
+        << "1"
+        << "2"
+        << "3"
+        << "4"
+        << "5"
+        << "6"
+        << "7"
+        << "8"
+        << "9"
+        << "A"
+        << "B"
+        << "C"
+        << "D"
+        << "E"
+        << "F";

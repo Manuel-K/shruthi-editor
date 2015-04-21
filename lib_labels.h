@@ -52,6 +52,8 @@ class Labels {
         static QStringList SequencerClockDivision;
         static QString TempoFormatter(int value); // used for labels
         static QString ArpeggiatorPatternFormatter(int value); // used for labels
-
+        static QStringList Notes;
+        static QString NoteFormatter(int value);
+        static QStringList HexValues;
 };
 #endif
