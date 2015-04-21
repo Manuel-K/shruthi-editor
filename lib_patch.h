@@ -20,7 +20,6 @@
 #define SHRUTHI_PATCH_H
 #include "lib_labels.h"
 #include <vector>
-#include "lib_midi.h"
 
 // ******************************************
 struct param_t {
@@ -78,8 +77,8 @@ class Patch {
         void printPatch();
         void resetPatch(unsigned int version = 1000);
         void randomizePatch(int);
-        bool parseFullSysex(unsigned char  *sysex, unsigned int len);
-        bool parseFullSysex(std::vector<unsigned char> message);
+        bool parseFullSysex(unsigned char *sysex, unsigned int len);
+        bool parseFullSysex(const std::vector<unsigned char> *message);
         void generateFullSysex(std::vector<unsigned char> *message);
 
         bool loadFromDisk(QString location);

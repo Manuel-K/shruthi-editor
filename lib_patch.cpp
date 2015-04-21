@@ -17,6 +17,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "lib_patch.h"
+#include "lib_midi.h"
+
 #include <QDebug>
 #include <iostream>
 #include <QFile>
@@ -610,6 +612,8 @@ int Patch::parseCcValue(const unsigned int val, int nrpn, const int filter)
 // ******************************************
 bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
 // ******************************************
+    // len should be 195
+
     // check if valid:
     if (!(sysex[0]==Midi::sysexHead[0] && sysex[1]==Midi::sysexHead[1] &&
           sysex[2]==Midi::sysexHead[2] && sysex[3]==Midi::sysexHead[3] &&
@@ -656,13 +660,15 @@ bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
 
 
 // ******************************************
-bool Patch::parseFullSysex(std::vector<unsigned char> message) {
+bool Patch::parseFullSysex(const std::vector<unsigned char> *message) {
 // ******************************************
     // copy to temporay array:
-    unsigned char *sysex = new unsigned char[message.size()];
-    for (unsigned int i=0; i<message.size();i++)
-        sysex[i] = message.at(i);
-    return parseFullSysex(sysex, message.size());
+    unsigned char *sysex = new unsigned char[message->size()];
+    for (unsigned int i=0; i<message->size();i++)
+        sysex[i] = message->at(i);
+    bool ret = parseFullSysex(sysex, message->size());
+    delete sysex;
+    return ret;
 }
 
 
