@@ -92,6 +92,22 @@ unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1)
 
 
 // ******************************************
+unsigned char Midi::byteToUpperNibble(unsigned char n)
+// ******************************************
+{
+    return (n >> 4) & 0x0F;
+}
+
+
+// ******************************************
+unsigned char Midi::byteToLowerNibble(unsigned char n)
+// ******************************************
+{
+    return n & 0x0F;
+}
+
+
+// ******************************************
 unsigned char Midi::getCommand(const Message *message)
 // ******************************************
 {
@@ -132,5 +148,33 @@ bool Midi::parseSysex(const std::vector<unsigned char> *message, std::vector<uns
     const unsigned char calculated_checksum = calculateChecksum(data);
 
     return checksum == calculated_checksum;
+}
+
+
+// ******************************************
+void Midi::generateSysex(const Message *payload, const int command, const int argument, Message *message)
+// ******************************************
+{
+    const unsigned int size = payload->size();
+    message->reserve(2 * size + 11);
+
+
+    for (unsigned int i=0; i<6; i++) {
+        message->push_back(sysexHead[i]);
+    }
+
+    message->push_back(command);
+    message->push_back(argument);
+    const unsigned char checksum = calculateChecksum(payload);
+
+    // expand bytes to nibbles:
+    for (unsigned int i = 0; i < size; i++) {
+        message->push_back((payload->at(i)>>4)&0x0F);
+        message->push_back(payload->at(i)&0x0F);
+    }
+    message->push_back((checksum>>4)&0x0F);
+    message->push_back(checksum&0x0F);
+
+    message->push_back(sysexFoot);
 }
 

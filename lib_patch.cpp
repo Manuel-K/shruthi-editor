@@ -408,8 +408,13 @@ void Patch::randomizePatch(int filter) {
 
 
 // ******************************************
-void Patch::parseSysex(unsigned char sysex[]) {
+bool Patch::parseSysex(unsigned char sysex[]) {
 // ******************************************
+    // check if version field contains valid entry
+    if (!(sysex[91] == 33 || sysex[91] == 37)) {
+        return false;
+    }
+
     int temp[108];
 
     // copy sysex data:
@@ -464,6 +469,8 @@ void Patch::parseSysex(unsigned char sysex[]) {
     for (int i=68; i<76; i++)
         tmp_name << QString("%1").arg((char)data[i]);
     name=tmp_name.join("").trimmed();
+
+    return true;
 }
 
 
@@ -610,88 +617,35 @@ int Patch::parseCcValue(const unsigned int val, int nrpn, const int filter)
 
 
 // ******************************************
-bool Patch::parseFullSysex(unsigned char sysex[], unsigned int len) {
-// ******************************************
-    // len should be 195
-
-    // check if valid:
-    if (!(sysex[0]==Midi::sysexHead[0] && sysex[1]==Midi::sysexHead[1] &&
-          sysex[2]==Midi::sysexHead[2] && sysex[3]==Midi::sysexHead[3] &&
-          sysex[4]==Midi::sysexHead[4] && sysex[5]==Midi::sysexHead[5])) {
-        qDebug() << "Invalid sysex header.";
-        return false;
-    }
-    if (!(Midi::sysexFoot==sysex[len-1])) {
-        qDebug() << "Invalid sysex footer.";
-        return false;
-    }
-    if (!(1==sysex[6]&&0==sysex[7])) {
-        qDebug() << "Sysex is not a patch.";
-        return false;
-    }
-    // combine nibbles to bytes:
-    int j=8;
-    for (unsigned int i=8;i<len-1;i+=2)
-        sysex[j++] = sysex[i]<<4|sysex[i+1];
-    sysex[j]=sysex[len-1];
-    len=j+1;
-
-    // The static '!' (33) field was changed to a version field.
-    // Post 1.00 versions use a '%' (37) as identifier.
-    unsigned char this_version = sysex[len-3];
-
-    if (this_version != 37 and this_version != 33) {
-        qDebug() << "Invalid patch data. Unknown version " << this_version << ".";
-        return false;
-    }
-    if (!Midi::calculateChecksum(sysex,8,100)==sysex[len-2]) {
-        qDebug() << "Invalid checksum.";
-        return false;
-    }
-
-    // throw padding away:
-    unsigned char tmp[92];
-    for (int i=0; i<92;i++)
-        tmp[i]=sysex[8+i];
-
-    parseSysex(tmp);
-    return true;
-}
-
-
-// ******************************************
 bool Patch::parseFullSysex(const std::vector<unsigned char> *message) {
 // ******************************************
+    Message payload;
+    if (!Midi::parseSysex(message, &payload)) {
+        return false;
+    }
+
     // copy to temporay array:
-    unsigned char *sysex = new unsigned char[message->size()];
-    for (unsigned int i=0; i<message->size();i++)
-        sysex[i] = message->at(i);
-    bool ret = parseFullSysex(sysex, message->size());
-    delete sysex;
-    return ret;
+    unsigned char temp[payload.size()];
+    for (unsigned int i = 0; i < payload.size(); i++) {
+        temp[i] = payload.at(i);
+    }
+
+    return parseSysex(temp);
 }
 
 
 // ******************************************
 void Patch::generateFullSysex(std::vector<unsigned char> *message) {
 // ******************************************
-    message->reserve(195); // Note: must have at least 195 entries.
-
-    unsigned char temp[93];
+    unsigned char temp[92];
     generateSysex(temp);
 
-    for (unsigned int i=0; i<6; i++)
-        message->push_back(Midi::sysexHead[i]);
-    message->push_back(1);
-    message->push_back(0);
-    temp[92]=Midi::calculateChecksum(temp,0,92);
-
-    // expand bytes to nibbles:
-    for (unsigned int i=0;i<93;i++) {
-        message->push_back((temp[i]>>4)&0x0F);
-        message->push_back(temp[i]&0x0F);
+    Message payload;
+    for (unsigned int i = 0; i < 92; i++) {
+        payload.push_back(temp[i]);
     }
-    message->push_back(Midi::sysexFoot);
+
+    Midi::generateSysex(&payload, 0x01, 0x00, message);
 }
 
 
@@ -713,34 +667,37 @@ bool Patch::loadFromDisk(QString location) {
         return false;
     }
 
-    char tmp [195];
-    unsigned int readBytes = file.read(tmp,195);
+    char tmp[195];
+    unsigned int readBytes = file.read(tmp, 195);
     file.close();
 
 #ifdef DEBUGMSGS
     qDebug() << "Read" << readBytes << "bytes.";
 #endif
 
-    unsigned char sysex[195] = {};
-    for (unsigned int i=0; i<readBytes; i++) {
-         sysex[i] = (char) tmp[i];
-#ifdef DEBUGMSGS
-        qDebug() << i << ":" << sysex[i];
-#endif
-    }
-
     // primitive check if patch is valid:
-    if (readBytes==195) {
+    if (readBytes == 195) {
 #ifdef DEBUGMSGS
         qDebug() << "Detected full patch sysex.";
 #endif
-        return parseFullSysex(sysex,195);
-    } else if (readBytes==92 && (tmp[91]==33 || tmp[91]==37)) { // last field is ! or %
+        Message sysex;
+        sysex.reserve(195);
+        for (unsigned int i = 0; i < 195; i++) {
+            sysex.push_back(tmp[i]);
+        }
+        return parseFullSysex(&sysex);
+    } else if (readBytes == 92) {
 #ifdef DEBUGMSGS
         qDebug() << "Detected light patch files.";
 #endif
-        parseSysex(sysex);
-        return true;
+        unsigned char sysex[92];
+        for (unsigned int i=0; i<readBytes; i++) {
+            sysex[i] = (char) tmp[i];
+    #ifdef DEBUGMSGS
+            qDebug() << i << ":" << sysex[i];
+    #endif
+        }
+        return parseSysex(sysex);
     } else {
         return false;
     }
