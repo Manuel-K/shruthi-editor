@@ -27,11 +27,12 @@
 // ******************************************
 enum ACTIONS
 // ******************************************
-    {PATCH_PARAMETER_CHANGE_EDITOR, SYSEX_FETCH_PATCH,
-    SYSEX_SEND_PATCH, PATCH_PARAMETER_CHANGE_MIDI, SYSEX_RECEIVED,
+    {PATCH_PARAMETER_CHANGE_EDITOR, SYSEX_FETCH_REQUEST,
+    SYSEX_SEND_DATA, PATCH_PARAMETER_CHANGE_MIDI, SYSEX_RECEIVED,
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE,
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF,
-    NOTE_PANIC, SYSEX_VERSION_REQUEST};
+    NOTE_PANIC, SYSEX_VERSION_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
+    SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE};
 
 
 // ******************************************
@@ -80,8 +81,8 @@ class Editor : public QObject {
         unsigned char channel;
         int shruthiFilterBoard;
         void actionPatchParameterChangeEditor(int,int);
-        void actionFetchPatch();
-        void actionSendPatch();
+        void actionFetchRequest(const int &which);
+        void actionSendData(const int &which);
         void actionVersionRequest();
         void actionPatchParameterChangeMidi(int,int);
         void actionNoteOn(unsigned char, unsigned char);
@@ -93,12 +94,17 @@ class Editor : public QObject {
         void actionFileIOSave(QString);
         void actionResetPatch(unsigned int version);
         void actionRandomizePatch();
+        void actionSequenceParameterChangeEditor(const unsigned &id, const int &value);
 
     public:
         Editor();
         ~Editor();
         int getParam(int);
         QString getName();
+        const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp);
+
+        static const int FLAG_PATCH = 1;
+        static const int FLAG_SEQUENCE = 2;
 
     public slots:
         void process(queueitem_t);
@@ -110,6 +116,8 @@ class Editor : public QObject {
     signals:
         void redrawNRPN(int);
         void redrawAll();
+        void redrawSequenceParameter(int);
+        void redrawAllSequenceParameters();
         void finished();
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString);

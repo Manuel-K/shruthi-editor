@@ -99,17 +99,27 @@ QString Editor::getName() {
 
 
 // ******************************************
+const int &Editor::getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) {
+// ******************************************
+    return sequence.getParam(step, sp);
+}
+
+
+// ******************************************
 void Editor::process(queueitem_t item) {
 // ******************************************
     switch(item.action) {
         case PATCH_PARAMETER_CHANGE_EDITOR:
             actionPatchParameterChangeEditor(item.int0, item.int1);
             break;
-         case SYSEX_FETCH_PATCH:
-            actionFetchPatch();
+        case SEQUENCE_PARAMETER_CHANGE_EDITOR:
+            actionSequenceParameterChangeEditor(item.int0, item.int1);
             break;
-        case SYSEX_SEND_PATCH:
-            actionSendPatch();
+         case SYSEX_FETCH_REQUEST:
+            actionFetchRequest(item.int0);
+            break;
+        case SYSEX_SEND_DATA:
+            actionSendData(item.int0);
             break;
         case SYSEX_VERSION_REQUEST:
             actionVersionRequest();
@@ -168,31 +178,52 @@ void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
 }
 
 // ******************************************
-void Editor::actionFetchPatch() {
+void Editor::actionFetchRequest(const int &which) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionFetchPatch()";
+    qDebug() << "Editor::actionFetch()";
 #endif
-    if (midiout.patchTransferRequest())
-        emit displayStatusbar("Patch transfer request sent.");
-    else
-        emit displayStatusbar("Could not send patch transfer request.");
-    midiout.sequenceTransferRequest();
+    // TODO: combine messages
+    if (which&FLAG_PATCH) {
+        if (midiout.patchTransferRequest())
+            emit displayStatusbar("Patch transfer request sent.");
+        else
+            emit displayStatusbar("Could not send patch transfer request.");
+    }
+    if (which&FLAG_SEQUENCE) {
+        if (midiout.sequenceTransferRequest())
+            emit displayStatusbar("Sequence transfer request sent.");
+        else
+            emit displayStatusbar("Could not send sequence transfer request.");
+
+    }
 }
 
 
 // ******************************************
-void Editor::actionSendPatch() {
+void Editor::actionSendData(const int &which) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionSendPatch()";
+    qDebug() << "Editor::actionSend()";
 #endif
-    std::vector<unsigned char> temp;
-    patch.generateSysex(&temp);
-    if (midiout.write(temp))
-        emit displayStatusbar("Patch sent.");
-    else
-        emit displayStatusbar("Could not send patch.");
+    // TODO: combine messages
+    if (which&FLAG_PATCH) {
+        std::vector<unsigned char> temp;
+        patch.generateSysex(&temp);
+        if (midiout.write(temp))
+            emit displayStatusbar("Patch sent.");
+        else
+            emit displayStatusbar("Could not send patch.");
+    }
+    if (which&FLAG_SEQUENCE) {
+        // TODO: implement me
+        std::vector<unsigned char> temp;
+        sequence.generateSysex(&temp);
+        if (midiout.write(temp))
+            emit displayStatusbar("Sequence sent.");
+        else
+            emit displayStatusbar("Could not send sequence.");
+    }
 }
 
 
@@ -289,6 +320,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         }
     } else if (command == 0x02 && argument == 0x00) {
         sequence.unpackData(message);
+        emit redrawAllSequenceParameters();
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
@@ -408,4 +440,13 @@ void Editor::actionRandomizePatch() {
     emit displayStatusbar("Patch randomized.");
     emit setStatusbarVersionLabel(patch.getVersionString());
 }
+
+
+// ******************************************
+void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &value) {
+// ******************************************
+    sequence.setParamById(id, value);
+}
+
+
 

@@ -21,6 +21,10 @@
 
 #include <vector>
 
+namespace SequenceParameter {
+    enum SequenceParameter {ACTIVE, NOTE, TIE, VELOCITY, VALUE};
+}
+
 // ******************************************
 class Sequence {
 // ******************************************
@@ -30,22 +34,34 @@ public:
     ~Sequence();
     void unpackData(const unsigned char *data);
     void generateSysex(std::vector<unsigned char> *message);
+    const int &getParamByID(const int &id);
+    const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp);
+    void setParamById(const int &id, const int &val);
+    static int calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp);
     void reset();
+
+    const int &getActive(const int &step);
+    const int &getNote(const int &step);
+    const int &getTie(const int &step);
+    const int &getVelocity(const int &step);
+    const int &getValue(const int &step);
+
+    static const int NUMBER_OF_STEPS = 16;
+    static const int ERROR_RETURN;
 
 private:
     bool parseSysex(const std::vector<unsigned char> *message);
     void packData(unsigned char data[]);
     void print();
 
-    void setParam(int param, int val);
-    int getParam(int param);
 
-    int active[16];
-    int note[16];
-    int type[16];
-    int velocity[16];
-    int value[16];
+    int stepsActive[16];
+    int stepsNote[16];
+    int stepsTie[16];
+    int stepsVelocity[16];
+    int stepsValue[16];
     static unsigned char INIT_SEQUENCE[];
+
 
 };
 

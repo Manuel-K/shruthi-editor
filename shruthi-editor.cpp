@@ -106,6 +106,8 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     connect(ui->actionSave_Patch, SIGNAL(triggered()), this, SLOT(savePatch()));
     connect(ui->actionFetch_Patch, SIGNAL(triggered()), this, SLOT(fetchPatch()));
     connect(ui->actionSend_Patch, SIGNAL(triggered()), this, SLOT(sendPatch()));
+    connect(ui->actionFetchSequence, SIGNAL(triggered()), this, SLOT(fetchSequence()));
+    connect(ui->actionSendSequence, SIGNAL(triggered()), this, SLOT(sendSequence()));
     connect(ui->actionOpenSettings, SIGNAL(triggered()), this, SLOT(openSettings()));
     connect(ui->actionReset_Patch, SIGNAL(triggered()), this, SLOT(resetPatch()));
     connect(ui->actionReset_Patch_pre_1_00, SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
@@ -114,6 +116,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()));
     connect(ui->actionRandomize_Patch, SIGNAL(triggered()), this, SLOT(randomizePatch()));
     connect(ui->actionKeyboard, SIGNAL(triggered()), this, SIGNAL(showKeyboard()));
+    connect(ui->actionOpenSequenceEditor, SIGNAL(triggered()), this, SIGNAL(showSequenceEditor()));
 }
 
 
@@ -389,7 +392,7 @@ void ShruthiEditorMainWindow::savePatch() {
 // ******************************************
 void ShruthiEditorMainWindow::fetchPatch() {
 // ******************************************
-    queueitem_t signal(SYSEX_FETCH_PATCH);
+    queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH);
     emit(enqueue(signal));
 }
 
@@ -397,7 +400,23 @@ void ShruthiEditorMainWindow::fetchPatch() {
 // ******************************************
 void ShruthiEditorMainWindow::sendPatch() {
 // ******************************************
-    queueitem_t signal(SYSEX_SEND_PATCH);
+    queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_PATCH);
+    emit(enqueue(signal));
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::fetchSequence() {
+// ******************************************
+    queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_SEQUENCE);
+    emit(enqueue(signal));
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::sendSequence() {
+// ******************************************
+    queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
     emit(enqueue(signal));
 }
 

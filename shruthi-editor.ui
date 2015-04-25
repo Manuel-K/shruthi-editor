@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>691</height>
+    <width>996</width>
+    <height>687</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2948,7 +2948,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>996</width>
      <height>27</height>
     </rect>
    </property>
@@ -2970,6 +2970,8 @@
     </property>
     <addaction name="actionFetch_Patch"/>
     <addaction name="actionSend_Patch"/>
+    <addaction name="actionFetchSequence"/>
+    <addaction name="actionSendSequence"/>
     <addaction name="separator"/>
     <addaction name="actionOpenSettings"/>
    </widget>
@@ -2985,6 +2987,7 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionKeyboard"/>
+    <addaction name="actionOpenSequenceEditor"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuMidi"/>
@@ -3049,6 +3052,21 @@
   <action name="actionReset_Patch_pre_1_00">
    <property name="text">
     <string>Reset Patch (pre &amp;1.00)</string>
+   </property>
+  </action>
+  <action name="actionOpenSequenceEditor">
+   <property name="text">
+    <string>Open &amp;Sequence Editor</string>
+   </property>
+  </action>
+  <action name="actionFetchSequence">
+   <property name="text">
+    <string>Fetch Sequence</string>
+   </property>
+  </action>
+  <action name="actionSendSequence">
+   <property name="text">
+    <string>Send Sequence</string>
    </property>
   </action>
  </widget>

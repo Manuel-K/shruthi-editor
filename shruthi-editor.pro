@@ -19,14 +19,15 @@
 HEADERS     = RtMidi.h settings-dialog.h shruthi-editor.h lib_patch.h \
               lib_labels.h lib_editor.h lib_config.h lib_midiout.h \
               lib_midiin.h keyboard-dialog.h lib_signalrouter.h \
-              lib_midi.h keyboard_widget.h lib_fileio.h lib_sequence.h
+              lib_midi.h keyboard_widget.h lib_fileio.h lib_sequence.h \
+              sequence_editor.h sequence_step.h
 SOURCES     = RtMidi.cpp settings-dialog.cpp shruthi-editor.cpp main.cpp \
               lib_patch.cpp lib_labels.cpp lib_editor.cpp lib_config.cpp \
               lib_midiout.cpp lib_midiin.cpp keyboard-dialog.cpp \
               lib_signalrouter.cpp lib_midi.cpp keyboard_widget.cpp \
-              lib_fileio.cpp lib_sequence.cpp
+              lib_fileio.cpp lib_sequence.cpp sequence_editor.cpp sequence_step.cpp
 
-FORMS       = settings-dialog.ui shruthi-editor.ui keyboard.ui
+FORMS       = settings-dialog.ui shruthi-editor.ui keyboard.ui sequence_editor.ui sequence_step.ui
 RESOURCES   = shruthi-editor.qrc
 
 QT += widgets

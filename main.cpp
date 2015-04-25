@@ -22,6 +22,7 @@
 
 #include "shruthi-editor.h"
 #include "keyboard-dialog.h"
+#include "sequence_editor.h"
 
 #include "lib_editor.h"
 #include "lib_midiin.h"
@@ -94,12 +95,19 @@ int main(int argc, char *argv[]) {
         keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(showKeyboard()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
 
+        // Setup SequenceEditor
+        SequenceEditor sequence_editor(&editor);
+        sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(showSequenceEditor()));
+        sequence_editor.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
+
         // Start editor
         editorThread.start();
 
         // signalrouter: incoming signals
         sr.connect(&editor, SIGNAL(finished()), SLOT(editorFinished()));
         sr.connect(main_window, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
+        sr.connect(&sequence_editor, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
         sr.connect(&midiin, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
         sr.connect(&keys, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
         sr.connect(main_window, SIGNAL(settingsChanged(int,int,unsigned char,int)), SLOT(settingsChanged(int,int,unsigned char,int)));

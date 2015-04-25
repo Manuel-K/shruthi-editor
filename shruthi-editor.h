@@ -52,6 +52,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void savePatch();
         void fetchPatch();
         void sendPatch();
+        void fetchSequence();
+        void sendSequence();
         void openSettings();
         void resetPatch();
         void resetPatchPre100();
@@ -78,6 +80,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void enqueue(queueitem_t);
         void settingsChanged(int, int, unsigned char, int);
         void showKeyboard();
+        void showSequenceEditor();
 };
 
 

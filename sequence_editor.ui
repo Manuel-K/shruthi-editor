@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SequenceEditor</class>
+ <widget class="QDialog" name="SequenceEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>918</width>
+    <height>338</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SequenceEditor</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="gSeq">
+     <property name="title">
+      <string>Sequence:</string>
+     </property>
+     <layout class="QGridLayout" name="gSeq_gl">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="SequenceStep" name="s1" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="SequenceStep" name="s2" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="SequenceStep" name="s3" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="SequenceStep" name="s4" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="SequenceStep" name="s5" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="SequenceStep" name="s6" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="SequenceStep" name="s7" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="SequenceStep" name="s8" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="SequenceStep" name="s9" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="SequenceStep" name="s10" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="SequenceStep" name="s11" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="SequenceStep" name="s12" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="SequenceStep" name="s13" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="SequenceStep" name="s14" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="SequenceStep" name="s15" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="SequenceStep" name="s16" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>106</width>
+          <height>142</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SequenceStep</class>
+   <extends>QWidget</extends>
+   <header>sequence_step.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SequenceStep</class>
+ <widget class="QWidget" name="SequenceStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>106</width>
+    <height>152</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>106</width>
+    <height>152</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>106</width>
+    <height>152</height>
+   </size>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="4" column="0" colspan="2">
+    <widget class="QComboBox" name="note">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maxVisibleItems">
+      <number>20</number>
+     </property>
+     <property name="minimumContentsLength">
+      <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="valuelabel">
+     <property name="text">
+      <string>Value: </string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QSpinBox" name="octave"/>
+   </item>
+   <item row="7" column="1" colspan="2">
+    <widget class="QComboBox" name="value">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maxVisibleItems">
+      <number>20</number>
+     </property>
+     <property name="minimumContentsLength">
+      <number>2</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="name">
+     <property name="text">
+      <string>Step</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QCheckBox" name="active">
+     <property name="text">
+      <string>Active</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="veloctiyLabel">
+     <property name="text">
+      <string>Velocity:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="QCheckBox" name="tie">
+     <property name="text">
+      <string>Tie/Slide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QSpinBox" name="velocity"/>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
