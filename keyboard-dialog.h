@@ -33,15 +33,14 @@ class Keyboard : public QDialog {
 
     private:
         Ui::keyboard *ui;
-        unsigned char noteOctave;
         unsigned char noteVelocity;
-        unsigned char calculateNote(int);
+        static const int defaultOctave = 0;
 
     private slots:
-        void push();
-        void release();
-        void setVelocity(int);
-        void setOctave(int);
+        void keyPressed(int key);
+        void keyReleased(int key);
+        void setVelocity(int vel);
+        void setOctave(int oct);
         void panicPushed();
 
     public slots:

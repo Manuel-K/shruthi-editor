@@ -93,7 +93,6 @@ int main(int argc, char *argv[]) {
         Keyboard keys;
         keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(showKeyboard()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
-        keys.setFixedSize(keys.width(),keys.height());
 
         // Start editor
         editorThread.start();
