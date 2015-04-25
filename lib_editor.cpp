@@ -17,6 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "lib_editor.h"
+#include "lib_fileio.h"
 #include <QDebug>
 
 
@@ -313,23 +314,63 @@ void Editor::actionSetPatchname(QString name) {
 // ******************************************
 void Editor::actionFileIOLoad(QString filename) {
 // ******************************************
-    bool status = patch.loadFromDisk(filename);
+    std::vector<unsigned char> temp;
+    bool status = FileIO::loadFromDisk(filename, temp);
+
+    if (status) {
+        const unsigned int &readBytes = temp.size();
+        // primitive check if patch is valid:
+        if (readBytes == 195) {
+#ifdef DEBUGMSGS
+            qDebug() << "Detected full patch sysex.";
+#endif
+            status = patch.parseSysex(&temp);
+        } else if (readBytes == 92) {
+#ifdef DEBUGMSGS
+            qDebug() << "Detected light patch files.";
+#endif
+            unsigned char data[92];
+            for (unsigned int i=0; i<readBytes; i++) {
+                data[i] = (char) temp[i];
+#ifdef DEBUGMSGS
+                qDebug() << i << ":" << sysex[i];
+#endif
+            }
+            status = patch.unpackData(data);
+        } else {
+            status = false;
+        }
+    }
+
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLoadPatch(" << filename << "):" << status;
 #endif
-    if (status)
+    if (status) {
         emit displayStatusbar("Patch loaded from disk.");
-    else
+        emit redrawAll();
+        emit setStatusbarVersionLabel(patch.getVersionString());
+    } else {
         emit displayStatusbar("Could not load patch.");
-    emit redrawAll();
-    emit setStatusbarVersionLabel(patch.getVersionString());
+    }
 }
 
 
 // ******************************************
 void Editor::actionFileIOSave(QString filename) {
 // ******************************************
-    bool status = patch.saveToDisk(filename);
+    QByteArray ba;
+
+    if (filename.endsWith(".syx")) {
+        std::vector<unsigned char> temp;
+        patch.generateSysex(&temp);
+        FileIO::appendToByteArray(temp, ba);
+    } else {
+        unsigned char data[92];
+        patch.packData(data);
+        FileIO::appendToByteArray(data, 92, ba);
+    }
+
+    bool status = FileIO::saveToDisk(filename, ba);
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSavePatch(" << filename << "):" << status;
 #endif
