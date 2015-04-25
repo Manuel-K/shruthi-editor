@@ -34,7 +34,7 @@ const unsigned char Patch::parameterCount = 108;
 
 
 // ******************************************
-param_t Patch::parameters [108] = {
+const param_t Patch::parameters [108] = {
 // ******************************************
     /*0*/ {"Oscillator 1 shape", 0, 34, &Labels::OscillatorAlgorithm},
     /*1*/ {"Oscillator 1 parameter", 0, 127, NULL},
@@ -155,7 +155,7 @@ const unsigned char Patch::filterBoardCount = 8;
 
 
 // ******************************************
-param_t Patch::parameter84 [8] = {
+const param_t Patch::parameter84 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 127, NULL},
 /*Filter 1*/ {"High Pass", 0, 127, NULL},
@@ -169,7 +169,7 @@ param_t Patch::parameter84 [8] = {
 
 
 // ******************************************
-param_t Patch::parameter85 [8] = {
+const param_t Patch::parameter85 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 127, NULL},
 /*Filter 1*/ {NULL, 0, 127, NULL},
@@ -183,7 +183,7 @@ param_t Patch::parameter85 [8] = {
 
 
 // ******************************************
-param_t Patch::parameter92 [8] = {
+const param_t Patch::parameter92 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 2, NULL},
 /*Filter 1*/ {NULL, 0, 2, NULL},
@@ -197,7 +197,7 @@ param_t Patch::parameter92 [8] = {
 
 
 // ******************************************
-param_t Patch::parameter93 [8] = {
+const param_t Patch::parameter93 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, 0, 5, NULL},
 /*Filter 1*/ {NULL, 0, 5, NULL},
@@ -258,7 +258,7 @@ param_t Patch::parameter(int id, int filter)
 
 
 // ******************************************
-unsigned char Patch::INIT_PATCH[] =
+const unsigned char Patch::INIT_PATCH[] =
 // ******************************************
     {1, 0, 0, 0, 1, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
     90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
@@ -267,7 +267,7 @@ unsigned char Patch::INIT_PATCH[] =
 
 
 // ******************************************
-unsigned char Patch::INIT_PATCH_PRE100[] =
+const unsigned char Patch::INIT_PATCH_PRE100[] =
 // ******************************************
     {1, 0, 0, 0, 2, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
     90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
@@ -408,7 +408,7 @@ void Patch::randomizePatch(int filter) {
 
 
 // ******************************************
-bool Patch::parseSysex(unsigned char sysex[]) {
+bool Patch::parseSysex(const unsigned char sysex[]) {
 // ******************************************
     // check if version field contains valid entry
     if (!(sysex[91] == 33 || sysex[91] == 37)) {

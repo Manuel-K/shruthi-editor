@@ -46,22 +46,22 @@ class Patch {
         void generateSysex(unsigned char res[]);
         bool parseFullSysex(const std::vector<unsigned char> *message);
 
-        static param_t parameter84[];
-        static param_t parameter85[];
-        static param_t parameter92[];
-        static param_t parameter93[];
+        static const param_t parameter84[];
+        static const param_t parameter85[];
+        static const param_t parameter92[];
+        static const param_t parameter93[];
 
         int sys_legato, sys_portamento; // not the right place, but we have to store them somewhere
 
     public:
         static const unsigned char parameterCount;
         static const unsigned char filterBoardCount;
-        static unsigned char INIT_PATCH[];
-        static unsigned char INIT_PATCH_PRE100[];
+        static const unsigned char INIT_PATCH[];
+        static const unsigned char INIT_PATCH_PRE100[];
         static bool enabled(int);
         static bool hasUI(int);
 
-        static param_t parameters[]; // use this with caution
+        static const param_t parameters[]; // use this with caution
         static param_t parameter(int id, int filter = 0);
 
         Patch();
@@ -78,7 +78,7 @@ class Patch {
         void resetPatch(unsigned int version = 1000);
         void randomizePatch(int);
 
-        bool parseSysex(unsigned char *sysex);
+        bool parseSysex(const unsigned char *sysex);
         void generateFullSysex(std::vector<unsigned char> *message);
 
         bool loadFromDisk(QString location);
