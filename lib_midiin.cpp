@@ -145,7 +145,7 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
         if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
             // Parse as NRPN
             if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
-                queueitem_t signal(NRPN_RECEIVED,nrpn.getNRPN(),nrpn.getValue());
+                queueitem_t signal(PATCH_PARAMETER_CHANGE_MIDI, nrpn.getNRPN(), nrpn.getValue());
                 emit enqueue(signal);
             }
         } else {
@@ -158,7 +158,7 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
                     warnedCC = true;
                 }
             }
-            queueitem_t signal(NRPN_RECEIVED, nrpn, value);
+            queueitem_t signal(PATCH_PARAMETER_CHANGE_MIDI, nrpn, value);
             emit enqueue(signal);
         }
     }

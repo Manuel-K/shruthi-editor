@@ -315,7 +315,7 @@ void ShruthiEditorMainWindow::comboBoxChanged(int val) {
     QString id = s->objectName();
     id.remove(0,1);
 
-    queueitem_t signal(NRPN_PROCESS_EDITOR,id.toInt(),val);
+    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), val);
     emit(enqueue(signal));
 }
 
@@ -350,7 +350,7 @@ void ShruthiEditorMainWindow::dialChanged(int val) {
     if (!s->isEnabled())
         return;
 
-    queueitem_t signal(NRPN_PROCESS_EDITOR, param, val);
+    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, param, val);
     emit(enqueue(signal));
 }
 

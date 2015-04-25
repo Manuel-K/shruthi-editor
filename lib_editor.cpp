@@ -101,7 +101,7 @@ QString Editor::getName() {
 void Editor::process(queueitem_t item) {
 // ******************************************
     switch(item.action) {
-        case NRPN_PROCESS_EDITOR:
+        case PATCH_PARAMETER_CHANGE_EDITOR:
             actionProcessEditor(item.int0,item.int1);
             break;
          case SYSEX_FETCH_PATCH:
@@ -113,7 +113,7 @@ void Editor::process(queueitem_t item) {
         case SYSEX_VERSION_REQUEST:
             actionVersionRequest();
             break;
-        case NRPN_RECEIVED:
+        case PATCH_PARAMETER_CHANGE_MIDI:
             actionNrpnReceived(item.int0,item.int1);
             break;
         case NOTE_ON:
