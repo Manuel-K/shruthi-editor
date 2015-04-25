@@ -44,7 +44,7 @@ class Patch {
         int data[108];
         unsigned char version;
         void packData(unsigned char res[]);
-        bool parseFull(const std::vector<unsigned char> *message);
+        bool parseSysex(const std::vector<unsigned char> *message);
 
         static const param_t parameter84[];
         static const param_t parameter85[];

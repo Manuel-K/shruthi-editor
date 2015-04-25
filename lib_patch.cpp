@@ -617,7 +617,7 @@ int Patch::parseCcValue(const unsigned int val, int nrpn, const int filter)
 
 
 // ******************************************
-bool Patch::parseFull(const std::vector<unsigned char> *message) {
+bool Patch::parseSysex(const std::vector<unsigned char> *message) {
 // ******************************************
     Message payload;
     if (!Midi::parseSysex(message, &payload)) {
@@ -685,7 +685,7 @@ bool Patch::loadFromDisk(QString location) {
         for (unsigned int i = 0; i < 195; i++) {
             sysex.push_back(tmp[i]);
         }
-        return parseFull(&sysex);
+        return parseSysex(&sysex);
     } else if (readBytes == 92) {
 #ifdef DEBUGMSGS
         qDebug() << "Detected light patch files.";
