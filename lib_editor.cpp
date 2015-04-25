@@ -102,7 +102,7 @@ void Editor::process(queueitem_t item) {
 // ******************************************
     switch(item.action) {
         case PATCH_PARAMETER_CHANGE_EDITOR:
-            actionProcessEditor(item.int0,item.int1);
+            actionPatchParameterChangeEditor(item.int0, item.int1);
             break;
          case SYSEX_FETCH_PATCH:
             actionFetchPatch();
@@ -114,7 +114,7 @@ void Editor::process(queueitem_t item) {
             actionVersionRequest();
             break;
         case PATCH_PARAMETER_CHANGE_MIDI:
-            actionNrpnReceived(item.int0,item.int1);
+            actionPatchParameterChangeMidi(item.int0, item.int1);
             break;
         case NOTE_ON:
             actionNoteOn(item.int0,item.int1);
@@ -132,10 +132,10 @@ void Editor::process(queueitem_t item) {
             actionSetPatchname(item.string);
             break;
         case FILEIO_LOAD:
-            actionLoadPatch(item.string);
+            actionFileIOLoad(item.string);
             break;
         case FILEIO_SAVE:
-            actionSavePatch(item.string);
+            actionFileIOSave(item.string);
             break;
         case RESET_PATCH:
             actionResetPatch(item.int0);
@@ -154,7 +154,7 @@ void Editor::process(queueitem_t item) {
 
 
 // ******************************************
-void Editor::actionProcessEditor(int nrpn, int value) {
+void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionProcessEditor(" << nrpn << "," << value << ")";
@@ -212,7 +212,7 @@ void Editor::actionVersionRequest()
 
 
 // ******************************************
-void Editor::actionNrpnReceived(int nrpn, int value) {
+void Editor::actionPatchParameterChangeMidi(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNrpnReceived(" << nrpn << "," << value << ")";
@@ -311,7 +311,7 @@ void Editor::actionSetPatchname(QString name) {
 
 
 // ******************************************
-void Editor::actionLoadPatch(QString filename) {
+void Editor::actionFileIOLoad(QString filename) {
 // ******************************************
     bool status = patch.loadFromDisk(filename);
 #ifdef DEBUGMSGS
@@ -327,7 +327,7 @@ void Editor::actionLoadPatch(QString filename) {
 
 
 // ******************************************
-void Editor::actionSavePatch(QString filename) {
+void Editor::actionFileIOSave(QString filename) {
 // ******************************************
     bool status = patch.saveToDisk(filename);
 #ifdef DEBUGMSGS

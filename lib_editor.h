@@ -77,18 +77,18 @@ class Editor : public QObject {
         MidiOut midiout;
         unsigned char channel;
         int shruthiFilterBoard;
-        void actionProcessEditor(int,int);
+        void actionPatchParameterChangeEditor(int,int);
         void actionFetchPatch();
         void actionSendPatch();
         void actionVersionRequest();
-        void actionNrpnReceived(int,int);
+        void actionPatchParameterChangeMidi(int,int);
         void actionNoteOn(unsigned char, unsigned char);
         void actionNoteOff(unsigned char);
         void actionNotePanic();
         void actionSysexReceived(unsigned int, unsigned int, unsigned int, unsigned char*);
         void actionSetPatchname(QString);
-        void actionLoadPatch(QString);
-        void actionSavePatch(QString);
+        void actionFileIOLoad(QString);
+        void actionFileIOSave(QString);
         void actionResetPatch(unsigned int version);
         void actionRandomizePatch();
 
