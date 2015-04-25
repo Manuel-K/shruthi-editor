@@ -386,9 +386,9 @@ void Patch::printPatch() {
 void Patch::resetPatch(unsigned int version) {
 // ******************************************
     if (version >= 1000) {
-        parseSysex(INIT_PATCH);
+        unpackData(INIT_PATCH);
     } else {
-        parseSysex(INIT_PATCH_PRE100);
+        unpackData(INIT_PATCH_PRE100);
     }
 }
 
@@ -396,7 +396,7 @@ void Patch::resetPatch(unsigned int version) {
 // ******************************************
 void Patch::randomizePatch(int filter) {
 // ******************************************
-    parseSysex(INIT_PATCH);
+    unpackData(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) {
             const param_t param = parameter(i, filter);
@@ -408,7 +408,7 @@ void Patch::randomizePatch(int filter) {
 
 
 // ******************************************
-bool Patch::parseSysex(const unsigned char sysex[]) {
+bool Patch::unpackData(const unsigned char sysex[]) {
 // ******************************************
     // check if version field contains valid entry
     if (!(sysex[91] == 33 || sysex[91] == 37)) {
@@ -475,7 +475,7 @@ bool Patch::parseSysex(const unsigned char sysex[]) {
 
 
 // ******************************************
-void Patch::generateSysex(unsigned char res[]) {
+void Patch::packData(unsigned char res[]) {
 // ******************************************
     int temp[108];
     // copy data:
@@ -617,7 +617,7 @@ int Patch::parseCcValue(const unsigned int val, int nrpn, const int filter)
 
 
 // ******************************************
-bool Patch::parseFullSysex(const std::vector<unsigned char> *message) {
+bool Patch::parseFull(const std::vector<unsigned char> *message) {
 // ******************************************
     Message payload;
     if (!Midi::parseSysex(message, &payload)) {
@@ -630,15 +630,15 @@ bool Patch::parseFullSysex(const std::vector<unsigned char> *message) {
         temp[i] = payload.at(i);
     }
 
-    return parseSysex(temp);
+    return unpackData(temp);
 }
 
 
 // ******************************************
-void Patch::generateFullSysex(std::vector<unsigned char> *message) {
+void Patch::generateSysex(std::vector<unsigned char> *message) {
 // ******************************************
     unsigned char temp[92];
-    generateSysex(temp);
+    packData(temp);
 
     Message payload;
     for (unsigned int i = 0; i < 92; i++) {
@@ -685,7 +685,7 @@ bool Patch::loadFromDisk(QString location) {
         for (unsigned int i = 0; i < 195; i++) {
             sysex.push_back(tmp[i]);
         }
-        return parseFullSysex(&sysex);
+        return parseFull(&sysex);
     } else if (readBytes == 92) {
 #ifdef DEBUGMSGS
         qDebug() << "Detected light patch files.";
@@ -697,7 +697,7 @@ bool Patch::loadFromDisk(QString location) {
             qDebug() << i << ":" << sysex[i];
     #endif
         }
-        return parseSysex(sysex);
+        return unpackData(sysex);
     } else {
         return false;
     }
@@ -721,13 +721,13 @@ bool Patch::saveToDisk(QString location) {
     unsigned int len;
     if (location.endsWith(".syx")) {
         std::vector<unsigned char> sysex;
-        generateFullSysex(&sysex);
+        generateSysex(&sysex);
         len = 195;
         for (unsigned int i=0; i<len; i++)
             temp[i] = (char) sysex[i];
     } else {
         unsigned char sysex[92] = {};
-        generateSysex(sysex);
+        packData(sysex);
         len = 92;
         for (unsigned int i=0; i<len; i++)
             temp[i] = (char) sysex[i];

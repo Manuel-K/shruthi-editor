@@ -186,7 +186,7 @@ void Editor::actionSendPatch() {
     qDebug() << "Editor::actionSendPatch()";
 #endif
     std::vector<unsigned char> temp;
-    patch.generateFullSysex(&temp);
+    patch.generateSysex(&temp);
     if (midiout.write(temp))
         emit displayStatusbar("Patch sent.");
     else
@@ -280,7 +280,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         //    firmwareVersion = message.at(0) * 1000 + message.at(1);
         //}
     } else if (command == 0x01 && argument == 0x00) {
-        if (size == 92 && patch.parseSysex(message)) {
+        if (size == 92 && patch.unpackData(message)) {
             emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
         } else {
             emit displayStatusbar("Received invalid patch.");
