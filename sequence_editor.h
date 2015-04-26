@@ -22,6 +22,8 @@ class SequenceEditor : public QDialog
         Ui::SequenceEditor *ui;
         Editor *editor;
 
+        void sendSequenceUpdate();
+
     public slots:
         void showSequenceEditor();
         void redrawPatchParameter(int);
