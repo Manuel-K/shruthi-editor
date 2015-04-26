@@ -176,8 +176,10 @@ void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
 #endif
     if (patch.getParam(nrpn) != value) {
         patch.setParam(nrpn,value);
-        if (!midiout.nrpn(nrpn,value))
+
+        if (Patch::sendAsNRPN(nrpn) && !midiout.nrpn(nrpn, value)) {
             emit displayStatusbar("Could not send changes.");
+        }
     }
 }
 

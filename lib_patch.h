@@ -41,15 +41,13 @@ class Patch {
 // ******************************************
     private:
         QString name;
-        int data[108];
+        int data[110];
         unsigned char version;
 
         static const param_t parameter84[];
         static const param_t parameter85[];
         static const param_t parameter92[];
         static const param_t parameter93[];
-
-        int sys_legato, sys_portamento; // not the right place, but we have to store them somewhere
 
     public:
         static const unsigned char parameterCount;
@@ -58,6 +56,7 @@ class Patch {
         static const unsigned char INIT_PATCH_PRE100[];
         static bool enabled(int);
         static bool hasUI(int);
+        static bool sendAsNRPN(const int &id);
 
         static const param_t parameters[]; // use this with caution
         static param_t parameter(int id, int filter = 0);

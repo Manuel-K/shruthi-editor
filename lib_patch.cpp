@@ -27,12 +27,12 @@
 
 
 // ******************************************
-const unsigned char Patch::parameterCount = 108;
+const unsigned char Patch::parameterCount = 110;
 // ******************************************
 
 
 // ******************************************
-const param_t Patch::parameters [108] = {
+const param_t Patch::parameters [110] = {
 // ******************************************
     /*0*/ {"Oscillator 1 shape", 0, 34, &Labels::OscillatorAlgorithm},
     /*1*/ {"Oscillator 1 parameter", 0, 127, NULL},
@@ -141,8 +141,10 @@ const param_t Patch::parameters [108] = {
     /*104*/ {"Arpeggiator direction", 0, 4, &Labels::ArpeggiatorDirection}, // 0..3 according to manual
     /*105*/ {"Arpeggiator range", 1, 4, NULL},
     /*106*/ {"Arpeggiator pattern", 0, 15, NULL}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
-    /*107*/ {"Sequencer Clock Division", 0, 11, &Labels::SequencerClockDivision}
-    /* portamento 0..63 */
+    /*107*/ {"Sequencer Clock Division", 0, 11, &Labels::SequencerClockDivision},
+    /* no NRPN support: */
+    /*108*/ {"Portamento", 0, 63, NULL},
+    /*109*/ {"Legato", 0, 1, NULL}
     /* legato  off/on */
 };
 
@@ -289,6 +291,13 @@ bool Patch::hasUI(int i) {
 
 
 // ******************************************
+bool Patch::sendAsNRPN(const int &id) {
+// ******************************************
+    return (id < 68 || id == 84 || id == 85 || (id >= 92 && id < 108));
+}
+
+
+// ******************************************
 Patch::Patch() {
 // ******************************************
     resetPatch();
@@ -396,7 +405,7 @@ void Patch::randomizePatch(int filter) {
 // ******************************************
     unpackData(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
-        if (enabled(i)) {
+        if (enabled(i)) { // do we want to randomize sequencer settings?
             const param_t param = parameter(i, filter);
             data[i] = (rand() %(param.max-param.min))+param.min;
         }
@@ -413,13 +422,14 @@ bool Patch::unpackData(const unsigned char sysex[]) {
         return false;
     }
 
-    int temp[108];
+    int temp[parameterCount];
 
     // copy sysex data:
     for (int i=0; i<92 ;i++)
         temp[i] = sysex[i];
-    for (int i=100; i<108 ;i++)
+    for (int i = 100; i < parameterCount; i++) {
         temp[i] = 0;
+    }
 
     // uncompress data:
     temp[92] = temp[86]>>4; // filter_1_mode_
@@ -437,8 +447,8 @@ bool Patch::unpackData(const unsigned char sysex[]) {
     // uncompress v1.00 data:
     if (version == 37) {
         // temp[76] holds (system_settings.legato ? 0x40 : 0x00) | system_settings.portamento
-        sys_legato = (temp[76] & 0x40) > 0;
-        sys_portamento = temp[76] % 64;
+        temp[109] = (temp[76] & 0x40) > 0;  // legato
+        temp[108] = temp[76] % 64; // portamento
         temp[100] = temp[77]; // seq_mode
         temp[101] = temp[78]; // seq_tempo
         temp[102] = temp[79]; // seq_groove_template
@@ -458,12 +468,15 @@ bool Patch::unpackData(const unsigned char sysex[]) {
     }
 
     // fix negative values (2s complement):
-    for (int i=0; i < 108; i++) if (enabled(i))
-        if (parameters[i].min < 0)
+    for (int i = 0; i < parameterCount; i++) {
+        if (enabled(i) && parameters[i].min < 0) {
             temp[i] -= (temp[i]>>7)*256;
+        }
+    }
     // store patch
-    for (int i=0; i<108 ;i++)
+    for (int i = 0; i < parameterCount; i++) {
         data[i] = temp[i];
+    }
     // read name:
     QStringList tmp_name = QStringList();
     for (int i=68; i<76; i++)
@@ -477,15 +490,17 @@ bool Patch::unpackData(const unsigned char sysex[]) {
 // ******************************************
 void Patch::packData(unsigned char res[]) {
 // ******************************************
-    int temp[108];
+    int temp[parameterCount];
     // copy data:
-    for (int i=0; i<108 ;i++)
+    for (int i = 0; i < parameterCount; i++)
         temp[i] = data[i];
 
     // fix negative values (2s complement):
-    for (unsigned int i=0; i < 92; i++) if (enabled(i))
-        if (parameters[i].min < 0 && temp[i]<0)
+    for (unsigned int i=0; i < parameterCount; i++) {
+        if (enabled(i) && parameters[i].min < 0 && temp[i] < 0) {
             temp[i]+=256;
+        }
+    }
     // compress data
     temp[86] = (temp[92]<<4) | temp[93];
     temp[87] = temp[94];
@@ -495,7 +510,7 @@ void Patch::packData(unsigned char res[]) {
     temp[91] = version; // ascii value of ! or %
     // compress v1.00 data:
     if (version == 37) {
-        temp[76] = (sys_legato ? 0x40 : 0x00) | sys_portamento;
+        temp[76] = (temp[109] ? 0x40 : 0x00) | temp[108]; // (legato ? 0x40 : 0x00) | portamento;
         temp[77] = temp[100]; // seq_mode
         temp[78] = temp[101]; // seq_tempo
         temp[79] = temp[102]; // seq_groove_template
@@ -563,6 +578,14 @@ unsigned char Patch::ccToNrpn(const unsigned char cc, int filter)
     // Groove template/amount, Arpeggiator dir/range/pattern, Seq clock devision
     if (cc >= 76 && cc <= 81) {
         return cc + 26;
+    }
+    // Portamento
+    if (cc == 84) {
+        return 108; // parameter id, not NRPN!
+    }
+    // Legato
+    if (cc == 68) {
+        return 109; // parameter id, not NRPN!
     }
     //SVF filter cutoff2/resonance2
     if (cc == 12 || cc == 13) {
@@ -658,8 +681,6 @@ bool Patch::equals(const Patch &other) {
         }
     }
     if (version != other.version ||
-            sys_legato != other.sys_legato ||
-            sys_portamento != other.sys_portamento ||
             name.compare(other.name) != 0) {
         return false;
     }
