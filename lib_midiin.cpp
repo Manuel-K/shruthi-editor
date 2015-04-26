@@ -127,7 +127,9 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
         // version info has a SysEx size of 15/2 bytes payload
         if (payload.size() == 2 && Midi::getCommand(message) == 0x0c && Midi::getArgument(message) == 0x00) {
             firmwareVersion = payload.at(0) * 1000 + payload.at(1);
+#ifdef DEBUGMSGS
             std::cout << "Firmware version: " << firmwareVersion << std::endl;
+#endif
         }
 
         unsigned char *msg = new unsigned char[payload.size()];
