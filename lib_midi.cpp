@@ -18,6 +18,11 @@
 
 #include "lib_midi.h"
 
+#ifdef DEBUGMSGS
+#include <QDebug>
+#endif
+
+
 // ******************************************
 #ifdef PRE094SYSEXHEADER
 const unsigned char Midi::sysexHead[6]={0xf0,0x00,0x20,0x77,0x00,0x02}; // pre 0.94
@@ -84,6 +89,36 @@ bool Midi::checkSysexHeadFoot(const std::vector<unsigned char> *message) {
 
 
 // ******************************************
+bool Midi::checkSysexHeadFoot(const Message *message, const unsigned int start, const unsigned int end) {
+// ******************************************
+    const unsigned int size = message->size();
+
+#ifdef DEBUGMSGS
+    qDebug() << "Midi::checkSysexHeadFoot()" << start << end << size << std::endl;
+#endif
+
+    // Check if bounds are valid
+    if (start >= end || end >= size) {
+        return false;
+    }
+
+    // Check header:
+    for (unsigned int i = 0; i < 6; i ++) {
+        if (message->at(start + i) != sysexHead[i]) {
+            return false;
+        }
+    }
+
+    // Check footer:
+    if (message->at(end) == sysexFoot) {
+        return true;
+    }
+
+    return false;
+}
+
+
+// ******************************************
 unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1)
 // ******************************************
 {
@@ -108,24 +143,22 @@ unsigned char Midi::byteToLowerNibble(unsigned char n)
 
 
 // ******************************************
-unsigned char Midi::getCommand(const Message *message)
+unsigned char Midi::getCommand(const Message *message, const unsigned int start) {
 // ******************************************
-{
-    if (message->size() < 6) {
+    if (message->size() < start + 6) {
         return 0;
     }
-    return message->at(6);
+    return message->at(start + 6);
 }
 
 
 // ******************************************
-unsigned char Midi::getArgument(const Message *message)
+unsigned char Midi::getArgument(const Message *message, const unsigned int start) {
 // ******************************************
-{
-    if (message->size() < 7) {
+    if (message->size() < start + 7) {
         return 0;
     }
-    return message->at(7);
+    return message->at(start + 7);
 }
 
 
@@ -178,3 +211,78 @@ void Midi::generateSysex(const Message *payload, const int command, const int ar
     message->push_back(sysexFoot);
 }
 
+
+// ******************************************
+int Midi::findNextPatch(const Message *message, const unsigned int start) {
+// ******************************************
+    const int &size = message->size();
+
+    for (int i = start; i < size - 194; i++) {
+        if (message->at(i) == sysexHead[0]) {
+            if (checkSysexHeadFoot(message, i, i + 194) &&
+                    getCommand(message, i) == 0x01 &&
+                    getArgument(message, i) == 0x00) {
+                return i;
+            }
+        }
+    }
+
+    return -1;
+}
+
+
+// ******************************************
+bool Midi::getPatch(const Message *message, Message *patch, const unsigned int start) {
+// ******************************************
+    const int &st = findNextPatch(message, start);
+
+    if (st < 0) {
+        return false;
+    }
+
+    patch->reserve(195);
+    for (int i = st; i < st + 195; i++) {
+        patch->push_back(message->at(i));
+    }
+
+    return true;
+}
+
+
+// ******************************************
+int Midi::findNextSequence(const Message *message, const unsigned int start) {
+// ******************************************
+    const int &size = message->size();
+
+    for (int i = start; i < size - 74; i++) {
+        if (message->at(i) == sysexHead[0]) {
+            if (checkSysexHeadFoot(message, i, i + 74) &&
+                    getCommand(message, i) == 0x02 &&
+                    getArgument(message, i) == 0x00) {
+                return i;
+            }
+        }
+    }
+
+    return -1;
+
+}
+
+
+// ******************************************
+bool Midi::getSequence(const Message *message, Message *patch, const unsigned int start) {
+// ******************************************
+    const int &st = findNextSequence(message, start);
+
+    if (st < 0) {
+        return false;
+    }
+
+    patch->reserve(75);
+    for (int i = st; i < st + 75; i++) {
+        patch->push_back(message->at(i));
+    }
+
+    return true;
+
+}

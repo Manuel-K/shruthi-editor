@@ -19,6 +19,7 @@
 #include "lib_editor.h"
 #include "lib_fileio.h"
 #include <QDebug>
+#include "lib_midi.h"
 
 
 // ******************************************
@@ -143,13 +144,16 @@ void Editor::process(queueitem_t item) {
             actionSetPatchname(item.string);
             break;
         case FILEIO_LOAD:
-            actionFileIOLoad(item.string);
+            actionFileIOLoad(item.string, item.int0);
             break;
         case FILEIO_SAVE:
-            actionFileIOSave(item.string);
+            actionFileIOSave(item.string, item.int0);
             break;
         case RESET_PATCH:
             actionResetPatch(item.int0);
+            break;
+        case RESET_SEQUENCE:
+            actionResetSequence();
             break;
         case RANDOMIZE_PATCH:
             actionRandomizePatch();
@@ -347,20 +351,15 @@ void Editor::actionSetPatchname(QString name) {
 
 
 // ******************************************
-void Editor::actionFileIOLoad(QString filename) {
+void Editor::actionFileIOLoad(QString path, const int &what) {
 // ******************************************
     std::vector<unsigned char> temp;
-    bool status = FileIO::loadFromDisk(filename, temp);
+    bool status = FileIO::loadFromDisk(path, temp);
 
-    if (status) {
-        const unsigned int &readBytes = temp.size();
-        // primitive check if patch is valid:
-        if (readBytes == 195) {
-#ifdef DEBUGMSGS
-            qDebug() << "Detected full patch sysex.";
-#endif
-            status = patch.parseSysex(&temp);
-        } else if (readBytes == 92) {
+    const unsigned int &readBytes = temp.size();
+
+    if (status && path.endsWith(".sp") && (what&FLAG_PATCH)) {
+        if (readBytes == 92) {
 #ifdef DEBUGMSGS
             qDebug() << "Detected light patch files.";
 #endif
@@ -375,44 +374,90 @@ void Editor::actionFileIOLoad(QString filename) {
         } else {
             status = false;
         }
+    } else if (status) {
+        if (what&FLAG_PATCH) {
+            std::vector<unsigned char> ptc;
+            // ignore return value; if it fails, ptc is empty:
+            Midi::getPatch(&temp, &ptc);
+            status &= patch.parseSysex(&ptc);
+        }
+        if (what&FLAG_SEQUENCE) {
+            std::vector<unsigned char> seq;
+            // ignore return value; if it fails, seq is empty:
+            Midi::getSequence(&temp, &seq);
+            status &= sequence.parseSysex(&seq);
+        }
     }
 
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLoadPatch(" << filename << "):" << status;
 #endif
+
+    QString swhat, sWhat;
+    if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+        swhat = "patch";
+        sWhat = "Patch";
+    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "sequence";
+        sWhat = "Sequence";
+    }
+
     if (status) {
-        emit displayStatusbar("Patch loaded from disk.");
+        emit displayStatusbar(sWhat + " loaded from disk.");
+    } else {
+        emit displayStatusbar("Could not load " + swhat + ".");
+    }
+
+    // Send required refresh signals
+    if (status && (what&FLAG_PATCH)) {
         emit redrawAll();
         emit setStatusbarVersionLabel(patch.getVersionString());
-    } else {
-        emit displayStatusbar("Could not load patch.");
+    }
+    if (status && (what&FLAG_SEQUENCE)) {
+        emit redrawAllSequenceParameters();
     }
 }
 
 
 // ******************************************
-void Editor::actionFileIOSave(QString filename) {
+void Editor::actionFileIOSave(QString path, const int &what) {
 // ******************************************
     QByteArray ba;
 
-    if (filename.endsWith(".syx")) {
-        std::vector<unsigned char> temp;
-        patch.generateSysex(&temp);
-        FileIO::appendToByteArray(temp, ba);
-    } else {
+    if (path.endsWith(".sp")) {
         unsigned char data[92];
         patch.packData(data);
         FileIO::appendToByteArray(data, 92, ba);
+    } else {
+        std::vector<unsigned char> temp;
+        if (what&FLAG_PATCH) {
+            patch.generateSysex(&temp);
+        }
+        if (what&FLAG_SEQUENCE) {
+            sequence.generateSysex(&temp);
+        }
+        FileIO::appendToByteArray(temp, ba);
     }
 
-    bool status = FileIO::saveToDisk(filename, ba);
+    bool status = FileIO::saveToDisk(path, ba);
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSavePatch(" << filename << "):" << status;
 #endif
-    if (status)
-        emit displayStatusbar("Patch saved to disk.");
-    else
-        emit displayStatusbar("Could not save patch.");
+
+    QString swhat, sWhat;
+    if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+        swhat = "patch";
+        sWhat = "Patch";
+    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "sequence";
+        sWhat = "Sequence";
+    }
+
+    if (status) {
+        emit displayStatusbar(sWhat + " saved to disk.");
+    } else {
+        emit displayStatusbar("Could not save " + swhat + ".");
+    }
 }
 
 
@@ -446,6 +491,18 @@ void Editor::actionRandomizePatch() {
 void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &value) {
 // ******************************************
     sequence.setParamById(id, value);
+}
+
+
+// ******************************************
+void Editor::actionResetSequence() {
+// ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionResetSequence()";
+#endif
+    sequence.reset();
+    emit redrawAllSequenceParameters();
+    emit displayStatusbar("Sequence reset.");
 }
 
 

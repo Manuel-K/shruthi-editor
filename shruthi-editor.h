@@ -49,7 +49,9 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void dialChanged(int);
         void patchNameChanged();
         void loadPatch();
+        void loadSequence();
         void savePatch();
+        void saveSequence();
         void fetchPatch();
         void sendPatch();
         void fetchSequence();
@@ -57,6 +59,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void openSettings();
         void resetPatch();
         void resetPatchPre100();
+        void resetSequence();
         void randomizePatch();
         void quitShruthiEditor();
         void aboutShruthiEditor();

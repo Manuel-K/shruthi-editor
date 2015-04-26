@@ -117,6 +117,9 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     connect(ui->actionRandomize_Patch, SIGNAL(triggered()), this, SLOT(randomizePatch()));
     connect(ui->actionKeyboard, SIGNAL(triggered()), this, SIGNAL(showKeyboard()));
     connect(ui->actionOpenSequenceEditor, SIGNAL(triggered()), this, SIGNAL(showSequenceEditor()));
+    connect(ui->actionLoadSequence, SIGNAL(triggered()), this, SLOT(loadSequence()));
+    connect(ui->actionSaveSequence, SIGNAL(triggered()), this, SLOT(saveSequence()));
+    connect(ui->actionResetSequence, SIGNAL(triggered()), this, SLOT(resetSequence()));
 }
 
 
@@ -371,9 +374,20 @@ void ShruthiEditorMainWindow::patchNameChanged() {
 void ShruthiEditorMainWindow::loadPatch() {
 // ******************************************
     QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".syx", "All possible files (*.syx *.sp);;Sysex-Files (*.syx);;Shruthi-Patches (*.sp)");
-    if (filename!="") {
-        queueitem_t signal(FILEIO_LOAD,filename);
-        emit(enqueue(signal));
+    if (filename != "") {
+        queueitem_t signal(FILEIO_LOAD, filename, Editor::FLAG_PATCH);
+        emit enqueue(signal);
+    }
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::loadSequence() {
+// ******************************************
+    QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".syx", "Sysex-Files (*.syx)");
+    if (filename != "") {
+        queueitem_t signal(FILEIO_LOAD, filename, Editor::FLAG_SEQUENCE);
+        emit enqueue(signal);
     }
 }
 
@@ -382,9 +396,20 @@ void ShruthiEditorMainWindow::loadPatch() {
 void ShruthiEditorMainWindow::savePatch() {
 // ******************************************
     QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".syx", "Sysex-Files (*.syx);;Shruthi-Patches (*.sp)");
-    if (filename!="") {
-        queueitem_t signal(FILEIO_SAVE,filename);
-        emit(enqueue(signal));
+    if (filename != "") {
+        queueitem_t signal(FILEIO_SAVE, filename, Editor::FLAG_PATCH);
+        emit enqueue(signal);
+    }
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::saveSequence() {
+// ******************************************
+    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".syx", "Sysex-Files (*.syx)");
+    if (filename != "") {
+        queueitem_t signal(FILEIO_SAVE, filename, Editor::FLAG_SEQUENCE);
+        emit enqueue(signal);
     }
 }
 
@@ -456,6 +481,14 @@ void ShruthiEditorMainWindow::resetPatchPre100() {
     queueitem_t signal(RESET_PATCH);
     signal.int0 = 98;
     emit(enqueue(signal));
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::resetSequence() {
+// ******************************************
+    queueitem_t signal(RESET_SEQUENCE);
+    emit enqueue(signal);
 }
 
 

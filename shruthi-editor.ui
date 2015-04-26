@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>996</width>
-    <height>687</height>
+    <width>994</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2948,7 +2948,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>996</width>
+     <width>994</width>
      <height>27</height>
     </rect>
    </property>
@@ -2961,6 +2961,10 @@
     <addaction name="actionLoad_Patch"/>
     <addaction name="actionSave_Patch"/>
     <addaction name="actionRandomize_Patch"/>
+    <addaction name="separator"/>
+    <addaction name="actionResetSequence"/>
+    <addaction name="actionLoadSequence"/>
+    <addaction name="actionSaveSequence"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -3061,12 +3065,27 @@
   </action>
   <action name="actionFetchSequence">
    <property name="text">
-    <string>Fetch Sequence</string>
+    <string>Fet&amp;ch Sequence</string>
    </property>
   </action>
   <action name="actionSendSequence">
    <property name="text">
-    <string>Send Sequence</string>
+    <string>Se&amp;nd Sequence</string>
+   </property>
+  </action>
+  <action name="actionLoadSequence">
+   <property name="text">
+    <string>Load Sequence...</string>
+   </property>
+  </action>
+  <action name="actionSaveSequence">
+   <property name="text">
+    <string>Save Sequence...</string>
+   </property>
+  </action>
+  <action name="actionResetSequence">
+   <property name="text">
+    <string>Reset Sequence</string>
    </property>
   </action>
  </widget>

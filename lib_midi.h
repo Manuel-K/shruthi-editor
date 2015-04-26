@@ -30,13 +30,18 @@ class Midi {
         static unsigned char calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end);
         static unsigned char calculateChecksum(const std::vector<unsigned char> *message);
         static bool checkSysexHeadFoot(const std::vector<unsigned char> *message);
+        static bool checkSysexHeadFoot(const Message *message, const unsigned int start, const unsigned int end);
         static bool parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data);
         static void generateSysex(const Message *payload, const int command, const int argument, Message *message);
+        static int findNextPatch(const Message *message, const unsigned int start = 0);
+        static bool getPatch(const Message *message, Message *patch, const unsigned int start = 0);
+        static int findNextSequence(const Message *message, const unsigned int start = 0);
+        static bool getSequence(const Message *message, Message *patch, const unsigned int start = 0);
         static unsigned char nibbleToByte(unsigned char n0, unsigned char n1);
         static unsigned char byteToUpperNibble(unsigned char n);
         static unsigned char byteToLowerNibble(unsigned char n);
-        static unsigned char getCommand(const Message *message);
-        static unsigned char getArgument(const Message *message);
+        static unsigned char getCommand(const Message *message, const unsigned int start = 0);
+        static unsigned char getArgument(const Message *message, const unsigned int start = 0);
 };
 
 #endif

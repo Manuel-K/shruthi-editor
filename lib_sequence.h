@@ -32,8 +32,12 @@ class Sequence {
 public:
     Sequence();
     ~Sequence();
+
     void unpackData(const unsigned char *data);
+    void packData(unsigned char data[]);
+    bool parseSysex(const std::vector<unsigned char> *message);
     void generateSysex(std::vector<unsigned char> *message);
+
     const int &getParamByID(const int &id);
     const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp);
     void setParamById(const int &id, const int &val);
@@ -50,8 +54,6 @@ public:
     static const int ERROR_RETURN;
 
 private:
-    bool parseSysex(const std::vector<unsigned char> *message);
-    void packData(unsigned char data[]);
     void print();
 
 

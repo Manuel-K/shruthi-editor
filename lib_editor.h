@@ -32,7 +32,7 @@ enum ACTIONS
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE,
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF,
     NOTE_PANIC, SYSEX_VERSION_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
-    SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE};
+    SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE, RESET_SEQUENCE};
 
 
 // ******************************************
@@ -62,6 +62,13 @@ struct queueitem_t {
         action=a;
         string=s;
     }
+    queueitem_t(ACTIONS a, QString s, int i0) {
+        action = a;
+        string = s;
+        int0 = i0;
+        int1 = 0;
+        message = NULL;
+    }
     queueitem_t(ACTIONS a, unsigned char *m, unsigned int s) {
         action=a;
         message=m;
@@ -90,11 +97,12 @@ class Editor : public QObject {
         void actionNotePanic();
         void actionSysexReceived(unsigned int, unsigned int, unsigned int, unsigned char*);
         void actionSetPatchname(QString);
-        void actionFileIOLoad(QString);
-        void actionFileIOSave(QString);
+        void actionFileIOLoad(QString path, const int &what);
+        void actionFileIOSave(QString path, const int &what);
         void actionResetPatch(unsigned int version);
         void actionRandomizePatch();
         void actionSequenceParameterChangeEditor(const unsigned &id, const int &value);
+        void actionResetSequence();
 
     public:
         Editor();
