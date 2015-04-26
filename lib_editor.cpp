@@ -319,12 +319,19 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
     } else if (command == 0x01 && argument == 0x00) {
         if (size == 92 && patch.unpackData(message)) {
             emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
+            emit redrawAll();
+            emit setStatusbarVersionLabel(patch.getVersionString());
         } else {
             emit displayStatusbar("Received invalid patch.");
         }
     } else if (command == 0x02 && argument == 0x00) {
-        sequence.unpackData(message);
-        emit redrawAllSequenceParameters();
+        if (size == 32) {
+            sequence.unpackData(message);
+            emit displayStatusbar("Received valid sequence.");
+            emit redrawAllSequenceParameters();
+        } else {
+            emit displayStatusbar("Received invalid sequence.");
+        }
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
@@ -334,8 +341,6 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
     if (message) { // TODO: is it a good idea to check if size > 0
         delete message;
     }
-    emit redrawAll();
-    emit setStatusbarVersionLabel(patch.getVersionString());
 }
 
 
