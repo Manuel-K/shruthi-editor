@@ -107,3 +107,6 @@ v0.21 * SysEx header for firmware versions >= 0.94
       * updated init patch (old version can be reached via menu)
       * added patch version display to statusbar
 v0.22 * scalable keyboad with flexible amount of keys
+      * added sequence editor
+      * support for loading of mixed sysex files: load patch/sequence searches 
+        the first occurence in a sysex file
