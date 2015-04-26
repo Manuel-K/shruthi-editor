@@ -649,3 +649,21 @@ void Patch::generateSysex(std::vector<unsigned char> *message) {
 }
 
 
+// ******************************************
+bool Patch::equals(const Patch &other) {
+// ******************************************
+    for (unsigned int i = 0; i < parameterCount; i++) {
+        if (enabled(i) && data[i] != other.data[i]) {
+            return false;
+        }
+    }
+    if (version != other.version ||
+            sys_legato != other.sys_legato ||
+            sys_portamento != other.sys_portamento ||
+            name.compare(other.name) != 0) {
+        return false;
+    }
+    return true;
+}
+
+

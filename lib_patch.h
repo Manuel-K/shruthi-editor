@@ -81,6 +81,8 @@ class Patch {
         bool parseSysex(const std::vector<unsigned char> *message);
         void generateSysex(std::vector<unsigned char> *message);
 
+        bool equals(const Patch &other);
+
         static unsigned char ccToNrpn(const unsigned char cc, const int filter);
         static int parseCcValue(const unsigned int val, int nrpn, const int filter);
 };
