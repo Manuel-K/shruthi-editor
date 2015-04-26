@@ -431,7 +431,9 @@ bool Patch::unpackData(const unsigned char sysex[]) {
     temp[98] = temp[90]>>3; // op 2 in 2
     temp[99] = temp[90]%8; // op 2 out
     version = temp[91];
+#ifdef DEBUGMSGS
     std::cout << "Parsed patch with version " << version << "/" << (int)version << "." << std::endl;
+#endif
     // uncompress v1.00 data:
     if (version == 37) {
         // temp[76] holds (system_settings.legato ? 0x40 : 0x00) | system_settings.portamento
