@@ -367,7 +367,7 @@ void ShruthiEditorMainWindow::patchNameChanged() {
 // ******************************************
 void ShruthiEditorMainWindow::loadPatch() {
 // ******************************************
-    QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".sp", "All possible files (*.sp *.syx);;Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
+    QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".syx", "All possible files (*.syx *.sp);;Sysex-Files (*.syx);;Shruthi-Patches (*.sp)");
     if (filename!="") {
         queueitem_t signal(FILEIO_LOAD,filename);
         emit(enqueue(signal));
@@ -378,7 +378,7 @@ void ShruthiEditorMainWindow::loadPatch() {
 // ******************************************
 void ShruthiEditorMainWindow::savePatch() {
 // ******************************************
-    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".sp", "Shruthi-Patches (*.sp);; Sysex-Files (*.syx)");
+    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".syx", "Sysex-Files (*.syx);;Shruthi-Patches (*.sp)");
     if (filename!="") {
         queueitem_t signal(FILEIO_SAVE,filename);
         emit(enqueue(signal));
