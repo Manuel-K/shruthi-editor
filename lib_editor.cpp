@@ -172,7 +172,7 @@ void Editor::process(queueitem_t item) {
 void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionProcessEditor(" << nrpn << "," << value << ")";
+    qDebug() << "Editor::actionPatchParameterChangeEditor(" << nrpn << "," << value << ")";
 #endif
     if (patch.getParam(nrpn) != value) {
         patch.setParam(nrpn,value);
@@ -185,7 +185,7 @@ void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
 void Editor::actionFetchRequest(const int &which) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionFetch()";
+    qDebug() << "Editor::actionFetchRequest()";
 #endif
     // TODO: combine messages
     if (which&FLAG_PATCH) {
@@ -208,7 +208,7 @@ void Editor::actionFetchRequest(const int &which) {
 void Editor::actionSendData(const int &which) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionSend()";
+    qDebug() << "Editor::actionSendData()";
 #endif
     // TODO: combine messages
     if (which&FLAG_PATCH) {
@@ -252,7 +252,7 @@ void Editor::actionVersionRequest()
 void Editor::actionPatchParameterChangeMidi(int nrpn, int value) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionNrpnReceived(" << nrpn << "," << value << ")";
+    qDebug() << "Editor::actionPatchParameterChangeMidi(" << nrpn << "," << value << ")";
 #endif
     if (!Patch::enabled(nrpn)) {
         return;
@@ -367,7 +367,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
             for (unsigned int i=0; i<readBytes; i++) {
                 data[i] = (char) temp[i];
 #ifdef DEBUGMSGS
-                qDebug() << i << ":" << sysex[i];
+                qDebug() << i << ":" << temp[i];
 #endif
             }
             status = patch.unpackData(data);
@@ -390,7 +390,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
     }
 
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionLoadPatch(" << filename << "):" << status;
+    qDebug() << "Editor::actionFileIOLoad(" << path << "):" << status;
 #endif
 
     QString swhat, sWhat;
@@ -441,7 +441,7 @@ void Editor::actionFileIOSave(QString path, const int &what) {
 
     bool status = FileIO::saveToDisk(path, ba);
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionSavePatch(" << filename << "):" << status;
+    qDebug() << "Editor::actionFileIOSave(" << path << "):" << status;
 #endif
 
     QString swhat, sWhat;
@@ -490,6 +490,9 @@ void Editor::actionRandomizePatch() {
 // ******************************************
 void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &value) {
 // ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionSequenceParameterChangeEditor()" << id << value;
+#endif
     sequence.setParamById(id, value);
 }
 

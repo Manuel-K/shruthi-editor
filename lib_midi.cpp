@@ -94,7 +94,7 @@ bool Midi::checkSysexHeadFoot(const Message *message, const unsigned int start, 
     const unsigned int size = message->size();
 
 #ifdef DEBUGMSGS
-    qDebug() << "Midi::checkSysexHeadFoot()" << start << end << size << std::endl;
+    qDebug() << "Midi::checkSysexHeadFoot()" << start << end << size;
 #endif
 
     // Check if bounds are valid
