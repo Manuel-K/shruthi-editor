@@ -40,6 +40,11 @@ int main(int argc, char *argv[]) {
     int retVal;
 
     {
+        QApplication app(argc, argv);
+#ifdef FUSION
+        app.setStyle(QStyleFactory::create("Fusion"));
+#endif
+
         // Setup signalrouter
         SignalRouter sr;
         QThread srThread;
@@ -69,10 +74,6 @@ int main(int argc, char *argv[]) {
         midiin.connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
 
         // Setup main_window
-        QApplication app(argc, argv);
-#ifdef FUSION
-        app.setStyle(QStyleFactory::create("Fusion"));
-#endif
         ShruthiEditorMainWindow *main_window = new ShruthiEditorMainWindow(&editor);
         main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
         main_window->setFixedSize(main_window->width(), main_window->height());
