@@ -57,8 +57,8 @@ class Patch {
         static const unsigned char filterBoardCount;
         static const unsigned char INIT_PATCH[];
         static const unsigned char INIT_PATCH_PRE100[];
-        static bool enabled(int);
-        static bool hasUI(int);
+        static bool enabled(const int &id);
+        static bool hasUI(const int &id);
         static bool sendAsNRPN(const int &id);
 
         static const param_t parameters[]; // use this with caution
@@ -66,17 +66,17 @@ class Patch {
 
         Patch();
 
-        void setParam(int param, int value);
-        int getParam(int param);
-        QString getParamFancy(int param);
-        static QString formatParameterValue(int param, int value, int filter = 0);
+        void setParam(int id, int value);
+        int getParam(int id);
+        QString getParamFancy(int id);
+        static QString formatParameterValue(int id, int value, int filter = 0);
         void setName(QString name);
         QString getName();
         QString getVersionString();
 
         void printPatch();
         void resetPatch(unsigned int version = 1000);
-        void randomizePatch(int);
+        void randomizePatch(const int &filter);
 
         bool unpackData(const unsigned char *sysex);
         void packData(unsigned char res[]);
@@ -85,7 +85,7 @@ class Patch {
 
         bool equals(const Patch &other);
 
-        static unsigned char ccToNrpn(const unsigned char cc, const int filter);
-        static int parseCcValue(const unsigned int val, int nrpn, const int filter);
+        static unsigned char ccToId(const unsigned char &cc, const int &filter);
+        static int convertCCValue(const unsigned int &val, int &id, const int &filter);
 };
 #endif

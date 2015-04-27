@@ -33,7 +33,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         ~ShruthiEditorMainWindow();
 
     private:
-        void displayMidiStatusChanged(bool, bool);
+        void displayMidiStatusChanged(const bool &in, const bool &out);
         void closeEvent(QCloseEvent* event);
 
         Ui::MainWindow *ui;
@@ -45,8 +45,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
 
     private slots:
         // local ui actions
-        void comboBoxChanged(int);
-        void dialChanged(int);
+        void comboBoxChanged(int val);
+        void dialChanged(int val);
         void patchNameChanged();
         void loadPatch();
         void loadSequence();
@@ -67,15 +67,15 @@ class ShruthiEditorMainWindow : public QMainWindow {
 
     public slots:
         // redraw commands:
-        void redrawNRPN(int);
-        void redrawAll();
+        void redrawPatchParameter(int id);
+        void redrawAllPatchParameters();
         // ui settings:
-        void setMidiInputPort(int);
-        void setMidiOutputPort(int);
-        void setMidiChannel(unsigned char);
-        void setShruthiFilterBoard(int);
-        void midiInputStatusChanged(bool);
-        void midiOutputStatusChanged(bool);
+        void setMidiInputPort(int midiin);
+        void setMidiOutputPort(int midiout);
+        void setMidiChannel(unsigned char channel);
+        void setShruthiFilterBoard(int filter);
+        void midiInputStatusChanged(bool st);
+        void midiOutputStatusChanged(bool st);
         void displayStatusbar(QString msg);
         void setStatusbarVersionLabel(QString text);
 

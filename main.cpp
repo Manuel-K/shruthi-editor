@@ -80,8 +80,8 @@ int main(int argc, char *argv[]) {
         main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
         // main_window: incoming signals
-        main_window->connect(&editor, SIGNAL(redrawNRPN(int)), SLOT(redrawNRPN(int)));
-        main_window->connect(&editor, SIGNAL(redrawAll()), SLOT(redrawAll()));
+        main_window->connect(&editor, SIGNAL(redrawPatchParamter(int)), SLOT(redrawPatchParameter(int)));
+        main_window->connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));
         main_window->connect(&sr, SIGNAL(setMidiInputPort(int)), SLOT(setMidiInputPort(int)));
         main_window->connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
         main_window->connect(&sr, SIGNAL(setMidiChannel(unsigned char)), SLOT(setMidiChannel(unsigned char)));
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
         sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(showSequenceEditor()));
         sequence_editor.setWindowIcon(QIcon(":/shruthi-editor.png"));
         sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
-        sequence_editor.connect(&editor, SIGNAL(redrawAll()), SLOT(redrawAllPatchParameters()));
+        sequence_editor.connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));
         sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter2(int)), SLOT(redrawPatchParameter(int)));
 
         // Start editor

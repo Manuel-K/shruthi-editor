@@ -87,9 +87,9 @@ Editor::~Editor() {
 
 
 // ******************************************
-int Editor::getParam(int nrpn) {
+int Editor::getParam(int id) {
 // ******************************************
-    return patch.getParam(nrpn);
+    return patch.getParam(id);
 }
 
 
@@ -170,26 +170,26 @@ void Editor::process(queueitem_t item) {
 
 
 // ******************************************
-void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
+void Editor::actionPatchParameterChangeEditor(int id, int value) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionPatchParameterChangeEditor(" << nrpn << "," << value << ")";
+    qDebug() << "Editor::actionPatchParameterChangeEditor(" << id << "," << value << ")";
 #endif
-    if (patch.getParam(nrpn) != value) {
-        patch.setParam(nrpn,value);
+    if (patch.getParam(id) != value) {
+        patch.setParam(id, value);
 
         //strange hack to fix arpeggiator range
         //firmware 1.03 maps 1->1, 2->1, 3->2, 4->3
         //to circumvent this: send 1, 3, 4, 5
-        if (firmwareVersion >= 1000 && nrpn == 105 && value > 1) {
+        if (firmwareVersion >= 1000 && id == 105 && value > 1) {
             value += 1;
         }
 
-        if (Patch::sendAsNRPN(nrpn) && !midiout.nrpn(nrpn, value)) {
+        if (Patch::sendAsNRPN(id) && !midiout.nrpn(id, value)) {
             emit displayStatusbar("Could not send changes as NRPN.");
         } else {
-            const int &cc = Patch::parameter(nrpn, 0).cc;
-            const int &val = 127.0 * (value - Patch::parameter(nrpn, 0).min) / Patch::parameter(nrpn, 0).max;
+            const int &cc = Patch::parameter(id, 0).cc;
+            const int &val = 127.0 * (value - Patch::parameter(id, 0).min) / Patch::parameter(id, 0).max;
             if (cc >= 0) {
                 if (!midiout.controlChange(0, cc, val)) {
                     emit displayStatusbar("Could not send changes as CC.");
@@ -271,23 +271,23 @@ void Editor::actionVersionRequest()
 
 
 // ******************************************
-void Editor::actionPatchParameterChangeMidi(int nrpn, int value) {
+void Editor::actionPatchParameterChangeMidi(int id, int value) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionPatchParameterChangeMidi(" << nrpn << "," << value << ")";
+    qDebug() << "Editor::actionPatchParameterChangeMidi(" << id << "," << value << ")";
 #endif
-    if (!Patch::enabled(nrpn)) {
+    if (!Patch::enabled(id)) {
         return;
     }
 
-    if (Patch::parameters[nrpn].min<0 && value>=127)
+    if (Patch::parameters[id].min < 0 && value >= 127)
         value-=256; //2s complement
-    patch.setParam(nrpn,value);
-    if (Patch::hasUI(nrpn)) {
-        emit redrawNRPN(nrpn);
+    patch.setParam(id, value);
+    if (Patch::hasUI(id)) {
+        emit redrawPatchParamter(id);
     }
-    if (nrpn >= 100 && nrpn < 110) {
-        emit redrawPatchParameter2(nrpn);
+    if (id >= 100 && id < 110) {
+        emit redrawPatchParameter2(id);
     }
 }
 
@@ -344,7 +344,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
     } else if (command == 0x01 && argument == 0x00) {
         if (size == 92 && patch.unpackData(message)) {
             emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
-            emit redrawAll();
+            emit redrawAllPatchParameters();
             emit setStatusbarVersionLabel(patch.getVersionString());
         } else {
             emit displayStatusbar("Received invalid patch.");
@@ -440,7 +440,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
 
     // Send required refresh signals
     if (status && (what&FLAG_PATCH)) {
-        emit redrawAll();
+        emit redrawAllPatchParameters();
         emit setStatusbarVersionLabel(patch.getVersionString());
     }
     if (status && (what&FLAG_SEQUENCE)) {
@@ -498,7 +498,7 @@ void Editor::actionResetPatch(unsigned int version) {
     qDebug() << "Editor::actionResetPatch()";
 #endif
     patch.resetPatch(version);
-    emit redrawAll();
+    emit redrawAllPatchParameters();
     emit displayStatusbar("Patch reset.");
     emit setStatusbarVersionLabel(patch.getVersionString());
 }
@@ -511,7 +511,7 @@ void Editor::actionRandomizePatch() {
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
     patch.randomizePatch(shruthiFilterBoard);
-    emit redrawAll();
+    emit redrawAllPatchParameters();
     emit displayStatusbar("Patch randomized.");
     emit setStatusbarVersionLabel(patch.getVersionString());
 }

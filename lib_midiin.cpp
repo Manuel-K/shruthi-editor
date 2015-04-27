@@ -151,16 +151,16 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
                 emit enqueue(signal);
             }
         } else {
-            int nrpn = Patch::ccToNrpn(message->at(1), shruthiFilterBoard);
-            int value = Patch::parseCcValue(message->at(2), nrpn, shruthiFilterBoard);
+            int id = Patch::ccToId(message->at(1), shruthiFilterBoard);
+            int value = Patch::convertCCValue(message->at(2), id, shruthiFilterBoard);
             if (!warnedCC) {
-                if (nrpn == 25  || nrpn == 29) {
+                if (id == 25  || id == 29) {
                     std::cout << "Received LFO Rate per CC. That's a bad idea...\nFurther warnings will be suppressed."
                               << std::endl; // << (int) message->at(2) << std::endl;
                     warnedCC = true;
                 }
             }
-            queueitem_t signal(PATCH_PARAMETER_CHANGE_MIDI, nrpn, value);
+            queueitem_t signal(PATCH_PARAMETER_CHANGE_MIDI, id, value);
             emit enqueue(signal);
         }
     }

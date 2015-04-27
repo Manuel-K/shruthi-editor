@@ -277,16 +277,16 @@ const unsigned char Patch::INIT_PATCH_PRE100[] =
 
 
 // ******************************************
-bool Patch::enabled(int i) {
+bool Patch::enabled(const int &id) {
 // ******************************************
-    return (i<68 || i==84 || i==85 || (i>=92 && i<parameterCount));
+    return (id < 68 || id == 84 || id == 85 || (id >= 92 && id < parameterCount));
 }
 
 
 // ******************************************
-bool Patch::hasUI(int i) {
+bool Patch::hasUI(const int &id) {
 // ******************************************
-    return (i<68 || i==84 || i==85 || (i>=92 && i<=99));
+    return (id < 68 || id == 84 || id == 85 || (id >= 92 && id <= 99));
 }
 
 
@@ -306,32 +306,32 @@ Patch::Patch() {
 
 
 // ******************************************
-void Patch::setParam(int param, int value) {
+void Patch::setParam(int id, int value) {
 // ******************************************
-    data[param] = value;
+    data[id] = value;
 }
 
 
 // ******************************************
-int Patch::getParam(int param) {
+int Patch::getParam(int id) {
 // ******************************************
-    return data[param];
+    return data[id];
 }
 
 
 // ******************************************
-QString Patch::getParamFancy(int param)
+QString Patch::getParamFancy(int id)
 // ******************************************
 {
-    return formatParameterValue(param, data[param]);
+    return formatParameterValue(id, data[id]);
 }
 
 
 // ******************************************
-QString Patch::formatParameterValue(int param, int value, int filter)
+QString Patch::formatParameterValue(int id, int value, int filter)
 // ******************************************
 {
-    switch (param) {
+    switch (id) {
     case 25:
     case 29:
         return Labels::LfoRateFormatter(value);
@@ -340,7 +340,7 @@ QString Patch::formatParameterValue(int param, int value, int filter)
     case 106:
         return Labels::ArpeggiatorPatternFormatter(value);
     default:
-        param_t param_entry = parameter(param, filter);
+        param_t param_entry = parameter(id, filter);
         if (param_entry.dropdown) {
             return (*param_entry.dropdown).at(value);
         } else {
@@ -401,7 +401,7 @@ void Patch::resetPatch(unsigned int version) {
 
 
 // ******************************************
-void Patch::randomizePatch(int filter) {
+void Patch::randomizePatch(const int &filter) {
 // ******************************************
     unpackData(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
@@ -532,7 +532,7 @@ void Patch::packData(unsigned char res[]) {
 
 
 // ******************************************
-unsigned char Patch::ccToNrpn(const unsigned char cc, int filter)
+unsigned char Patch::ccToId(const unsigned char &cc, const int &filter)
 // ******************************************
 {
     // Oscillator 1
@@ -581,11 +581,11 @@ unsigned char Patch::ccToNrpn(const unsigned char cc, int filter)
     }
     // Portamento
     if (cc == 84) {
-        return 108; // parameter id, not NRPN!
+        return 108; // no NRPN support!
     }
     // Legato
     if (cc == 68) {
-        return 109; // parameter id, not NRPN!
+        return 109; // no NRPN support!
     }
     //SVF filter cutoff2/resonance2
     if (cc == 12 || cc == 13) {
@@ -618,17 +618,17 @@ unsigned char Patch::ccToNrpn(const unsigned char cc, int filter)
 
 
 // ******************************************
-int Patch::parseCcValue(const unsigned int val, int nrpn, const int filter)
+int Patch::convertCCValue(const unsigned int &val, int &id, const int &filter)
 // ******************************************
 {
-    if (nrpn >= parameterCount)
+    if (id >= parameterCount)
         return 255; // Not supported
-    const int min = parameter(nrpn, filter).min;
-    const int max = parameter(nrpn, filter).max;
+    const int min = parameter(id, filter).min;
+    const int max = parameter(id, filter).max;
     const double perc = val / 127.0;
 
     // Try to emulate Shruthi's LFO rate extrapolation:
-    if (nrpn == 25  || nrpn == 29) {
+    if (id == 25  || id == 29) {
         int temp = min + floor(perc * (max - min));
         if (temp == 143)
             return 142;

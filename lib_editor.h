@@ -93,16 +93,16 @@ class Editor : public QObject {
         unsigned char channel;
         int shruthiFilterBoard;
         int firmwareVersion;
-        void actionPatchParameterChangeEditor(int,int);
+        void actionPatchParameterChangeEditor(int id, int value);
         void actionFetchRequest(const int &which);
         void actionSendData(const int &which);
         void actionVersionRequest();
-        void actionPatchParameterChangeMidi(int,int);
-        void actionNoteOn(unsigned char, unsigned char);
-        void actionNoteOff(unsigned char);
+        void actionPatchParameterChangeMidi(int id, int value);
+        void actionNoteOn(unsigned char note, unsigned char velocity);
+        void actionNoteOff(unsigned char note);
         void actionNotePanic();
-        void actionSysexReceived(unsigned int, unsigned int, unsigned int, unsigned char*);
-        void actionSetPatchname(QString);
+        void actionSysexReceived(unsigned int command, unsigned int argument, unsigned int size, unsigned char* message);
+        void actionSetPatchname(QString name);
         void actionFileIOLoad(QString path, const int &what);
         void actionFileIOSave(QString path, const int &what);
         void actionResetPatch(unsigned int version);
@@ -113,7 +113,7 @@ class Editor : public QObject {
     public:
         Editor();
         ~Editor();
-        int getParam(int);
+        int getParam(int id);
         QString getName();
         const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp);
 
@@ -121,16 +121,16 @@ class Editor : public QObject {
         static const int FLAG_SEQUENCE = 2;
 
     public slots:
-        void process(queueitem_t);
-        bool setMidiOutputPort(int);
-        void setMidiChannel(unsigned char);
-        void setShruthiFilterBoard(int);
+        void process(queueitem_t item);
+        bool setMidiOutputPort(int out);
+        void setMidiChannel(unsigned char channel);
+        void setShruthiFilterBoard(int filter);
         void run();
 
     signals:
-        void redrawNRPN(int);
+        void redrawPatchParamter(int);
         void redrawPatchParameter2(int);
-        void redrawAll();
+        void redrawAllPatchParameters();
         void redrawSequenceParameter(int);
         void redrawAllSequenceParameters();
         void finished();

@@ -99,7 +99,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     connect(ui->patch_name, SIGNAL(editingFinished()), this, SLOT(patchNameChanged()));
 
     // Now that everything is set up, update all UI elements:
-    redrawAll();
+    redrawAllPatchParameters();
 
     // other UI Signals:
     connect(ui->actionLoad_Patch, SIGNAL(triggered()), this, SLOT(loadPatch()));
@@ -283,10 +283,10 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
 
     // Force display update:
-    redrawNRPN(84);
-    redrawNRPN(85);
-    redrawNRPN(92);
-    redrawNRPN(93);
+    redrawPatchParameter(84);
+    redrawPatchParameter(85);
+    redrawPatchParameter(92);
+    redrawPatchParameter(93);
 
 
     // Enable active widgets:
@@ -537,24 +537,24 @@ void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 // ******************************************
 
 // ******************************************
-void ShruthiEditorMainWindow::redrawNRPN(int nrpn) {
+void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
 // ******************************************
-    const param_t param = Patch::parameter(nrpn, SHRUTHI_FILTER_BOARD);
+    const param_t param = Patch::parameter(id, SHRUTHI_FILTER_BOARD);
 
-    QString id = QString("c%1").arg(nrpn);
+    QString wid = QString("c%1").arg(id);
 
     bool forceDial = false;
 
     // Fix for additional dials (parameter 92/93):
-    if ((nrpn == 92 || nrpn == 93) && param.dropdown == NULL) {
-        id.append("d");
+    if ((id == 92 || id == 93) && param.dropdown == NULL) {
+        wid.append("d");
         forceDial = true;
     }
 
     // Deactivate element before setting value to prevent sending
     // the change back (i.e. debouncing)!
     if (!forceDial && param.dropdown) {
-        QComboBox* temp = this->findChild<QComboBox*>(id);
+        QComboBox* temp = this->findChild<QComboBox*>(wid);
         if (!temp) {
             qDebug() << "ComboBox" << id << "could not be found!";
             return;
@@ -562,11 +562,11 @@ void ShruthiEditorMainWindow::redrawNRPN(int nrpn) {
         bool wasEnabled = temp->isEnabled();
         if (wasEnabled)
             temp->setEnabled(false);
-        temp->setCurrentIndex(editor->getParam(nrpn));
+        temp->setCurrentIndex(editor->getParam(id));
         if (wasEnabled)
             temp->setEnabled(true);
     } else {
-        QDial* temp = this->findChild<QDial*>(id);
+        QDial* temp = this->findChild<QDial*>(wid);
         if (!temp) {
             qDebug() << "Dial" << id << "could not be found!";
             return;
@@ -574,18 +574,18 @@ void ShruthiEditorMainWindow::redrawNRPN(int nrpn) {
         bool wasEnabled = temp->isEnabled();
         if (wasEnabled)
             temp->setEnabled(false);
-        temp->setValue(editor->getParam(nrpn));
+        temp->setValue(editor->getParam(id));
         if (wasEnabled)
             temp->setEnabled(true);
     }
 }
 
 // ******************************************
-void ShruthiEditorMainWindow::redrawAll() {
+void ShruthiEditorMainWindow::redrawAllPatchParameters() {
 // ******************************************
     for (int i=0; i<100; i++) {
         if (Patch::hasUI(i)) {
-            redrawNRPN(i);
+            redrawPatchParameter(i);
         }
     }
     ui->patch_name->setText(editor->getName());
@@ -615,7 +615,7 @@ void ShruthiEditorMainWindow::midiOutputStatusChanged(bool st) {
 
 
 // ******************************************
-void ShruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
+void ShruthiEditorMainWindow::displayMidiStatusChanged(const bool &in, const bool &out) {
 // ******************************************
     QString status = "MidiIn: ";
     if (!in)
