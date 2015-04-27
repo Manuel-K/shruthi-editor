@@ -322,7 +322,7 @@ void ShruthiEditorMainWindow::comboBoxChanged(int val) {
     id.remove(0,1);
 
     queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), val);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -357,7 +357,7 @@ void ShruthiEditorMainWindow::dialChanged(int val) {
         return;
 
     queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, param, val);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -418,7 +418,7 @@ void ShruthiEditorMainWindow::saveSequence() {
 void ShruthiEditorMainWindow::fetchPatch() {
 // ******************************************
     queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -426,7 +426,7 @@ void ShruthiEditorMainWindow::fetchPatch() {
 void ShruthiEditorMainWindow::sendPatch() {
 // ******************************************
     queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_PATCH);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -434,7 +434,7 @@ void ShruthiEditorMainWindow::sendPatch() {
 void ShruthiEditorMainWindow::fetchSequence() {
 // ******************************************
     queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_SEQUENCE);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -442,7 +442,7 @@ void ShruthiEditorMainWindow::fetchSequence() {
 void ShruthiEditorMainWindow::sendSequence() {
 // ******************************************
     queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -471,7 +471,7 @@ void ShruthiEditorMainWindow::resetPatch() {
 // ******************************************
     queueitem_t signal(RESET_PATCH);
     signal.int0 = 1000;
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -480,7 +480,7 @@ void ShruthiEditorMainWindow::resetPatchPre100() {
 // ******************************************
     queueitem_t signal(RESET_PATCH);
     signal.int0 = 98;
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -496,7 +496,7 @@ void ShruthiEditorMainWindow::resetSequence() {
 void ShruthiEditorMainWindow::randomizePatch() {
 // ******************************************
     queueitem_t signal(RANDOMIZE_PATCH);
-    emit(enqueue(signal));
+    emit enqueue(signal);
 }
 
 
@@ -629,7 +629,7 @@ void ShruthiEditorMainWindow::displayMidiStatusChanged(bool in, bool out) {
     // It's rather hacky to do this here, but it works:
     if (in && out) {
         queueitem_t signal(SYSEX_VERSION_REQUEST);
-        emit(enqueue(signal));
+        emit enqueue(signal);
     }
 
 }

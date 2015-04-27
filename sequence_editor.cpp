@@ -94,7 +94,7 @@ void SequenceEditor::sendSequenceUpdate() {
 // ******************************************
     if (ui->autoSendSequence->isChecked()) {
         queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
-        emit(enqueue(signal));
+        emit enqueue(signal);
     }
 }
 
@@ -171,7 +171,7 @@ void SequenceEditor::activeChanged(int step, int value) {
     std::cout << "SequenceEditor active " << step << " " << value << std::endl;
 #endif
     queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::ACTIVE), value);
-    emit(enqueue(signal));
+    emit enqueue(signal);
     sendSequenceUpdate();
 }
 
@@ -183,7 +183,7 @@ void SequenceEditor::noteChanged(int step, int value) {
     std::cout << "SequenceEditor note " << step << " " << value << std::endl;
 #endif
     queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::NOTE), value);
-    emit(enqueue(signal));
+    emit enqueue(signal);
     sendSequenceUpdate();
 }
 
@@ -195,7 +195,7 @@ void SequenceEditor::valueChanged(int step, int value) {
     std::cout << "SequenceEditor value " << step << " " << value << std::endl;
 #endif
     queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::VALUE), value);
-    emit(enqueue(signal));
+    emit enqueue(signal);
     sendSequenceUpdate();
 }
 
@@ -207,7 +207,7 @@ void SequenceEditor::tieChanged(int step, int value) {
     std::cout << "SequenceEditor tie " <<  step << " " << value << std::endl;
 #endif
     queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::TIE), value);
-    emit(enqueue(signal));
+    emit enqueue(signal);
     sendSequenceUpdate();
 }
 
@@ -219,7 +219,7 @@ void SequenceEditor::velocityChanged(int step, int value) {
     std::cout << "SequenceEditor velocity " << step << " " << value << std::endl;
 #endif
     queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::VELOCITY), value);
-    emit(enqueue(signal));
+    emit enqueue(signal);
     sendSequenceUpdate();
 }
 
