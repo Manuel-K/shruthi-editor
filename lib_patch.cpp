@@ -34,118 +34,118 @@ const unsigned char Patch::parameterCount = 110;
 // ******************************************
 const param_t Patch::parameters [110] = {
 // ******************************************
-    /*0*/ {"Oscillator 1 shape", 0, 34, &Labels::OscillatorAlgorithm},
-    /*1*/ {"Oscillator 1 parameter", 0, 127, NULL},
-    /*2*/ {"Oscillator 1 range",-24, 24, NULL},
-    /*3*/ {"Modulation operator", 0, 13, &Labels::Operator},
-    /*4*/ {"Oscillator 2 shape", 0, 34, &Labels::OscillatorAlgorithm},
-    /*5*/ {"Oscillator 2 parameter", 0, 127, NULL},
-    /*6*/ {"Oscillator 2 range",-24, 24, NULL},
-    /*7*/ {"Oscillator 2 detune", 0, 127, NULL},
-    /*8*/ {"Oscillator balance", 0, 63, NULL},
-    /*9*/ {"Sub oscillator volume", 0, 63, NULL},
-    /*10*/ {"Noise volume", 0, 63, NULL},
-    /*11*/ {"Sub oscillator/transient generator shape", 0, 10, &Labels::SubOscillatorAlgorithm},
-    /*12*/ {"Filter cutoff", 0, 127, NULL},
-    /*13*/ {"Filter resonance", 0, 63, NULL},
-    /*14*/ {"Envelope->cutoff modulation amount", 0, 63, NULL},
-    /*15*/ {"Lfo->cutoff modulation amount", 0, 63, NULL},
-    /*16*/ {"Envelope 1 attack", 0, 127, NULL},
-    /*17*/ {"Envelope 1 decay", 0, 127, NULL},
-    /*18*/ {"Envelope 1 sustain", 0, 127, NULL},
-    /*19*/ {"Envelope 1 release", 0, 127, NULL},
-    /*20*/ {"Envelope 2 attack", 0, 127, NULL},
-    /*21*/ {"Envelope 2 decay", 0, 127, NULL},
-    /*22*/ {"Envelope 2 sustain", 0, 127, NULL},
-    /*23*/ {"Envelope 2 release", 0, 127, NULL},
-    /*24*/ {"LFO 1 waveform", 0, 20, &Labels::LfoWave},
-    /*25*/ {"LFO 1 rate", 0, 143, NULL}, //FORMATTER
-    /*26*/ {"LFO 1 rise time", 0, 127, NULL},
-    /*27*/ {"LFO 1 master/slave", 0, 3, &Labels::LfoMode},
-    /*28*/ {"LFO 2 waveform", 0, 20, &Labels::LfoWave},
-    /*29*/ {"LFO 2 rate", 0, 143, NULL}, // FORMATTER
-    /*30*/ {"LFO 2 rise time", 0, 127, NULL},
-    /*31*/ {"LFO 2 master/slave", 0, 3, &Labels::LfoMode},
-    /*32*/ {"Modulation 1 source", 0, 27, &Labels::ModulationSource},
-    /*33*/ {"Modulation 1 destination", 0, 26, &Labels::ModulationDestination},
-    /*34*/ {"Modulation 1 amount",-63, 63, NULL},
-    /*35*/ {"Modulation 2 source", 0, 27, &Labels::ModulationSource},
-    /*36*/ {"Modulation 2 destination", 0, 26, &Labels::ModulationDestination},
-    /*37*/ {"Modulation 2 amount",-63, 63, NULL},
-    /*38*/ {"Modulation 3 source", 0, 27, &Labels::ModulationSource},
-    /*39*/ {"Modulation 3 destination", 0, 26, &Labels::ModulationDestination},
-    /*40*/ {"Modulation 3 amount",-63, 63, NULL},
-    /*41*/ {"Modulation 4 source", 0, 27, &Labels::ModulationSource},
-    /*42*/ {"Modulation 4 destination", 0, 26, &Labels::ModulationDestination},
-    /*43*/ {"Modulation 4 amount",-63, 63, NULL},
-    /*44*/ {"Modulation 5 source", 0, 27, &Labels::ModulationSource},
-    /*45*/ {"Modulation 5 destination", 0, 26, &Labels::ModulationDestination},
-    /*46*/ {"Modulation 5 amount",-63, 63, NULL},
-    /*47*/ {"Modulation 6 source", 0, 27, &Labels::ModulationSource},
-    /*48*/ {"Modulation 6 destination", 0, 26, &Labels::ModulationDestination},
-    /*49*/ {"Modulation 6 amount",-63, 63, NULL},
-    /*50*/ {"Modulation 7 source", 0, 27, &Labels::ModulationSource},
-    /*51*/ {"Modulation 7 destination", 0, 26, &Labels::ModulationDestination},
-    /*52*/ {"Modulation 7 amount",-63, 63, NULL},
-    /*53*/ {"Modulation 8 source", 0, 27, &Labels::ModulationSource},
-    /*54*/ {"Modulation 8 destination", 0, 26, &Labels::ModulationDestination},
-    /*55*/ {"Modulation 8 amount",-63, 63, NULL},
-    /*56*/ {"Modulation 9 source", 0, 27, &Labels::ModulationSource},
-    /*57*/ {"Modulation 9 destination", 0, 26, &Labels::ModulationDestination},
-    /*58*/ {"Modulation 9 amount",-63, 63, NULL},
-    /*59*/ {"Modulation 10 source", 0, 27, &Labels::ModulationSource},
-    /*60*/ {"Modulation 10 destination", 0, 26, &Labels::ModulationDestination},
-    /*61*/ {"Modulation 10 amount",-63, 63, NULL},
-    /*62*/ {"Modulation 11 source", 0, 27, &Labels::ModulationSource},
-    /*63*/ {"Modulation 11 destination", 0, 26, &Labels::ModulationDestination},
-    /*64*/ {"Modulation 11 amount",-63, 63, NULL},
-    /*65*/ {"Modulation 12 source", 0, 27, &Labels::ModulationSource},
-    /*66*/ {"Modulation 12 destination", 0, 26, &Labels::ModulationDestination},
-    /*67*/ {"Modulation 12 amount",-63, 63, NULL},
-    /*68*/ {NULL, 0, 0, NULL}, //68-75: Name
-    /*69*/ {NULL, 0, 0, NULL},
-    /*70*/ {NULL, 0, 0, NULL},
-    /*71*/ {NULL, 0, 0, NULL},
-    /*72*/ {NULL, 0, 0, NULL},
-    /*73*/ {NULL, 0, 0, NULL},
-    /*74*/ {NULL, 0, 0, NULL},
-    /*75*/ {NULL, 0, 0, NULL},
-    /*76*/ {NULL, 0, 0, NULL}, // (system_settings.legato ? 0x40 : 0x00) | system_settings.portamento
-    /*77*/ {NULL, 0, 0, NULL}, // seq_mode
-    /*78*/ {NULL, 0, 0, NULL}, // seq_tempo
-    /*79*/ {NULL, 0, 0, NULL}, // seq_groove_template
-    /*80*/ {NULL, 0, 9, NULL}, // seq_groove_amount
-    /*81*/ {NULL, 0, 0, NULL}, // (arp_direction << 4) | arp_range
-    /*82*/ {NULL, 0, 0, NULL}, // arp_pattern
-    /*83*/ {NULL, 0, 0, NULL}, // arp_clock_division
-    /*84*/ {"Filter cutoff 2", 0, 127, NULL},
-    /*85*/ {"Filter resonance 2", 0, 63, NULL},
-    /*86*/ {NULL, 0, 0, NULL}, //86: filter_topology_ (92<<4 | 93)
-    /*87*/ {NULL, 0, 0, NULL}, //87-90: op_data_[4] (94, 95<<3 | 96, 97, 98<<3 | 99)
-    /*88*/ {NULL, 0, 0, NULL},
-    /*89*/ {NULL, 0, 0, NULL},
-    /*90*/ {NULL, 0, 0, NULL},
-    /*91*/ {NULL, 0, 0, NULL}, //91: version_
-    /*92*/ {"Filter 1 mode", 0, 5, &Labels::FilterSVFMode1},
-    /*93*/ {"Filter 2 mode", 0, 5, &Labels::FilterSVFMode2},
-    /*94*/ {"Operator 1 in1", 0, 31, &Labels::ModulationSource},
-    /*95*/ {"Operator 1 in2", 0, 31, &Labels::ModulationSource},
-    /*96*/ {"Operator 1 out", 0, 9, &Labels::CvOperator},
-    /*97*/ {"Operator 2 in1", 0, 31, &Labels::ModulationSource},
-    /*98*/ {"Operator 2 in2", 0, 31, &Labels::ModulationSource},
-    /*99*/ {"Operator 2 out", 0, 9, &Labels::CvOperator},
-    /*100*/ {"Sequencer mode", 0, 2, &Labels::SequencerMode},
-    /*101*/ {"Tempo", 39, 240, NULL}, // 35..248 according to manual; (<40 external); min with encoder is 39, with poti it's 38
-    /*102*/ {"Groove template", 0, 5, &Labels::GrooveTemplate},
-    /*103*/ {"Groove amount", 0, 127, NULL},
-    /*104*/ {"Arpeggiator direction", 0, 4, &Labels::ArpeggiatorDirection}, // 0..3 according to manual
-    /*105*/ {"Arpeggiator range", 1, 4, NULL},
-    /*106*/ {"Arpeggiator pattern", 0, 15, NULL}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
-    /*107*/ {"Sequencer Clock Division", 0, 11, &Labels::SequencerClockDivision},
+    /* Long name, short name, min, max, labels, value formatter, cc */
+    /*0*/ {"Oscillator 1 shape", "Shape", 0, 34, &Labels::OscillatorAlgorithm, NULL, 20},
+    /*1*/ {"Oscillator 1 parameter", "Param", 0, 127, NULL, NULL, 21},
+    /*2*/ {"Oscillator 1 range", "Range",-24, 24, NULL, NULL, 22},
+    /*3*/ {"Modulation operator", "Operator", 0, 13, &Labels::Operator, NULL, 28},
+    /*4*/ {"Oscillator 2 shape", "Shape", 0, 34, &Labels::OscillatorAlgorithm, NULL, 24},
+    /*5*/ {"Oscillator 2 parameter", "Param", 0, 127, NULL, NULL, 25},
+    /*6*/ {"Oscillator 2 range", "Range",-24, 24, NULL, NULL, 26},
+    /*7*/ {"Oscillator 2 detune", "Detune", 0, 127, NULL, NULL, 27},
+    /*8*/ {"Oscillator balance", "Mix", 0, 63, NULL, NULL, 29},
+    /*9*/ {"Sub oscillator volume", "Sub. Vol.", 0, 63, NULL, NULL, 30},
+    /*10*/ {"Noise volume", "Noise", 0, 63, NULL, NULL, 31},
+    /*11*/ {"Sub oscillator/transient generator shape", "Sub-Osc", 0, 10, &Labels::SubOscillatorAlgorithm, NULL, 23},
+    /*12*/ {"Filter cutoff", "Cutoff", 0, 127, NULL, NULL, 14}, // alternate cc: 74
+    /*13*/ {"Filter resonance", "Resonance", 0, 63, NULL, NULL, 15}, // alternate cc: 71
+    /*14*/ {"Envelope->cutoff modulation amount", "Evn Amnt", 0, 63, NULL, NULL, 102},
+    /*15*/ {"Lfo->cutoff modulation amount", "Lfo2 Amnt", 0, 63, NULL, NULL, 103},
+    /*16*/ {"Envelope 1 attack", "Attack", 0, 127, NULL, NULL, 104},
+    /*17*/ {"Envelope 1 decay", "Decay", 0, 127, NULL, NULL, 105},
+    /*18*/ {"Envelope 1 sustain", "Sustain", 0, 127, NULL, NULL, 106},
+    /*19*/ {"Envelope 1 release", "Release", 0, 127, NULL, NULL, 107},
+    /*20*/ {"Envelope 2 attack", "Attack", 0, 127, NULL, NULL, 108}, // alternate cc: 73
+    /*21*/ {"Envelope 2 decay", "Decay", 0, 127, NULL, NULL, 109},
+    /*22*/ {"Envelope 2 sustain", "Sustain", 0, 127, NULL, NULL, 110},
+    /*23*/ {"Envelope 2 release", "Release", 0, 127, NULL, NULL, 111},
+    /*24*/ {"LFO 1 waveform", "Shape", 0, 20, &Labels::LfoWave, NULL, 112},
+    /*25*/ {"LFO 1 rate", "Rate", 0, 143, NULL, Labels::LfoRateFormatter, 113},
+    /*26*/ {"LFO 1 rise time", "Attack", 0, 127, NULL, NULL, 114},
+    /*27*/ {"LFO 1 master/slave", "Sync Mode", 0, 3, &Labels::LfoMode, NULL, 115},
+    /*28*/ {"LFO 2 waveform", "Shape", 0, 20, &Labels::LfoWave, NULL, 116},
+    /*29*/ {"LFO 2 rate", "Rate", 0, 143, NULL, Labels::LfoRateFormatter, 117},
+    /*30*/ {"LFO 2 rise time", "Attack", 0, 127, NULL, NULL, 118},
+    /*31*/ {"LFO 2 master/slave", "Sync Mode", 0, 3, &Labels::LfoMode, NULL, 119},
+    /*32*/ {"Modulation 1 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*33*/ {"Modulation 1 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*34*/ {"Modulation 1 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*35*/ {"Modulation 2 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*36*/ {"Modulation 2 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*37*/ {"Modulation 2 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*38*/ {"Modulation 3 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*39*/ {"Modulation 3 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*40*/ {"Modulation 3 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*41*/ {"Modulation 4 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*42*/ {"Modulation 4 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*43*/ {"Modulation 4 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*44*/ {"Modulation 5 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*45*/ {"Modulation 5 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*46*/ {"Modulation 5 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*47*/ {"Modulation 6 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*48*/ {"Modulation 6 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*49*/ {"Modulation 6 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*50*/ {"Modulation 7 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*51*/ {"Modulation 7 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*52*/ {"Modulation 7 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*53*/ {"Modulation 8 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*54*/ {"Modulation 8 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*55*/ {"Modulation 8 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*56*/ {"Modulation 9 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*57*/ {"Modulation 9 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*58*/ {"Modulation 9 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*59*/ {"Modulation 10 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*60*/ {"Modulation 10 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*61*/ {"Modulation 10 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*62*/ {"Modulation 11 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*63*/ {"Modulation 11 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*64*/ {"Modulation 11 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*65*/ {"Modulation 12 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
+    /*66*/ {"Modulation 12 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
+    /*67*/ {"Modulation 12 amount", NULL,-63, 63, NULL, NULL, -1},
+    /*68*/ param_blank, //68-75: Name
+    /*69*/ param_blank,
+    /*70*/ param_blank,
+    /*71*/ param_blank,
+    /*72*/ param_blank,
+    /*73*/ param_blank,
+    /*74*/ param_blank,
+    /*75*/ param_blank,
+    /*76*/ param_blank, // (system_settings.legato ? 0x40 : 0x00) | system_settings.portamento
+    /*77*/ param_blank, // seq_mode
+    /*78*/ param_blank, // seq_tempo
+    /*79*/ param_blank, // seq_groove_template
+    /*80*/ param_blank, // seq_groove_amount
+    /*81*/ param_blank, // (arp_direction << 4) | arp_range
+    /*82*/ param_blank, // arp_pattern
+    /*83*/ param_blank, // arp_clock_division
+    /*84*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
+    /*85*/ {"SVF filter resonance 2", "Res2", 0, 63, NULL, NULL, 13},
+    /*86*/ param_blank, //86: filter_topology_ (92<<4 | 93)
+    /*87*/ param_blank, //87-90: op_data_[4] (94, 95<<3 | 96, 97, 98<<3 | 99)
+    /*88*/ param_blank,
+    /*89*/ param_blank,
+    /*90*/ param_blank,
+    /*91*/ param_blank, //91: version_
+    /*92*/ {"SVF filter mode 1", "Mode 1", 0, 5, &Labels::FilterSVFMode1, NULL, 85},
+    /*93*/ {"SVF filter mode 2", "Mode 2", 0, 5, &Labels::FilterSVFMode2, NULL, 86},
+    /*94*/ {"Operator 1 in1", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
+    /*95*/ {"Operator 1 in2", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
+    /*96*/ {"Operator 1 out", NULL, 0, 9, &Labels::CvOperator, NULL, -1},
+    /*97*/ {"Operator 2 in1", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
+    /*98*/ {"Operator 2 in2", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
+    /*99*/ {"Operator 2 out", NULL, 0, 9, &Labels::CvOperator, NULL, -1},
+    /*100*/ {"Sequencer mode", "Seq mode", 0, 2, &Labels::SequencerMode, NULL, 75},
+    /*101*/ {"Tempo", "Tempo", 39, 240, NULL, Labels::TempoFormatter, -1}, // 35..248 according to manual; (<40 external); min with encoder is 39, with poti it's 38
+    /*102*/ {"Groove template", "Grv tmp", 0, 5, &Labels::GrooveTemplate, NULL, 76},
+    /*103*/ {"Groove amount", "Grv amt", 0, 127, NULL, NULL, 77},
+    /*104*/ {"Arpeggiator direction", "Arp dir", 0, 4, &Labels::ArpeggiatorDirection, NULL, 78}, // 0..3 according to manual
+    /*105*/ {"Arpeggiator range", "Arp rng", 1, 4, NULL, NULL, 79},
+    /*106*/ {"Arpeggiator pattern", "Art pat", 0, 15, NULL, Labels::ArpeggiatorPatternFormatter, 80}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
+    /*107*/ {"Sequencer Clock Division", "Cld div", 0, 11, &Labels::SequencerClockDivision, NULL, 81},
     /* no NRPN support: */
-    /*108*/ {"Portamento", 0, 63, NULL},
-    /*109*/ {"Legato", 0, 1, NULL}
-    /* legato  off/on */
+    /*108*/ {"Portamento", "Portamento", 0, 63, NULL, NULL, 84},
+    /*109*/ {"Legato", "Legato", 0, 1, NULL, NULL, 68} // off/on
 };
 
 
@@ -157,56 +157,56 @@ const unsigned char Patch::filterBoardCount = 8;
 // ******************************************
 const param_t Patch::parameter84 [8] = {
 // ******************************************
-/*Filter 0*/ {NULL, 0, 127, NULL},
-/*Filter 1*/ {"High Pass", 0, 127, NULL},
-/*Filter 2*/ {"Cutoff2", 0, 127, NULL},
-/*Filter 3*/ {"Param. 1", 0, 127, NULL},
-/*Filter 4*/ {"Overdrive", 0, 1, NULL}, // &Labels::OffOn
-/*Filter 5*/ {NULL, 0, 127, NULL},
-/*Filter 6*/ {"Time", 0, 127, NULL},
-/*Filter 7*/ {"Feedback", 0, 127, NULL},
+/*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+/*Filter 1*/ {"SSM high pass", "High Pass", 0, 127, NULL, NULL, 12},
+/*Filter 2*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
+/*Filter 3*/ {"DSP FX Parameter 1", "Param. 1", 0, 127, NULL, NULL, 12},
+/*Filter 4*/ {"Polivoks overdrive", "Overdrive", 0, 1, NULL, NULL, 90}, // &Labels::OffOn
+/*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+/*Filter 6*/ {"Delay time", "Time", 0, 127, NULL, NULL, 12},
+/*Filter 7*/ {"SP feedback", "Feedback", 0, 127, NULL, NULL, 12}, // TODO: check cc
 };
 
 
 // ******************************************
 const param_t Patch::parameter85 [8] = {
 // ******************************************
-/*Filter 0*/ {NULL, 0, 127, NULL},
-/*Filter 1*/ {NULL, 0, 127, NULL},
-/*Filter 2*/ {"Res2", 0, 127, NULL},
-/*Filter 3*/ {"Param. 2", 0, 63, NULL},
-/*Filter 4*/ {"Fm feedbk.", 0, 1, NULL}, // &Labels::OffOn
-/*Filter 5*/ {NULL, 0, 127, NULL},
-/*Filter 6*/ {"Level", 0, 127, NULL},
-/*Filter 7*/ {NULL, 0, 127, NULL},
+/*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+/*Filter 1*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+/*Filter 2*/ {"SVF filter resonance 2", "Res2", 0, 127, NULL, NULL, 13},
+/*Filter 3*/ {"DSP FX Parameter 2", "Param. 2", 0, 63, NULL, NULL, 13},
+/*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, NULL, 91}, // &Labels::OffOn
+/*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+/*Filter 6*/ {"Delay level", "Level", 0, 127, NULL, NULL, 13},
+/*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 };
 
 
 // ******************************************
 const param_t Patch::parameter92 [8] = {
 // ******************************************
-/*Filter 0*/ {NULL, 0, 2, NULL},
-/*Filter 1*/ {NULL, 0, 2, NULL},
-/*Filter 2*/ {"Mode 1", 0, 5, &Labels::FilterSVFMode1},
-/*Filter 3*/ {"FX Mode", 0, 4, &Labels::FilterDSPMode},
-/*Filter 4*/ {"Mode", 0, 1, &Labels::FilterPolivoksMode},
-/*Filter 5*/ {"Mode", 0, 14, &Labels::Filter4PMMode},
-/*Filter 6*/ {"Feedback", 0, 15, NULL},
-/*Filter 7*/ {"Mode", 0, 3, &Labels::FilterSPMode},
+/*Filter 0*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
+/*Filter 1*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
+/*Filter 2*/ {"SVF filter mode 1", "Mode 1", 0, 5, &Labels::FilterSVFMode1, NULL, 85},
+/*Filter 3*/ {"DSP FX mode", "FX Mode", 0, 4, &Labels::FilterDSPMode, NULL, 87},
+/*Filter 4*/ {"Polivoks filter mode", "Mode", 0, 1, &Labels::FilterPolivoksMode, NULL, 89},
+/*Filter 5*/ {"4PM filter mode", "Mode", 0, 14, &Labels::Filter4PMMode, NULL, 92},
+/*Filter 6*/ {"Delay feedback", "Feedback", 0, 15, NULL, NULL, 94},
+/*Filter 7*/ {"SP mode", "Mode", 0, 3, &Labels::FilterSPMode, NULL, 96},
 };
 
 
 // ******************************************
 const param_t Patch::parameter93 [8] = {
 // ******************************************
-/*Filter 0*/ {NULL, 0, 5, NULL},
-/*Filter 1*/ {NULL, 0, 5, NULL},
-/*Filter 2*/ {"Mode 2", 0, 5, &Labels::FilterSVFMode2},
-/*Filter 3*/ {"FX Program", 0, 15, &Labels::FilterDSPFx},
-/*Filter 4*/ {NULL, 0, 127, NULL},
-/*Filter 5*/ {"Resonance Flavor", 0, 3, &Labels::Filter4PMResonanceFlavor},
-/*Filter 6*/ {"EQ Flavor", 0, 15, NULL},
-/*Filter 7*/ {NULL, 0, 127, NULL},
+/*Filter 0*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
+/*Filter 1*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
+/*Filter 2*/ {"SVF filter mode 2", "Mode 2", 0, 5, &Labels::FilterSVFMode2, NULL, 86},
+/*Filter 3*/ {"DSP FX Program", "FX Program", 0, 15, &Labels::FilterDSPFx, NULL, 88},
+/*Filter 4*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+/*Filter 5*/ {"4PM resonance flavor", "Resonance Flavor", 0, 3, &Labels::Filter4PMResonanceFlavor, NULL, 93},
+/*Filter 6*/ {"Delay EQ flavor", "EQ Flavor", 0, 15, NULL, NULL, 95},
+/*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 };
 
 

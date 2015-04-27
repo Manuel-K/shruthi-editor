@@ -25,14 +25,17 @@
 struct param_t {
 // ******************************************
     QString name;
+    QString short_name;
     int min;
     int max;
     QStringList* dropdown;
+    QString (*formatter)(int);
+    int cc;
 };
 
 
 // ******************************************
-static const param_t param_blank = {NULL, 0, 0, NULL};
+static const param_t param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
 // ******************************************
 
 
