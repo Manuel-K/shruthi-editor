@@ -30,6 +30,34 @@ SequenceEditor::SequenceEditor(Editor *edit, QWidget *parent) :
         connect(step, SIGNAL(velocityChanged(int,int)), this, SLOT(velocityChanged(int,int)));
     }
 
+    ShruthiEditorDial *dial;
+    QComboBox *cb;
+    QLabel *l;
+    for (unsigned int p = 100; p < 110; p++) {
+        if (Patch::parameter(p, 0).dropdown) {
+            cb = this->findChild<QComboBox*>(QString("c%1").arg(p));
+            if (!cb) {
+                continue;
+            }
+            cb->addItems(*Patch::parameter(p, 0).dropdown);
+            connect(cb, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChanged(int)));
+            l = this->findChild<QLabel*>(QString("l%1").arg(p));
+            if (!l) {
+                continue;
+            }
+            l->setText(Patch::parameter(p, 0).short_name + ":");
+        } else {
+            dial = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(p));
+            if (!dial) {
+                continue;
+            }
+            dial->setParameter(p);
+            dial->setFormatter(Patch::parameter(p, 0).formatter);
+            dial->setName(Patch::parameter(p, 0).short_name + ":");
+            dial->setLimits(Patch::parameter(p, 0).min, Patch::parameter(p, 0).max);
+            connect(dial, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
+        }
+    }
     redrawAllSequenceParameters();
 }
 
@@ -60,16 +88,39 @@ void SequenceEditor::showSequenceEditor() {
 
 
 // ******************************************
-void SequenceEditor::redrawPatchParameter(int) {
+void SequenceEditor::redrawPatchParameter(int id) {
 // ******************************************
-    //TODO: implement me
+#ifdef DEBUGMSGS
+    std::cout << "SequenceEditor::redrawPatchParameter();" << id << std::endl;
+#endif
+    if (Patch::parameter(id, 0).dropdown) {
+        QComboBox *cb = this->findChild<QComboBox*>(QString("c%1").arg(id));
+        if (!cb) {
+            return;
+        }
+        const bool &temp = cb->isEnabled();
+        cb->setEnabled(false);
+        cb->setCurrentIndex(editor->getParam(id));
+        cb->setEnabled(temp);
+    } else {
+        ShruthiEditorDial *dial = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(id));
+        if (!dial) {
+            return;
+        }
+        dial->setValue(editor->getParam(id));
+    }
 }
 
 
 // ******************************************
 void SequenceEditor::redrawAllPatchParameters() {
 // ******************************************
-    //TODO: implement me
+#ifdef DEBUGMSGS
+    std::cout << "SequenceEditor::redrawAllPatchParameters();" << std::endl;
+#endif
+    for (unsigned int p = 100; p < 110; p++) {
+        redrawPatchParameter(p);
+    }
 }
 
 
@@ -79,7 +130,6 @@ void SequenceEditor::redrawAllSequenceParameters() {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor::redrawAllSequenceParameters()" << std::endl;
 #endif
-    //TODO: cleanup
     SequenceStep *s;
     for (unsigned int i = 0; i < Sequence::NUMBER_OF_STEPS; i++) {
         s = this->findChild<SequenceStep*>(QString("s%1").arg(i));
@@ -153,3 +203,40 @@ void SequenceEditor::velocityChanged(int step, int value) {
     emit(enqueue(signal));
     sendSequenceUpdate();
 }
+
+
+// ******************************************
+void SequenceEditor::comboBoxChanged(int value) {
+// ******************************************
+    // Never send 'no current item set' i.e. -1:
+    if (value == -1)
+        return;
+
+    QComboBox* s = (QComboBox*) sender();
+
+    // Don't send changed signal if element is disabled:
+    if (!s->isEnabled())
+        return;
+
+    QString id = s->objectName();
+    id.remove(0,1);
+
+
+#ifdef DEBUGMSGS
+    std::cout << "SequenceEditor comboBoxChanged " << id.toInt() << " " << value << std::endl;
+#endif
+    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), value);
+    emit enqueue(signal);
+}
+
+
+// ******************************************
+void SequenceEditor::dialChanged(int id, int value) {
+// ******************************************
+#ifdef DEBUGMSGS
+    std::cout << "SequenceEditor dialChanged " << id << " " << value << std::endl;
+#endif
+    emit enqueue(queueitem_t(PATCH_PARAMETER_CHANGE_EDITOR, id, value));
+}
+
+

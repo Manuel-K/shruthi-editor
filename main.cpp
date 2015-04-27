@@ -101,6 +101,8 @@ int main(int argc, char *argv[]) {
         sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(showSequenceEditor()));
         sequence_editor.setWindowIcon(QIcon(":/shruthi-editor.png"));
         sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
+        sequence_editor.connect(&editor, SIGNAL(redrawAll()), SLOT(redrawAllPatchParameters()));
+        sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter2(int)), SLOT(redrawPatchParameter(int)));
 
         // Start editor
         editorThread.start();

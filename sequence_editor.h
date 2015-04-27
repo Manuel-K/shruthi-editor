@@ -26,7 +26,7 @@ class SequenceEditor : public QDialog
 
     public slots:
         void showSequenceEditor();
-        void redrawPatchParameter(int);
+        void redrawPatchParameter(int id);
         void redrawAllPatchParameters();
         void redrawAllSequenceParameters();
 
@@ -36,6 +36,9 @@ class SequenceEditor : public QDialog
         void valueChanged(int step, int value);
         void tieChanged(int step, int value);
         void velocityChanged(int step, int velocity);
+
+        void comboBoxChanged(int value);
+        void dialChanged(int id, int value);
 
     signals:
         void enqueue(queueitem_t);

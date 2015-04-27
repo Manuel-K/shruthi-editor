@@ -29,6 +29,7 @@ Editor::Editor() {
     qDebug("Editor::Editor()");
 #endif
     shruthiFilterBoard = 0;
+    firmwareVersion = 0;
 }
 
 
@@ -177,8 +178,25 @@ void Editor::actionPatchParameterChangeEditor(int nrpn, int value) {
     if (patch.getParam(nrpn) != value) {
         patch.setParam(nrpn,value);
 
+        //strange hack to fix arpeggiator range
+        //firmware 1.03 maps 1->1, 2->1, 3->2, 4->3
+        //to circumvent this: send 1, 3, 4, 5
+        if (firmwareVersion >= 1000 && nrpn == 105 && value > 1) {
+            value += 1;
+        }
+
         if (Patch::sendAsNRPN(nrpn) && !midiout.nrpn(nrpn, value)) {
-            emit displayStatusbar("Could not send changes.");
+            emit displayStatusbar("Could not send changes as NRPN.");
+        } else {
+            const int &cc = Patch::parameter(nrpn, 0).cc;
+            const int &val = 127.0 * (value - Patch::parameter(nrpn, 0).min) / Patch::parameter(nrpn, 0).max;
+            if (cc >= 0) {
+                if (!midiout.controlChange(0, cc, val)) {
+                    emit displayStatusbar("Could not send changes as CC.");
+                }
+            } else {
+                emit displayStatusbar("Could not send changes.");
+            }
         }
     }
 }
@@ -268,6 +286,9 @@ void Editor::actionPatchParameterChangeMidi(int nrpn, int value) {
     if (Patch::hasUI(nrpn)) {
         emit redrawNRPN(nrpn);
     }
+    if (nrpn >= 100 && nrpn < 110) {
+        emit redrawPatchParameter2(nrpn);
+    }
 }
 
 
@@ -317,9 +338,9 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         emit displayStatusbar("Received invalid SysEx.");
     } else if (command == 0x0c && argument == 0x00) {
         // Version info
-        //if (size == 2) {
-        //    firmwareVersion = message.at(0) * 1000 + message.at(1);
-        //}
+        if (size == 2) {
+            firmwareVersion = message[0] * 1000 + message[1];
+        }
     } else if (command == 0x01 && argument == 0x00) {
         if (size == 92 && patch.unpackData(message)) {
             emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");

@@ -92,6 +92,7 @@ class Editor : public QObject {
         MidiOut midiout;
         unsigned char channel;
         int shruthiFilterBoard;
+        int firmwareVersion;
         void actionPatchParameterChangeEditor(int,int);
         void actionFetchRequest(const int &which);
         void actionSendData(const int &which);
@@ -128,6 +129,7 @@ class Editor : public QObject {
 
     signals:
         void redrawNRPN(int);
+        void redrawPatchParameter2(int);
         void redrawAll();
         void redrawSequenceParameter(int);
         void redrawAllSequenceParameters();
