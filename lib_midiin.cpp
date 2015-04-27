@@ -91,26 +91,6 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
 // ******************************************
     int size = message->size();
 
-    // For debugging purposes:
-    // Version 0.98 version SysEx Message:
-    //std::vector<unsigned char> *message098 = new std::vector<unsigned char>;
-    //message098->push_back(240);
-    //message098->push_back(0);
-    //message098->push_back(33);
-    //message098->push_back(2);
-    //message098->push_back(0);
-    //message098->push_back(2);
-    //message098->push_back(12);
-    //message098->push_back(0);
-    //message098->push_back(0);
-    //message098->push_back(0);
-    //message098->push_back(6);
-    //message098->push_back(2);
-    //message098->push_back(6);
-    //message098->push_back(2);
-    //message098->push_back(247);
-
-
     if (size >= 4) {
         std::vector<unsigned char> payload;
         if (!Midi::parseSysex(message, &payload)) {
@@ -156,7 +136,7 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
             if (!warnedCC) {
                 if (id == 25  || id == 29) {
                     std::cout << "Received LFO Rate per CC. That's a bad idea...\nFurther warnings will be suppressed."
-                              << std::endl; // << (int) message->at(2) << std::endl;
+                              << std::endl;
                     warnedCC = true;
                 }
             }
@@ -197,7 +177,6 @@ MidiIn::MidiIn() {
     catch (RtMidiError &error) {
         error.printMessage();
         qWarning() << "MidiOut::MidiIn(): could not initilize midi port for writing.";
-//         exit(EXIT_FAILURE);
     }
 }
 
