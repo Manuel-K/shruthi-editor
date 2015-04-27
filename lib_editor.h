@@ -86,13 +86,18 @@ struct queueitem_t {
 class Editor : public QObject {
 // ******************************************
     Q_OBJECT
+
+    public:
+        Editor();
+        ~Editor();
+        int getParam(int id);
+        QString getName();
+        const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp);
+
+        static const int FLAG_PATCH = 1;
+        static const int FLAG_SEQUENCE = 2;
+
     private:
-        Patch patch;
-        Sequence sequence;
-        MidiOut midiout;
-        unsigned char channel;
-        int shruthiFilterBoard;
-        int firmwareVersion;
         void actionPatchParameterChangeEditor(int id, int value);
         void actionFetchRequest(const int &which);
         void actionSendData(const int &which);
@@ -110,15 +115,12 @@ class Editor : public QObject {
         void actionSequenceParameterChangeEditor(const unsigned &id, const int &value);
         void actionResetSequence();
 
-    public:
-        Editor();
-        ~Editor();
-        int getParam(int id);
-        QString getName();
-        const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp);
-
-        static const int FLAG_PATCH = 1;
-        static const int FLAG_SEQUENCE = 2;
+        Patch patch;
+        Sequence sequence;
+        MidiOut midiout;
+        unsigned char channel;
+        int shruthiFilterBoard;
+        int firmwareVersion;
 
     public slots:
         void process(queueitem_t item);

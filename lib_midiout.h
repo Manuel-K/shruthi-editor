@@ -23,35 +23,34 @@
 // ******************************************
 class MidiOut {
 // ******************************************
-    private:
-        RtMidiOut* midiout;
-        bool opened;
-        unsigned int output;
-
-        // Wrappers:
-        bool write(unsigned char,unsigned char,unsigned char);
-        bool write(unsigned char,unsigned char);
-        bool write(unsigned char sysex[]);
-        bool request(unsigned char);
-
     public:
         MidiOut();
         ~MidiOut();
-        bool open(unsigned int channel);
-        bool write(std::vector<unsigned char> sysex);
+        bool open(const unsigned int &channel);
+        bool write(std::vector<unsigned char> &sysex);
 
         // Wrappers:
-        bool nrpn(int nrpn, int value);
-        bool noteOn(unsigned char, unsigned char, unsigned char);
-        bool noteOff(unsigned char, unsigned char);
-        bool allNotesOff(unsigned char);
-        bool programChange(unsigned char, unsigned char);
-        bool controlChange(unsigned char, unsigned char, unsigned char);
+        bool nrpn(const int &nrpn, const int &value);
+        bool noteOn(const unsigned char &channel, const unsigned char &note, const unsigned char &velocity);
+        bool noteOff(const unsigned char &channel, const unsigned char &note);
+        bool allNotesOff(const unsigned char &channel);
+        bool programChange(const unsigned char &channel, const unsigned char &program);
+        bool controlChange(const unsigned char &channel, const unsigned char &controller, const unsigned char &value);
 
         // Requests:
         bool patchTransferRequest();
         bool sequenceTransferRequest();
         bool versionRequest();
+
+    private:
+        // Wrappers:
+        bool write(const unsigned char &c1, const unsigned char &c2, const unsigned char &c3);
+        bool write(const unsigned char &c1, const unsigned char &c2);
+        bool request(const unsigned char &which);
+
+        RtMidiOut* midiout;
+        bool opened;
+        unsigned int output;
 };
 
 #endif

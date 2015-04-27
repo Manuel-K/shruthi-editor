@@ -28,9 +28,6 @@ class SignalRouter : public QObject {
 // ******************************************
     Q_OBJECT
 
-    private:
-        Config config;
-
     public:
         SignalRouter();
         ~SignalRouter();
@@ -38,6 +35,9 @@ class SignalRouter : public QObject {
         bool editorWorking;
         bool editorEnabled;
         QQueue<queueitem_t> queue;
+
+    private:
+        Config config;
 
     public slots:
         void run();

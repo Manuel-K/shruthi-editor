@@ -42,39 +42,23 @@ static const param_t param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
 // ******************************************
 class Patch {
 // ******************************************
-    private:
-        QString name;
-        int data[110];
-        unsigned char version;
-
-        static const param_t parameter84[];
-        static const param_t parameter85[];
-        static const param_t parameter92[];
-        static const param_t parameter93[];
-
     public:
-        static const unsigned char parameterCount;
-        static const unsigned char filterBoardCount;
-        static const unsigned char INIT_PATCH[];
-        static const unsigned char INIT_PATCH_PRE100[];
+        Patch();
+
+        static param_t parameter(const int &id, int filter = 0);
+
         static bool enabled(const int &id);
         static bool hasUI(const int &id);
         static bool sendAsNRPN(const int &id);
 
-        static const param_t parameters[]; // use this with caution
-        static param_t parameter(int id, int filter = 0);
-
-        Patch();
-
-        void setParam(int id, int value);
-        int getParam(int id);
-        QString getParamFancy(int id);
-        static QString formatParameterValue(int id, int value, int filter = 0);
-        void setName(QString name);
+        void setParam(const int &id, int value);
+        int getParam(const int &id);
+        QString getParamFancy(const int &id);
+        static QString formatParameterValue(const int &id, const int &value, int filter = 0);
+        void setName(const QString &name);
         QString getName();
         QString getVersionString();
 
-        void printPatch();
         void resetPatch(unsigned int version = 1000);
         void randomizePatch(const int &filter);
 
@@ -87,5 +71,24 @@ class Patch {
 
         static unsigned char ccToId(const unsigned char &cc, const int &filter);
         static int convertCCValue(const unsigned int &val, int &id, const int &filter);
+
+        static const param_t parameters[]; // use this with caution
+        static const unsigned char parameterCount;
+        static const unsigned char filterBoardCount;
+
+    private:
+        void printPatch();
+
+        QString name;
+        int data[110];
+        unsigned char version;
+
+        static const param_t parameter84[];
+        static const param_t parameter85[];
+        static const param_t parameter92[];
+        static const param_t parameter93[];
+
+        static const unsigned char INIT_PATCH[];
+        static const unsigned char INIT_PATCH_PRE100[];
 };
 #endif

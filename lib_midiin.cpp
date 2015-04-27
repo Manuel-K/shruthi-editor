@@ -46,7 +46,7 @@ int NRPN::getNRPN(){
 
 
 // ******************************************
-bool MidiIn::isNRPN(unsigned char n0, unsigned char n1)
+bool MidiIn::isNRPN(const unsigned char &n0, const unsigned char &n1)
 // ******************************************
 {
     return n0 == 176 && (n1 == 6 || n1 == 38 || n1 == 98 || n1 == 99);
@@ -214,7 +214,7 @@ void MidiIn::setShruthiFilterBoard(int filter)
 
 
 // ******************************************
-bool MidiIn::open(unsigned int port) {
+bool MidiIn::open(const unsigned int &port) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::open(" << port << ")";

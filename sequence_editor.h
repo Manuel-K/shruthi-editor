@@ -38,10 +38,10 @@ class SequenceEditor : public QDialog
         ~SequenceEditor();
 
     private:
+        void sendSequenceUpdate();
+
         Ui::SequenceEditor *ui;
         Editor *editor;
-
-        void sendSequenceUpdate();
 
     public slots:
         void showSequenceEditor();

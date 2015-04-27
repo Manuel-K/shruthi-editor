@@ -231,7 +231,7 @@ const param_t Patch::parameter93 [8] = {
 
 
 // ******************************************
-param_t Patch::parameter(int id, int filter)
+param_t Patch::parameter(const int &id, int filter)
 // ******************************************
 {
     if (id >= parameterCount || filter >= filterBoardCount) {
@@ -306,21 +306,21 @@ Patch::Patch() {
 
 
 // ******************************************
-void Patch::setParam(int id, int value) {
+void Patch::setParam(const int &id, int const value) {
 // ******************************************
     data[id] = value;
 }
 
 
 // ******************************************
-int Patch::getParam(int id) {
+int Patch::getParam(const int &id) {
 // ******************************************
     return data[id];
 }
 
 
 // ******************************************
-QString Patch::getParamFancy(int id)
+QString Patch::getParamFancy(const int &id)
 // ******************************************
 {
     return formatParameterValue(id, data[id]);
@@ -328,7 +328,7 @@ QString Patch::getParamFancy(int id)
 
 
 // ******************************************
-QString Patch::formatParameterValue(int id, int value, int filter)
+QString Patch::formatParameterValue(const int &id, const int &value, int filter)
 // ******************************************
 {
     switch (id) {
@@ -351,7 +351,7 @@ QString Patch::formatParameterValue(int id, int value, int filter)
 
 
 // ******************************************
-void Patch::setName(QString new_name) {
+void Patch::setName(const QString &new_name) {
 // ******************************************
     name=new_name;
 }

@@ -43,6 +43,20 @@ class ShruthiEditorMainWindow : public QMainWindow {
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
         QLabel *statusbarVersionLabel;
 
+    public slots:
+        // redraw commands:
+        void redrawPatchParameter(int id);
+        void redrawAllPatchParameters();
+        // ui settings:
+        void setMidiInputPort(int midiin);
+        void setMidiOutputPort(int midiout);
+        void setMidiChannel(unsigned char channel);
+        void setShruthiFilterBoard(int filter);
+        void midiInputStatusChanged(bool st);
+        void midiOutputStatusChanged(bool st);
+        void displayStatusbar(QString msg);
+        void setStatusbarVersionLabel(QString text);
+
     private slots:
         // local ui actions
         void comboBoxChanged(int val);
@@ -64,20 +78,6 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void quitShruthiEditor();
         void aboutShruthiEditor();
         void aboutQt();
-
-    public slots:
-        // redraw commands:
-        void redrawPatchParameter(int id);
-        void redrawAllPatchParameters();
-        // ui settings:
-        void setMidiInputPort(int midiin);
-        void setMidiOutputPort(int midiout);
-        void setMidiChannel(unsigned char channel);
-        void setShruthiFilterBoard(int filter);
-        void midiInputStatusChanged(bool st);
-        void midiOutputStatusChanged(bool st);
-        void displayStatusbar(QString msg);
-        void setStatusbarVersionLabel(QString text);
 
     signals:
         void enqueue(queueitem_t);

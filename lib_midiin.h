@@ -27,30 +27,39 @@
 // ******************************************
 class NRPN {
 // ******************************************
-    private:
-        int nrpnMsb;
-        int nrpn;
-        int valueMsb;
-        int value;
     public:
         NRPN();
         int getValue();
         int getNRPN();
         bool parse(int,int,int);
+
+    private:
+        int nrpnMsb;
+        int nrpn;
+        int valueMsb;
+        int value;
 };
 
 // ******************************************
 class MidiIn : public QObject {
 // ******************************************
     Q_OBJECT
+
+    public:
+        ~MidiIn();
+        MidiIn();
+        void process(const std::vector<unsigned char> *message);
+
     private:
+        bool open(const unsigned int &port);
+        bool isNRPN(const unsigned char &n0, const unsigned char &n1);
+
         NRPN nrpn;
 
         RtMidiIn* midiin;
         bool opened;
         unsigned int input;
 
-        bool open(unsigned int);
 
         // The major part of the version number is multiplied by 1000 and the minor part is added,
         // ie v0.98 = 98 and 1.01 = 1001
@@ -62,17 +71,12 @@ class MidiIn : public QObject {
 
         bool warnedCC;
 
-        bool isNRPN(unsigned char, unsigned char);
-
         int shruthiFilterBoard;
 
-    public:
-        ~MidiIn();
-        MidiIn();
-        void process(const std::vector<unsigned char> *message);
     public slots:
-        void setMidiInputPort(int);
-        void setShruthiFilterBoard(int);
+        void setMidiInputPort(int in);
+        void setShruthiFilterBoard(int filter);
+
     signals:
         void enqueue(queueitem_t);
         void midiInputStatusChanged(bool);

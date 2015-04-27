@@ -50,7 +50,7 @@ MidiOut::~MidiOut() {
 
 
 // ******************************************
-bool MidiOut::open(unsigned int port) {
+bool MidiOut::open(const unsigned int &port) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiOut::open(" << port << ")";
@@ -85,32 +85,15 @@ bool MidiOut::open(unsigned int port) {
 
 
 // ******************************************
-bool MidiOut::write(unsigned char sysex[]) {
+bool MidiOut::write(std::vector<unsigned char> &sysex) {
 // ******************************************
     if (!opened) {
-        qDebug() << "MidiOut::write(unsigned char[]): could not send. Port not opened.";
-        return false;
-    }
-
-    std::vector<unsigned char> message;
-    int i;
-    for (i=0; sysex[i]!=247; i++)
-        message.push_back(sysex[i]);
-    message.push_back(sysex[i]);
-    return write(message);
-}
-
-
-// ******************************************
-bool MidiOut::write(std::vector<unsigned char> message) {
-// ******************************************
-    if (!opened) {
-        qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Port not opened.";
+        qDebug() << "MidiOut::write(std::vector<unsigned char>&): could not send. Port not opened.";
         return false;
     }
 
     try {
-        midiout->sendMessage(&message);
+        midiout->sendMessage(&sysex);
         return true;
     }
     catch (RtMidiError &error) {
@@ -122,7 +105,7 @@ bool MidiOut::write(std::vector<unsigned char> message) {
 
 
 // ******************************************
-bool MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
+bool MidiOut::write(const unsigned char &c1, const unsigned char &c2, const unsigned char &c3) {
 // ******************************************
     std::vector<unsigned char> message;
     message.push_back(c1);
@@ -133,7 +116,7 @@ bool MidiOut::write(unsigned char c1,unsigned char c2,unsigned char c3) {
 
 
 // ******************************************
-bool MidiOut::write(unsigned char c1,unsigned char c2) {
+bool MidiOut::write(const unsigned char &c1, const unsigned char &c2) {
 // ******************************************
     std::vector<unsigned char> message;
     message.push_back(c1);
@@ -150,19 +133,25 @@ bool MidiOut::write(unsigned char c1,unsigned char c2) {
 
 
 // ******************************************
-bool MidiOut::request(unsigned char which) {
+bool MidiOut::request(const unsigned char &which) {
 // ******************************************
-    unsigned char patchTransferRequest[]={Midi::sysexHead[0], Midi::sysexHead[1],
-                                          Midi::sysexHead[2], Midi::sysexHead[3],
-                                          Midi::sysexHead[4], Midi::sysexHead[5],
-                                          which, 0, 0, 0,
-                                          Midi::sysexFoot};
-    return write(patchTransferRequest);
+    std::vector<unsigned char> message;
+
+    for (int i = 0; i < 6; i++) {
+        message.push_back(Midi::sysexHead[i]);
+    }
+    message.push_back(which);
+    message.push_back(0);
+    message.push_back(0);
+    message.push_back(0);
+    message.push_back(Midi::sysexFoot);
+
+    return write(message);
 }
 
 
 // ******************************************
-bool MidiOut::nrpn(int nrpn, int value) {
+bool MidiOut::nrpn(const int &nrpn, const int &value) {
 // ******************************************
     if (!opened) {
         qDebug() << "MidiOut::nrpn(): could not send. Port not opened.";
@@ -189,28 +178,28 @@ bool MidiOut::nrpn(int nrpn, int value) {
 
 
 // ******************************************
-bool MidiOut::noteOn(unsigned char channel, unsigned char note, unsigned char velocity) {
+bool MidiOut::noteOn(const unsigned char &channel, const unsigned char &note, const unsigned char &velocity) {
 // ******************************************
     return write((144|channel),note,velocity);
 }
 
 
 // ******************************************
-bool MidiOut::noteOff(unsigned char channel, unsigned char note) {
+bool MidiOut::noteOff(const unsigned char &channel, const unsigned char &note) {
 // ******************************************
     return write((128|channel),note,0);
 }
 
 
 // ******************************************
-bool MidiOut::allNotesOff(unsigned char channel) {
+bool MidiOut::allNotesOff(const unsigned char &channel) {
 // ******************************************
     return controlChange(channel,123,0);
 }
 
 
 // ******************************************
-bool MidiOut::programChange(unsigned char channel, unsigned char program) {
+bool MidiOut::programChange(const unsigned char &channel, const unsigned char &program) {
 // ******************************************
     if (program>127) {
         return controlChange(channel,32,1) && write((192|channel),(program-128));
@@ -221,7 +210,7 @@ bool MidiOut::programChange(unsigned char channel, unsigned char program) {
 
 
 // ******************************************
-bool MidiOut::controlChange(unsigned char channel, unsigned char controller, unsigned char value) {
+bool MidiOut::controlChange(const unsigned char &channel, const unsigned char &controller, const unsigned char &value) {
 // ******************************************
     if (!opened) {
         qDebug() << "MidiOut::controlChange(): could not send. Port not opened.";

@@ -56,15 +56,12 @@ public:
 private:
     void print();
 
-
     int stepsActive[16];
     int stepsNote[16];
     int stepsTie[16];
     int stepsVelocity[16];
     int stepsValue[16];
     static unsigned char INIT_SEQUENCE[];
-
-
 };
 
 #endif // SHRUTHI_SEQUENCE_H

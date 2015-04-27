@@ -29,17 +29,18 @@ class ShruthiEditorSettings : public QDialog {
     public:
         ShruthiEditorSettings(QWidget *parent = 0);
         ~ShruthiEditorSettings();
-        void getPortInfo();
 
         int getMidiInputPort();
         int getMidiOutputPort();
-        void setMidiPorts(int,int);
-        void setMidiChannel(unsigned char);
+        void setMidiPorts(const int &in, const int &out);
+        void setMidiChannel(const unsigned char &channel);
         unsigned char getMidiChannel();
         int getShruthiFilterBoard();
-        void setShruthiFilterBoard(int);
+        void setShruthiFilterBoard(const int &index);
 
     private:
+        void getPortInfo();
+
         Ui::SettingsDialog *ui;
 };
 

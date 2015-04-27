@@ -22,12 +22,6 @@
 // ******************************************
 class Config {
 // ******************************************
-    private:
-        int midiInputPort;
-        int midiOutputPort;
-        unsigned char midiChannel;
-        int shruthiFilterBoard;
-
     public:
         void save();
         void load();
@@ -39,5 +33,11 @@ class Config {
         unsigned char getMidiChannel();
         int getShruthiFilterBoard() const;
         void setShruthiFilterBoard(int value);
+
+    private:
+        int midiInputPort;
+        int midiOutputPort;
+        unsigned char midiChannel;
+        int shruthiFilterBoard;
 };
 #endif

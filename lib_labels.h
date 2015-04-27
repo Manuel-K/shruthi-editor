@@ -21,8 +21,6 @@
 #include <QStringList>
 
 class Labels {
-    private:
-        static QStringList LFORate; // used for LfoRateFormatter
     public:
         static QStringList ModulationSource;
         static QStringList ModulationDestination;
@@ -55,5 +53,8 @@ class Labels {
         static QStringList Notes;
         static QString NoteFormatter(int value);
         static QStringList HexValues;
+
+    private:
+        static QStringList LFORate; // used for LfoRateFormatter
 };
 #endif

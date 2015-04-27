@@ -105,7 +105,7 @@ void ShruthiEditorSettings::getPortInfo() {
 
 
 // ******************************************
-void ShruthiEditorSettings::setMidiPorts(int in, int out) {
+void ShruthiEditorSettings::setMidiPorts(const int &in, const int &out) {
 // ******************************************
     ui->midiInputPort->setCurrentIndex(in);
     ui->midiOutputPort->setCurrentIndex(out);
@@ -127,7 +127,7 @@ int ShruthiEditorSettings::getMidiOutputPort() {
 
 
 // ******************************************
-void ShruthiEditorSettings::setMidiChannel(unsigned char channel) {
+void ShruthiEditorSettings::setMidiChannel(const unsigned char &channel) {
 // ******************************************
     ui->midiChannel->setValue(channel+1);
 }
@@ -140,7 +140,7 @@ unsigned char ShruthiEditorSettings::getMidiChannel() {
 }
 
 // ******************************************
-void ShruthiEditorSettings::setShruthiFilterBoard(int index) {
+void ShruthiEditorSettings::setShruthiFilterBoard(const int &index) {
 // ******************************************
     ui->shruthiFilterBoard->setCurrentIndex(index);
 }
