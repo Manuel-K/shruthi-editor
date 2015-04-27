@@ -223,9 +223,12 @@ bool MidiOut::programChange(unsigned char channel, unsigned char program) {
 // ******************************************
 bool MidiOut::controlChange(unsigned char channel, unsigned char controller, unsigned char value) {
 // ******************************************
+    if (!opened) {
+        qDebug() << "MidiOut::controlChange(): could not send. Port not opened.";
+        return false;
+    }
     return write((176|channel),controller,value);
 }
-
 
 
 // ******************************************
