@@ -15,6 +15,9 @@ Shruthi in the settings dialog.
 The editor has bidirectional communication: Changing a parameter in the editor 
 changes the same parameter on the Shruthi instantly and vice versa.
 
+Patches/sequences can be read from mixed SysEx files. The editor searches the 
+first valid patch/sequence from the beginning of the file.
+
 After loading a patch you have to send the patch manually by using the
 "Shruthi">"Send Patch" menu option.
 
@@ -41,11 +44,11 @@ What works:
  - Editing patches.
  - Remotely changing patch options on the Shruthi.
  - Loading/saving patches from/to disk.
- - Fetching/sending patches from/to the Shruthi.
+ - Fetching/sending patches/sequences from/to the Shruthi.
  - Changes made to patch options on the Shruthi change the settings of the
    editor.
  - Generate random patches.
- - Loading/saving full patch sysex.
+ - Loading/saving patches/sequences as SysEx.
  - Editing up to (and including) firmware version 1.02
 
 What doesn't work:
@@ -110,3 +113,5 @@ v0.22 * scalable keyboad with flexible amount of keys
       * added sequence editor
       * support for loading of mixed sysex files: load patch/sequence searches 
         the first occurence in a sysex file
+      * added ui for missing patch parameters
+      * send parameter changes as cc (compile time decision)
