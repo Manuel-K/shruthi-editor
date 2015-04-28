@@ -185,8 +185,8 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     // Parameter 84:
     bool p84dial = false;
     const param_t p84 = Patch::parameter(84, filter);
-    if (p84.name != NULL) {
-        ui->l84->setText(p84.name + ":");
+    if (p84.short_name != NULL) {
+        ui->l84->setText(p84.short_name + ":");
         if (p84.dropdown == NULL) {
             p84dial = true;
             ui->c84->setMinimum(p84.min);
@@ -201,8 +201,8 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     // Parameter 85:
     bool p85dial = false;
     const param_t p85 = Patch::parameter(85, filter);
-    if (p85.name != NULL) {
-        ui->l85->setText(p85.name + ":");
+    if (p85.short_name != NULL) {
+        ui->l85->setText(p85.short_name + ":");
         if (p85.dropdown == NULL) {
             p85dial = true;
             ui->c85->setMinimum(p85.min);
@@ -219,14 +219,14 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     bool p92dial = false;
 
     const param_t p92 = Patch::parameter(92, filter);
-    if (p92.name != NULL) {
+    if (p92.short_name != NULL) {
         if (p92.dropdown == NULL) {
-            ui->l92d->setText(p92.name + ":");
+            ui->l92d->setText(p92.short_name + ":");
             p92dial = true;
             ui->c92d->setMinimum(p92.min);
             ui->c92d->setMaximum(p92.max);
         } else {
-            ui->l92->setText(p92.name + ":");
+            ui->l92->setText(p92.short_name + ":");
             p92combo = p92.dropdown;
         }
     }
@@ -251,14 +251,14 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     bool p93dial = false;
 
     const param_t p93 = Patch::parameter(93, filter);
-    if (p93.name != NULL) {
+    if (p93.short_name != NULL) {
         if (p93.dropdown == NULL) {
-            ui->l93d->setText(p93.name + ":");
+            ui->l93d->setText(p93.short_name + ":");
             p93dial = true;
             ui->c93d->setMinimum(p93.min);
             ui->c93d->setMaximum(p93.max);
         } else {
-            ui->l93->setText(p93.name + ":");
+            ui->l93->setText(p93.short_name + ":");
             p93combo = p93.dropdown;
         }
     }
