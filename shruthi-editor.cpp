@@ -193,6 +193,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         if (p84.dropdown == NULL) {
             p84dial = true;
             ui->c84->setLimits(p84.min, p84.max);
+            ui->c84->setFormatter(p84.formatter);
         }
     }
 
@@ -208,6 +209,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         if (p85.dropdown == NULL) {
             p85dial = true;
             ui->c85->setLimits(p85.min, p85.max);
+            ui->c85->setFormatter(p85.formatter);
         }
     }
 
@@ -225,6 +227,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
             ui->c92d->setName(p92.short_name + ":");
             p92dial = true;
             ui->c92d->setLimits(p92.min, p92.max);
+            ui->c92d->setFormatter(p92.formatter);
         } else {
             ui->l92->setText(p92.short_name + ":");
             p92combo = p92.dropdown;
@@ -256,6 +259,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
             ui->c93d->setName(p93.short_name + ":");
             p93dial = true;
             ui->c93d->setLimits(p93.min, p93.max);
+            ui->c93d->setFormatter(p93.formatter);
         } else {
             ui->l93->setText(p93.short_name + ":");
             p93combo = p93.dropdown;
