@@ -185,8 +185,10 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
             value += 1;
         }
 
-        if (Patch::sendAsNRPN(id) && !midiout.nrpn(id, value)) {
-            emit displayStatusbar("Could not send changes as NRPN.");
+        if (Patch::sendAsNRPN(id)) {
+            if (!midiout.nrpn(id, value)) {
+                emit displayStatusbar("Could not send changes as NRPN.");
+            }
         } else {
             const int &cc = Patch::parameter(id, 0).cc;
             const int &val = 127.0 * (value - Patch::parameter(id, 0).min) / Patch::parameter(id, 0).max;
