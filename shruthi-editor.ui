@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>994</width>
-    <height>685</height>
+    <width>992</width>
+    <height>683</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,7 +85,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QWidget" name="w1" native="true">
+      <widget class="ShruthiEditorDial" name="c1" native="true">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -94,53 +94,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="l1">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Param:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c1">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d1">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w2" native="true">
+      <widget class="ShruthiEditorDial" name="c2" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -149,50 +104,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c2">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Range:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w9" native="true">
+      <widget class="ShruthiEditorDial" name="c9" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -201,56 +114,14 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="l9">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Sub. Vol.:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d9">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c9">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-       </widget>
       </widget>
-      <zorder>w2</zorder>
-      <zorder>w1</zorder>
+      <zorder>c2</zorder>
+      <zorder>c1</zorder>
       <zorder>c0</zorder>
       <zorder>l0</zorder>
       <zorder>l11</zorder>
       <zorder>c11</zorder>
-      <zorder>w9</zorder>
+      <zorder>c9</zorder>
      </widget>
     </item>
     <item row="0" column="1">
@@ -313,7 +184,7 @@
         <number>8</number>
        </property>
       </widget>
-      <widget class="QWidget" name="w5" native="true">
+      <widget class="ShruthiEditorDial" name="c5" native="true">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -322,53 +193,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="d5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Param:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c5">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w6" native="true">
+      <widget class="ShruthiEditorDial" name="c6" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -377,50 +203,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c6">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l6">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Range:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d6">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w7" native="true">
+      <widget class="ShruthiEditorDial" name="c7" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -429,51 +213,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c7">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d7">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l7">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Detune:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -482,7 +221,7 @@
       <property name="title">
        <string>Filter:</string>
       </property>
-      <widget class="QWidget" name="w12" native="true">
+      <widget class="ShruthiEditorDial" name="c12" native="true">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -491,53 +230,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c12">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l12">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Cutoff:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d12">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w13" native="true">
+      <widget class="ShruthiEditorDial" name="c13" native="true">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -546,53 +240,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c13">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d13">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l13">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Resonance:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w14" native="true">
+      <widget class="ShruthiEditorDial" name="c14" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -601,53 +250,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c14">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d14">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l14">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Env Amnt:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w15" native="true">
+      <widget class="ShruthiEditorDial" name="c15" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -656,53 +260,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c15">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d15">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l15">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Lfo2 Amnt:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w84" native="true">
+      <widget class="ShruthiEditorDial" name="c84" native="true">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -711,53 +270,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c84">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l84">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Cutoff2:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d84">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w85" native="true">
+      <widget class="ShruthiEditorDial" name="c85" native="true">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -766,51 +280,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c85">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l85">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Resonance2:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d85">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
       <widget class="QStackedWidget" name="sw9293">
        <property name="geometry">
@@ -825,7 +294,7 @@
         <number>1</number>
        </property>
        <widget class="QWidget" name="sw9293_d">
-        <widget class="QWidget" name="w93" native="true">
+        <widget class="ShruthiEditorDial" name="c93d" native="true">
          <property name="geometry">
           <rect>
            <x>80</x>
@@ -834,53 +303,8 @@
            <height>71</height>
           </rect>
          </property>
-         <widget class="QLabel" name="l93d">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>81</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Mode2:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="d93">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>20</y>
-            <width>31</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QDial" name="c93d">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>20</y>
-            <width>51</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="mouseTracking">
-           <bool>true</bool>
-          </property>
-         </widget>
         </widget>
-        <widget class="QWidget" name="w92" native="true">
+        <widget class="ShruthiEditorDial" name="c92d" native="true">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -889,57 +313,12 @@
            <height>71</height>
           </rect>
          </property>
-         <widget class="QLabel" name="l92d">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>81</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Mode1:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-         <widget class="QDial" name="c92d">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>20</y>
-            <width>51</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="mouseTracking">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="d92">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>20</y>
-            <width>31</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
         </widget>
-        <zorder>w92</zorder>
-        <zorder>w93</zorder>
+        <zorder>c92d</zorder>
+        <zorder>c93d</zorder>
        </widget>
        <widget class="QWidget" name="sw9293_cb">
-        <widget class="QWidget" name="w93cb" native="true">
+        <widget class="QWidget" name="w93" native="true">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -972,7 +351,7 @@
           </property>
          </widget>
         </widget>
-        <widget class="QWidget" name="w92cb" native="true">
+        <widget class="QWidget" name="w92" native="true">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -1005,8 +384,8 @@
           </property>
          </widget>
         </widget>
-        <zorder>w92cb</zorder>
-        <zorder>w93cb</zorder>
+        <zorder>w92</zorder>
+        <zorder>w93</zorder>
        </widget>
       </widget>
      </widget>
@@ -1022,7 +401,7 @@
       <property name="title">
        <string>Envelope 1:</string>
       </property>
-      <widget class="QWidget" name="w16" native="true">
+      <widget class="ShruthiEditorDial" name="c16" native="true">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1031,53 +410,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c16">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d16">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l16">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Attack:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w17" native="true">
+      <widget class="ShruthiEditorDial" name="c17" native="true">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -1086,53 +420,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c17">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d17">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l17">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Decay:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w18" native="true">
+      <widget class="ShruthiEditorDial" name="c18" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -1141,53 +430,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="l18">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Sustain:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d18">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c18">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w19" native="true">
+      <widget class="ShruthiEditorDial" name="c19" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -1196,51 +440,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c19">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l19">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Release:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d19">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -1255,7 +454,7 @@
       <property name="title">
        <string>Envelope 2:</string>
       </property>
-      <widget class="QWidget" name="w20" native="true">
+      <widget class="ShruthiEditorDial" name="c20" native="true">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -1264,53 +463,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c20">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d20">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l20">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Attack:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w21" native="true">
+      <widget class="ShruthiEditorDial" name="c21" native="true">
        <property name="geometry">
         <rect>
          <x>80</x>
@@ -1319,53 +473,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c21">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d21">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l21">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Decay:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w22" native="true">
+      <widget class="ShruthiEditorDial" name="c22" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -1374,53 +483,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c22">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d22">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l22">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Sustain:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w23" native="true">
+      <widget class="ShruthiEditorDial" name="c23" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -1429,51 +493,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="d23">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l23">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Release:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c23">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -1505,7 +524,7 @@
         <string>Operator:</string>
        </property>
       </widget>
-      <widget class="QWidget" name="w8" native="true">
+      <widget class="ShruthiEditorDial" name="c8" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -1514,53 +533,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c8">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d8">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l8">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Mix:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w10" native="true">
+      <widget class="ShruthiEditorDial" name="c10" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -1569,48 +543,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="d10">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c10">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l10">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Noise:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -1665,7 +597,7 @@
         <string>Sync Mode:</string>
        </property>
       </widget>
-      <widget class="QWidget" name="w25" native="true">
+      <widget class="ShruthiEditorDial" name="c25" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -1674,53 +606,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="l25">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Rate:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c25">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d25">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w26" native="true">
+      <widget class="ShruthiEditorDial" name="c26" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -1729,51 +616,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c26">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d26">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l26">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Attack:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -1834,7 +676,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QWidget" name="w29" native="true">
+      <widget class="ShruthiEditorDial" name="c29" native="true">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -1843,53 +685,8 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QDial" name="c29">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d29">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="l29">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Rate:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w30" native="true">
+      <widget class="ShruthiEditorDial" name="c30" native="true">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -1898,51 +695,6 @@
          <height>71</height>
         </rect>
        </property>
-       <widget class="QLabel" name="l30">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>81</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Attack:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d30">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>31</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c30">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>20</y>
-          <width>51</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -2948,7 +1700,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>994</width>
+     <width>992</width>
      <height>27</height>
     </rect>
    </property>
@@ -3075,20 +1827,28 @@
   </action>
   <action name="actionLoadSequence">
    <property name="text">
-    <string>Load Sequence...</string>
+    <string>L&amp;oad Sequence...</string>
    </property>
   </action>
   <action name="actionSaveSequence">
    <property name="text">
-    <string>Save Sequence...</string>
+    <string>S&amp;ave Sequence...</string>
    </property>
   </action>
   <action name="actionResetSequence">
    <property name="text">
-    <string>Reset Sequence</string>
+    <string>R&amp;eset Sequence</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ShruthiEditorDial</class>
+   <extends>QWidget</extends>
+   <header>shruthi_editor_dial.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

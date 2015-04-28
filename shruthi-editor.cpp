@@ -46,6 +46,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     QDial* tmp_d;
     QComboBox* tmp_c;
     QLabel *tmp_l;
+    ShruthiEditorDial * tmp_sed;
     for (int i=0; i<100; i++) {
         if (Patch::hasUI(i)) {
             if (Patch::parameters[i].dropdown) {
@@ -56,7 +57,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
                 }
                 tmp_c->addItems(*(Patch::parameters[i].dropdown));
                 connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
-            } else {
+            } else if (Patch::belongsToModMatrix(i)){ // small dials
                 tmp_d = this->findChild<QDial*>(QString("c%1").arg(i));
                 if (!tmp_d) {
                     qDebug() << "Dial" << QString("c%1").arg(i) << "could not be found!";
@@ -72,27 +73,33 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
                     continue;
                 }
                 connect(tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+            } else {
+                tmp_sed = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(i));
+                if (!tmp_sed) {
+                    qDebug() << "ShruthiEditorDial" << QString("c%1").arg(i) << "could not be found!";
+                    continue;
+                }
+                tmp_sed->setParameter(i);
+                tmp_sed->setLimits(Patch::parameters[i].min, Patch::parameters[i].max);
+                tmp_sed->setName(Patch::parameters[i].short_name + ":");
+                tmp_sed->setFormatter(Patch::parameters[i].formatter);
+                connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
             }
         }
     }
     // Setup additional dials for parameters 92 and 93:
     for (int i = 92; i <= 93; i++) {
         if (Patch::hasUI(i)) {
-                tmp_d = this->findChild<QDial*>(QString("c%1d").arg(i));
-                if (!tmp_d) {
-                    qDebug() << "Dial" << QString("c%1d").arg(i) << "could not be found!";
-                    continue;
-                }
-                tmp_d->setMinimum(Patch::parameters[i].min);
-                tmp_d->setMaximum(Patch::parameters[i].max);
-                tmp_l = this->findChild<QLabel*>(QString("d%1").arg(i));
-                if (tmp_l) {
-                    tmp_l->setText("0");
-                } else {
-                    qDebug() << "Label" << QString("d%1").arg(i) << "could not be found!";
-                    continue;
-                }
-                connect(tmp_d, SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+            tmp_sed = this->findChild<ShruthiEditorDial*>(QString("c%1d").arg(i));
+            if (!tmp_sed) {
+                qDebug() << "ShruthiEditorDial" << QString("c%1d").arg(i) << "could not be found!";
+                continue;
+            }
+            tmp_sed->setParameter(i);
+            tmp_sed->setLimits(Patch::parameters[i].min, Patch::parameters[i].max);
+            tmp_sed->setName(Patch::parameters[i].short_name + ":");
+            tmp_sed->setFormatter(Patch::parameters[i].formatter);
+            connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
         }
     }
 
@@ -175,43 +182,37 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     //
 
     // Disable all relevant widgets:
-    ui->c84->setEnabled(false);
-    ui->c85->setEnabled(false);
-    ui->c92d->setEnabled(false);
     ui->c92->setEnabled(false);
-    ui->c93d->setEnabled(false);
     ui->c93->setEnabled(false);
 
     // Parameter 84:
     bool p84dial = false;
     const param_t p84 = Patch::parameter(84, filter);
     if (p84.short_name != NULL) {
-        ui->l84->setText(p84.short_name + ":");
+        ui->c84->setName(p84.short_name + ":");
         if (p84.dropdown == NULL) {
             p84dial = true;
-            ui->c84->setMinimum(p84.min);
-            ui->c84->setMaximum(p84.max);
+            ui->c84->setLimits(p84.min, p84.max);
         }
     }
 
     // dial visibility
-    ui->w84->setHidden(!p84dial);
+    ui->c84->setHidden(!p84dial);
 
 
     // Parameter 85:
     bool p85dial = false;
     const param_t p85 = Patch::parameter(85, filter);
     if (p85.short_name != NULL) {
-        ui->l85->setText(p85.short_name + ":");
+        ui->c85->setName(p85.short_name + ":");
         if (p85.dropdown == NULL) {
             p85dial = true;
-            ui->c85->setMinimum(p85.min);
-            ui->c85->setMaximum(p85.max);
+            ui->c85->setLimits(p85.min, p85.max);
         }
     }
 
     // dial visibility
-    ui->w85->setHidden(!p85dial);
+    ui->c85->setHidden(!p85dial);
 
 
     // Parameter 92:
@@ -221,10 +222,9 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     const param_t p92 = Patch::parameter(92, filter);
     if (p92.short_name != NULL) {
         if (p92.dropdown == NULL) {
-            ui->l92d->setText(p92.short_name + ":");
+            ui->c92d->setName(p92.short_name + ":");
             p92dial = true;
-            ui->c92d->setMinimum(p92.min);
-            ui->c92d->setMaximum(p92.max);
+            ui->c92d->setLimits(p92.min, p92.max);
         } else {
             ui->l92->setText(p92.short_name + ":");
             p92combo = p92.dropdown;
@@ -232,7 +232,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
 
     // dial visibility
-    ui->w92->setHidden(!p92dial);
+    ui->c92d->setHidden(!p92dial);
 
     // combo box visibility
     bool p92hidden = true;
@@ -243,7 +243,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         p92hidden = false;
     }
 
-    ui->w92cb->setHidden(p92hidden);
+    ui->w92->setHidden(p92hidden);
 
 
     // Parameter 93:
@@ -253,10 +253,9 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     const param_t p93 = Patch::parameter(93, filter);
     if (p93.short_name != NULL) {
         if (p93.dropdown == NULL) {
-            ui->l93d->setText(p93.short_name + ":");
+            ui->c93d->setName(p93.short_name + ":");
             p93dial = true;
-            ui->c93d->setMinimum(p93.min);
-            ui->c93d->setMaximum(p93.max);
+            ui->c93d->setLimits(p93.min, p93.max);
         } else {
             ui->l93->setText(p93.short_name + ":");
             p93combo = p93.dropdown;
@@ -264,7 +263,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     }
 
     // dial visibility
-    ui->w93->setHidden(!p93dial);
+    ui->c93d->setHidden(!p93dial);
 
     // combo box visibility
     bool p93hidden = true;
@@ -274,7 +273,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
         // need to set index?
         p93hidden = false;
     }
-    ui->w93cb->setHidden(p93hidden);
+    ui->w93->setHidden(p93hidden);
 
 
     // change p92/p93 page:
@@ -290,11 +289,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
 
     // Enable active widgets:
-    ui->c84->setEnabled(p84dial);
-    ui->c85->setEnabled(p85dial);
-    ui->c92d->setEnabled(p92dial);
     ui->c92->setEnabled(!p92hidden);
-    ui->c93d->setEnabled(p93dial);
     ui->c93->setEnabled(!p93hidden);
 }
 
@@ -357,6 +352,14 @@ void ShruthiEditorMainWindow::dialChanged(int val) {
         return;
 
     queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, param, val);
+    emit enqueue(signal);
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::dialChanged(int id, int val) {
+// ******************************************
+    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id, val);
     emit enqueue(signal);
 }
 
@@ -543,40 +546,37 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
 
     QString wid = QString("c%1").arg(id);
 
-    bool forceDial = false;
-
     // Fix for additional dials (parameter 92/93):
     if ((id == 92 || id == 93) && param.dropdown == NULL) {
         wid.append("d");
-        forceDial = true;
     }
 
     // Deactivate element before setting value to prevent sending
     // the change back (i.e. debouncing)!
-    if (!forceDial && param.dropdown) {
+    if (param.dropdown) {
         QComboBox* temp = this->findChild<QComboBox*>(wid);
         if (!temp) {
-            qDebug() << "ComboBox" << id << "could not be found!";
             return;
         }
-        bool wasEnabled = temp->isEnabled();
-        if (wasEnabled)
-            temp->setEnabled(false);
+        const bool &wasEnabled = temp->isEnabled();
+        temp->setEnabled(false);
         temp->setCurrentIndex(editor->getParam(id));
-        if (wasEnabled)
-            temp->setEnabled(true);
-    } else {
+        temp->setEnabled(wasEnabled);
+    } else if (Patch::belongsToModMatrix(id)) {
         QDial* temp = this->findChild<QDial*>(wid);
         if (!temp) {
-            qDebug() << "Dial" << id << "could not be found!";
             return;
         }
-        bool wasEnabled = temp->isEnabled();
-        if (wasEnabled)
-            temp->setEnabled(false);
+        const bool &wasEnabled = temp->isEnabled();
+        temp->setEnabled(false);
         temp->setValue(editor->getParam(id));
-        if (wasEnabled)
-            temp->setEnabled(true);
+        temp->setEnabled(wasEnabled);
+    } else {
+        ShruthiEditorDial* temp = this->findChild<ShruthiEditorDial*>(wid);
+        if (!temp) {
+            return;
+        }
+        temp->setValue(editor->getParam(id));
     }
 }
 

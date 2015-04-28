@@ -50,6 +50,7 @@ class Patch {
         static bool enabled(const int &id);
         static bool hasUI(const int &id);
         static bool sendAsNRPN(const int &id);
+        static bool belongsToModMatrix(const int &id);
 
         void setParam(const int &id, int value);
         int getParam(const int &id);

@@ -61,6 +61,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         // local ui actions
         void comboBoxChanged(int val);
         void dialChanged(int val);
+        void dialChanged(int id, int val);
         void patchNameChanged();
         void loadPatch();
         void loadSequence();
