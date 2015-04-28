@@ -53,7 +53,6 @@ class Patch {
 
         void setParam(const int &id, int value);
         int getParam(const int &id);
-        QString getParamFancy(const int &id);
         static QString formatParameterValue(const int &id, const int &value, int filter = 0);
         void setName(const QString &name);
         QString getName();

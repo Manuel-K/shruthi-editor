@@ -320,32 +320,18 @@ int Patch::getParam(const int &id) {
 
 
 // ******************************************
-QString Patch::getParamFancy(const int &id)
-// ******************************************
-{
-    return formatParameterValue(id, data[id]);
-}
-
-
-// ******************************************
 QString Patch::formatParameterValue(const int &id, const int &value, int filter)
 // ******************************************
 {
-    switch (id) {
-    case 25:
-    case 29:
-        return Labels::LfoRateFormatter(value);
-    case 101:
-        return Labels::TempoFormatter(value);
-    case 106:
-        return Labels::ArpeggiatorPatternFormatter(value);
-    default:
-        param_t param_entry = parameter(id, filter);
-        if (param_entry.dropdown) {
-            return (*param_entry.dropdown).at(value);
-        } else {
-            return QString("%1").arg(value);
+    const param_t &param_entry = parameter(id, filter);
+
+    if (param_entry.dropdown) {
+        return (*param_entry.dropdown).at(value);
+    } else {
+        if (param_entry.formatter) {
+            return (*param_entry.formatter)(value);
         }
+        return QString("%1").arg(value);
     }
 }
 
@@ -383,7 +369,7 @@ void Patch::printPatch() {
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) {
             std::cout << parameters[i].name.toUtf8().constData() << ": "
-                      << getParamFancy(i).toUtf8().constData() << std::endl;
+                      << formatParameterValue(i, data[i]).toUtf8().constData() << std::endl;
         }
     }
 }
