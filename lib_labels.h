@@ -33,6 +33,7 @@ class Labels {
         static QStringList CvOperator;
         static QString LfoRateFormatter(int value); // used for labels
         static QStringList OffOn;
+        static QString OffOnFormatter(int value);
         // The following labels are used for the filter boards:
         static QStringList FilterBoard;
         static QStringList FilterSVFMode1;

@@ -246,6 +246,17 @@ QString Labels::LfoRateFormatter(int value) {  // used for labels
 
 
 // ******************************************
+QString Labels::OffOnFormatter(int value) {
+// ******************************************
+    if (value > 0) {
+        return "On";
+    } else {
+        return "Off";
+    }
+}
+
+
+// ******************************************
 QStringList Labels::OffOn = QStringList()
 // ******************************************
         << "Off"

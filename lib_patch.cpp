@@ -145,7 +145,7 @@ const param_t Patch::parameters [110] = {
     /*107*/ {"Sequencer Clock Division", "Cld div", 0, 11, &Labels::SequencerClockDivision, NULL, 81},
     /* no NRPN support: */
     /*108*/ {"Portamento", "Portamento", 0, 63, NULL, NULL, 84},
-    /*109*/ {"Legato", "Legato", 0, 1, NULL, NULL, 68} // off/on
+    /*109*/ {"Legato", "Legato", 0, 1, &Labels::OffOn, NULL, 68}
 };
 
 
@@ -161,7 +161,7 @@ const param_t Patch::parameter84 [8] = {
 /*Filter 1*/ {"SSM high pass", "High Pass", 0, 127, NULL, NULL, 12},
 /*Filter 2*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
 /*Filter 3*/ {"DSP FX Parameter 1", "Param. 1", 0, 127, NULL, NULL, 12},
-/*Filter 4*/ {"Polivoks overdrive", "Overdrive", 0, 1, NULL, NULL, 90}, // &Labels::OffOn
+/*Filter 4*/ {"Polivoks overdrive", "Overdrive", 0, 1, NULL, Labels::OffOnFormatter, 90}, // &Labels::OffOn
 /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 /*Filter 6*/ {"Delay time", "Time", 0, 127, NULL, NULL, 12},
 /*Filter 7*/ {"SP feedback", "Feedback", 0, 127, NULL, NULL, 12}, // TODO: check cc
@@ -175,7 +175,7 @@ const param_t Patch::parameter85 [8] = {
 /*Filter 1*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 /*Filter 2*/ {"SVF filter resonance 2", "Res2", 0, 127, NULL, NULL, 13},
 /*Filter 3*/ {"DSP FX Parameter 2", "Param. 2", 0, 63, NULL, NULL, 13},
-/*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, NULL, 91}, // &Labels::OffOn
+/*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, Labels::OffOnFormatter, 91}, // &Labels::OffOn
 /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 /*Filter 6*/ {"Delay level", "Level", 0, 63, NULL, NULL, 13},
 /*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
