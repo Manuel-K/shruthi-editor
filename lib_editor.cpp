@@ -190,8 +190,9 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
                 emit displayStatusbar("Could not send changes as NRPN.");
             }
         } else {
-            const int &cc = Patch::parameter(id, 0).cc;
-            const int &val = 127.0 * (value - Patch::parameter(id, 0).min) / Patch::parameter(id, 0).max;
+            const param_t &param = Patch::parameter(id, shruthiFilterBoard);
+            const int &cc = param.cc;
+            const int &val = 127.0 * (value - param.min) / param.max;
             if (cc >= 0) {
                 if (!midiout.controlChange(0, cc, val)) {
                     emit displayStatusbar("Could not send changes as CC.");
