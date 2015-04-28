@@ -177,7 +177,7 @@ const param_t Patch::parameter85 [8] = {
 /*Filter 3*/ {"DSP FX Parameter 2", "Param. 2", 0, 63, NULL, NULL, 13},
 /*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, NULL, 91}, // &Labels::OffOn
 /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 6*/ {"Delay level", "Level", 0, 127, NULL, NULL, 13},
+/*Filter 6*/ {"Delay level", "Level", 0, 63, NULL, NULL, 13},
 /*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 };
 
