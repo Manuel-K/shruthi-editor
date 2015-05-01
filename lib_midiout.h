@@ -41,6 +41,8 @@ class MidiOut {
         bool patchTransferRequest();
         bool sequenceTransferRequest();
         bool versionRequest();
+        bool numBanksRequest();
+        bool currentPatchSequenceRequest();
 
     private:
         // Wrappers:

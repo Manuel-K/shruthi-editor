@@ -250,4 +250,18 @@ bool MidiOut::versionRequest()
 }
 
 
+// ******************************************
+bool MidiOut::numBanksRequest() {
+// ******************************************
+    return request(0x1b);
+}
+
+
+// ******************************************
+bool MidiOut::currentPatchSequenceRequest() {
+// ******************************************
+    return request(0x1a);
+}
+
+
 
