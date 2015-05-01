@@ -28,7 +28,7 @@ class FileIO
 // ******************************************
 {
     public:
-        static const int MAX_READ_SIZE = 10240;
+        static const int MAX_READ_SIZE = 1048576; // 1MB
         static bool loadFromDisk(const QString &location, std::vector<unsigned char> &data);
         static void appendToCharVector(const QByteArray &byteArray, std::vector<unsigned char> &data);
         static void appendToByteArray(const std::vector<unsigned char> &data, QByteArray &byteArray);
