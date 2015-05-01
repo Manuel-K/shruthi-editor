@@ -271,7 +271,7 @@ int Midi::findNextSequence(const Message *message, const unsigned int start) {
 
 
 // ******************************************
-int Midi::getSequence(const Message *message, Message *patch, const unsigned int start) {
+int Midi::getSequence(const Message *message, Message *sequence, const unsigned int start) {
 // ******************************************
     const int &st = findNextSequence(message, start);
 
@@ -279,9 +279,10 @@ int Midi::getSequence(const Message *message, Message *patch, const unsigned int
         return st;
     }
 
-    patch->reserve(75);
+    sequence->clear();
+    sequence->reserve(75);
     for (int i = st; i < st + 75; i++) {
-        patch->push_back(message->at(i));
+        sequence->push_back(message->at(i));
     }
 
     return st;
