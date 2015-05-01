@@ -681,3 +681,14 @@ bool Patch::equals(const Patch &other) {
 }
 
 
+// ******************************************
+void Patch::set(const Patch &other) {
+// ******************************************
+    for (unsigned int i = 0; i < parameterCount; i++) {
+        data[i] = other.data[i];
+    }
+    version = other.version;
+    name = other.name;
+}
+
+

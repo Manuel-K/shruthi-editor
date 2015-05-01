@@ -68,6 +68,7 @@ class Patch {
         void generateSysex(std::vector<unsigned char> *message);
 
         bool equals(const Patch &other);
+        void set(const Patch &other);
 
         static unsigned char ccToId(const unsigned char &cc, const int &filter);
         static int convertCCValue(const unsigned int &val, int &id, const int &filter);
