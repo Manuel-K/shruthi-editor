@@ -22,6 +22,7 @@
 
 #import <vector>
 #import "lib_patch.h"
+#import "lib_sequence.h"
 #import "lib_midiout.h"
 
 class QString;
@@ -37,11 +38,20 @@ class Library {
         const Patch &recallPatch(const int &id);
         void storePatch(const int &id, const Patch &patch);
         void listPatches();
-        void move(const int &from, const int &to);
+        void movePatch(const int &from, const int &to);
+
+        const Sequence &recallSequence(const int &id);
+        void storeSequence(const int &id, const Sequence &sequence);
+        void listSequences();
+        bool moveSequence(const int &from, const int &to);
 
         void fetchPatches(const int &from, const int &to);
         bool receivedPatch(const unsigned char *sysex);
         bool isFetchingPatches();
+
+        void fetchSequences(const int &from, const int &to);
+        bool receivedSequence(const unsigned char *seq);
+        bool isFetchingSequences();
 
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path);
@@ -50,18 +60,33 @@ class Library {
 
     private:
         bool keepFetchingPatches();
+        bool keepFetchingSequences();
 
         std::vector<Patch> patches;
         std::vector<bool> patchMoved;
         std::vector<bool> patchEdited;
 
+        std::vector<Sequence> sequences;
+        std::vector<bool> sequenceMoved;
+        std::vector<bool> sequenceEdited;
+
+        const Sequence init_sequence;
+
         void growPatchVectors(const int &amount);
+        void growSequenceVectors(const int &amount);
 
         MidiOut *midiout;
+
+        bool fetchPatch;
+        bool fetchSequence;
 
         unsigned int fetchEnd;
         unsigned int fetchNextPatchForReceiving;
         unsigned int fetchNextRequestedPatch;
+
+        unsigned int fetchNextSequenceForReceiving;
+        unsigned int fetchNextRequestedSequence;
+
 
         int numberOfPrograms;
 };

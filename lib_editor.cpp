@@ -365,7 +365,12 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         }
     } else if (command == 0x02 && argument == 0x00) {
         if (size == 32) {
-            sequence.unpackData(message);
+            if (library.isFetchingSequences()) {
+                library.receivedSequence(message);
+            } else {
+                sequence.unpackData(message);
+            }
+
             emit displayStatusbar("Received valid sequence.");
             emit redrawAllSequenceParameters();
         } else {
@@ -379,6 +384,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 #endif
         library.setNumberOfPrograms(numberOfPrograms);
         //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
+        //library.fetchSequences(0, numberOfPrograms - 1); //DEBUG
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
