@@ -23,7 +23,7 @@
 
 
 // ******************************************
-Editor::Editor() {
+Editor::Editor(): library(&midiout) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug("Editor::Editor()");
@@ -346,7 +346,17 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
             firmwareVersion = message[0] * 1000 + message[1];
         }
     } else if (command == 0x01 && argument == 0x00) {
-        if (size == 92 && patch.unpackData(message)) {
+        bool ret = (size == 92);
+
+        if (ret) {
+            if (library.isFetchingPatches()) {
+                ret = library.receivedPatch(message);
+            } else {
+                ret = patch.unpackData(message);
+            }
+        }
+
+        if (ret) {
             emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
             emit redrawAllPatchParameters();
             emit setStatusbarVersionLabel(patch.getVersionString());
@@ -367,6 +377,8 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 #ifdef DEBUGMSGS
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
+        library.setNumberOfPrograms(numberOfPrograms);
+        //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS

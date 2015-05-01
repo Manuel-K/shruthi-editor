@@ -22,6 +22,7 @@
 #include "lib_patch.h"
 #include "lib_midiout.h"
 #include "lib_sequence.h"
+#include "lib_library.h"
 
 
 // ******************************************
@@ -117,6 +118,7 @@ class Editor : public QObject {
 
         Patch patch;
         Sequence sequence;
+        Library library;
         MidiOut midiout;
         unsigned char channel;
         int shruthiFilterBoard;

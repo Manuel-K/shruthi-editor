@@ -39,7 +39,8 @@ HEADERS =   RtMidi.h \
             lib_sequence.h \
             sequence_editor.h \
             sequence_step.h \
-            shruthi_editor_dial.h
+            shruthi_editor_dial.h \
+            lib_library.h
 
 SOURCES =   RtMidi.cpp \
             settings-dialog.cpp \
@@ -59,7 +60,8 @@ SOURCES =   RtMidi.cpp \
             lib_sequence.cpp \
             sequence_editor.cpp \
             sequence_step.cpp \
-            shruthi_editor_dial.cpp
+            shruthi_editor_dial.cpp \
+            lib_library.cpp
 
 FORMS =     settings-dialog.ui \
             shruthi-editor.ui \
