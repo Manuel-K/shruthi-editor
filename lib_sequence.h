@@ -44,6 +44,9 @@ public:
     static int calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp);
     void reset();
 
+    bool equals(const Sequence &other);
+    void set(const Sequence &other);
+
     const int &getActive(const int &step);
     const int &getNote(const int &step);
     const int &getTie(const int &step);

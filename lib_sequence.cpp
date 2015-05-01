@@ -161,6 +161,36 @@ void Sequence::reset() {
 
 
 // ******************************************
+bool Sequence::equals(const Sequence &other) {
+// ******************************************
+    for (int s = 0; s < NUMBER_OF_STEPS; s++) {
+        if(stepsActive[s] != other.stepsActive[s] ||
+                stepsNote[s] != other.stepsNote[s] ||
+                stepsTie[s] != other.stepsTie[s] ||
+                stepsValue[s] != other.stepsValue[s] ||
+                stepsVelocity[s] != other.stepsVelocity[s]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+// ******************************************
+void Sequence::set(const Sequence &other) {
+// ******************************************
+    for (int s = 0; s < NUMBER_OF_STEPS; s++) {
+        stepsActive[s] = other.stepsActive[s];
+        stepsNote[s] = other.stepsNote[s];
+        stepsTie[s] = other.stepsTie[s];
+        stepsValue[s] = other.stepsValue[s];
+        stepsVelocity[s] = other.stepsVelocity[s];
+    }
+}
+
+
+// ******************************************
 const int &Sequence::getActive(const int &step) {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
