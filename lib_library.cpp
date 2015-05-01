@@ -36,13 +36,13 @@ Library::Library(MidiOut *out) {
 
     midiout = out;
 
-    fetchPatch = false;
-    fetchSequence = false;
+    fetchPatchMode = false;
+    fetchSequenceMode = false;
     fetchEnd = 0;
-    fetchNextPatchForReceiving = 0;
-    fetchNextRequestedPatch = 0;
-    fetchNextSequenceForReceiving = 0;
-    fetchNextRequestedSequence = 0;
+    fetchNextIncomingPatch = 0;
+    fetchNextPatchRequest = 0;
+    fetchNextIncomingSequence = 0;
+    fetchNextSequenceRequest = 0;
 
     numberOfPrograms = 16;
     growPatchVectors(16);
@@ -164,13 +164,13 @@ void Library::fetch(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
-    fetchPatch = true;
-    fetchSequence = true;
+    fetchPatchMode = true;
+    fetchSequenceMode = true;
     fetchEnd = to;
-    fetchNextPatchForReceiving = from;
-    fetchNextRequestedPatch = from;
-    fetchNextSequenceForReceiving = from;
-    fetchNextRequestedSequence = from;
+    fetchNextIncomingPatch = from;
+    fetchNextPatchRequest = from;
+    fetchNextIncomingSequence = from;
+    fetchNextSequenceRequest = from;
 
     keepFetching();
 }
@@ -181,10 +181,10 @@ void Library::fetchPatches(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
-    fetchPatch = true;
+    fetchPatchMode = true;
     fetchEnd = to;
-    fetchNextPatchForReceiving = from;
-    fetchNextRequestedPatch = from;
+    fetchNextIncomingPatch = from;
+    fetchNextPatchRequest = from;
 
     keepFetching();
 }
@@ -193,30 +193,30 @@ void Library::fetchPatches(const int &from, const int &to) {
 // ******************************************
 bool Library::receivedPatch(const unsigned char *sysex) {
 // ******************************************
-    if (!fetchPatch || fetchNextPatchForReceiving > fetchEnd) {
+    if (!fetchPatchMode || fetchNextIncomingPatch > fetchEnd) {
         return false;
     }
 
 #ifdef DEBUGMSGS
-    std::cout << "Library::receivedPatch() " << fetchNextPatchForReceiving << std::endl;
+    std::cout << "Library::receivedPatch() " << fetchNextIncomingPatch << std::endl;
 #endif
 
     // allocate space in vectors
-    const int &temp = (fetchNextPatchForReceiving - patches.size() + 1);
+    const int &temp = (fetchNextIncomingPatch - patches.size() + 1);
     if (temp > 0) {
         growPatchVectors(temp);
     }
 
-    bool ret = patches.at(fetchNextPatchForReceiving).unpackData(sysex);
+    bool ret = patches.at(fetchNextIncomingPatch).unpackData(sysex);
     if (ret) {
-        fetchNextPatchForReceiving++;
+        fetchNextIncomingPatch++;
 
         //listPatches(); //DEBUG
         keepFetching();
     } else {
         //TODO test if this really stops everything and unlocks the editor
         fetchEnd = 0;
-        fetchPatch = false;
+        fetchPatchMode = false;
     }
     return ret;
 }
@@ -226,9 +226,9 @@ bool Library::receivedPatch(const unsigned char *sysex) {
 bool Library::isFetchingPatches() {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "Library::isFetchingPatches() " << fetchPatch << " " << fetchNextPatchForReceiving << " " << fetchEnd << std::endl;
+    std::cout << "Library::isFetchingPatches() " << fetchPatchMode << " " << fetchNextIncomingPatch << " " << fetchEnd << std::endl;
 #endif
-    return (fetchPatch && fetchNextPatchForReceiving <= fetchEnd);
+    return (fetchPatchMode && fetchNextIncomingPatch <= fetchEnd);
 }
 
 
@@ -237,10 +237,10 @@ void Library::fetchSequences(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
-    fetchSequence = true;
+    fetchSequenceMode = true;
     fetchEnd = to;
-    fetchNextSequenceForReceiving = from;
-    fetchNextRequestedSequence = from;
+    fetchNextIncomingSequence = from;
+    fetchNextSequenceRequest = from;
 
     keepFetching();
 }
@@ -249,22 +249,22 @@ void Library::fetchSequences(const int &from, const int &to) {
 // ******************************************
 bool Library::receivedSequence(const unsigned char *seq) {
 // ******************************************
-    if (!fetchSequence || fetchNextSequenceForReceiving > fetchEnd) {
+    if (!fetchSequenceMode || fetchNextIncomingSequence > fetchEnd) {
         return false;
     }
 
 #ifdef DEBUGMSGS
-    std::cout << "Library::receivedSequence() " << fetchNextSequenceForReceiving << std::endl;
+    std::cout << "Library::receivedSequence() " << fetchNextIncomingSequence << std::endl;
 #endif
 
     // allocate space in vectors
-    const int &temp = (fetchNextSequenceForReceiving - sequences.size() + 1);
+    const int &temp = (fetchNextIncomingSequence - sequences.size() + 1);
     if (temp > 0) {
         growSequenceVectors(temp);
     }
 
-    sequences.at(fetchNextSequenceForReceiving).unpackData(seq);
-    fetchNextSequenceForReceiving++;
+    sequences.at(fetchNextIncomingSequence).unpackData(seq);
+    fetchNextIncomingSequence++;
 
     //listSequences(); //DEBUG
     keepFetching();
@@ -277,9 +277,9 @@ bool Library::receivedSequence(const unsigned char *seq) {
 bool Library::isFetchingSequences() {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "Library::isFetchingSequences() " << fetchSequence << " " << fetchNextSequenceForReceiving << " " << fetchEnd << std::endl;
+    std::cout << "Library::isFetchingSequences() " << fetchSequenceMode << " " << fetchNextIncomingSequence << " " << fetchEnd << std::endl;
 #endif
-    return (fetchSequence && fetchNextSequenceForReceiving <= fetchEnd);
+    return (fetchSequenceMode && fetchNextIncomingSequence <= fetchEnd);
 }
 
 
@@ -404,29 +404,29 @@ void Library::setNumberOfPrograms(const unsigned int &num) {
 bool Library::keepFetching() {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "Library::keepFetching(): Patches " << fetchPatch << " " << fetchNextRequestedPatch << " " << fetchEnd << std::endl;
-    std::cout << "Library::keepFetching(): Sequnces " << fetchSequence << " " << fetchNextSequenceForReceiving << " " << fetchEnd << std::endl;
+    std::cout << "Library::keepFetching(): Patches " << fetchPatchMode << " " << fetchNextPatchRequest << " " << fetchEnd << std::endl;
+    std::cout << "Library::keepFetching(): Sequences " << fetchSequenceMode << " " << fetchNextSequenceRequest << " " << fetchEnd << std::endl;
 #endif
-    const bool ptc_enabled = fetchPatch && fetchNextRequestedPatch <= fetchEnd;
-    const bool seq_enabled = fetchSequence && fetchNextRequestedSequence <= fetchEnd;
+    const bool ptc_enabled = fetchPatchMode && fetchNextPatchRequest <= fetchEnd;
+    const bool seq_enabled = fetchSequenceMode && fetchNextSequenceRequest <= fetchEnd;
 
     if (!ptc_enabled && !seq_enabled) {
         return false;
     }
 
-    const bool prefer_patch = fetchNextRequestedPatch <= fetchNextRequestedSequence;
+    const bool prefer_patch = fetchNextPatchRequest <= fetchNextSequenceRequest;
 
     bool ret;
 
     if ((ptc_enabled && prefer_patch) || (ptc_enabled && !seq_enabled)) {
-        ret = midiout->programChange(0, fetchNextRequestedPatch) && midiout->patchTransferRequest();
+        ret = midiout->programChange(0, fetchNextPatchRequest) && midiout->patchTransferRequest();
         if (ret) {
-            fetchNextRequestedPatch++;
+            fetchNextPatchRequest++;
         }
     } else {
-        ret = midiout->programChange(0, fetchNextRequestedSequence) && midiout->sequenceTransferRequest();
+        ret = midiout->programChange(0, fetchNextSequenceRequest) && midiout->sequenceTransferRequest();
         if (ret) {
-            fetchNextRequestedSequence++;
+            fetchNextSequenceRequest++;
         }
     }
 

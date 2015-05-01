@@ -78,15 +78,15 @@ class Library {
 
         MidiOut *midiout;
 
-        bool fetchPatch;
-        bool fetchSequence;
+        bool fetchPatchMode;
+        bool fetchSequenceMode;
 
         unsigned int fetchEnd;
-        unsigned int fetchNextPatchForReceiving;
-        unsigned int fetchNextRequestedPatch;
+        unsigned int fetchNextIncomingPatch;
+        unsigned int fetchNextPatchRequest;
 
-        unsigned int fetchNextSequenceForReceiving;
-        unsigned int fetchNextRequestedSequence;
+        unsigned int fetchNextIncomingSequence;
+        unsigned int fetchNextSequenceRequest;
 
 
         int numberOfPrograms;
