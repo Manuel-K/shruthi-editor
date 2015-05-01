@@ -199,13 +199,12 @@ bool MidiOut::allNotesOff(const unsigned char &channel) {
 
 
 // ******************************************
-bool MidiOut::programChange(const unsigned char &channel, const unsigned char &program) {
+bool MidiOut::programChange(const unsigned char &channel, const int &program) {
 // ******************************************
-    if (program>127) {
-        return controlChange(channel,32,1) && write((192|channel),(program-128));
-    } else {
-        return controlChange(channel,32,0) && write((192|channel),program);
-    }
+    const int &bank = program / 128;
+    const int &p = program % 128;
+
+    return controlChange(channel, 0, bank) && write((0xc0|channel), p);
 }
 
 

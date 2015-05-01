@@ -34,7 +34,7 @@ class MidiOut {
         bool noteOn(const unsigned char &channel, const unsigned char &note, const unsigned char &velocity);
         bool noteOff(const unsigned char &channel, const unsigned char &note);
         bool allNotesOff(const unsigned char &channel);
-        bool programChange(const unsigned char &channel, const unsigned char &program);
+        bool programChange(const unsigned char &channel, const int &program);
         bool controlChange(const unsigned char &channel, const unsigned char &controller, const unsigned char &value);
 
         // Requests:
