@@ -30,6 +30,7 @@ Editor::Editor() {
 #endif
     shruthiFilterBoard = 0;
     firmwareVersion = 0;
+    numberOfPrograms = 16; // only internal
 }
 
 
@@ -123,8 +124,8 @@ void Editor::process(queueitem_t item) {
         case SYSEX_SEND_DATA:
             actionSendData(item.int0);
             break;
-        case SYSEX_VERSION_REQUEST:
-            actionVersionRequest();
+        case SYSEX_SHRUTHI_INFO_REQUEST:
+            actionShruthiInfoRequest();
             break;
         case PATCH_PARAMETER_CHANGE_MIDI:
             actionPatchParameterChangeMidi(item.int0, item.int1);
@@ -255,19 +256,19 @@ void Editor::actionSendData(const int &which) {
 
 
 // ******************************************
-void Editor::actionVersionRequest()
+void Editor::actionShruthiInfoRequest()
 // ******************************************
 {
 #ifdef DEBUGMSGS
-    qDebug() << "Editor::actionVersionRequest()";
+    qDebug() << "Editor::actionShruthiInfoRequest()";
 #endif
-    if (midiout.versionRequest()) {
+    if (midiout.versionRequest() && midiout.numBanksRequest()) {
         //emit displayStatusbar("Version request sent.");
 #ifdef DEBUGMSGS
-        std::cout  << "Version request sent." << std::endl;
+        std::cout  << "Version and number of banks requests sent." << std::endl;
     } else {
         //emit displayStatusbar("Could not send version request.");
-        std::cout  << "Could not send version request." << std::endl;
+        std::cout  << "Could not send version and/or number of banks request." << std::endl;
 #endif
     }
 }
@@ -360,10 +361,17 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         } else {
             emit displayStatusbar("Received invalid sequence.");
         }
+    } else if (command == 0x0b and size == 0) {
+        // number of banks
+        numberOfPrograms = 16 + argument * 64; // internal + external
+#ifdef DEBUGMSGS
+        std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
+#endif
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
-        qDebug() << "unknown sysex type";
+        qDebug() << "Unknown sysex type...";
+        std::cout << "Unknown sysex with command " << command << ", argument " << argument << " and length " << size << " received." << std::endl;
 #endif
     }
     if (message) { // TODO: is it a good idea to check if size > 0

@@ -31,7 +31,7 @@ enum ACTIONS
     SYSEX_SEND_DATA, PATCH_PARAMETER_CHANGE_MIDI, SYSEX_RECEIVED,
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE,
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF,
-    NOTE_PANIC, SYSEX_VERSION_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
+    NOTE_PANIC, SYSEX_SHRUTHI_INFO_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
     SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE, RESET_SEQUENCE};
 
 
@@ -101,7 +101,7 @@ class Editor : public QObject {
         void actionPatchParameterChangeEditor(int id, int value);
         void actionFetchRequest(const int &which);
         void actionSendData(const int &which);
-        void actionVersionRequest();
+        void actionShruthiInfoRequest();
         void actionPatchParameterChangeMidi(int id, int value);
         void actionNoteOn(unsigned char note, unsigned char velocity);
         void actionNoteOff(unsigned char note);
@@ -121,6 +121,7 @@ class Editor : public QObject {
         unsigned char channel;
         int shruthiFilterBoard;
         int firmwareVersion;
+        int numberOfPrograms;
 
     public slots:
         void process(queueitem_t item);

@@ -632,7 +632,7 @@ void ShruthiEditorMainWindow::displayMidiStatusChanged(const bool &in, const boo
 
     // It's rather hacky to do this here, but it works:
     if (in && out) {
-        queueitem_t signal(SYSEX_VERSION_REQUEST);
+        queueitem_t signal(SYSEX_SHRUTHI_INFO_REQUEST);
         emit enqueue(signal);
     }
 
