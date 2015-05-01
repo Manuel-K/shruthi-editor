@@ -34,9 +34,9 @@ class Midi {
         static bool parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data);
         static void generateSysex(const Message *payload, const int command, const int argument, Message *message);
         static int findNextPatch(const Message *message, const unsigned int start = 0);
-        static bool getPatch(const Message *message, Message *patch, const unsigned int start = 0);
+        static int getPatch(const Message *message, Message *patch, const unsigned int start = 0);
         static int findNextSequence(const Message *message, const unsigned int start = 0);
-        static bool getSequence(const Message *message, Message *patch, const unsigned int start = 0);
+        static int getSequence(const Message *message, Message *patch, const unsigned int start = 0);
         static unsigned char nibbleToByte(unsigned char n0, unsigned char n1);
         static unsigned char byteToUpperNibble(unsigned char n);
         static unsigned char byteToLowerNibble(unsigned char n);
