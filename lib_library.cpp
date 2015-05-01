@@ -48,8 +48,7 @@ Library::Library(MidiOut *out) {
     growPatchVectors(16);
     growSequenceVectors(16);
 
-    //loadLibrary("library_all.syx"); //DEBUG
-    //loadLibrary("library_seqandinitpatch.syx"); //DEBUG
+    //loadLibrary("library_complete.syx"); //DEBUG
     //listPatches(); //DEBUG
     //listSequences(); //DEBUG
 }
@@ -160,6 +159,22 @@ bool Library::moveSequence(const int &from, const int &to) {
     return false;
 }
 
+// ******************************************
+void Library::fetch(const int &from, const int &to) {
+// ******************************************
+    // Note:
+    // Shruthi displays the first patches number as 1, but calls it 0 internally.
+    fetchPatch = true;
+    fetchSequence = true;
+    fetchEnd = to;
+    fetchNextPatchForReceiving = from;
+    fetchNextRequestedPatch = from;
+    fetchNextSequenceForReceiving = from;
+    fetchNextRequestedSequence = from;
+
+    keepFetching();
+}
+
 
 // ******************************************
 void Library::fetchPatches(const int &from, const int &to) {
@@ -171,7 +186,7 @@ void Library::fetchPatches(const int &from, const int &to) {
     fetchNextPatchForReceiving = from;
     fetchNextRequestedPatch = from;
 
-    keepFetchingPatches();
+    keepFetching();
 }
 
 
@@ -197,7 +212,7 @@ bool Library::receivedPatch(const unsigned char *sysex) {
         fetchNextPatchForReceiving++;
 
         //listPatches(); //DEBUG
-        keepFetchingPatches();
+        keepFetching();
     } else {
         //TODO test if this really stops everything and unlocks the editor
         fetchEnd = 0;
@@ -227,7 +242,7 @@ void Library::fetchSequences(const int &from, const int &to) {
     fetchNextSequenceForReceiving = from;
     fetchNextRequestedSequence = from;
 
-    keepFetchingSequences();
+    keepFetching();
 }
 
 
@@ -251,8 +266,8 @@ bool Library::receivedSequence(const unsigned char *seq) {
     sequences.at(fetchNextSequenceForReceiving).unpackData(seq);
     fetchNextSequenceForReceiving++;
 
-    listSequences(); //DEBUG
-    keepFetchingSequences();
+    //listSequences(); //DEBUG
+    keepFetching();
     //TODO add function to stop everything and to unlock the editor
     return true;
 }
@@ -386,37 +401,35 @@ void Library::setNumberOfPrograms(const unsigned int &num) {
 
 
 // ******************************************
-bool Library::keepFetchingPatches() {
+bool Library::keepFetching() {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "Library::keepFetchingPatches() " << fetchPatch << " " << fetchNextRequestedPatch << " " << fetchEnd << std::endl;
+    std::cout << "Library::keepFetching(): Patches " << fetchPatch << " " << fetchNextRequestedPatch << " " << fetchEnd << std::endl;
+    std::cout << "Library::keepFetching(): Sequnces " << fetchSequence << " " << fetchNextSequenceForReceiving << " " << fetchEnd << std::endl;
 #endif
-    if (!fetchPatch || fetchNextRequestedPatch > fetchEnd) {
+    const bool ptc_enabled = fetchPatch && fetchNextRequestedPatch <= fetchEnd;
+    const bool seq_enabled = fetchSequence && fetchNextRequestedSequence <= fetchEnd;
+
+    if (!ptc_enabled && !seq_enabled) {
         return false;
     }
 
-    bool ret = midiout->programChange(0, fetchNextRequestedPatch) && midiout->patchTransferRequest();
-    if (ret) {
-        fetchNextRequestedPatch ++;
-    }
-    return ret;
-}
+    const bool prefer_patch = fetchNextRequestedPatch <= fetchNextRequestedSequence;
 
+    bool ret;
 
-// ******************************************
-bool Library::keepFetchingSequences() {
-// ******************************************
-#ifdef DEBUGMSGS
-    std::cout << "Library::keepFetchingSequnces() " << fetchSequence << " " << fetchNextSequenceForReceiving << " " << fetchEnd << std::endl;
-#endif
-    if (!fetchSequence || fetchNextRequestedSequence > fetchEnd) {
-        return false;
+    if ((ptc_enabled && prefer_patch) || (ptc_enabled && !seq_enabled)) {
+        ret = midiout->programChange(0, fetchNextRequestedPatch) && midiout->patchTransferRequest();
+        if (ret) {
+            fetchNextRequestedPatch++;
+        }
+    } else {
+        ret = midiout->programChange(0, fetchNextRequestedSequence) && midiout->sequenceTransferRequest();
+        if (ret) {
+            fetchNextRequestedSequence++;
+        }
     }
 
-    bool ret = midiout->programChange(0, fetchNextRequestedSequence) && midiout->sequenceTransferRequest();
-    if (ret) {
-        fetchNextRequestedSequence ++;
-    }
     return ret;
 }
 

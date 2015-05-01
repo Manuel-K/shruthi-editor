@@ -45,6 +45,8 @@ class Library {
         void listSequences();
         bool moveSequence(const int &from, const int &to);
 
+        void fetch(const int &from, const int &to);
+
         void fetchPatches(const int &from, const int &to);
         bool receivedPatch(const unsigned char *sysex);
         bool isFetchingPatches();
@@ -59,8 +61,7 @@ class Library {
         void setNumberOfPrograms(const unsigned int &num);
 
     private:
-        bool keepFetchingPatches();
-        bool keepFetchingSequences();
+        bool keepFetching();
 
         std::vector<Patch> patches;
         std::vector<bool> patchMoved;
