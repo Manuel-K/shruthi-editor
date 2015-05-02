@@ -677,6 +677,14 @@ bool Patch::equals(const Patch &other) {
             name.compare(other.name) != 0) {
         return false;
     }
+    // compare the performance page settings:
+    if (version == 33) {
+        for (unsigned int i = 76; i <= 83; i++) {
+            if (data[i] != other.data[i]) {
+                return false;
+            }
+        }
+    }
     return true;
 }
 
