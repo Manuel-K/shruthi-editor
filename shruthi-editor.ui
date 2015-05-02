@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>992</width>
-    <height>683</height>
+    <width>990</width>
+    <height>681</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1700,7 +1700,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>992</width>
+     <width>990</width>
      <height>27</height>
     </rect>
    </property>
@@ -1744,6 +1744,7 @@
     </property>
     <addaction name="actionKeyboard"/>
     <addaction name="actionOpenSequenceEditor"/>
+    <addaction name="actionOpenLibrary"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuMidi"/>
@@ -1838,6 +1839,11 @@
   <action name="actionResetSequence">
    <property name="text">
     <string>R&amp;eset Sequence</string>
+   </property>
+  </action>
+  <action name="actionOpenLibrary">
+   <property name="text">
+    <string>Open Library</string>
    </property>
   </action>
  </widget>

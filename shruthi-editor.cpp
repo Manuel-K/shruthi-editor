@@ -124,6 +124,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     connect(ui->actionRandomize_Patch, SIGNAL(triggered()), this, SLOT(randomizePatch()));
     connect(ui->actionKeyboard, SIGNAL(triggered()), this, SIGNAL(showKeyboard()));
     connect(ui->actionOpenSequenceEditor, SIGNAL(triggered()), this, SIGNAL(showSequenceEditor()));
+    connect(ui->actionOpenLibrary, SIGNAL(triggered()), this, SIGNAL(showLibrary()));
     connect(ui->actionLoadSequence, SIGNAL(triggered()), this, SLOT(loadSequence()));
     connect(ui->actionSaveSequence, SIGNAL(triggered()), this, SLOT(saveSequence()));
     connect(ui->actionResetSequence, SIGNAL(triggered()), this, SLOT(resetSequence()));

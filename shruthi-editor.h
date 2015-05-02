@@ -85,6 +85,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void settingsChanged(int, int, unsigned char, int);
         void showKeyboard();
         void showSequenceEditor();
+        void showLibrary();
 };
 
 
