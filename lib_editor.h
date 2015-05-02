@@ -33,7 +33,8 @@ enum ACTIONS
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE,
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF,
     NOTE_PANIC, SYSEX_SHRUTHI_INFO_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
-    SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE, RESET_SEQUENCE};
+    SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE, RESET_SEQUENCE,
+    LIBRARY_FETCH, LIBRARY_STORE, LIBRARY_RECALL, LIBRARY_SEND, LIBRARY_MOVE};
 
 
 // ******************************************
@@ -42,6 +43,7 @@ struct queueitem_t {
     ACTIONS action;
     int int0;
     int int1;
+    int int2;
     QString string;
     unsigned int size;
     unsigned char *message;
@@ -51,6 +53,13 @@ struct queueitem_t {
     }
     queueitem_t(ACTIONS a) {
         action = a;
+        message = NULL;
+    }
+    queueitem_t(ACTIONS a, int i0, int i1, int i2) {
+        action = a;
+        int0 = i0;
+        int1 = i1;
+        int2 = i2;
         message = NULL;
     }
     queueitem_t(ACTIONS a, int i0, int i1) {
@@ -91,9 +100,12 @@ class Editor : public QObject {
     public:
         Editor();
         ~Editor();
-        int getParam(int id);
-        QString getName();
-        const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp);
+        const int &getParam(int id) const;
+        const QString &getName() const;
+        const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
+        const QString &getLibraryName(const unsigned int &patch_id) const;
+        bool getLibraryPatchMoved(const unsigned int patch_id) const;
+        bool getLibraryPatchEdited(const unsigned int &patch_id) const;
 
         static const int FLAG_PATCH = 1;
         static const int FLAG_SEQUENCE = 2;
@@ -115,6 +127,11 @@ class Editor : public QObject {
         void actionRandomizePatch();
         void actionSequenceParameterChangeEditor(const unsigned &id, const int &value);
         void actionResetSequence();
+
+        void actionLibraryFetch(const unsigned int &what, const int &start, const int &stop);
+        void actionLibraryRecall(const unsigned int &what, const unsigned int &id);
+        void actionLibraryStore(const unsigned int &what, const unsigned int &id);
+        void actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target);
 
         Patch patch;
         Sequence sequence;
@@ -142,5 +159,6 @@ class Editor : public QObject {
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString);
         void setStatusbarVersionLabel(QString);
+        void redrawLibraryItems(int,int,int);
 };
 #endif

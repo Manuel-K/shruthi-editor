@@ -88,23 +88,44 @@ Editor::~Editor() {
 
 
 // ******************************************
-int Editor::getParam(int id) {
+const int &Editor::getParam(int id) const {
 // ******************************************
     return patch.getParam(id);
 }
 
 
 // ******************************************
-QString Editor::getName() {
+const QString &Editor::getName() const {
 // ******************************************
     return patch.getName();
 }
 
 
 // ******************************************
-const int &Editor::getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) {
+const int &Editor::getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const {
 // ******************************************
     return sequence.getParam(step, sp);
+}
+
+
+// ******************************************
+const QString &Editor::getLibraryName(const unsigned int &patch_id) const {
+// ******************************************
+    return library.recallPatch(patch_id).getName();
+}
+
+
+// ******************************************
+bool Editor::getLibraryPatchMoved(const unsigned int patch_id) const {
+// ******************************************
+    return library.patchHasBeenMoved(patch_id);
+}
+
+
+// ******************************************
+bool Editor::getLibraryPatchEdited(const unsigned int &patch_id) const {
+// ******************************************
+    return library.patchHasBeenEdited(patch_id);
 }
 
 
@@ -153,6 +174,18 @@ void Editor::process(queueitem_t item) {
             break;
         case RESET_PATCH:
             actionResetPatch(item.int0);
+            break;
+        case LIBRARY_FETCH:
+            actionLibraryFetch(item.int0, item.int1, item.int2);
+            break;
+        case LIBRARY_RECALL:
+            actionLibraryRecall(item.int0, item.int1);
+            break;
+        case LIBRARY_STORE:
+            actionLibraryStore(item.int0, item.int1);
+            break;
+        case LIBRARY_MOVE:
+            actionLibraryMove(item.int0, item.int1, item.int2);
             break;
         case RESET_SEQUENCE:
             actionResetSequence();
@@ -351,6 +384,9 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         if (ret) {
             if (library.isFetchingPatches()) {
                 ret = library.receivedPatch(message);
+                if (ret) {
+                    emit redrawLibraryItems(FLAG_PATCH, library.nextPatch() - 1, library.nextPatch() - 1);
+                }
             } else {
                 ret = patch.unpackData(message);
             }
@@ -370,6 +406,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         if (size == 32) {
             if (library.isFetchingSequences()) {
                 library.receivedSequence(message);
+                emit redrawLibraryItems(FLAG_SEQUENCE, library.nextSequence() - 1, library.nextSequence() - 1);
             } else {
                 sequence.unpackData(message);
             }
@@ -392,6 +429,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         //library.fetch(0, numberOfPrograms - 1); //DEBUG
         //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
         //library.fetchSequences(0, numberOfPrograms - 1); //DEBUG
+        emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, numberOfPrograms - 1);
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
@@ -572,6 +610,77 @@ void Editor::actionResetSequence() {
     sequence.reset();
     emit redrawAllSequenceParameters();
     emit displayStatusbar("Sequence reset.");
+}
+
+
+// ******************************************
+void Editor::actionLibraryFetch(const unsigned int &what, const int &start, const int &stop) {
+// ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionLibraryFetch()";
+#endif
+    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        library.fetch(start, stop);
+    } else if ((what&FLAG_PATCH)) {
+        library.fetchPatches(start, stop);
+    } else if ((what&FLAG_SEQUENCE)) {
+        library.fetchSequences(start, stop);
+    }
+}
+
+
+// ******************************************
+void Editor::actionLibraryRecall(const unsigned int &what, const unsigned int &id) {
+// ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionLibraryRecall()";
+#endif
+    Q_UNUSED(what);
+
+    if (what&FLAG_PATCH) {
+        patch.set(library.recallPatch(id));
+        emit redrawAllPatchParameters();
+    }
+    if (what&FLAG_SEQUENCE) {
+        sequence.set(library.recallSequence(id));
+        emit redrawAllSequenceParameters();
+    }
+}
+
+
+// ******************************************
+void Editor::actionLibraryStore(const unsigned int &what, const unsigned int &id) {
+// ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionLibraryStore()";
+#endif
+    if (what&FLAG_PATCH) {
+        library.storePatch(id, patch);
+        emit redrawLibraryItems(FLAG_PATCH, id, id);
+    }
+    if (what&FLAG_SEQUENCE) {
+        library.storeSequence(id, sequence);
+        emit redrawLibraryItems(FLAG_SEQUENCE, id, id);
+    }
+}
+
+
+// ******************************************
+void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target) {
+// ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionLibraryMove()";
+#endif
+    if (what&FLAG_PATCH) {
+        library.movePatch(start, target);
+    }
+    if (what&FLAG_SEQUENCE) {
+        library.moveSequence(start, target);
+    }
+    const int &s = std::min(start, target);
+    const int &t = std::max(start, target);
+    emit redrawLibraryItems(what, s, t);
+
 }
 
 

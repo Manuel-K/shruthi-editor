@@ -53,10 +53,10 @@ class Patch {
         static bool belongsToModMatrix(const int &id);
 
         void setParam(const int &id, int value);
-        int getParam(const int &id);
+        const int &getParam(const int &id) const;
         static QString formatParameterValue(const int &id, const int &value, int filter = 0);
         void setName(const QString &name);
-        QString getName();
+        const QString &getName() const;
         QString getVersionString();
 
         void resetPatch(unsigned int version = 1000);
@@ -67,7 +67,7 @@ class Patch {
         bool parseSysex(const std::vector<unsigned char> *message);
         void generateSysex(std::vector<unsigned char> *message);
 
-        bool equals(const Patch &other);
+        bool equals(const Patch &other) const;
         void set(const Patch &other);
 
         static unsigned char ccToId(const unsigned char &cc, const int &filter);

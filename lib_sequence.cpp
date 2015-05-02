@@ -82,7 +82,7 @@ void Sequence::generateSysex(std::vector<unsigned char> *message) {
 }
 
 // ******************************************
-const int &Sequence::getParam(const int &step, const SequenceParameter::SequenceParameter &sp) {
+const int &Sequence::getParam(const int &step, const SequenceParameter::SequenceParameter &sp) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -161,7 +161,7 @@ void Sequence::reset() {
 
 
 // ******************************************
-bool Sequence::equals(const Sequence &other) {
+bool Sequence::equals(const Sequence &other) const {
 // ******************************************
     for (int s = 0; s < NUMBER_OF_STEPS; s++) {
         if(stepsActive[s] != other.stepsActive[s] ||

@@ -320,7 +320,7 @@ void Patch::setParam(const int &id, int const value) {
 
 
 // ******************************************
-int Patch::getParam(const int &id) {
+const int &Patch::getParam(const int &id) const {
 // ******************************************
     return data[id];
 }
@@ -351,7 +351,7 @@ void Patch::setName(const QString &new_name) {
 
 
 // ******************************************
-QString Patch::getName() {
+const QString &Patch::getName() const {
 // ******************************************
     return name;
 }
@@ -666,7 +666,7 @@ void Patch::generateSysex(std::vector<unsigned char> *message) {
 
 
 // ******************************************
-bool Patch::equals(const Patch &other) {
+bool Patch::equals(const Patch &other) const {
 // ******************************************
     for (unsigned int i = 0; i < parameterCount; i++) {
         if (enabled(i) && data[i] != other.data[i]) {

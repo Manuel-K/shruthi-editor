@@ -35,14 +35,17 @@ class Library {
         Library(MidiOut *out);
         ~Library();
 
-        const Patch &recallPatch(const int &id);
+        const Patch &recallPatch(const int &id) const;
         void storePatch(const int &id, const Patch &patch);
-        void listPatches();
+        void listPatches() const;
         void movePatch(const int &from, const int &to);
 
-        const Sequence &recallSequence(const int &id);
+        bool patchHasBeenMoved(const int &id) const;
+        bool patchHasBeenEdited(const int &id) const;
+
+        const Sequence &recallSequence(const int &id) const;
         void storeSequence(const int &id, const Sequence &sequence);
-        void listSequences();
+        void listSequences() const;
         void moveSequence(const int &from, const int &to);
 
         bool fetch(const int &from, const int &to);
@@ -50,16 +53,19 @@ class Library {
 
         bool fetchPatches(const int &from, const int &to);
         bool receivedPatch(const unsigned char *sysex);
-        bool isFetchingPatches();
+        bool isFetchingPatches() const;
 
         bool fetchSequences(const int &from, const int &to);
         bool receivedSequence(const unsigned char *seq);
-        bool isFetchingSequences();
+        bool isFetchingSequences() const;
 
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path);
 
         void setNumberOfPrograms(const unsigned int &num);
+
+        int nextPatch() const;
+        int nextSequence() const;
 
     private:
         bool keepFetching();

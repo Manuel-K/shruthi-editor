@@ -62,7 +62,7 @@ Library::~Library() {
 
 
 // ******************************************
-const Patch &Library::recallPatch(const int &id) {
+const Patch &Library::recallPatch(const int &id) const {
 // ******************************************
     return patches.at(id);
 }
@@ -77,7 +77,7 @@ void Library::storePatch(const int &id, const Patch &patch) {
 
 
 // ******************************************
-void Library::listPatches() {
+void Library::listPatches() const {
 // ******************************************
     std::cout << "List of patches:" << std::endl;
 
@@ -120,7 +120,21 @@ void Library::movePatch(const int &from, const int &to) {
 
 
 // ******************************************
-const Sequence &Library::recallSequence(const int &id) {
+bool Library::patchHasBeenMoved(const int &id) const {
+// ******************************************
+    return patchMoved.at(id);
+}
+
+
+// ******************************************
+bool Library::patchHasBeenEdited(const int &id) const {
+// ******************************************
+    return patchEdited.at(id);
+}
+
+
+// ******************************************
+const Sequence &Library::recallSequence(const int &id) const {
 // ******************************************
     return sequences.at(id);
 }
@@ -130,11 +144,12 @@ const Sequence &Library::recallSequence(const int &id) {
 void Library::storeSequence(const int &id, const Sequence &sequence) {
 // ******************************************
     sequences.at(id).set(sequence);
+    sequenceEdited.at(id) = true;
 }
 
 
 // ******************************************
-void Library::listSequences() {
+void Library::listSequences() const {
 // ******************************************
     std::cout << "List of sequences:" << std::endl;
 
@@ -235,8 +250,13 @@ bool Library::receivedPatch(const unsigned char *sysex) {
         growPatchVectors(temp);
     }
 
-    bool ret = patches.at(fetchNextIncomingPatch).unpackData(sysex);
+    Patch tempp;
+    bool ret = tempp.unpackData(sysex);
+
     if (ret) {
+        patches.at(fetchNextIncomingPatch).set(tempp);
+        patchEdited.at(fetchNextIncomingPatch) = false;
+        patchMoved.at(fetchNextIncomingPatch) = false;
         fetchNextIncomingPatch++;
 
         //listPatches(); //DEBUG
@@ -250,7 +270,7 @@ bool Library::receivedPatch(const unsigned char *sysex) {
 
 
 // ******************************************
-bool Library::isFetchingPatches() {
+bool Library::isFetchingPatches() const {
 // ******************************************
 #ifdef DEBUGMSGS
     std::cout << "Library::isFetchingPatches() " << fetchPatchMode << " " << fetchNextIncomingPatch << " " << fetchEnd << std::endl;
@@ -292,6 +312,8 @@ bool Library::receivedSequence(const unsigned char *seq) {
     }
 
     sequences.at(fetchNextIncomingSequence).unpackData(seq);
+    sequenceEdited.at(fetchNextIncomingSequence) = false;
+    sequenceMoved.at(fetchNextIncomingSequence) = false;
     fetchNextIncomingSequence++;
 
     //listSequences(); //DEBUG
@@ -300,7 +322,7 @@ bool Library::receivedSequence(const unsigned char *seq) {
 
 
 // ******************************************
-bool Library::isFetchingSequences() {
+bool Library::isFetchingSequences() const {
 // ******************************************
 #ifdef DEBUGMSGS
     std::cout << "Library::isFetchingSequences() " << fetchSequenceMode << " " << fetchNextIncomingSequence << " " << fetchEnd << std::endl;
@@ -371,6 +393,8 @@ bool Library::loadLibrary(const QString &path) {
                     growPatchVectors(1);
                 }
                 patches.at(patch).set(tempPatch);
+                patchEdited.at(patch) = false;
+                patchMoved.at(patch) = false;
                 patch++;
             }
             keepGoing = statusp && retp >= 0;
@@ -400,6 +424,8 @@ bool Library::loadLibrary(const QString &path) {
                     growSequenceVectors(1);
                 }
                 sequences.at(sequence).set(tempSequence);
+                sequenceEdited.at(sequence) = false;
+                sequenceMoved.at(sequence) = false;
                 sequence++;
             }
             keepGoing = statuss && rets >= 0;
@@ -423,6 +449,20 @@ void Library::setNumberOfPrograms(const unsigned int &num) {
     growPatchVectors(num - numberOfPrograms);
     growSequenceVectors(num - numberOfPrograms);
     numberOfPrograms = num;
+}
+
+
+// ******************************************
+int Library::nextPatch() const {
+// ******************************************
+    return fetchNextIncomingPatch;
+}
+
+
+// ******************************************
+int Library::nextSequence() const {
+// ******************************************
+    return fetchNextIncomingSequence;
 }
 
 

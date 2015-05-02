@@ -39,12 +39,12 @@ public:
     void generateSysex(std::vector<unsigned char> *message);
 
     const int &getParamByID(const int &id);
-    const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp);
+    const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
     void setParamById(const int &id, const int &val);
     static int calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp);
     void reset();
 
-    bool equals(const Sequence &other);
+    bool equals(const Sequence &other) const;
     void set(const Sequence &other);
 
     const int &getActive(const int &step);
