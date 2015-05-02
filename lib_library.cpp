@@ -38,6 +38,7 @@ Library::Library(MidiOut *out) {
 
     fetchPatchMode = false;
     fetchSequenceMode = false;
+    fetchStart = 0;
     fetchEnd = 0;
     fetchNextIncomingPatch = 0;
     fetchNextPatchRequest = 0;
@@ -276,11 +277,14 @@ bool Library::fetch(const int &from, const int &to) {
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchPatchMode = true;
     fetchSequenceMode = true;
+    fetchStart = from;
     fetchEnd = to;
     fetchNextIncomingPatch = from;
     fetchNextPatchRequest = from;
     fetchNextIncomingSequence = from;
     fetchNextSequenceRequest = from;
+
+    time.start();
 
     return keepFetching();
 }
@@ -301,9 +305,12 @@ bool Library::fetchPatches(const int &from, const int &to) {
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchPatchMode = true;
+    fetchStart = from;
     fetchEnd = to;
     fetchNextIncomingPatch = from;
     fetchNextPatchRequest = from;
+
+    time.start();
 
     return keepFetching();
 }
@@ -362,9 +369,12 @@ bool Library::fetchSequences(const int &from, const int &to) {
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchSequenceMode = true;
+    fetchStart = from;
     fetchEnd = to;
     fetchNextIncomingSequence = from;
     fetchNextSequenceRequest = from;
+
+    time.start();
 
     return keepFetching();
 }
@@ -554,15 +564,20 @@ bool Library::keepFetching() {
     const bool seq_enabled = fetchSequenceMode && fetchNextSequenceRequest <= fetchEnd;
 
     if (!ptc_enabled && !seq_enabled) {
-        // Finished fetching:
-        std::cout << "Finished fetching." << std::endl;
-        //DEBUG:
-        //listPatches();
-        //movePatch(3, 1);
-        //listPatches();
-        //movePatch(1, 3);
-        //listPatches();
-        //END DEBUG
+        // Finished fetching. Display statistics:
+        std::cout << "Finished fetching ";
+
+        if (fetchPatchMode) {
+            std::cout << "patches";
+            if (fetchSequenceMode) {
+                std::cout << " and ";
+            }
+        }
+        if (fetchSequenceMode) {
+            std::cout << "sequences";
+        }
+        std::cout << ". It took " << time.elapsed() << " ms to fetch " << fetchEnd - fetchStart + 1 << " programs." << std::endl;
+
         abortFetching();
         return true;
     }

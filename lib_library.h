@@ -20,12 +20,13 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#import <vector>
-#import "lib_patch.h"
-#import "lib_sequence.h"
-#import "lib_midiout.h"
+#include <vector>
+#include "lib_patch.h"
+#include "lib_sequence.h"
+#include "lib_midiout.h"
 
 class QString;
+#include <QTime>
 
 // ******************************************
 class Library {
@@ -94,6 +95,7 @@ class Library {
         bool fetchPatchMode;
         bool fetchSequenceMode;
 
+        unsigned int fetchStart;
         unsigned int fetchEnd;
         unsigned int fetchNextIncomingPatch;
         unsigned int fetchNextPatchRequest;
@@ -101,6 +103,7 @@ class Library {
         unsigned int fetchNextIncomingSequence;
         unsigned int fetchNextSequenceRequest;
 
+        QTime time;
 
         int numberOfPrograms;
 };
