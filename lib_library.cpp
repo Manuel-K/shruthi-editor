@@ -71,8 +71,11 @@ const Patch &Library::recallPatch(const int &id) const {
 // ******************************************
 void Library::storePatch(const int &id, const Patch &patch) {
 // ******************************************
-    patches.at(id).set(patch);
-    patchEdited.at(id) = true;
+    if (!patches.at(id).equals(patch)) {
+        patches.at(id).set(patch);
+        patchEdited.at(id) = true;
+        patchMoved.at(id) = false;
+    }
 }
 
 
@@ -143,8 +146,11 @@ const Sequence &Library::recallSequence(const int &id) const {
 // ******************************************
 void Library::storeSequence(const int &id, const Sequence &sequence) {
 // ******************************************
-    sequences.at(id).set(sequence);
-    sequenceEdited.at(id) = true;
+    if (!sequences.at(id).equals(sequence)) {
+        sequences.at(id).set(sequence);
+        sequenceEdited.at(id) = true;
+        sequenceMoved.at(id) = false;
+    }
 }
 
 
