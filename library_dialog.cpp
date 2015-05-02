@@ -223,8 +223,6 @@ void LibraryDialog::move(const QModelIndex &parent, int start, int end, const QM
 // ******************************************
 void LibraryDialog::fetch() {
 // ******************************************
-//    ui->patchList->addItem("new");
-//    ui->patchList->insertItem(ui->patchList->currentRow(), "new");
     queueitem_t signal(LIBRARY_FETCH);
     signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
     signal.int1 = 0;
@@ -240,6 +238,11 @@ void LibraryDialog::sendSelected() {
 
     // should use range!
     const int &c = ui->patchList->currentRow();
+
+    if (c < 0) {
+        // no selection
+        return;
+    }
 
     queueitem_t signal(LIBRARY_SEND);
     signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
