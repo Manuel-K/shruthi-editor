@@ -160,7 +160,7 @@ bool Library::moveSequence(const int &from, const int &to) {
 }
 
 // ******************************************
-void Library::fetch(const int &from, const int &to) {
+bool Library::fetch(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
@@ -172,12 +172,21 @@ void Library::fetch(const int &from, const int &to) {
     fetchNextIncomingSequence = from;
     fetchNextSequenceRequest = from;
 
-    keepFetching();
+    return keepFetching();
 }
 
 
 // ******************************************
-void Library::fetchPatches(const int &from, const int &to) {
+void Library::abortFetching() {
+// ******************************************
+    fetchEnd = 0;
+    fetchPatchMode = false;
+    fetchSequenceMode = false;
+}
+
+
+// ******************************************
+bool Library::fetchPatches(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
@@ -186,7 +195,7 @@ void Library::fetchPatches(const int &from, const int &to) {
     fetchNextIncomingPatch = from;
     fetchNextPatchRequest = from;
 
-    keepFetching();
+    return keepFetching();
 }
 
 
@@ -194,6 +203,7 @@ void Library::fetchPatches(const int &from, const int &to) {
 bool Library::receivedPatch(const unsigned char *sysex) {
 // ******************************************
     if (!fetchPatchMode || fetchNextIncomingPatch > fetchEnd) {
+        abortFetching();
         return false;
     }
 
@@ -212,11 +222,10 @@ bool Library::receivedPatch(const unsigned char *sysex) {
         fetchNextIncomingPatch++;
 
         //listPatches(); //DEBUG
-        keepFetching();
+        ret = keepFetching();
     } else {
         //TODO test if this really stops everything and unlocks the editor
-        fetchEnd = 0;
-        fetchPatchMode = false;
+        abortFetching();
     }
     return ret;
 }
@@ -233,7 +242,7 @@ bool Library::isFetchingPatches() {
 
 
 // ******************************************
-void Library::fetchSequences(const int &from, const int &to) {
+bool Library::fetchSequences(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
@@ -242,7 +251,7 @@ void Library::fetchSequences(const int &from, const int &to) {
     fetchNextIncomingSequence = from;
     fetchNextSequenceRequest = from;
 
-    keepFetching();
+    return keepFetching();
 }
 
 
@@ -250,6 +259,7 @@ void Library::fetchSequences(const int &from, const int &to) {
 bool Library::receivedSequence(const unsigned char *seq) {
 // ******************************************
     if (!fetchSequenceMode || fetchNextIncomingSequence > fetchEnd) {
+        abortFetching();
         return false;
     }
 
@@ -267,9 +277,7 @@ bool Library::receivedSequence(const unsigned char *seq) {
     fetchNextIncomingSequence++;
 
     //listSequences(); //DEBUG
-    keepFetching();
-    //TODO add function to stop everything and to unlock the editor
-    return true;
+    return keepFetching();
 }
 
 
@@ -411,7 +419,10 @@ bool Library::keepFetching() {
     const bool seq_enabled = fetchSequenceMode && fetchNextSequenceRequest <= fetchEnd;
 
     if (!ptc_enabled && !seq_enabled) {
-        return false;
+        // finished fetchting:
+        std::cout << "Finished fetching." << std::endl;
+        abortFetching();
+        return true;
     }
 
     const bool prefer_patch = fetchNextPatchRequest <= fetchNextSequenceRequest;
@@ -428,6 +439,10 @@ bool Library::keepFetching() {
         if (ret) {
             fetchNextSequenceRequest++;
         }
+    }
+
+    if (!ret) {
+        abortFetching();
     }
 
     return ret;

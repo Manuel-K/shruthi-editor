@@ -361,6 +361,9 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
             emit redrawAllPatchParameters();
             emit setStatusbarVersionLabel(patch.getVersionString());
         } else {
+            if (library.isFetchingPatches()) {
+                library.abortFetching();
+            }
             emit displayStatusbar("Received invalid patch.");
         }
     } else if (command == 0x02 && argument == 0x00) {
@@ -374,6 +377,9 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
             emit displayStatusbar("Received valid sequence.");
             emit redrawAllSequenceParameters();
         } else {
+            if (library.isFetchingSequences()) {
+                library.abortFetching();
+            }
             emit displayStatusbar("Received invalid sequence.");
         }
     } else if (command == 0x0b and size == 0) {
@@ -383,6 +389,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
         library.setNumberOfPrograms(numberOfPrograms);
+        //library.fetch(0, numberOfPrograms - 1); //DEBUG
         //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
         //library.fetchSequences(0, numberOfPrograms - 1); //DEBUG
     } else {

@@ -45,13 +45,14 @@ class Library {
         void listSequences();
         bool moveSequence(const int &from, const int &to);
 
-        void fetch(const int &from, const int &to);
+        bool fetch(const int &from, const int &to);
+        void abortFetching();
 
-        void fetchPatches(const int &from, const int &to);
+        bool fetchPatches(const int &from, const int &to);
         bool receivedPatch(const unsigned char *sysex);
         bool isFetchingPatches();
 
-        void fetchSequences(const int &from, const int &to);
+        bool fetchSequences(const int &from, const int &to);
         bool receivedSequence(const unsigned char *seq);
         bool isFetchingSequences();
 
