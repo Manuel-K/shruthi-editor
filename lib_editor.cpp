@@ -18,8 +18,11 @@
 
 #include "lib_editor.h"
 #include "lib_fileio.h"
-#include <QDebug>
 #include "lib_midi.h"
+
+#ifdef DEBUGMSGS
+#include <QDebug>
+#endif
 
 
 // ******************************************
@@ -643,12 +646,13 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
+    const int &st = stop >= 0 ? stop : (numberOfPrograms - 1);
     if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
-        library.fetch(start, stop);
+        library.fetch(start, st);
     } else if ((what&FLAG_PATCH)) {
-        library.fetchPatches(start, stop);
+        library.fetchPatches(start, st);
     } else if ((what&FLAG_SEQUENCE)) {
-        library.fetchSequences(start, stop);
+        library.fetchSequences(start, st);
     }
 }
 
