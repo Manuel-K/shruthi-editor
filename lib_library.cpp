@@ -477,7 +477,7 @@ bool Library::keepFetching() {
     const bool seq_enabled = fetchSequenceMode && fetchNextSequenceRequest <= fetchEnd;
 
     if (!ptc_enabled && !seq_enabled) {
-        // Finished fetchting:
+        // Finished fetching:
         std::cout << "Finished fetching." << std::endl;
         //DEBUG:
         //listPatches();
