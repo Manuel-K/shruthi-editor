@@ -43,12 +43,15 @@ class MidiOut {
         bool versionRequest();
         bool numBanksRequest();
         bool currentPatchSequenceRequest();
+        bool patchWriteRequest(const int &slot);
+        bool sequenceWriteRequest(const int &slot);
 
     private:
         // Wrappers:
         bool write(const unsigned char &c1, const unsigned char &c2, const unsigned char &c3);
         bool write(const unsigned char &c1, const unsigned char &c2);
         bool request(const unsigned char &which);
+        bool writeRequest(const int &slot, const unsigned char &which);
 
         RtMidiOut* midiout;
         bool opened;
