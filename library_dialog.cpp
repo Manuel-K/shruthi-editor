@@ -55,7 +55,7 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     connect(ui->fetch, SIGNAL(clicked(bool)), this, SLOT(fetch()));
 
     // synchronize list widget scrolling:
-    connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSeqScrollBar(int)));
+    connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSequenceScrollBar(int)));
     connect(ui->sequenceList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToPatchScrollBar(int)));
 }
 
@@ -231,7 +231,7 @@ void LibraryDialog::fetch() {
 
 
 // ******************************************
-void LibraryDialog::syncToSeqScrollBar(int val) {
+void LibraryDialog::syncToSequenceScrollBar(int val) {
 // ******************************************
     if (dontScroll) {
         return;
