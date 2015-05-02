@@ -22,7 +22,7 @@
 #include "lib_midi.h"
 
 #include <iostream>
-
+#include <QThread>
 
 // ******************************************
 Library::Library(MidiOut *out) {
@@ -224,16 +224,15 @@ bool Library::sequenceIsInit(const int &id) const {
 // ******************************************
 bool Library::send(const int &what, const int &from, const int &to) {
 // ******************************************
-    if (from != to) {
-        std::cout << "Library::send(): ranges not implemented" << std::endl;
-        return false;
-    }
-
-    // Only Patch works
+    QTime t;
+    t.start();
     std::vector<unsigned char> temp;
     bool ret = true;
+
+    bool force = what&4;
+
     for (int i = from; i <= to; i++) {
-        if (what&1) {
+        if ((what&1) && (force || patchHasBeenEdited(i) || patchHasBeenMoved(i))) {
             std::cout << i << " patch " << std::endl;
             temp.clear();
             patches.at(i).generateSysex(&temp);
@@ -244,10 +243,11 @@ bool Library::send(const int &what, const int &from, const int &to) {
             if (ret) {
                 patchEdited.at(i) = false;
                 patchMoved.at(i) = false;
-                ret = midiout->programChange(0, i);
             }
+            // Don't flood the Shruthi
+            QThread::msleep(250);
         }
-        if (ret && (what&2)) {
+        if (ret && (what&2) && (force || sequenceHasBeenEdited(i) || sequenceHasBeenMoved(i))) {
             std::cout << i << " sequence " << std::endl;
             temp.clear();
             sequences.at(i).generateSysex(&temp);
@@ -258,12 +258,19 @@ bool Library::send(const int &what, const int &from, const int &to) {
             if (ret) {
                 sequenceEdited.at(i) = false;
                 sequenceMoved.at(i) = false;
-                ret = midiout->programChange(0, i);
             }
+            // Don't flood the Shruthi
+            QThread::msleep(125);
         }
+
         if (!ret) {
             return false;
         }
+    }
+
+    std::cout << "Sending finished. Time elapsed: " << t.elapsed() << " ms." << std::endl;
+    if (ret) {
+        ret = midiout->programChange(0, to);
     }
     return ret;
 

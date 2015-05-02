@@ -245,7 +245,7 @@ void LibraryDialog::sendSelected() {
     }
 
     queueitem_t signal(LIBRARY_SEND);
-    signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
+    signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE | 4; // Flag 4 means force update
     signal.int1 = c;
     signal.int2 = c;
     emit enqueue(signal);
