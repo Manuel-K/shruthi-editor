@@ -104,8 +104,11 @@ class Editor : public QObject {
         const QString &getName() const;
         const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
         const QString &getLibraryName(const unsigned int &patch_id) const;
-        bool getLibraryPatchMoved(const unsigned int patch_id) const;
+        bool getLibraryPatchMoved(const unsigned int &patch_id) const;
         bool getLibraryPatchEdited(const unsigned int &patch_id) const;
+        bool isLibrarySequenceInit(const unsigned int &seq_id) const;
+        bool getLibrarySequenceMoved(const unsigned int &seq_id) const;
+        bool getLibrarySequenceEdited(const unsigned int &seq_id) const;
 
         static const int FLAG_PATCH = 1;
         static const int FLAG_SEQUENCE = 2;

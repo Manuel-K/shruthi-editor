@@ -116,7 +116,7 @@ const QString &Editor::getLibraryName(const unsigned int &patch_id) const {
 
 
 // ******************************************
-bool Editor::getLibraryPatchMoved(const unsigned int patch_id) const {
+bool Editor::getLibraryPatchMoved(const unsigned int &patch_id) const {
 // ******************************************
     return library.patchHasBeenMoved(patch_id);
 }
@@ -126,6 +126,27 @@ bool Editor::getLibraryPatchMoved(const unsigned int patch_id) const {
 bool Editor::getLibraryPatchEdited(const unsigned int &patch_id) const {
 // ******************************************
     return library.patchHasBeenEdited(patch_id);
+}
+
+
+// ******************************************
+bool Editor::isLibrarySequenceInit(const unsigned int &seq_id) const {
+// ******************************************
+    return library.sequenceIsInit(seq_id);
+}
+
+
+// ******************************************
+bool Editor::getLibrarySequenceMoved(const unsigned int &seq_id) const {
+// ******************************************
+    return library.sequenceHasBeenMoved(seq_id);
+}
+
+
+// ******************************************
+bool Editor::getLibrarySequenceEdited(const unsigned int &seq_id) const {
+// ******************************************
+    return library.sequenceHasBeenEdited(seq_id);
 }
 
 

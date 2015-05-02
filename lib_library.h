@@ -48,6 +48,11 @@ class Library {
         void listSequences() const;
         void moveSequence(const int &from, const int &to);
 
+        bool sequenceHasBeenMoved(const int &id) const;
+        bool sequenceHasBeenEdited(const int &id) const;
+        bool sequenceIsInit(const int &id) const;
+
+
         bool fetch(const int &from, const int &to);
         void abortFetching();
 

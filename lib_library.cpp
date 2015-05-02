@@ -164,7 +164,7 @@ void Library::listSequences() const {
     const unsigned int &num = sequences.size();
     for (unsigned int i = 0; i < num; i++) {
         std::cout << "  " << i << ": "
-                  << (sequences.at(i).equals(init_sequence) ? "init" : "custom")
+                  << (sequenceIsInit(i) ? "init" : "custom")
                   << ", changed " << sequenceEdited.at(i)
                   << ", moved " << sequenceMoved.at(i) << std::endl;
     }
@@ -197,6 +197,28 @@ void Library::moveSequence(const int &from, const int &to) {
         sequenceMoved.at(i) = true;
     }
 }
+
+
+// ******************************************
+bool Library::sequenceHasBeenMoved(const int &id) const {
+// ******************************************
+    return sequenceMoved.at(id);
+}
+
+
+// ******************************************
+bool Library::sequenceHasBeenEdited(const int &id) const {
+// ******************************************
+    return sequenceEdited.at(id);
+}
+
+
+// ******************************************
+bool Library::sequenceIsInit(const int &id) const {
+// ******************************************
+    return sequences.at(id).equals(init_sequence);
+}
+
 
 // ******************************************
 bool Library::fetch(const int &from, const int &to) {
