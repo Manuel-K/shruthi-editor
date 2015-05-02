@@ -52,6 +52,7 @@ class Library {
         bool sequenceHasBeenEdited(const int &id) const;
         bool sequenceIsInit(const int &id) const;
 
+        bool send(const int &what, const int &from, const int &to);
 
         bool fetch(const int &from, const int &to);
         void abortFetching();

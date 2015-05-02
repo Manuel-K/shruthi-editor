@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>621</width>
-    <height>496</height>
+    <width>619</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,13 @@
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="sendSelected">
+     <property name="text">
+      <string>Send selected</string>
      </property>
     </widget>
    </item>

@@ -132,6 +132,7 @@ class Editor : public QObject {
         void actionResetSequence();
 
         void actionLibraryFetch(const unsigned int &what, const int &start, const int &stop);
+        void actionLibrarySend(const unsigned int &what, const int &start, const int &end);
         void actionLibraryRecall(const unsigned int &what, const unsigned int &id);
         void actionLibraryStore(const unsigned int &what, const unsigned int &id);
         void actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target);

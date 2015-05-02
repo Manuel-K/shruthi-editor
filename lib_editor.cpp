@@ -208,6 +208,9 @@ void Editor::process(queueitem_t item) {
         case LIBRARY_MOVE:
             actionLibraryMove(item.int0, item.int1, item.int2);
             break;
+        case LIBRARY_SEND:
+            actionLibrarySend(item.int0, item.int1, item.int2);
+            break;
         case RESET_SEQUENCE:
             actionResetSequence();
             break;
@@ -647,6 +650,18 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
     } else if ((what&FLAG_SEQUENCE)) {
         library.fetchSequences(start, stop);
     }
+}
+
+
+// ******************************************
+void Editor::actionLibrarySend(const unsigned int &what, const int &start, const int &end) {
+// ******************************************
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionLibrarySend()" << what << start << end;
+#endif
+
+    library.send(what, start, end);
+    emit redrawLibraryItems(what, start, end);
 }
 
 

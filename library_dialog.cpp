@@ -53,6 +53,7 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     connect(ui->patchList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(customContextMenuRequested(QPoint)));
     connect(ui->patchList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(move(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->fetch, SIGNAL(clicked(bool)), this, SLOT(fetch()));
+    connect(ui->sendSelected, SIGNAL(clicked()), this, SLOT(sendSelected()));
 
     // synchronize list widget scrolling:
     connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSequenceScrollBar(int)));
@@ -208,6 +209,8 @@ void LibraryDialog::move(const QModelIndex &parent, int start, int end, const QM
         return;
     }
 
+    std::cout << "move" << std::endl;
+
     queueitem_t signal(LIBRARY_MOVE);
     signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
     signal.int1 = start;
@@ -226,6 +229,22 @@ void LibraryDialog::fetch() {
     signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
     signal.int1 = 0;
     signal.int2 = 15;
+    emit enqueue(signal);
+}
+
+
+// ******************************************
+void LibraryDialog::sendSelected() {
+// ******************************************
+    //std::cout << "LibraryDialog::sendSelected()" << std::endl;
+
+    // should use range!
+    const int &c = ui->patchList->currentRow();
+
+    queueitem_t signal(LIBRARY_SEND);
+    signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
+    signal.int1 = c;
+    signal.int2 = c;
     emit enqueue(signal);
 }
 

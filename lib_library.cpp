@@ -221,6 +221,55 @@ bool Library::sequenceIsInit(const int &id) const {
 
 
 // ******************************************
+bool Library::send(const int &what, const int &from, const int &to) {
+// ******************************************
+    if (from != to) {
+        std::cout << "Library::send(): ranges not implemented" << std::endl;
+        return false;
+    }
+
+    // Only Patch works
+    std::vector<unsigned char> temp;
+    bool ret = true;
+    for (int i = from; i <= to; i++) {
+        if (what&1) {
+            std::cout << i << " patch " << std::endl;
+            temp.clear();
+            patches.at(i).generateSysex(&temp);
+            ret = midiout->write(temp);
+            if (ret) {
+                ret = midiout->patchWriteRequest(i);
+            }
+            if (ret) {
+                patchEdited.at(i) = false;
+                patchMoved.at(i) = false;
+                ret = midiout->programChange(0, i);
+            }
+        }
+        if (ret && (what&2)) {
+            std::cout << i << " sequence " << std::endl;
+            temp.clear();
+            sequences.at(i).generateSysex(&temp);
+            ret = midiout->write(temp);
+            if (ret) {
+                ret = midiout->sequenceWriteRequest(i);
+            }
+            if (ret) {
+                sequenceEdited.at(i) = false;
+                sequenceMoved.at(i) = false;
+                ret = midiout->programChange(0, i);
+            }
+        }
+        if (!ret) {
+            return false;
+        }
+    }
+    return ret;
+
+}
+
+
+// ******************************************
 bool Library::fetch(const int &from, const int &to) {
 // ******************************************
     // Note:
