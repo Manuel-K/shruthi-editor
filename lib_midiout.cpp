@@ -283,7 +283,6 @@ bool MidiOut::sequenceWriteRequest(const int &slot)
 bool MidiOut::writeRequest(const int &slot, const unsigned char &which)
 // ******************************************
 {
-    std::cout << "MidiOut::writeRequest" << std::endl;
     if (slot < 0) {
         qDebug() << "MidiOut::writeRequest(): Slot" << slot << "is invalid.";
         return false;
