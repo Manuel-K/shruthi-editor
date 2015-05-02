@@ -231,24 +231,57 @@ void LibraryDialog::fetch() {
 }
 
 
+
+// ******************************************
+void LibraryDialog::sendRange(const int &flags, const int &from, const int &to) {
+// ******************************************
+    std::cout << "LibraryDialog::sendRange() " << flags << " " << from << " " << to << std::endl;
+    queueitem_t signal(LIBRARY_SEND);
+    signal.int0 = flags;
+    signal.int1 = from;
+    signal.int2 = to;
+    emit enqueue(signal);
+}
+
+
 // ******************************************
 void LibraryDialog::sendSelected() {
 // ******************************************
     //std::cout << "LibraryDialog::sendSelected()" << std::endl;
 
-    // should use range!
-    const int &c = ui->patchList->currentRow();
-
-    if (c < 0) {
+    if (ui->patchList->currentRow() < 0) {
         // no selection
         return;
     }
 
-    queueitem_t signal(LIBRARY_SEND);
-    signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE | 4; // Flag 4 means force update
-    signal.int1 = c;
-    signal.int2 = c;
-    emit enqueue(signal);
+    // determine selection manually:
+    int rows = ui->patchList->count();
+    if (rows < 16) {
+        return; // should have at least the internal patches!
+    }
+
+    const int &flags = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
+
+    bool last = ui->patchList->item(0)->isSelected();
+    bool inside = false;
+    int start = 0;
+    for (int i = 1; i < rows; i++) {
+        const bool &current = ui->patchList->item(i)->isSelected();
+        if (current && !last) {
+            inside = true;
+            start = i;
+        }
+
+        if (!current && last) {
+            inside = false;
+            sendRange(flags, start, i - 1);
+        }
+
+        last = current;
+    }
+    if (inside) {
+        sendRange(flags, start, rows - 1);
+    }
 }
 
 

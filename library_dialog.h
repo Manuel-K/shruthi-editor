@@ -43,6 +43,7 @@ class LibraryDialog : public QDialog {
 
     private:
         void setFont(QListWidgetItem *item, bool edited, bool moved);
+        void sendRange(const int &flags, const int &from, const int &to);
 
         Ui::LibraryDialog *ui;
         Editor *editor;
