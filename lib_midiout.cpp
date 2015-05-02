@@ -250,4 +250,37 @@ bool MidiOut::versionRequest()
 }
 
 
+// ******************************************
+bool MidiOut::patchWriteRequest(const int &slot)
+// ******************************************
+{
+    return writeRequest(slot, 0x21);
+}
 
+
+// ******************************************
+bool MidiOut::sequenceWriteRequest(const int &slot)
+// ******************************************
+{
+    return writeRequest(slot, 0x22);
+}
+
+
+// ******************************************
+bool MidiOut::writeRequest(const int &slot, const unsigned char &which)
+// ******************************************
+{
+    std::cout << "MidiOut::writeRequest" << std::endl;
+    if (slot < 0) {
+        qDebug() << "MidiOut::writeRequest(): Slot" << slot << "is invalid.";
+        return false;
+    }
+    std::vector<unsigned char> payload;
+    payload.push_back(slot >> 8);
+    payload.push_back(slot & 0xff);
+
+    std::vector<unsigned char> message;
+    Midi::generateSysex(&payload, which, 0x00, &message);
+
+    return write(message);
+}
