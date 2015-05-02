@@ -43,7 +43,7 @@ class Library {
         const Sequence &recallSequence(const int &id);
         void storeSequence(const int &id, const Sequence &sequence);
         void listSequences();
-        bool moveSequence(const int &from, const int &to);
+        void moveSequence(const int &from, const int &to);
 
         bool fetch(const int &from, const int &to);
         void abortFetching();

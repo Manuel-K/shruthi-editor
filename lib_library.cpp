@@ -94,21 +94,19 @@ void Library::listPatches() {
 // ******************************************
 void Library::movePatch(const int &from, const int &to) {
 // ******************************************
-    return; //this is completely untested!
-
     if (from == to) {
         return;
     }
-    // TODO implement/test me
 
-    patches.insert(patches.begin() + to, patches.at(from));
+    Patch temp = patches.at(from);
     patches.erase(patches.begin() + from);
+    patches.insert(patches.begin() + to, temp);
 
-    patchEdited.insert(patchEdited.begin() + to, patchEdited.at(from));
+    bool temp2 = patchEdited.at(from);
     patchEdited.erase(patchEdited.begin() + from);
+    patchEdited.insert(patchEdited.begin() + to, temp2);
 
-
-    // mark as moved:
+    // Mark as moved:
     int start = from;
     int end = to;
     if (from > to) {
@@ -153,10 +151,30 @@ void Library::listSequences() {
 
 
 // ******************************************
-bool Library::moveSequence(const int &from, const int &to) {
+void Library::moveSequence(const int &from, const int &to) {
 // ******************************************
-    //TODO: implement me
-    return false;
+    if (from == to) {
+        return;
+    }
+
+    Sequence temp = sequences.at(from);
+    sequences.erase(sequences.begin() + from);
+    sequences.insert(sequences.begin() + to, temp);
+
+    bool temp2 = sequenceEdited.at(from);
+    sequenceEdited.erase(sequenceEdited.begin() + from);
+    sequenceEdited.insert(sequenceEdited.begin() + to, temp2);
+
+    // Mark as moved:
+    int start = from;
+    int end = to;
+    if (from > to) {
+        start = to;
+        end = from;
+    }
+    for (int i = start; i <= end; i++) {
+        sequenceMoved.at(i) = true;
+    }
 }
 
 // ******************************************
@@ -419,8 +437,15 @@ bool Library::keepFetching() {
     const bool seq_enabled = fetchSequenceMode && fetchNextSequenceRequest <= fetchEnd;
 
     if (!ptc_enabled && !seq_enabled) {
-        // finished fetchting:
+        // Finished fetchting:
         std::cout << "Finished fetching." << std::endl;
+        //DEBUG:
+        //listPatches();
+        //movePatch(3, 1);
+        //listPatches();
+        //movePatch(1, 3);
+        //listPatches();
+        //END DEBUG
         abortFetching();
         return true;
     }
