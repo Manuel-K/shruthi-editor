@@ -44,7 +44,6 @@ class SequenceEditor : public QDialog
         Editor *editor;
 
     public slots:
-        void showSequenceEditor();
         void redrawPatchParameter(int id);
         void redrawAllPatchParameters();
         void redrawAllSequenceParameters();

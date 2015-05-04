@@ -94,12 +94,12 @@ int main(int argc, char *argv[]) {
 
         // Setup keyboard
         Keyboard keys;
-        keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(showKeyboard()));
+        keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(show()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
 
         // Setup SequenceEditor
         SequenceEditor sequence_editor(&editor);
-        sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(showSequenceEditor()));
+        sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(show()));
         sequence_editor.setWindowIcon(QIcon(":/shruthi-editor.png"));
         sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
         sequence_editor.connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));

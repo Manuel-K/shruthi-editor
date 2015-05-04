@@ -100,13 +100,6 @@ void SequenceEditor::sendSequenceUpdate() {
 
 
 // ******************************************
-void SequenceEditor::showSequenceEditor() {
-// ******************************************
-    show();
-}
-
-
-// ******************************************
 void SequenceEditor::redrawPatchParameter(int id) {
 // ******************************************
 #ifdef DEBUGMSGS

@@ -43,9 +43,6 @@ class Keyboard : public QDialog {
         void setOctave(int oct);
         void panicPushed();
 
-    public slots:
-        void showKeyboard();
-
     signals:
         void enqueue(queueitem_t);
 };
