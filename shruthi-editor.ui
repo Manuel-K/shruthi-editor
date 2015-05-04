@@ -1728,6 +1728,7 @@
     <addaction name="separator"/>
     <addaction name="actionFetchPatch"/>
     <addaction name="actionSendPatch"/>
+    <addaction name="separator"/>
     <addaction name="actionFetchSequence"/>
     <addaction name="actionSendSequence"/>
     <addaction name="separator"/>
