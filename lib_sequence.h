@@ -34,11 +34,11 @@ public:
     ~Sequence();
 
     void unpackData(const unsigned char *data);
-    void packData(unsigned char data[]);
+    void packData(unsigned char data[]) const;
     bool parseSysex(const std::vector<unsigned char> *message);
-    void generateSysex(std::vector<unsigned char> *message);
+    void generateSysex(std::vector<unsigned char> *message) const;
 
-    const int &getParamByID(const int &id);
+    const int &getParamByID(const int &id) const;
     const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
     void setParamById(const int &id, const int &val);
     static int calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp);
@@ -47,17 +47,17 @@ public:
     bool equals(const Sequence &other) const;
     void set(const Sequence &other);
 
-    const int &getActive(const int &step);
-    const int &getNote(const int &step);
-    const int &getTie(const int &step);
-    const int &getVelocity(const int &step);
-    const int &getValue(const int &step);
+    const int &getActive(const int &step) const;
+    const int &getNote(const int &step) const;
+    const int &getTie(const int &step) const;
+    const int &getVelocity(const int &step) const;
+    const int &getValue(const int &step) const;
 
     static const int NUMBER_OF_STEPS = 16;
     static const int ERROR_RETURN;
 
 private:
-    void print();
+    void print() const;
 
     int stepsActive[16];
     int stepsNote[16];

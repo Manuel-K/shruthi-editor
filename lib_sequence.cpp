@@ -68,7 +68,7 @@ bool Sequence::parseSysex(const std::vector<unsigned char> *message) {
 
 
 // ******************************************
-void Sequence::generateSysex(std::vector<unsigned char> *message) {
+void Sequence::generateSysex(std::vector<unsigned char> *message) const {
 // ******************************************
     unsigned char temp[32];
     packData(temp);
@@ -122,7 +122,7 @@ void Sequence::unpackData(const unsigned char *data) {
 
 
 // ******************************************
-void Sequence::packData(unsigned char data[]) {
+void Sequence::packData(unsigned char data[]) const {
 // ******************************************
     for (unsigned int i = 0; i < 16; i++) {
         data[2*i] = stepsActive[i] << 7 | stepsNote[i];
@@ -191,7 +191,7 @@ void Sequence::set(const Sequence &other) {
 
 
 // ******************************************
-const int &Sequence::getActive(const int &step) {
+const int &Sequence::getActive(const int &step) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -201,7 +201,7 @@ const int &Sequence::getActive(const int &step) {
 
 
 // ******************************************
-const int &Sequence::getNote(const int &step) {
+const int &Sequence::getNote(const int &step) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -211,7 +211,7 @@ const int &Sequence::getNote(const int &step) {
 
 
 // ******************************************
-const int &Sequence::getTie(const int &step) {
+const int &Sequence::getTie(const int &step) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -222,7 +222,7 @@ const int &Sequence::getTie(const int &step) {
 
 
 // ******************************************
-const int &Sequence::getVelocity(const int &step) {
+const int &Sequence::getVelocity(const int &step) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -232,7 +232,7 @@ const int &Sequence::getVelocity(const int &step) {
 
 
 // ******************************************
-const int &Sequence::getValue(const int &step) {
+const int &Sequence::getValue(const int &step) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -244,7 +244,7 @@ const int &Sequence::getValue(const int &step) {
 
 
 // ******************************************
-void Sequence::print() {
+void Sequence::print() const {
 // ******************************************
     QString typestr;
     for (unsigned int i = 0; i < 16; i++) {
@@ -316,7 +316,7 @@ int Sequence::calculateParamId(const int &step, const SequenceParameter::Sequenc
 
 
 // ******************************************
-const int &Sequence::getParamByID(const int &id) {
+const int &Sequence::getParamByID(const int &id) const {
 // ******************************************
     if (id < 0 || id >= 80) {
         return ERROR_RETURN;

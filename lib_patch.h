@@ -57,15 +57,15 @@ class Patch {
         static QString formatParameterValue(const int &id, const int &value, int filter = 0);
         void setName(const QString &name);
         const QString &getName() const;
-        QString getVersionString();
+        QString getVersionString() const;
 
         void resetPatch(unsigned int version = 1000);
         void randomizePatch(const int &filter);
 
         bool unpackData(const unsigned char *sysex);
-        void packData(unsigned char res[]);
+        void packData(unsigned char res[]) const;
         bool parseSysex(const std::vector<unsigned char> *message);
-        void generateSysex(std::vector<unsigned char> *message);
+        void generateSysex(std::vector<unsigned char> *message) const;
 
         bool equals(const Patch &other) const;
         void set(const Patch &other);
@@ -78,7 +78,7 @@ class Patch {
         static const unsigned char filterBoardCount;
 
     private:
-        void printPatch();
+        void printPatch() const;
 
         QString name;
         int data[110];

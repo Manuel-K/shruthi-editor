@@ -50,7 +50,7 @@ void Config::setMidiInputPort(int in) {
 
 
 // ******************************************
-int Config::getMidiInputPort() {
+const int &Config::getMidiInputPort() const {
 // ******************************************
     return midiInputPort;
 }
@@ -64,7 +64,7 @@ void Config::setMidiOutputPort(int out) {
 
 
 // ******************************************
-int Config::getMidiOutputPort() {
+const int &Config::getMidiOutputPort() const {
 // ******************************************
     return midiOutputPort;
 }
@@ -78,14 +78,14 @@ void Config::setMidiChannel(unsigned char channel) {
 
 
 // ******************************************
-unsigned char Config::getMidiChannel() {
+const unsigned char &Config::getMidiChannel() const {
 // ******************************************
     return midiChannel;
 }
 
 
 // ******************************************
-int Config::getShruthiFilterBoard() const
+const int &Config::getShruthiFilterBoard() const
 // ******************************************
 {
     return shruthiFilterBoard;

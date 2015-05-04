@@ -26,12 +26,12 @@ class Config {
         void save();
         void load();
         void setMidiInputPort(int in);
-        int getMidiInputPort();
+        const int &getMidiInputPort() const;
         void setMidiOutputPort(int out);
-        int getMidiOutputPort();
+        const int &getMidiOutputPort() const;
         void setMidiChannel(unsigned char);
-        unsigned char getMidiChannel();
-        int getShruthiFilterBoard() const;
+        const unsigned char &getMidiChannel() const;
+        const int &getShruthiFilterBoard() const;
         void setShruthiFilterBoard(int value);
 
     private:

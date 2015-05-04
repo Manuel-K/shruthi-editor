@@ -357,9 +357,8 @@ const QString &Patch::getName() const {
 }
 
 // ******************************************
-QString Patch::getVersionString()
+QString Patch::getVersionString() const {
 // ******************************************
-{
     if (version==33) {
         return "0.9x";
     } else if (version==37) {
@@ -370,7 +369,7 @@ QString Patch::getVersionString()
 
 
 // ******************************************
-void Patch::printPatch() {
+void Patch::printPatch() const {
 // ******************************************
     std::cout << "name: " << name.toUtf8().constData() << std::endl;
     for (int i=0; i < parameterCount; i++) {
@@ -481,7 +480,7 @@ bool Patch::unpackData(const unsigned char sysex[]) {
 
 
 // ******************************************
-void Patch::packData(unsigned char res[]) {
+void Patch::packData(unsigned char res[]) const {
 // ******************************************
     int temp[parameterCount];
     // copy data:
@@ -651,7 +650,7 @@ bool Patch::parseSysex(const std::vector<unsigned char> *message) {
 
 
 // ******************************************
-void Patch::generateSysex(std::vector<unsigned char> *message) {
+void Patch::generateSysex(std::vector<unsigned char> *message) const {
 // ******************************************
     unsigned char temp[92];
     packData(temp);
