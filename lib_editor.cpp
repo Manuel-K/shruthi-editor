@@ -487,10 +487,12 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
 // ******************************************
     std::vector<unsigned char> temp;
     bool status = FileIO::loadFromDisk(path, temp);
+    bool statusP = status;
+    bool statusS = status;
 
     const unsigned int &readBytes = temp.size();
 
-    if (status && path.endsWith(".sp") && (what&FLAG_PATCH)) {
+    if (status && path.endsWith(".sp", Qt::CaseInsensitive) && (what&FLAG_PATCH)) {
         if (readBytes == 92) {
 #ifdef DEBUGMSGS
             qDebug() << "Detected light patch files.";
@@ -502,22 +504,22 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
                 qDebug() << i << ":" << temp[i];
 #endif
             }
-            status = patch.unpackData(data);
+            statusP = patch.unpackData(data);
         } else {
-            status = false;
+            statusP = false;
         }
     } else if (status) {
         if (what&FLAG_PATCH) {
             std::vector<unsigned char> ptc;
             // ignore return value; if it fails, ptc is empty:
             Midi::getPatch(&temp, &ptc);
-            status &= patch.parseSysex(&ptc);
+            statusP = patch.parseSysex(&ptc);
         }
         if (what&FLAG_SEQUENCE) {
             std::vector<unsigned char> seq;
             // ignore return value; if it fails, seq is empty:
             Midi::getSequence(&temp, &seq);
-            status &= sequence.parseSysex(&seq);
+            statusS = sequence.parseSysex(&seq);
         }
     }
 
@@ -525,8 +527,21 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
     qDebug() << "Editor::actionFileIOLoad(" << path << "):" << status;
 #endif
 
-    QString swhat, sWhat;
-    if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+    QString swhat = "unknown";
+    QString sWhat = "Unknown";
+    QString partial = ".";
+    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "patch and sequence";
+        sWhat = "Patch and sequence";
+
+        if (status && statusP && !statusS) {
+            partial = "; only patch found.";
+        }
+        if (status && !statusP && statusS) {
+            partial = "; only sequence found.";
+        }
+
+    } else if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
         swhat = "patch";
         sWhat = "Patch";
     } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
@@ -534,18 +549,18 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
         sWhat = "Sequence";
     }
 
-    if (status) {
+    if (statusP && statusS) {
         emit displayStatusbar(sWhat + " loaded from disk.");
     } else {
-        emit displayStatusbar("Could not load " + swhat + ".");
+        emit displayStatusbar("Could not load " + swhat + partial);
     }
 
     // Send required refresh signals
-    if (status && (what&FLAG_PATCH)) {
+    if (statusP && (what&FLAG_PATCH)) {
         emit redrawAllPatchParameters();
         emit setStatusbarVersionLabel(patch.getVersionString());
     }
-    if (status && (what&FLAG_SEQUENCE)) {
+    if (statusS && (what&FLAG_SEQUENCE)) {
         emit redrawAllSequenceParameters();
     }
 }
@@ -556,7 +571,7 @@ void Editor::actionFileIOSave(QString path, const int &what) {
 // ******************************************
     QByteArray ba;
 
-    if (path.endsWith(".sp")) {
+    if (path.endsWith(".sp", Qt::CaseInsensitive)) {
         unsigned char data[92];
         patch.packData(data);
         FileIO::appendToByteArray(data, 92, ba);
@@ -583,6 +598,9 @@ void Editor::actionFileIOSave(QString path, const int &what) {
     } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
         swhat = "sequence";
         sWhat = "Sequence";
+    } else if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "patch and sequence";
+        sWhat = "Patch and sequence";
     }
 
     if (status) {
