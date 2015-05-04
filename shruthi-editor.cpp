@@ -113,17 +113,19 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     // other UI Signals:
     connect(ui->actionLoadProgram, SIGNAL(triggered()), this, SLOT(loadProgram()));
     connect(ui->actionSaveProgram, SIGNAL(triggered()), this, SLOT(saveProgram()));
-    connect(ui->actionFetch_Patch, SIGNAL(triggered()), this, SLOT(fetchPatch()));
-    connect(ui->actionSend_Patch, SIGNAL(triggered()), this, SLOT(sendPatch()));
+    connect(ui->actionFetchProgram, SIGNAL(triggered()), this, SLOT(fetchProgram()));
+    connect(ui->actionSendProgram, SIGNAL(triggered()), this, SLOT(sendProgram()));
+    connect(ui->actionFetchPatch, SIGNAL(triggered()), this, SLOT(fetchPatch()));
+    connect(ui->actionSendPatch, SIGNAL(triggered()), this, SLOT(sendPatch()));
     connect(ui->actionFetchSequence, SIGNAL(triggered()), this, SLOT(fetchSequence()));
     connect(ui->actionSendSequence, SIGNAL(triggered()), this, SLOT(sendSequence()));
     connect(ui->actionOpenSettings, SIGNAL(triggered()), this, SLOT(openSettings()));
-    connect(ui->actionReset_Patch, SIGNAL(triggered()), this, SLOT(resetPatch()));
-    connect(ui->actionReset_Patch_pre_1_00, SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
+    connect(ui->actionResetPatch, SIGNAL(triggered()), this, SLOT(resetPatch()));
+    connect(ui->actionResetPatchPre100, SIGNAL(triggered()), this, SLOT(resetPatchPre100()));
     connect(ui->actionQuit,SIGNAL(triggered()), this, SLOT(quitShruthiEditor()));
-    connect(ui->actionAbout_Shruthi_Editor, SIGNAL(triggered()), this, SLOT(aboutShruthiEditor()));
-    connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()));
-    connect(ui->actionRandomize_Patch, SIGNAL(triggered()), this, SLOT(randomizePatch()));
+    connect(ui->actionAboutShruthiEditor, SIGNAL(triggered()), this, SLOT(aboutShruthiEditor()));
+    connect(ui->actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
+    connect(ui->actionRandomizePatch, SIGNAL(triggered()), this, SLOT(randomizePatch()));
     connect(ui->actionKeyboard, SIGNAL(triggered()), this, SIGNAL(showKeyboard()));
     connect(ui->actionOpenSequenceEditor, SIGNAL(triggered()), this, SIGNAL(showSequenceEditor()));
     connect(ui->actionOpenLibrary, SIGNAL(triggered()), this, SIGNAL(showLibrary()));
@@ -469,6 +471,22 @@ void ShruthiEditorMainWindow::saveProgram() {
         queueitem_t signal(FILEIO_SAVE, filenames.first(), flag);
         emit enqueue(signal);
     }
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::fetchProgram() {
+// ******************************************
+    queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
+    emit enqueue(signal);
+}
+
+
+// ******************************************
+void ShruthiEditorMainWindow::sendProgram() {
+// ******************************************
+    queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
+    emit enqueue(signal);
 }
 
 

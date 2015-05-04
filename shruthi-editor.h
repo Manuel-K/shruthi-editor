@@ -71,6 +71,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void patchNameChanged();
         void loadProgram();
         void saveProgram();
+        void fetchProgram();
+        void sendProgram();
         void fetchPatch();
         void sendPatch();
         void fetchSequence();

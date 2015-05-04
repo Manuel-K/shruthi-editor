@@ -1711,9 +1711,9 @@
     <addaction name="actionLoadProgram"/>
     <addaction name="actionSaveProgram"/>
     <addaction name="separator"/>
-    <addaction name="actionReset_Patch"/>
-    <addaction name="actionReset_Patch_pre_1_00"/>
-    <addaction name="actionRandomize_Patch"/>
+    <addaction name="actionResetPatch"/>
+    <addaction name="actionResetPatchPre100"/>
+    <addaction name="actionRandomizePatch"/>
     <addaction name="separator"/>
     <addaction name="actionResetSequence"/>
     <addaction name="separator"/>
@@ -1723,8 +1723,11 @@
     <property name="title">
      <string>Shr&amp;uthi</string>
     </property>
-    <addaction name="actionFetch_Patch"/>
-    <addaction name="actionSend_Patch"/>
+    <addaction name="actionFetchProgram"/>
+    <addaction name="actionSendProgram"/>
+    <addaction name="separator"/>
+    <addaction name="actionFetchPatch"/>
+    <addaction name="actionSendPatch"/>
     <addaction name="actionFetchSequence"/>
     <addaction name="actionSendSequence"/>
     <addaction name="separator"/>
@@ -1734,8 +1737,8 @@
     <property name="title">
      <string>About</string>
     </property>
-    <addaction name="actionAbout_Shruthi_Editor"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAboutShruthiEditor"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -1760,14 +1763,14 @@
     <string>&amp;Save Program...</string>
    </property>
   </action>
-  <action name="actionFetch_Patch">
+  <action name="actionFetchPatch">
    <property name="text">
-    <string>&amp;Fetch Patch</string>
+    <string>Fetc&amp;h Patch</string>
    </property>
   </action>
-  <action name="actionSend_Patch">
+  <action name="actionSendPatch">
    <property name="text">
-    <string>&amp;Send Patch</string>
+    <string>Send &amp;Patch</string>
    </property>
   </action>
   <action name="actionOpenSettings">
@@ -1775,7 +1778,7 @@
     <string>S&amp;ettings...</string>
    </property>
   </action>
-  <action name="actionReset_Patch">
+  <action name="actionResetPatch">
    <property name="text">
     <string>&amp;Reset Patch</string>
    </property>
@@ -1785,27 +1788,27 @@
     <string>&amp;Quit</string>
    </property>
   </action>
-  <action name="actionAbout_Shruthi_Editor">
+  <action name="actionAboutShruthiEditor">
    <property name="text">
     <string>&amp;About Shruthi-Editor</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="actionAboutQt">
    <property name="text">
     <string>About &amp;Qt</string>
    </property>
   </action>
-  <action name="actionRandomize_Patch">
+  <action name="actionRandomizePatch">
    <property name="text">
     <string>Randomize &amp;Patch</string>
    </property>
   </action>
   <action name="actionKeyboard">
    <property name="text">
-    <string>&amp;Open Keyboard</string>
+    <string>Open &amp;Keyboard</string>
    </property>
   </action>
-  <action name="actionReset_Patch_pre_1_00">
+  <action name="actionResetPatchPre100">
    <property name="text">
     <string>Reset Patch (pre &amp;1.00)</string>
    </property>
@@ -1843,6 +1846,16 @@
   <action name="actionOpenLibrary">
    <property name="text">
     <string>Open &amp;Library</string>
+   </property>
+  </action>
+  <action name="actionFetchProgram">
+   <property name="text">
+    <string>&amp;Fetch Program</string>
+   </property>
+  </action>
+  <action name="actionSendProgram">
+   <property name="text">
+    <string>&amp;Send Program</string>
    </property>
   </action>
  </widget>

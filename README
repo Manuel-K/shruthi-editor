@@ -116,3 +116,4 @@ v0.22 * scalable keyboad with flexible amount of keys
       * added ui for missing patch parameters
       * send parameter changes as cc (compile time decision)
 v0.33 * combined patch/sequence load and save dialogs (with type selection)
+      * combined patch/sequence send and fetch menu action
