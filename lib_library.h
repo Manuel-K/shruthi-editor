@@ -52,6 +52,7 @@ class Library {
         bool sequenceHasBeenMoved(const int &id) const;
         bool sequenceHasBeenEdited(const int &id) const;
         bool sequenceIsInit(const int &id) const;
+        QString getSequenceIdentifier(const int &id) const;
 
         bool send(const int &what, const int &from, const int &to);
 
@@ -69,6 +70,7 @@ class Library {
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path);
 
+        const unsigned int &getNumberOfPrograms() const;
         void setNumberOfPrograms(const unsigned int &num);
 
         int nextPatch() const;
@@ -90,6 +92,9 @@ class Library {
         void growPatchVectors(const int &amount);
         void growSequenceVectors(const int &amount);
 
+        QString calculateSequenceHash(const unsigned int &id) const;
+        static QString calculateHash(const unsigned char *key, const unsigned int &len);
+
         MidiOut *midiout;
 
         bool fetchPatchMode;
@@ -105,7 +110,8 @@ class Library {
 
         QTime time;
 
-        int numberOfPrograms;
+        unsigned int numberOfPrograms;
+
 };
 
 #endif // LIBRARY_H

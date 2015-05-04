@@ -45,6 +45,7 @@ void Editor::run()
     qDebug("Editor::run()");
 #endif
     emit setStatusbarVersionLabel(patch.getVersionString());
+    emit redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
 }
 
 
@@ -112,7 +113,7 @@ const int &Editor::getSequenceParam(const int &step, const SequenceParameter::Se
 
 
 // ******************************************
-const QString &Editor::getLibraryName(const unsigned int &patch_id) const {
+const QString &Editor::getLibraryPatchName(const unsigned int &patch_id) const {
 // ******************************************
     return library.recallPatch(patch_id).getName();
 }
@@ -133,9 +134,9 @@ bool Editor::getLibraryPatchEdited(const unsigned int &patch_id) const {
 
 
 // ******************************************
-bool Editor::isLibrarySequenceInit(const unsigned int &seq_id) const {
+const QString Editor::getLibrarySequenceName(const unsigned int &seq_id) const {
 // ******************************************
-    return library.sequenceIsInit(seq_id);
+    return library.getSequenceIdentifier(seq_id);
 }
 
 

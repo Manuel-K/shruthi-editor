@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <QThread>
+#include <stdint.h> // needed for hash calculation
 
 // ******************************************
 Library::Library(MidiOut *out) {
@@ -165,7 +166,7 @@ void Library::listSequences() const {
     const unsigned int &num = sequences.size();
     for (unsigned int i = 0; i < num; i++) {
         std::cout << "  " << i << ": "
-                  << (sequenceIsInit(i) ? "init" : "custom")
+                  << getSequenceIdentifier(i).toUtf8().constData()
                   << ", changed " << sequenceEdited.at(i)
                   << ", moved " << sequenceMoved.at(i) << std::endl;
     }
@@ -218,6 +219,13 @@ bool Library::sequenceHasBeenEdited(const int &id) const {
 bool Library::sequenceIsInit(const int &id) const {
 // ******************************************
     return sequences.at(id).equals(init_sequence);
+}
+
+
+// ******************************************
+QString Library::getSequenceIdentifier(const int &id) const {
+// ******************************************
+    return (sequenceIsInit(id) ? QString("init") : QString("custom (%1)").arg(calculateSequenceHash(id).toUtf8().constData()));
 }
 
 
@@ -468,11 +476,11 @@ bool Library::loadLibrary(const QString &path) {
 
     // Patch:
     bool statusp = true;
+    unsigned int patch = 0;
     {
         int lastPosition = 0;
         bool keepGoing = true;
 
-        unsigned int patch = 0;
         std::vector<unsigned char> ptc;
         Patch tempPatch;
         while(keepGoing) {
@@ -497,12 +505,12 @@ bool Library::loadLibrary(const QString &path) {
 
     // Sequence
     bool statuss = true;
+    unsigned int sequence = 0;
     {
         bool keepGoing = true;
         int lastPosition = 0;
 
         std::vector<unsigned char> seq;
-        unsigned int sequence = 0;
         Sequence tempSequence;
 
         while(keepGoing) {
@@ -526,13 +534,28 @@ bool Library::loadLibrary(const QString &path) {
         }
     }
 
+    // Updated number of programs:
+    // Note: there are two possible ways to handle this:
+    // Either stop loading the programs after numberOfPrograms has been hit or decouple
+    // the number of programs inside the library from the number of programs on the Shruthi.
+    // Use approach number two!
+    numberOfPrograms = std::max(numberOfPrograms, std::max(patch, sequence));
+
     return statusp && statuss;
+}
+
+
+// ******************************************
+const unsigned int &Library::getNumberOfPrograms() const {
+// ******************************************
+    return numberOfPrograms;
 }
 
 
 // ******************************************
 void Library::setNumberOfPrograms(const unsigned int &num) {
 // ******************************************
+    // TODO: should never decrease number of programs!
     patches.reserve(num);
     patchEdited.reserve(num);
     patchMoved.reserve(num);
@@ -635,3 +658,32 @@ void Library::growSequenceVectors(const int &amount) {
 
 }
 
+
+// ******************************************
+QString Library::calculateSequenceHash(const unsigned int &id) const {
+// ******************************************
+    // uses public domain code for Bob Jenkins' One-at-a-Time Hash
+    // source: http://burtleburtle.net/bob/hash/doobs.html
+    unsigned char key[32];
+    sequences.at(id).packData(key);
+    return calculateHash(key, 32);
+}
+
+
+// ******************************************
+QString Library::calculateHash(const unsigned char *key, const unsigned int &len) {
+// ******************************************
+    // uses public domain code for Bob Jenkins' One-at-a-Time Hash
+    // source: http://burtleburtle.net/bob/hash/doobs.html
+    uint32_t hash;
+    unsigned int j;
+    for(hash = j = 0; j < len; ++j) {
+        hash += key[j];
+        hash += (hash << 10);
+        hash ^= (hash >> 6);
+    }
+    hash += (hash << 3);
+    hash ^= (hash >> 11);
+    hash += (hash << 15);
+    return QString("%1").arg(hash, 8, 16, QChar('0'));
+}

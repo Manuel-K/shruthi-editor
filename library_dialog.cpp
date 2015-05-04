@@ -116,7 +116,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         //std::cout << "redrawPatchNames " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->patchList->item(i);
-            item->setText(QString("%1: ").arg(i+1)+editor->getLibraryName(i));
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' '))+editor->getLibraryPatchName(i));
 
             const bool &e = editor->getLibraryPatchEdited(i);
             const bool &m = editor->getLibraryPatchMoved(i);
@@ -129,7 +129,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         //std::cout << "redrawSequenceInfo " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->sequenceList->item(i);
-            item->setText(QString("%1: ").arg(i+1)+(editor->isLibrarySequenceInit(i) ? "init" : "custom"));
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' '))+editor->getLibrarySequenceName(i));
 
             const bool &e = editor->getLibrarySequenceEdited(i);
             const bool &m = editor->getLibrarySequenceMoved(i);
