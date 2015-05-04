@@ -496,7 +496,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 #ifdef DEBUGMSGS
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
-        library.setNumberOfPrograms(numberOfPrograms);
+        library.increaseNumberOfProgramsTo(numberOfPrograms);
         //library.fetch(0, numberOfPrograms - 1); //DEBUG
         //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
         //library.fetchSequences(0, numberOfPrograms - 1); //DEBUG

@@ -552,9 +552,19 @@ const unsigned int &Library::getNumberOfPrograms() const {
 
 
 // ******************************************
+void Library::increaseNumberOfProgramsTo(const unsigned int &num) {
+// ******************************************
+    if (num > numberOfPrograms) {
+        setNumberOfPrograms(num);
+    }
+}
+
+
+// ******************************************
 void Library::setNumberOfPrograms(const unsigned int &num) {
 // ******************************************
-    // TODO: should never decrease number of programs!
+    // Be really careful with this function. Most of the times
+    // increaseNumberOfProgramsTo() has more suitable behavior.
     patches.reserve(num);
     patchEdited.reserve(num);
     patchMoved.reserve(num);

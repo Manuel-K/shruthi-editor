@@ -71,6 +71,7 @@ class Library {
         bool loadLibrary(const QString &path);
 
         const unsigned int &getNumberOfPrograms() const;
+        void increaseNumberOfProgramsTo(const unsigned int &num);
         void setNumberOfPrograms(const unsigned int &num);
 
         int nextPatch() const;
