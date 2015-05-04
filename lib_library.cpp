@@ -361,7 +361,6 @@ bool Library::receivedPatch(const unsigned char *sysex) {
         //listPatches(); //DEBUG
         ret = keepFetching();
     } else {
-        //TODO test if this really stops everything and unlocks the editor
         abortFetching();
     }
     return ret;
