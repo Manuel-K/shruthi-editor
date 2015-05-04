@@ -267,51 +267,94 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
 }
 
 // ******************************************
-void Editor::actionFetchRequest(const int &which) {
+void Editor::actionFetchRequest(const int &what) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionFetchRequest()";
 #endif
-    // TODO: combine messages
-    if (which&FLAG_PATCH) {
-        if (midiout.patchTransferRequest())
+    bool statusP = true;
+    if (what&FLAG_PATCH) {
+        statusP = midiout.patchTransferRequest();
+        if (statusP)
             emit displayStatusbar("Patch transfer request sent.");
         else
             emit displayStatusbar("Could not send patch transfer request.");
     }
-    if (which&FLAG_SEQUENCE) {
-        if (midiout.sequenceTransferRequest())
+    bool statusS = true;
+    if (what&FLAG_SEQUENCE) {
+        statusS = midiout.sequenceTransferRequest();
+        if (statusS)
             emit displayStatusbar("Sequence transfer request sent.");
         else
             emit displayStatusbar("Could not send sequence transfer request.");
 
     }
+
+
+    QString swhat = "unknown";
+    QString sWhat = "Unknown";
+    QString pl = "";
+    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "patch and sequence";
+        sWhat = "Patch and sequence";
+        pl = "s";
+    } else if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+        swhat = "patch";
+        sWhat = "Patch";
+    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "sequence";
+        sWhat = "Sequence";
+    }
+
+
+    if (statusP && statusS) {
+        emit displayStatusbar(sWhat + " transfer request" + pl + " sent.");
+    } else {
+        emit displayStatusbar("Could not send " + swhat + " transfer request" + pl + ".");
+    }
+
+
 }
 
 
 // ******************************************
-void Editor::actionSendData(const int &which) {
+void Editor::actionSendData(const int &what) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSendData()";
 #endif
-    // TODO: combine messages
-    if (which&FLAG_PATCH) {
+    bool statusP = true;
+    if (what&FLAG_PATCH) {
         std::vector<unsigned char> temp;
         patch.generateSysex(&temp);
-        if (midiout.write(temp))
-            emit displayStatusbar("Patch sent.");
-        else
-            emit displayStatusbar("Could not send patch.");
+        statusP = midiout.write(temp);
     }
-    if (which&FLAG_SEQUENCE) {
-        // TODO: implement me
+    bool statusS = true;
+    if (what&FLAG_SEQUENCE) {
         std::vector<unsigned char> temp;
         sequence.generateSysex(&temp);
-        if (midiout.write(temp))
-            emit displayStatusbar("Sequence sent.");
-        else
-            emit displayStatusbar("Could not send sequence.");
+        statusS = midiout.write(temp);
+
+    }
+
+    QString swhat = "unknown";
+    QString sWhat = "Unknown";
+    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "patch and sequence";
+        sWhat = "Patch and sequence";
+    } else if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+        swhat = "patch";
+        sWhat = "Patch";
+    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+        swhat = "sequence";
+        sWhat = "Sequence";
+    }
+
+
+    if (statusP && statusS) {
+        emit displayStatusbar(sWhat + " sent.");
+    } else {
+        emit displayStatusbar("Could not send " + swhat + ".");
     }
 }
 
@@ -465,7 +508,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         std::cout << "Unknown sysex with command " << command << ", argument " << argument << " and length " << size << " received." << std::endl;
 #endif
     }
-    if (message) { // TODO: is it a good idea to check if size > 0
+    if (message) {
         delete message;
     }
 }
@@ -591,7 +634,8 @@ void Editor::actionFileIOSave(QString path, const int &what) {
     qDebug() << "Editor::actionFileIOSave(" << path << "):" << status;
 #endif
 
-    QString swhat, sWhat;
+    QString swhat = "unknown";
+    QString sWhat = "Unknown";
     if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
         swhat = "patch";
         sWhat = "Patch";

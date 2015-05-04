@@ -115,8 +115,8 @@ class Editor : public QObject {
 
     private:
         void actionPatchParameterChangeEditor(int id, int value);
-        void actionFetchRequest(const int &which);
-        void actionSendData(const int &which);
+        void actionFetchRequest(const int &what);
+        void actionSendData(const int &what);
         void actionShruthiInfoRequest();
         void actionPatchParameterChangeMidi(int id, int value);
         void actionNoteOn(unsigned char note, unsigned char velocity);
