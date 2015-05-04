@@ -152,7 +152,7 @@ void mycallback(double deltatime, std::vector<unsigned char> *message, void *use
 // ******************************************
     Q_UNUSED(deltatime);
     ((MidiIn*)userData)->process(message);
-    // TODO: where is the message deleted?
+    // Don't try to delete the message!
 }
 
 
