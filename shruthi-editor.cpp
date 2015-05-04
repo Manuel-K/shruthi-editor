@@ -37,6 +37,8 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     MIDI_OUTPUT_PORT = 0;
     SHRUTHI_FILTER_BOARD = 0;
 
+    lastProgramFileMode = 2;
+
     statusbarVersionLabel = new QLabel("Version ");
     statusBar()->addPermanentWidget(statusbarVersionLabel);
     // The label is reparented (made a child of the statusbar), so it will get
@@ -109,8 +111,8 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     redrawAllPatchParameters();
 
     // other UI Signals:
-    connect(ui->actionLoad_Patch, SIGNAL(triggered()), this, SLOT(loadPatch()));
-    connect(ui->actionSave_Patch, SIGNAL(triggered()), this, SLOT(savePatch()));
+    connect(ui->actionLoadProgram, SIGNAL(triggered()), this, SLOT(loadProgram()));
+    connect(ui->actionSaveProgram, SIGNAL(triggered()), this, SLOT(saveProgram()));
     connect(ui->actionFetch_Patch, SIGNAL(triggered()), this, SLOT(fetchPatch()));
     connect(ui->actionSend_Patch, SIGNAL(triggered()), this, SLOT(sendPatch()));
     connect(ui->actionFetchSequence, SIGNAL(triggered()), this, SLOT(fetchSequence()));
@@ -125,8 +127,6 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
     connect(ui->actionKeyboard, SIGNAL(triggered()), this, SIGNAL(showKeyboard()));
     connect(ui->actionOpenSequenceEditor, SIGNAL(triggered()), this, SIGNAL(showSequenceEditor()));
     connect(ui->actionOpenLibrary, SIGNAL(triggered()), this, SIGNAL(showLibrary()));
-    connect(ui->actionLoadSequence, SIGNAL(triggered()), this, SLOT(loadSequence()));
-    connect(ui->actionSaveSequence, SIGNAL(triggered()), this, SLOT(saveSequence()));
     connect(ui->actionResetSequence, SIGNAL(triggered()), this, SLOT(resetSequence()));
 }
 
@@ -379,44 +379,94 @@ void ShruthiEditorMainWindow::patchNameChanged() {
 
 
 // ******************************************
-void ShruthiEditorMainWindow::loadPatch() {
+void ShruthiEditorMainWindow::loadProgram() {
 // ******************************************
-    QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".syx", "All possible files (*.syx *.sp);;Sysex-Files (*.syx);;Shruthi-Patches (*.sp)");
-    if (filename != "") {
-        queueitem_t signal(FILEIO_LOAD, filename, Editor::FLAG_PATCH);
+    QFileDialog *d = new QFileDialog(this);
+    d->setWindowTitle("Open program");
+    d->setNameFilter("All possible files (*.syx *.sp);;SysEx files (*.syx);;Shruthi patches (*.sp)");
+    d->setAcceptMode(QFileDialog::AcceptOpen);
+    d->setFileMode(QFileDialog::ExistingFile);
+
+    QComboBox *cb = injectQFileDialog(d);
+
+    int success = d->exec();
+
+    QStringList filenames = d->selectedFiles();
+    const int &index = cb->currentIndex();
+    int flag = cb->currentIndex() + 1; // combo box and flags have to be kept in sync!
+
+
+    delete d;
+    d = NULL;
+
+    if (success && filenames.size() > 0) {
+        lastProgramFileMode = index;
+        if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
+            flag = Editor::FLAG_PATCH;
+        }
+        queueitem_t signal(FILEIO_LOAD, filenames.first(), flag);
         emit enqueue(signal);
     }
 }
 
 
 // ******************************************
-void ShruthiEditorMainWindow::loadSequence() {
+QComboBox *ShruthiEditorMainWindow::injectQFileDialog(QFileDialog *d) {
 // ******************************************
-    QString filename = QFileDialog::getOpenFileName(this, "Open patch", ".syx", "Sysex-Files (*.syx)");
-    if (filename != "") {
-        queueitem_t signal(FILEIO_LOAD, filename, Editor::FLAG_SEQUENCE);
-        emit enqueue(signal);
+    QComboBox *cb = new QComboBox(d);
+    cb->addItem("Patch");
+    cb->addItem("Sequence");
+    cb->addItem("Patch/Sequence");
+    cb->setCurrentIndex(lastProgramFileMode);
+
+    // Insert type combo box into layout:
+
+    QGridLayout *gl = d->findChild<QGridLayout*>();
+
+    if (!gl) {
+        qDebug() << "Could not find QGridLayout of the QFileDialog! Type file dialog will look ugly!";
+    } else {
+        QLabel *l = new QLabel(d);
+        l->setText("Type:");
+
+        const int &row = gl->rowCount();
+        gl->addWidget(l, row, 0);
+        gl->addWidget(cb, row, 1);
     }
+    return cb;
 }
 
 
 // ******************************************
-void ShruthiEditorMainWindow::savePatch() {
+void ShruthiEditorMainWindow::saveProgram() {
 // ******************************************
-    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".syx", "Sysex-Files (*.syx);;Shruthi-Patches (*.sp)");
-    if (filename != "") {
-        queueitem_t signal(FILEIO_SAVE, filename, Editor::FLAG_PATCH);
-        emit enqueue(signal);
-    }
-}
+    QFileDialog *d = new QFileDialog(this);
+    d->setWindowTitle("Save program");
+    //d->setNameFilter("SysEx files (*.syx);;Shruthi patches (*.sp);;Shruthi patches (*.sp)");
+    d->setNameFilter("SysEx files (*.syx)");
+    d->setAcceptMode(QFileDialog::AcceptSave);
+    d->setFileMode(QFileDialog::AnyFile);
+    d->setDefaultSuffix("syx");
+
+    QComboBox *cb = injectQFileDialog(d);
+
+    int success = d->exec();
+
+    QStringList filenames = d->selectedFiles();
+    const int &index = cb->currentIndex();
+    int flag = cb->currentIndex() + 1; // combo box and flags have to be kept in sync!
 
 
-// ******************************************
-void ShruthiEditorMainWindow::saveSequence() {
-// ******************************************
-    QString filename = QFileDialog::getSaveFileName(this, "Save patch", ".syx", "Sysex-Files (*.syx)");
-    if (filename != "") {
-        queueitem_t signal(FILEIO_SAVE, filename, Editor::FLAG_SEQUENCE);
+    delete d;
+    d = NULL;
+
+    if (success && filenames.size() > 0) {
+        lastProgramFileMode = index;
+        std::cout << filenames.at(0).toUtf8().constData() << " " << flag << std::endl;
+        if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
+            flag = Editor::FLAG_PATCH;
+        }
+        queueitem_t signal(FILEIO_SAVE, filenames.first(), flag);
         emit enqueue(signal);
     }
 }

@@ -23,6 +23,8 @@
 
 #include "lib_editor.h"
 
+class QFileDialog;
+
 // ******************************************
 class ShruthiEditorMainWindow : public QMainWindow {
 // ******************************************
@@ -36,12 +38,16 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void displayMidiStatusChanged(const bool &in, const bool &out);
         void closeEvent(QCloseEvent* event);
 
+        QComboBox *injectQFileDialog(QFileDialog *d);
+
         Ui::MainWindow *ui;
         Editor* editor;
         int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT, SHRUTHI_FILTER_BOARD;
         unsigned char MIDI_CHANNEL;
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
         QLabel *statusbarVersionLabel;
+
+        int lastProgramFileMode;
 
     public slots:
         // redraw commands:
@@ -63,10 +69,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void dialChanged(int val);
         void dialChanged(int id, int val);
         void patchNameChanged();
-        void loadPatch();
-        void loadSequence();
-        void savePatch();
-        void saveSequence();
+        void loadProgram();
+        void saveProgram();
         void fetchPatch();
         void sendPatch();
         void fetchSequence();

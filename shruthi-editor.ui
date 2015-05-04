@@ -1708,15 +1708,14 @@
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
+    <addaction name="actionLoadProgram"/>
+    <addaction name="actionSaveProgram"/>
+    <addaction name="separator"/>
     <addaction name="actionReset_Patch"/>
     <addaction name="actionReset_Patch_pre_1_00"/>
-    <addaction name="actionLoad_Patch"/>
-    <addaction name="actionSave_Patch"/>
     <addaction name="actionRandomize_Patch"/>
     <addaction name="separator"/>
     <addaction name="actionResetSequence"/>
-    <addaction name="actionLoadSequence"/>
-    <addaction name="actionSaveSequence"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -1751,14 +1750,14 @@
    <addaction name="menuTools"/>
    <addaction name="menuAbout"/>
   </widget>
-  <action name="actionLoad_Patch">
+  <action name="actionLoadProgram">
    <property name="text">
-    <string>&amp;Load Patch...</string>
+    <string>&amp;Load Program...</string>
    </property>
   </action>
-  <action name="actionSave_Patch">
+  <action name="actionSaveProgram">
    <property name="text">
-    <string>&amp;Save Patch...</string>
+    <string>&amp;Save Program...</string>
    </property>
   </action>
   <action name="actionFetch_Patch">
@@ -1843,7 +1842,7 @@
   </action>
   <action name="actionOpenLibrary">
    <property name="text">
-    <string>Open Library</string>
+    <string>Open &amp;Library</string>
    </property>
   </action>
  </widget>
