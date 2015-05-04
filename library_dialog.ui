@@ -14,10 +14,10 @@
    <string>LibraryDialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QPushButton" name="fetch">
+   <item row="0" column="1">
+    <widget class="QPushButton" name="sendSelected">
      <property name="text">
-      <string>Fetch</string>
+      <string>Send selected</string>
      </property>
     </widget>
    </item>
@@ -105,10 +105,20 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="sendSelected">
+   <item row="0" column="0">
+    <widget class="QPushButton" name="fetch">
      <property name="text">
-      <string>Send selected</string>
+      <string>Fetch</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="sync">
+     <property name="text">
+      <string>Sync</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

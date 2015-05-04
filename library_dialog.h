@@ -44,6 +44,9 @@ class LibraryDialog : public QDialog {
     private:
         void setFont(QListWidgetItem *item, bool edited, bool moved);
         void sendRange(const int &flags, const int &from, const int &to);
+        void move(const int &flags, const int &from, const int &to);
+        void store(const int &flags, const int &id);
+        void recall(const int &flags, const int &id);
 
         Ui::LibraryDialog *ui;
         Editor *editor;
@@ -54,19 +57,25 @@ class LibraryDialog : public QDialog {
         QFont editedMovedFont;
 
         bool dontScroll; // to prevent scroll bar bouncing
+        bool dontSyncSelection; // to prevent selection bouncing
 
     public slots:
         void redrawItems(int what, int start, int stop);
 
     private slots:
-        void recall(QListWidgetItem *item);
-        void customContextMenuRequested(QPoint p);
-        void move(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
+        void patchRecall(QListWidgetItem *item);
+        void sequenceRecall(QListWidgetItem *item);
+        void patchStore(QPoint p);
+        void sequenceStore(QPoint p);
+        void patchMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
+        void sequenceMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
 
         void fetch();
         void sendSelected();
         void syncToSequenceScrollBar(int val);
         void syncToPatchScrollBar(int val);
+        void syncToSequenceSelection();
+        void syncToPatchSelection();
 
     signals:
         void enqueue(queueitem_t);
