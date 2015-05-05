@@ -56,6 +56,9 @@ class LibraryDialog : public QDialog {
         QFont editedFont;
         QFont editedMovedFont;
 
+        QMenu *patchContextMenu;
+        QMenu *sequenceContextMenu;
+
         bool dontScroll; // to prevent scroll bar bouncing
         bool dontSyncSelection; // to prevent selection bouncing
 
@@ -63,10 +66,12 @@ class LibraryDialog : public QDialog {
         void redrawItems(int what, int start, int stop);
 
     private slots:
+        void patchOpenContextMenu(QPoint p);
+        void sequenceOpenContextMenu(QPoint p);
         void patchRecall(QListWidgetItem *item);
         void sequenceRecall(QListWidgetItem *item);
-        void patchStore(QPoint p);
-        void sequenceStore(QPoint p);
+        void patchStore();
+        void sequenceStore();
         void patchMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
         void sequenceMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
 

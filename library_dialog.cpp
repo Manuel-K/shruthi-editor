@@ -22,6 +22,7 @@
 
 #include <QDebug>
 #include <QScrollBar>
+#include <QMenu>
 
 // ******************************************
 LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
@@ -49,12 +50,16 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     editedMovedFont = editedFont;
     editedMovedFont.setItalic(true);
 
+    patchContextMenu = new QMenu(this);
+    patchContextMenu->addAction("Store", this, SLOT(patchStore()));
+    sequenceContextMenu = new QMenu(this);
+    sequenceContextMenu->addAction("Store", this, SLOT(sequenceStore()));
 
     connect(ui->patchList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(patchRecall(QListWidgetItem*)));
-    connect(ui->patchList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(patchStore(QPoint)));
+    connect(ui->patchList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(patchOpenContextMenu(QPoint)));
     connect(ui->patchList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(patchMove(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->sequenceList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(sequenceRecall(QListWidgetItem*)));
-    connect(ui->sequenceList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(sequenceStore(QPoint)));
+    connect(ui->sequenceList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(sequenceOpenContextMenu(QPoint)));
     connect(ui->sequenceList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(sequenceMove(QModelIndex,int,int,QModelIndex,int)));
 
     connect(ui->fetch, SIGNAL(clicked(bool)), this, SLOT(fetch()));
@@ -80,7 +85,6 @@ LibraryDialog::~LibraryDialog() {
 // ******************************************
 void LibraryDialog::setFont(QListWidgetItem *item, bool edited, bool moved) {
 // ******************************************
-
     if (edited) {
         if (moved) {
             item->setFont(editedMovedFont);
@@ -213,6 +217,26 @@ void LibraryDialog::sendRange(const int &flags, const int &from, const int &to) 
 
 
 // ******************************************
+void LibraryDialog::patchOpenContextMenu(QPoint p) {
+// ******************************************
+#ifdef DEBUGMSGS
+    std::cout << "LibraryDialog::patchOpenContextMenu" << std::endl;
+#endif
+    patchContextMenu->popup(ui->patchList->mapToGlobal(p));
+}
+
+
+// ******************************************
+void LibraryDialog::sequenceOpenContextMenu(QPoint p) {
+// ******************************************
+#ifdef DEBUGMSGS
+    std::cout << "LibraryDialog::sequenceOpenContextMenu" << std::endl;
+#endif
+    sequenceContextMenu->popup(ui->sequenceList->mapToGlobal(p));
+}
+
+
+// ******************************************
 void LibraryDialog::patchRecall(QListWidgetItem *item) {
 // ******************************************
     Q_UNUSED(item);
@@ -244,10 +268,8 @@ void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
 
 
 // ******************************************
-void LibraryDialog::patchStore(QPoint p) {
+void LibraryDialog::patchStore() {
 // ******************************************
-    Q_UNUSED(p);
-
     const int &c = ui->patchList->currentRow();
 
 //    std::cout << "store " << c << std::endl;
@@ -260,10 +282,8 @@ void LibraryDialog::patchStore(QPoint p) {
 
 
 // ******************************************
-void LibraryDialog::sequenceStore(QPoint p) {
+void LibraryDialog::sequenceStore() {
 // ******************************************
-    Q_UNUSED(p);
-
     const int &c = ui->sequenceList->currentRow();
 
 //    std::cout << "store " << c << std::endl;
