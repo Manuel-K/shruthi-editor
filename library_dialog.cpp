@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QMenu>
+#include <QFileDialog>
 
 // ******************************************
 LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
@@ -72,10 +73,9 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     connect(ui->fetch, SIGNAL(clicked(bool)), this, SLOT(fetch()));
     connect(ui->send, SIGNAL(clicked()), this, SLOT(send()));
     connect(ui->sendChanged, SIGNAL(clicked()), this, SLOT(sendChanged()));
-
-    ui->save->setDisabled(true);
+    connect(ui->loadReplace, SIGNAL(clicked()), this, SLOT(loadReplace()));
+    connect(ui->save, SIGNAL(clicked()), this, SLOT(save()));
     ui->loadAppend->setDisabled(true);
-    ui->loadReplace->setDisabled(true);
 
 
     // synchronize list widget scrolling:
@@ -229,6 +229,33 @@ void LibraryDialog::sendChanged(){
     signal.int1 = 0;
     signal.int2 = -1;
     emit enqueue(signal);
+}
+
+
+// ******************************************
+void LibraryDialog::loadReplace() {
+// ******************************************
+    QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
+    if (path != "") {
+        std::cout << "filename: " << path.toUtf8().constData() << std::endl;
+        queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        emit enqueue(signal);
+    }
+}
+
+
+// ******************************************
+void LibraryDialog::save() {
+// ******************************************
+    QString path = QFileDialog::getSaveFileName(this, "Save Library", ".", "SysEx files (*.syx)");
+    if (path != "") {
+        if (!path.endsWith(".syx", Qt::CaseInsensitive)) {
+            path.append(".syx");
+        }
+
+        queueitem_t signal(LIBRARY_SAVE, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        emit enqueue(signal);
+    }
 }
 
 

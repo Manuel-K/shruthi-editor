@@ -34,7 +34,8 @@ enum ACTIONS
     RESET_PATCH, RANDOMIZE_PATCH, NOTE_ON, NOTE_OFF,
     NOTE_PANIC, SYSEX_SHRUTHI_INFO_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
     SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE, RESET_SEQUENCE,
-    LIBRARY_FETCH, LIBRARY_STORE, LIBRARY_RECALL, LIBRARY_SEND, LIBRARY_MOVE};
+    LIBRARY_FETCH, LIBRARY_STORE, LIBRARY_RECALL, LIBRARY_SEND, LIBRARY_MOVE,
+    LIBRARY_LOAD, LIBRARY_SAVE};
 
 
 // ******************************************
@@ -133,6 +134,8 @@ class Editor : public QObject {
         void actionLibraryRecall(const unsigned int &what, const unsigned int &id);
         void actionLibraryStore(const unsigned int &what, const unsigned int &id);
         void actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target);
+        void actionLibraryLoad(const QString &path, const int &flags);
+        void actionLibrarySave(const QString &path, const int &flags);
 
         Patch patch;
         Sequence sequence;

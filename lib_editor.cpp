@@ -180,6 +180,12 @@ void Editor::process(queueitem_t item) {
         case LIBRARY_SEND:
             actionLibrarySend(item.int0, item.int1, item.int2);
             break;
+        case LIBRARY_LOAD:
+            actionLibraryLoad(item.string, item.int0);
+            break;
+        case LIBRARY_SAVE:
+            actionLibrarySave(item.string, item.int0);
+            break;
         case RESET_SEQUENCE:
             actionResetSequence();
             break;
@@ -750,6 +756,26 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
     const int &t = std::max(start, target);
     emit redrawLibraryItems(what, s, t);
 
+}
+
+
+// ******************************************
+void Editor::actionLibraryLoad(const QString &path, const int &flags) {
+// ******************************************
+    //TODO respect flags
+    //TODO status bar messages
+    library.loadLibrary(path);
+    emit redrawLibraryItems(flags, 0, library.getNumberOfPrograms() - 1);
+}
+
+
+// ******************************************
+void Editor::actionLibrarySave(const QString &path, const int &flags) {
+// ******************************************
+    Q_UNUSED(flags);
+    //TODO respect flags
+    //TODO status bar messages
+    library.saveLibrary(path);
 }
 
 

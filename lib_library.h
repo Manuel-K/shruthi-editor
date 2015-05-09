@@ -81,6 +81,7 @@ class Library {
         static const int FLAG_PATCH = 1;
         static const int FLAG_SEQUENCE = 2;
         static const int FLAG_CHANGED = 4;
+        static const int FLAG_APPEND = 8;
 
     private:
         bool keepFetching();
