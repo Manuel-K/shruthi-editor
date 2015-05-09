@@ -43,10 +43,13 @@ class LibraryDialog : public QDialog {
 
     private:
         void setFont(QListWidgetItem *item, bool edited, bool moved);
-        void sendRange(const int &flags, const int &from, const int &to);
+        void libraryRange(const ACTIONS &action, const int &flags, const int &from, const int &to);
         void move(const int &flags, const int &from, const int &to);
         void store(const int &flags, const int &id);
         void recall(const int &flags, const int &id);
+
+        void librarySelectedRanges(QListWidget *list, const ACTIONS &action, const int &flags);
+
 
         Ui::LibraryDialog *ui;
         Editor *editor;
@@ -70,13 +73,16 @@ class LibraryDialog : public QDialog {
         void sequenceOpenContextMenu(QPoint p);
         void patchRecall(QListWidgetItem *item);
         void sequenceRecall(QListWidgetItem *item);
-        void patchStore();
-        void sequenceStore();
+        void patchCMStore();
+        void sequenceCMStore();
+        void patchCMSend();
+        void patchCMSendChanged();
+        void sequenceCMSend();
+        void sequenceCMSendChanged();
         void patchMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
         void sequenceMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
 
         void fetch();
-        void sendSelected();
         void syncToSequenceScrollBar(int val);
         void syncToPatchScrollBar(int val);
         void syncToSequenceSelection();

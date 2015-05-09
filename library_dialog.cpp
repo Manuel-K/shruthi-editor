@@ -51,9 +51,16 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     editedMovedFont.setItalic(true);
 
     patchContextMenu = new QMenu(this);
-    patchContextMenu->addAction("Store", this, SLOT(patchStore()));
+    patchContextMenu->addAction("Store", this, SLOT(patchCMStore()));
+    patchContextMenu->addSeparator();
+    patchContextMenu->addAction("Send", this, SLOT(patchCMSend()));
+    patchContextMenu->addAction("Send Changed", this, SLOT(patchCMSendChanged()));
+
     sequenceContextMenu = new QMenu(this);
-    sequenceContextMenu->addAction("Store", this, SLOT(sequenceStore()));
+    sequenceContextMenu->addAction("Store", this, SLOT(sequenceCMStore()));
+    sequenceContextMenu->addSeparator();
+    sequenceContextMenu->addAction("Send", this, SLOT(sequenceCMSend()));
+    sequenceContextMenu->addAction("Send Changed", this, SLOT(sequenceCMSendChanged()));
 
     connect(ui->patchList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(patchRecall(QListWidgetItem*)));
     connect(ui->patchList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(patchOpenContextMenu(QPoint)));
@@ -63,7 +70,8 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     connect(ui->sequenceList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(sequenceMove(QModelIndex,int,int,QModelIndex,int)));
 
     connect(ui->fetch, SIGNAL(clicked(bool)), this, SLOT(fetch()));
-    connect(ui->sendSelected, SIGNAL(clicked()), this, SLOT(sendSelected()));
+    //connect(ui->sendSelected, SIGNAL(clicked()), this, SLOT(sendSelected()));
+    ui->sendSelected->setDisabled(true);
 
     // synchronize list widget scrolling:
     connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSequenceScrollBar(int)));
@@ -104,7 +112,7 @@ void LibraryDialog::setFont(QListWidgetItem *item, bool edited, bool moved) {
 // ******************************************
 void LibraryDialog::redrawItems(int what, int start, int stop) {
 // ******************************************
-    if ((what&Editor::FLAG_PATCH) || (what&Editor::FLAG_SEQUENCE)) {
+    if ((what&Library::FLAG_PATCH) || (what&Library::FLAG_SEQUENCE)) {
         // add missing items
         const int &amount = stop - ui->patchList->count() + 1;
         if (amount > 0) {
@@ -123,7 +131,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         }
     }
 
-    if (what&Editor::FLAG_PATCH) {
+    if (what&Library::FLAG_PATCH) {
         QListWidgetItem *item;
         // setup items
         //std::cout << "redrawPatchNames " <<  start << " " << stop << std::endl;
@@ -136,7 +144,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
             setFont(item, e, m);
         }
     }
-    if (what&Editor::FLAG_SEQUENCE) {
+    if (what&Library::FLAG_SEQUENCE) {
         QListWidgetItem *item;
         // setup items
         //std::cout << "redrawSequenceInfo " <<  start << " " << stop << std::endl;
@@ -188,7 +196,7 @@ void LibraryDialog::store(const int &flags, const int &id) {
 void LibraryDialog::fetch() {
 // ******************************************
     queueitem_t signal(LIBRARY_FETCH);
-    signal.int0 = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
+    signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
     signal.int2 = 15;
     emit enqueue(signal);
@@ -197,10 +205,10 @@ void LibraryDialog::fetch() {
 
 
 // ******************************************
-void LibraryDialog::sendRange(const int &flags, const int &from, const int &to) {
+void LibraryDialog::libraryRange(const ACTIONS &action, const int &flags, const int &from, const int &to) {
 // ******************************************
     std::cout << "LibraryDialog::sendRange() " << flags << " " << from << " " << to << std::endl;
-    queueitem_t signal(LIBRARY_SEND);
+    queueitem_t signal(action);
     signal.int0 = flags;
     signal.int1 = from;
     signal.int2 = to;
@@ -208,7 +216,41 @@ void LibraryDialog::sendRange(const int &flags, const int &from, const int &to) 
 }
 
 
+// ******************************************
+void LibraryDialog::librarySelectedRanges(QListWidget *list, const ACTIONS &action, const int &flags) {
+// ******************************************
+    if (list->currentRow() < 0) {
+        // no selection
+        return;
+    }
 
+    // determine selection manually:
+    int rows = list->count();
+    if (rows < 16) {
+        return; // should have at least the internal patches!
+    }
+
+    bool last = list->item(0)->isSelected();
+    bool inside = false;
+    int start = 0;
+    for (int i = 1; i < rows; i++) {
+        const bool &current = list->item(i)->isSelected();
+        if (current && !last) {
+            inside = true;
+            start = i;
+        }
+
+        if (!current && last) {
+            inside = false;
+            libraryRange(action, flags, start, i - 1);
+        }
+
+        last = current;
+    }
+    if (inside) {
+        libraryRange(action, flags, start, rows - 1);
+    }
+}
 
 
 //
@@ -243,9 +285,9 @@ void LibraryDialog::patchRecall(QListWidgetItem *item) {
     const int &c = ui->patchList->currentRow();
 
 //    std::cout << "recall " << c << std::endl;
-    int flag = Editor::FLAG_PATCH;
+    int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Editor::FLAG_SEQUENCE;
+        flag |= Library::FLAG_SEQUENCE;
     }
     recall(flag, c);
 }
@@ -258,9 +300,9 @@ void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
     const int &c = ui->sequenceList->currentRow();
 
 //    std::cout << "recall " << c << std::endl;
-    int flag = Editor::FLAG_SEQUENCE;
+    int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Editor::FLAG_PATCH;
+        flag |= Library::FLAG_PATCH;
     }
     recall(flag, c);
 
@@ -268,71 +310,74 @@ void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
 
 
 // ******************************************
-void LibraryDialog::patchStore() {
+void LibraryDialog::patchCMStore() {
 // ******************************************
     const int &c = ui->patchList->currentRow();
 
 //    std::cout << "store " << c << std::endl;
-    int flag = Editor::FLAG_PATCH;
+    int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Editor::FLAG_SEQUENCE;
+        flag |= Library::FLAG_SEQUENCE;
     }
     store(flag, c);
 }
 
 
 // ******************************************
-void LibraryDialog::sequenceStore() {
+void LibraryDialog::sequenceCMStore() {
 // ******************************************
     const int &c = ui->sequenceList->currentRow();
 
 //    std::cout << "store " << c << std::endl;
-    int flag = Editor::FLAG_SEQUENCE;
+    int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Editor::FLAG_PATCH;
+        flag |= Library::FLAG_PATCH;
     }
     store(flag, c);
 }
 
 
 // ******************************************
-void LibraryDialog::sendSelected() {
+void LibraryDialog::patchCMSend() {
 // ******************************************
-    //std::cout << "LibraryDialog::sendSelected()" << std::endl;
-
-    if (ui->patchList->currentRow() < 0) {
-        // no selection
-        return;
+    int flag = Library::FLAG_PATCH;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_SEQUENCE;
     }
+    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+}
 
-    // determine selection manually:
-    int rows = ui->patchList->count();
-    if (rows < 16) {
-        return; // should have at least the internal patches!
+
+// ******************************************
+void LibraryDialog::patchCMSendChanged() {
+// ******************************************
+    int flag = Library::FLAG_PATCH | Library::FLAG_CHANGED;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_SEQUENCE;
     }
+    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+}
 
-    const int &flags = Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE;
 
-    bool last = ui->patchList->item(0)->isSelected();
-    bool inside = false;
-    int start = 0;
-    for (int i = 1; i < rows; i++) {
-        const bool &current = ui->patchList->item(i)->isSelected();
-        if (current && !last) {
-            inside = true;
-            start = i;
-        }
-
-        if (!current && last) {
-            inside = false;
-            sendRange(flags, start, i - 1);
-        }
-
-        last = current;
+// ******************************************
+void LibraryDialog::sequenceCMSend() {
+// ******************************************
+    int flag = Library::FLAG_SEQUENCE;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_PATCH;
     }
-    if (inside) {
-        sendRange(flags, start, rows - 1);
+    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+}
+
+
+// ******************************************
+void LibraryDialog::sequenceCMSendChanged() {
+// ******************************************
+    int flag = Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_PATCH;
     }
+    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
 }
 
 
@@ -351,9 +396,9 @@ void LibraryDialog::patchMove(const QModelIndex &parent, int start, int end, con
 
     syncToSequenceSelection();
 
-    int flag = Editor::FLAG_PATCH;
+    int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Editor::FLAG_SEQUENCE;
+        flag |= Library::FLAG_SEQUENCE;
     }
     move(flag, start, row);
 }
@@ -374,9 +419,9 @@ void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, 
 
     syncToPatchSelection();
 
-    int flag = Editor::FLAG_SEQUENCE;
+    int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Editor::FLAG_PATCH;
+        flag |= Library::FLAG_PATCH;
     }
     move(flag, start, row);
 }

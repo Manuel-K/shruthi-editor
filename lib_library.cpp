@@ -237,10 +237,10 @@ bool Library::send(const int &what, const int &from, const int &to) {
     std::vector<unsigned char> temp;
     bool ret = true;
 
-    bool force = what&4;
+    bool force = !(what&FLAG_CHANGED);
 
     for (int i = from; i <= to; i++) {
-        if ((what&1) && (force || patchHasBeenEdited(i) || patchHasBeenMoved(i))) {
+        if ((what&FLAG_PATCH) && (force || patchHasBeenEdited(i) || patchHasBeenMoved(i))) {
             std::cout << i << " patch " << std::endl;
             temp.clear();
             patches.at(i).generateSysex(&temp);
@@ -255,7 +255,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
             // Don't flood the Shruthi
             QThread::msleep(250);
         }
-        if (ret && (what&2) && (force || sequenceHasBeenEdited(i) || sequenceHasBeenMoved(i))) {
+        if (ret && (what&FLAG_SEQUENCE) && (force || sequenceHasBeenEdited(i) || sequenceHasBeenMoved(i))) {
             std::cout << i << " sequence " << std::endl;
             temp.clear();
             sequences.at(i).generateSysex(&temp);

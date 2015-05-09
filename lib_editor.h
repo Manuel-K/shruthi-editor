@@ -110,6 +110,7 @@ class Editor : public QObject {
         bool getLibrarySequenceMoved(const unsigned int &seq_id) const;
         bool getLibrarySequenceEdited(const unsigned int &seq_id) const;
 
+        // keep in sync with Library::FLAGs
         static const int FLAG_PATCH = 1;
         static const int FLAG_SEQUENCE = 2;
 
