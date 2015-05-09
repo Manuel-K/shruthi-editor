@@ -107,6 +107,8 @@ class Editor : public QObject {
 
         const Library &getLibrary() const;
 
+        const int &getNumberOfPrograms() const;
+
         // keep in sync with Library::FLAGs
         static const int FLAG_PATCH = 1;
         static const int FLAG_SEQUENCE = 2;

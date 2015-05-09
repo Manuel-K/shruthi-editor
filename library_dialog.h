@@ -59,6 +59,9 @@ class LibraryDialog : public QDialog {
         QFont editedFont;
         QFont editedMovedFont;
 
+        QColor colorOnHW;
+        QColor colorNotOnHW;
+
         QMenu *patchContextMenu;
         QMenu *sequenceContextMenu;
 

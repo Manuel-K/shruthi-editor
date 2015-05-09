@@ -51,6 +51,9 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     editedMovedFont = editedFont;
     editedMovedFont.setItalic(true);
 
+    colorOnHW.setNamedColor("black");
+    colorNotOnHW.setNamedColor("grey");
+
     patchContextMenu = new QMenu(this);
     patchContextMenu->addAction("Store", this, SLOT(patchCMStore()));
     patchContextMenu->addSeparator();
@@ -148,6 +151,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
             const bool &e = library.patchEdited(i);
             const bool &m = library.patchMoved(i);
             setFont(item, e, m);
+            item->setTextColor(i < editor->getNumberOfPrograms() ? colorOnHW : colorNotOnHW);
         }
     }
     if (what&Library::FLAG_SEQUENCE) {
@@ -161,6 +165,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
             const bool &e = library.sequenceEdited(i);
             const bool &m = library.sequenceMoved(i);
             setFont(item, e, m);
+            item->setTextColor(i < editor->getNumberOfPrograms() ? colorOnHW : colorNotOnHW);
         }
     }
 }

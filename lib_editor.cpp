@@ -120,6 +120,13 @@ const Library &Editor::getLibrary() const {
 
 
 // ******************************************
+const int &Editor::getNumberOfPrograms() const {
+// ******************************************
+    return numberOfPrograms;
+}
+
+
+// ******************************************
 void Editor::process(queueitem_t item) {
 // ******************************************
     switch(item.action) {
