@@ -236,7 +236,6 @@ void LibraryDialog::loadReplace() {
 // ******************************************
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
-        std::cout << "filename: " << path.toUtf8().constData() << std::endl;
         queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
         emit enqueue(signal);
     }
@@ -248,7 +247,6 @@ void LibraryDialog::loadAppend() {
 // ******************************************
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
-        std::cout << "filename: " << path.toUtf8().constData() << std::endl;
         queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_APPEND);
         emit enqueue(signal);
     }
