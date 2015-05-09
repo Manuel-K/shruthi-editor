@@ -41,16 +41,16 @@ class Library {
         void listPatches() const;
         void movePatch(const int &from, const int &to);
 
-        bool patchHasBeenMoved(const int &id) const;
-        bool patchHasBeenEdited(const int &id) const;
+        bool patchMoved(const int &id) const;
+        bool patchEdited(const int &id) const;
 
         const Sequence &recallSequence(const int &id) const;
         void storeSequence(const int &id, const Sequence &sequence);
         void listSequences() const;
         void moveSequence(const int &from, const int &to);
 
-        bool sequenceHasBeenMoved(const int &id) const;
-        bool sequenceHasBeenEdited(const int &id) const;
+        bool sequenceMoved(const int &id) const;
+        bool sequenceEdited(const int &id) const;
         bool sequenceIsInit(const int &id) const;
         QString getSequenceIdentifier(const int &id) const;
 
@@ -86,12 +86,12 @@ class Library {
         bool keepFetching();
 
         std::vector<Patch> patches;
-        std::vector<bool> patchMoved;
-        std::vector<bool> patchEdited;
+        std::vector<bool> mPatchMoved;
+        std::vector<bool> mPatchEdited;
 
         std::vector<Sequence> sequences;
-        std::vector<bool> sequenceMoved;
-        std::vector<bool> sequenceEdited;
+        std::vector<bool> mSequenceMoved;
+        std::vector<bool> mSequenceEdited;
 
         const Sequence init_sequence;
 

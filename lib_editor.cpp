@@ -113,44 +113,9 @@ const int &Editor::getSequenceParam(const int &step, const SequenceParameter::Se
 
 
 // ******************************************
-const QString &Editor::getLibraryPatchName(const unsigned int &patch_id) const {
+const Library &Editor::getLibrary() const {
 // ******************************************
-    return library.recallPatch(patch_id).getName();
-}
-
-
-// ******************************************
-bool Editor::getLibraryPatchMoved(const unsigned int &patch_id) const {
-// ******************************************
-    return library.patchHasBeenMoved(patch_id);
-}
-
-
-// ******************************************
-bool Editor::getLibraryPatchEdited(const unsigned int &patch_id) const {
-// ******************************************
-    return library.patchHasBeenEdited(patch_id);
-}
-
-
-// ******************************************
-const QString Editor::getLibrarySequenceName(const unsigned int &seq_id) const {
-// ******************************************
-    return library.getSequenceIdentifier(seq_id);
-}
-
-
-// ******************************************
-bool Editor::getLibrarySequenceMoved(const unsigned int &seq_id) const {
-// ******************************************
-    return library.sequenceHasBeenMoved(seq_id);
-}
-
-
-// ******************************************
-bool Editor::getLibrarySequenceEdited(const unsigned int &seq_id) const {
-// ******************************************
-    return library.sequenceHasBeenEdited(seq_id);
+    return library;
 }
 
 

@@ -29,11 +29,11 @@
 Library::Library(MidiOut *out) {
 // ******************************************
     patches.reserve(16);
-    patchEdited.reserve(16);
-    patchMoved.reserve(16);
+    mPatchEdited.reserve(16);
+    mPatchMoved.reserve(16);
     sequences.reserve(16);
-    sequenceEdited.reserve(16);
-    sequenceMoved.reserve(16);
+    mSequenceEdited.reserve(16);
+    mSequenceMoved.reserve(16);
 
     midiout = out;
 
@@ -75,8 +75,8 @@ void Library::storePatch(const int &id, const Patch &patch) {
 // ******************************************
     if (!patches.at(id).equals(patch)) {
         patches.at(id).set(patch);
-        patchEdited.at(id) = true;
-        patchMoved.at(id) = false;
+        mPatchEdited.at(id) = true;
+        mPatchMoved.at(id) = false;
     }
 }
 
@@ -90,8 +90,8 @@ void Library::listPatches() const {
     for (unsigned int i = 0; i < num; i++) {
         std::cout << "  " << i << ": "
                   << patches.at(i).getName().toUtf8().constData()
-                  << ", changed " << patchEdited.at(i)
-                  << ", moved " << patchMoved.at(i) << std::endl;
+                  << ", changed " << mPatchEdited.at(i)
+                  << ", moved " << mPatchMoved.at(i) << std::endl;
     }
 }
 
@@ -107,9 +107,9 @@ void Library::movePatch(const int &from, const int &to) {
     patches.erase(patches.begin() + from);
     patches.insert(patches.begin() + to, temp);
 
-    bool temp2 = patchEdited.at(from);
-    patchEdited.erase(patchEdited.begin() + from);
-    patchEdited.insert(patchEdited.begin() + to, temp2);
+    bool temp2 = mPatchEdited.at(from);
+    mPatchEdited.erase(mPatchEdited.begin() + from);
+    mPatchEdited.insert(mPatchEdited.begin() + to, temp2);
 
     // Mark as moved:
     int start = from;
@@ -119,22 +119,22 @@ void Library::movePatch(const int &from, const int &to) {
         end = from;
     }
     for (int i = start; i <= end; i++) {
-        patchMoved.at(i) = true;
+        mPatchMoved.at(i) = true;
     }
 }
 
 
 // ******************************************
-bool Library::patchHasBeenMoved(const int &id) const {
+bool Library::patchMoved(const int &id) const {
 // ******************************************
-    return patchMoved.at(id);
+    return mPatchMoved.at(id);
 }
 
 
 // ******************************************
-bool Library::patchHasBeenEdited(const int &id) const {
+bool Library::patchEdited(const int &id) const {
 // ******************************************
-    return patchEdited.at(id);
+    return mPatchEdited.at(id);
 }
 
 
@@ -150,8 +150,8 @@ void Library::storeSequence(const int &id, const Sequence &sequence) {
 // ******************************************
     if (!sequences.at(id).equals(sequence)) {
         sequences.at(id).set(sequence);
-        sequenceEdited.at(id) = true;
-        sequenceMoved.at(id) = false;
+        mSequenceEdited.at(id) = true;
+        mSequenceMoved.at(id) = false;
     }
 }
 
@@ -167,8 +167,8 @@ void Library::listSequences() const {
     for (unsigned int i = 0; i < num; i++) {
         std::cout << "  " << i << ": "
                   << getSequenceIdentifier(i).toUtf8().constData()
-                  << ", changed " << sequenceEdited.at(i)
-                  << ", moved " << sequenceMoved.at(i) << std::endl;
+                  << ", changed " << mSequenceEdited.at(i)
+                  << ", moved " << mSequenceMoved.at(i) << std::endl;
     }
 }
 
@@ -184,9 +184,9 @@ void Library::moveSequence(const int &from, const int &to) {
     sequences.erase(sequences.begin() + from);
     sequences.insert(sequences.begin() + to, temp);
 
-    bool temp2 = sequenceEdited.at(from);
-    sequenceEdited.erase(sequenceEdited.begin() + from);
-    sequenceEdited.insert(sequenceEdited.begin() + to, temp2);
+    bool temp2 = mSequenceEdited.at(from);
+    mSequenceEdited.erase(mSequenceEdited.begin() + from);
+    mSequenceEdited.insert(mSequenceEdited.begin() + to, temp2);
 
     // Mark as moved:
     int start = from;
@@ -196,22 +196,22 @@ void Library::moveSequence(const int &from, const int &to) {
         end = from;
     }
     for (int i = start; i <= end; i++) {
-        sequenceMoved.at(i) = true;
+        mSequenceMoved.at(i) = true;
     }
 }
 
 
 // ******************************************
-bool Library::sequenceHasBeenMoved(const int &id) const {
+bool Library::sequenceMoved(const int &id) const {
 // ******************************************
-    return sequenceMoved.at(id);
+    return mSequenceMoved.at(id);
 }
 
 
 // ******************************************
-bool Library::sequenceHasBeenEdited(const int &id) const {
+bool Library::sequenceEdited(const int &id) const {
 // ******************************************
-    return sequenceEdited.at(id);
+    return mSequenceEdited.at(id);
 }
 
 
@@ -240,7 +240,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
     bool force = !(what&FLAG_CHANGED);
 
     for (int i = from; i <= to; i++) {
-        if ((what&FLAG_PATCH) && (force || patchHasBeenEdited(i) || patchHasBeenMoved(i))) {
+        if ((what&FLAG_PATCH) && (force || patchEdited(i) || patchMoved(i))) {
             std::cout << i << " patch " << std::endl;
             temp.clear();
             patches.at(i).generateSysex(&temp);
@@ -249,13 +249,13 @@ bool Library::send(const int &what, const int &from, const int &to) {
                 ret = midiout->patchWriteRequest(i);
             }
             if (ret) {
-                patchEdited.at(i) = false;
-                patchMoved.at(i) = false;
+                mPatchEdited.at(i) = false;
+                mPatchMoved.at(i) = false;
             }
             // Don't flood the Shruthi
             QThread::msleep(250);
         }
-        if (ret && (what&FLAG_SEQUENCE) && (force || sequenceHasBeenEdited(i) || sequenceHasBeenMoved(i))) {
+        if (ret && (what&FLAG_SEQUENCE) && (force || sequenceEdited(i) || sequenceMoved(i))) {
             std::cout << i << " sequence " << std::endl;
             temp.clear();
             sequences.at(i).generateSysex(&temp);
@@ -264,8 +264,8 @@ bool Library::send(const int &what, const int &from, const int &to) {
                 ret = midiout->sequenceWriteRequest(i);
             }
             if (ret) {
-                sequenceEdited.at(i) = false;
-                sequenceMoved.at(i) = false;
+                mSequenceEdited.at(i) = false;
+                mSequenceMoved.at(i) = false;
             }
             // Don't flood the Shruthi
             QThread::msleep(125);
@@ -354,8 +354,8 @@ bool Library::receivedPatch(const unsigned char *sysex) {
 
     if (ret) {
         patches.at(fetchNextIncomingPatch).set(tempp);
-        patchEdited.at(fetchNextIncomingPatch) = false;
-        patchMoved.at(fetchNextIncomingPatch) = false;
+        mPatchEdited.at(fetchNextIncomingPatch) = false;
+        mPatchMoved.at(fetchNextIncomingPatch) = false;
         fetchNextIncomingPatch++;
 
         //listPatches(); //DEBUG
@@ -413,8 +413,8 @@ bool Library::receivedSequence(const unsigned char *seq) {
     }
 
     sequences.at(fetchNextIncomingSequence).unpackData(seq);
-    sequenceEdited.at(fetchNextIncomingSequence) = false;
-    sequenceMoved.at(fetchNextIncomingSequence) = false;
+    mSequenceEdited.at(fetchNextIncomingSequence) = false;
+    mSequenceMoved.at(fetchNextIncomingSequence) = false;
     fetchNextIncomingSequence++;
 
     //listSequences(); //DEBUG
@@ -494,8 +494,8 @@ bool Library::loadLibrary(const QString &path) {
                     growPatchVectors(1);
                 }
                 patches.at(patch).set(tempPatch);
-                patchEdited.at(patch) = false;
-                patchMoved.at(patch) = false;
+                mPatchEdited.at(patch) = false;
+                mPatchMoved.at(patch) = false;
                 patch++;
             }
             keepGoing = statusp && retp >= 0;
@@ -525,8 +525,8 @@ bool Library::loadLibrary(const QString &path) {
                     growSequenceVectors(1);
                 }
                 sequences.at(sequence).set(tempSequence);
-                sequenceEdited.at(sequence) = false;
-                sequenceMoved.at(sequence) = false;
+                mSequenceEdited.at(sequence) = false;
+                mSequenceMoved.at(sequence) = false;
                 sequence++;
             }
             keepGoing = statuss && rets >= 0;
@@ -566,11 +566,11 @@ void Library::setNumberOfPrograms(const unsigned int &num) {
     // Be really careful with this function. Most of the times
     // increaseNumberOfProgramsTo() has more suitable behavior.
     patches.reserve(num);
-    patchEdited.reserve(num);
-    patchMoved.reserve(num);
+    mPatchEdited.reserve(num);
+    mPatchMoved.reserve(num);
     sequences.reserve(num);
-    sequenceEdited.reserve(num);
-    sequenceMoved.reserve(num);
+    mSequenceEdited.reserve(num);
+    mSequenceMoved.reserve(num);
 
     growPatchVectors(num - numberOfPrograms);
     growSequenceVectors(num - numberOfPrograms);
@@ -650,8 +650,8 @@ void Library::growPatchVectors(const int &amount) {
 // ******************************************
     for (int i = 0; i < amount; i++) {
         patches.push_back(Patch());
-        patchEdited.push_back(false);
-        patchMoved.push_back(false);
+        mPatchEdited.push_back(false);
+        mPatchMoved.push_back(false);
     }
 }
 
@@ -661,8 +661,8 @@ void Library::growSequenceVectors(const int &amount) {
 // ******************************************
     for (int i = 0; i < amount; i++) {
         sequences.push_back(Sequence());
-        sequenceMoved.push_back(false);
-        sequenceEdited.push_back(false);
+        mSequenceMoved.push_back(false);
+        mSequenceEdited.push_back(false);
     }
 
 }

@@ -131,16 +131,18 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         }
     }
 
+    const Library &library = editor->getLibrary();
+
     if (what&Library::FLAG_PATCH) {
         QListWidgetItem *item;
         // setup items
         //std::cout << "redrawPatchNames " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->patchList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' '))+editor->getLibraryPatchName(i));
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library.recallPatch(i).getName());
 
-            const bool &e = editor->getLibraryPatchEdited(i);
-            const bool &m = editor->getLibraryPatchMoved(i);
+            const bool &e = library.patchEdited(i);
+            const bool &m = library.patchMoved(i);
             setFont(item, e, m);
         }
     }
@@ -150,10 +152,10 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         //std::cout << "redrawSequenceInfo " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->sequenceList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' '))+editor->getLibrarySequenceName(i));
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library.getSequenceIdentifier(i));
 
-            const bool &e = editor->getLibrarySequenceEdited(i);
-            const bool &m = editor->getLibrarySequenceMoved(i);
+            const bool &e = library.sequenceEdited(i);
+            const bool &m = library.sequenceMoved(i);
             setFont(item, e, m);
         }
     }
