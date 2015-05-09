@@ -14,14 +14,49 @@
    <string>LibraryDialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QPushButton" name="sendSelected">
+   <item row="0" column="0" colspan="2">
+    <widget class="QPushButton" name="fetch">
      <property name="text">
-      <string>Send selected</string>
+      <string>Fetch</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="send">
+     <property name="text">
+      <string>Send</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="sendChanged">
+     <property name="text">
+      <string>SendChanged</string>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
+    <widget class="QPushButton" name="loadReplace">
+     <property name="text">
+      <string>Load Library...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="loadAppend">
+     <property name="text">
+      <string>Append Library...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="2">
+    <widget class="QPushButton" name="save">
+     <property name="text">
+      <string>Save Library</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
     <widget class="QGroupBox" name="gPatch">
      <property name="title">
       <string>Patches:</string>
@@ -63,7 +98,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="2" colspan="2">
     <widget class="QGroupBox" name="gSeq">
      <property name="title">
       <string>Sequences:</string>
@@ -105,14 +140,7 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QPushButton" name="fetch">
-     <property name="text">
-      <string>Fetch</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QCheckBox" name="sync">
      <property name="text">
       <string>Sync</string>

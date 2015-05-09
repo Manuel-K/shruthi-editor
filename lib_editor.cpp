@@ -692,7 +692,8 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
     qDebug() << "Editor::actionLibrarySend()" << what << start << end;
 #endif
 
-    library.send(what, start, end);
+    const int &st = end >= 0 ? end : (numberOfPrograms - 1);
+    library.send(what, start, st);
     emit redrawLibraryItems(what, start, end);
 }
 

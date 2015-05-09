@@ -83,6 +83,8 @@ class LibraryDialog : public QDialog {
         void sequenceMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
 
         void fetch();
+        void send();
+        void sendChanged();
         void syncToSequenceScrollBar(int val);
         void syncToPatchScrollBar(int val);
         void syncToSequenceSelection();

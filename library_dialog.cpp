@@ -70,8 +70,13 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     connect(ui->sequenceList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(sequenceMove(QModelIndex,int,int,QModelIndex,int)));
 
     connect(ui->fetch, SIGNAL(clicked(bool)), this, SLOT(fetch()));
-    //connect(ui->sendSelected, SIGNAL(clicked()), this, SLOT(sendSelected()));
-    ui->sendSelected->setDisabled(true);
+    connect(ui->send, SIGNAL(clicked()), this, SLOT(send()));
+    connect(ui->sendChanged, SIGNAL(clicked()), this, SLOT(sendChanged()));
+
+    ui->save->setDisabled(true);
+    ui->loadAppend->setDisabled(true);
+    ui->loadReplace->setDisabled(true);
+
 
     // synchronize list widget scrolling:
     connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSequenceScrollBar(int)));
@@ -200,10 +205,31 @@ void LibraryDialog::fetch() {
     queueitem_t signal(LIBRARY_FETCH);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
-    signal.int2 = 15;
+    signal.int2 = 15; // TODO: change to -1
     emit enqueue(signal);
 }
 
+
+// ******************************************
+void LibraryDialog::send() {
+// ******************************************
+    queueitem_t signal(LIBRARY_SEND);
+    signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
+    signal.int1 = 0;
+    signal.int2 = 15; // TODO: change to -1
+    emit enqueue(signal);
+}
+
+
+// ******************************************
+void LibraryDialog::sendChanged(){
+// ******************************************
+    queueitem_t signal(LIBRARY_SEND);
+    signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
+    signal.int1 = 0;
+    signal.int2 = -1;
+    emit enqueue(signal);
+}
 
 
 // ******************************************
