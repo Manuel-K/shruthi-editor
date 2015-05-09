@@ -86,6 +86,7 @@ class LibraryDialog : public QDialog {
         void send();
         void sendChanged();
         void loadReplace();
+        void loadAppend();
         void save();
 
         void syncToSequenceScrollBar(int val);

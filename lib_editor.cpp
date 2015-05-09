@@ -764,7 +764,7 @@ void Editor::actionLibraryLoad(const QString &path, const int &flags) {
 // ******************************************
     //TODO respect flags
     //TODO status bar messages
-    library.loadLibrary(path);
+    library.loadLibrary(path, flags&Library::FLAG_APPEND);
     emit redrawLibraryItems(flags, 0, library.getNumberOfPrograms() - 1);
 }
 

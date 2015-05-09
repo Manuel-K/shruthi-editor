@@ -68,7 +68,7 @@ class Library {
         bool isFetchingSequences() const;
 
         bool saveLibrary(const QString &path);
-        bool loadLibrary(const QString &path);
+        bool loadLibrary(const QString &path, bool append = false);
 
         const unsigned int &getNumberOfPrograms() const;
         void increaseNumberOfProgramsTo(const unsigned int &num);

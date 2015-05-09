@@ -465,7 +465,7 @@ bool Library::saveLibrary(const QString &path) {
 
 
 // ******************************************
-bool Library::loadLibrary(const QString &path) {
+bool Library::loadLibrary(const QString &path, bool append) {
 // ******************************************
     std::vector<unsigned char> temp;
 
@@ -473,9 +473,17 @@ bool Library::loadLibrary(const QString &path) {
         return false;
     }
 
-    // Patch:
     bool statusp = true;
+    bool statuss = true;
     unsigned int patch = 0;
+    unsigned int sequence = 0;
+
+    if (append) {
+        patch = patches.size();
+        sequence = sequences.size();
+    }
+
+    // Patch:
     {
         int lastPosition = 0;
         bool keepGoing = true;
@@ -493,6 +501,10 @@ bool Library::loadLibrary(const QString &path) {
                 if (patch >= patches.size()) {
                     growPatchVectors(1);
                 }
+                // add init sequence if only patch is loaded
+                if (patch >= sequences.size()) {
+                    growSequenceVectors(1);
+                }
                 patches.at(patch).set(tempPatch);
                 mPatchEdited.at(patch) = false;
                 mPatchMoved.at(patch) = false;
@@ -503,8 +515,6 @@ bool Library::loadLibrary(const QString &path) {
     }
 
     // Sequence
-    bool statuss = true;
-    unsigned int sequence = 0;
     {
         bool keepGoing = true;
         int lastPosition = 0;
@@ -523,6 +533,10 @@ bool Library::loadLibrary(const QString &path) {
                 lastPosition = rets + 95;
                 if (sequence >= sequences.size()) {
                     growSequenceVectors(1);
+                }
+                // add init patch if only sequence is loaded
+                if (sequence >= patches.size()) {
+                    growPatchVectors(1);
                 }
                 sequences.at(sequence).set(tempSequence);
                 mSequenceEdited.at(sequence) = false;

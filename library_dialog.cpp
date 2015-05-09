@@ -74,9 +74,8 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     connect(ui->send, SIGNAL(clicked()), this, SLOT(send()));
     connect(ui->sendChanged, SIGNAL(clicked()), this, SLOT(sendChanged()));
     connect(ui->loadReplace, SIGNAL(clicked()), this, SLOT(loadReplace()));
+    connect(ui->loadAppend, SIGNAL(clicked()), this, SLOT(loadAppend()));
     connect(ui->save, SIGNAL(clicked()), this, SLOT(save()));
-    ui->loadAppend->setDisabled(true);
-
 
     // synchronize list widget scrolling:
     connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSequenceScrollBar(int)));
@@ -239,6 +238,18 @@ void LibraryDialog::loadReplace() {
     if (path != "") {
         std::cout << "filename: " << path.toUtf8().constData() << std::endl;
         queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        emit enqueue(signal);
+    }
+}
+
+
+// ******************************************
+void LibraryDialog::loadAppend() {
+// ******************************************
+    QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
+    if (path != "") {
+        std::cout << "filename: " << path.toUtf8().constData() << std::endl;
+        queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_APPEND);
         emit enqueue(signal);
     }
 }
