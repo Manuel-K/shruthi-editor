@@ -484,67 +484,63 @@ bool Library::loadLibrary(const QString &path, bool append) {
     }
 
     // Patch:
-    {
-        int lastPosition = 0;
-        bool keepGoing = true;
+    int lastPosition = 0;
+    bool keepGoing = true;
 
-        std::vector<unsigned char> ptc;
-        Patch tempPatch;
-        while(keepGoing) {
-            //std::cout << "patch " << patch << " " << lastPosition << std::endl;
-            const int &retp = Midi::getPatch(&temp, &ptc, lastPosition);
-            statusp &= tempPatch.parseSysex(&ptc);
+    std::vector<unsigned char> ptc;
+    Patch tempPatch;
+    while(keepGoing) {
+        //std::cout << "patch " << patch << " " << lastPosition << std::endl;
+        const int &retp = Midi::getPatch(&temp, &ptc, lastPosition);
+        statusp &= tempPatch.parseSysex(&ptc);
 
-            //std::cout << "ret " << ret << std::endl;
-            if(retp >= 0 && statusp) {
-                lastPosition = retp + 195;
-                if (patch >= patches.size()) {
-                    growPatchVectors(1);
-                }
-                // add init sequence if only patch is loaded
-                if (patch >= sequences.size()) {
-                    growSequenceVectors(1);
-                }
-                patches.at(patch).set(tempPatch);
-                mPatchEdited.at(patch) = false;
-                mPatchMoved.at(patch) = false;
-                patch++;
+        //std::cout << "ret " << ret << std::endl;
+        if(retp >= 0 && statusp) {
+            lastPosition = retp + 195;
+            if (patch >= patches.size()) {
+                growPatchVectors(1);
             }
-            keepGoing = statusp && retp >= 0;
+            // add init sequence if only patch is loaded
+            if (patch >= sequences.size()) {
+                growSequenceVectors(1);
+            }
+            patches.at(patch).set(tempPatch);
+            mPatchEdited.at(patch) = false;
+            mPatchMoved.at(patch) = false;
+            patch++;
         }
+        keepGoing = statusp && retp >= 0;
     }
 
     // Sequence
-    {
-        bool keepGoing = true;
-        int lastPosition = 0;
+    keepGoing = true;
+    lastPosition = 0;
 
-        std::vector<unsigned char> seq;
-        Sequence tempSequence;
+    std::vector<unsigned char> seq;
+    Sequence tempSequence;
 
-        while(keepGoing) {
-            //std::cout << "seq" << sequence << std::endl;
-            const int &rets = Midi::getSequence(&temp, &seq, lastPosition);
-            statuss &= tempSequence.parseSysex(&seq);
+    while(keepGoing) {
+        //std::cout << "seq" << sequence << std::endl;
+        const int &rets = Midi::getSequence(&temp, &seq, lastPosition);
+        statuss &= tempSequence.parseSysex(&seq);
 
-            //std::cout << "rets" << rets << " status " << statuss << std::endl;
+        //std::cout << "rets" << rets << " status " << statuss << std::endl;
 
-            if (rets >= 0 && statuss) {
-                lastPosition = rets + 95;
-                if (sequence >= sequences.size()) {
-                    growSequenceVectors(1);
-                }
-                // add init patch if only sequence is loaded
-                if (sequence >= patches.size()) {
-                    growPatchVectors(1);
-                }
-                sequences.at(sequence).set(tempSequence);
-                mSequenceEdited.at(sequence) = false;
-                mSequenceMoved.at(sequence) = false;
-                sequence++;
+        if (rets >= 0 && statuss) {
+            lastPosition = rets + 95;
+            if (sequence >= sequences.size()) {
+                growSequenceVectors(1);
             }
-            keepGoing = statuss && rets >= 0;
+            // add init patch if only sequence is loaded
+            if (sequence >= patches.size()) {
+                growPatchVectors(1);
+            }
+            sequences.at(sequence).set(tempSequence);
+            mSequenceEdited.at(sequence) = false;
+            mSequenceMoved.at(sequence) = false;
+            sequence++;
         }
+        keepGoing = statuss && rets >= 0;
     }
 
     // Updated number of programs:
