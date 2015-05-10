@@ -20,10 +20,10 @@
 #include <QtCore>
 #include <QDebug>
 
-#include "shruthi-editor.h"
-#include "keyboard-dialog.h"
-#include "sequence_editor.h"
-#include "library_dialog.h"
+#include "ui/shruthi_editor.h"
+#include "ui/keyboard_dialog.h"
+#include "ui/sequence_editor.h"
+#include "ui/library_dialog.h"
 
 #include "lib_editor.h"
 #include "lib_midiin.h"
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
         main_window->connect(&midiin, SIGNAL(midiInputStatusChanged(bool)), SLOT(midiInputStatusChanged(bool)));
 
         // Setup keyboard
-        Keyboard keys;
+        KeyboardDialog keys;
         keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(show()));
         keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
 

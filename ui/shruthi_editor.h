@@ -19,7 +19,7 @@
 #ifndef SHRUTHI_EDITOR_H
 #define SHRUTHI_EDITOR_H
 
-#include "ui_shruthi-editor.h"
+#include "ui_shruthi_editor.h"
 
 #include "lib_editor.h"
 

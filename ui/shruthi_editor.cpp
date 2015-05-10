@@ -17,8 +17,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
-#include "shruthi-editor.h"
-#include "settings-dialog.h"
+#include "ui/shruthi_editor.h"
+#include "ui/settings_dialog.h"
 #include "lib_labels.h"
 #include "lib_patch.h"
 
@@ -525,7 +525,7 @@ void ShruthiEditorMainWindow::sendSequence() {
 // ******************************************
 void ShruthiEditorMainWindow::openSettings() {
 // ******************************************
-    ShruthiEditorSettings prefs(this);
+    SettingsDialog prefs(this);
     prefs.setFixedSize(prefs.width(),prefs.height());
     prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
     prefs.setMidiChannel(MIDI_CHANNEL);

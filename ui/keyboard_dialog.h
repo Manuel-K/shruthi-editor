@@ -19,17 +19,17 @@
 #ifndef KEYBOARD_DIALOG_H
 #define KEYBOARD_DIALOG_H
 
-#include "ui_keyboard.h"
+#include "ui_keyboard_dialog.h"
 #include "lib_editor.h"
 
 // ******************************************
-class Keyboard : public QDialog {
+class KeyboardDialog : public QDialog {
 // ******************************************
     Q_OBJECT
 
     public:
-        explicit Keyboard(QWidget *parent = 0);
-        ~Keyboard();
+        explicit KeyboardDialog(QWidget *parent = 0);
+        ~KeyboardDialog();
 
     private:
         Ui::keyboard *ui;

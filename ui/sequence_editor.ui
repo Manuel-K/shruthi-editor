@@ -816,13 +816,13 @@
   <customwidget>
    <class>ShruthiEditorDial</class>
    <extends>QWidget</extends>
-   <header>shruthi_editor_dial.h</header>
+   <header>ui/shruthi_editor_dial.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SequenceStep</class>
    <extends>QWidget</extends>
-   <header>sequence_step.h</header>
+   <header>ui/sequence_step.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

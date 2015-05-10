@@ -107,7 +107,7 @@
   <customwidget>
    <class>KeyboardWidget</class>
    <extends>QWidget</extends>
-   <header>keyboard_widget.h</header>
+   <header>ui/keyboard_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

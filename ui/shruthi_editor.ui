@@ -1864,7 +1864,7 @@
   <customwidget>
    <class>ShruthiEditorDial</class>
    <extends>QWidget</extends>
-   <header>shruthi_editor_dial.h</header>
+   <header>ui/shruthi_editor_dial.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

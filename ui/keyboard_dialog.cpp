@@ -17,10 +17,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
-#include "keyboard-dialog.h"
+#include "keyboard_dialog.h"
 
 // ******************************************
-Keyboard::Keyboard(QWidget *parent):
+KeyboardDialog::KeyboardDialog(QWidget *parent):
     QDialog(parent),
     ui(new Ui::keyboard) {
 // ******************************************
@@ -42,7 +42,7 @@ Keyboard::Keyboard(QWidget *parent):
 
 
 // ******************************************
-Keyboard::~Keyboard()
+KeyboardDialog::~KeyboardDialog()
 // ******************************************
 {
     delete ui;
@@ -53,7 +53,7 @@ Keyboard::~Keyboard()
 //
 
 // ******************************************
-void Keyboard::keyPressed(int key) {
+void KeyboardDialog::keyPressed(int key) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::keyPressed()" << key;
@@ -63,7 +63,7 @@ void Keyboard::keyPressed(int key) {
 }
 
 // ******************************************
-void Keyboard::panicPushed() {
+void KeyboardDialog::panicPushed() {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::panicPushed()";
@@ -73,7 +73,7 @@ void Keyboard::panicPushed() {
 }
 
 // ******************************************
-void Keyboard::keyReleased(int key) {
+void KeyboardDialog::keyReleased(int key) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::keyReleased()" << key;
@@ -84,7 +84,7 @@ void Keyboard::keyReleased(int key) {
 
 
 // ******************************************
-void Keyboard::setVelocity(int vel) {
+void KeyboardDialog::setVelocity(int vel) {
 // ******************************************
     noteVelocity = vel;
 #ifdef DEBUGMSGS
@@ -94,7 +94,7 @@ void Keyboard::setVelocity(int vel) {
 
 
 // ******************************************
-void Keyboard::setOctave(int oct) {
+void KeyboardDialog::setOctave(int oct) {
 // ******************************************
     ui->keys->setOctave(oct);
 #ifdef DEBUGMSGS
