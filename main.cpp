@@ -20,7 +20,7 @@
 #include <QtCore>
 #include <QDebug>
 
-#include "ui/shruthi_editor.h"
+#include "ui/main_window.h"
 #include "ui/keyboard_dialog.h"
 #include "ui/sequence_editor.h"
 #include "ui/library_dialog.h"

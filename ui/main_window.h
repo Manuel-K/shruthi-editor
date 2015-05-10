@@ -16,10 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SHRUTHI_EDITOR_H
-#define SHRUTHI_EDITOR_H
+#ifndef SHRUTHI_EDITOR_MAIN_WINDOW_H
+#define SHRUTHI_EDITOR_MAIN_WINDOW_H
 
-#include "ui_shruthi_editor.h"
+#include "ui_main_window.h"
 
 #include "editor.h"
 

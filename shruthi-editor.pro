@@ -26,10 +26,10 @@ HEADERS = \
     ui/keyboard_dialog.h \
     ui/keyboard_widget.h \
     ui/library_dialog.h \
+    ui/main_window.h \
     ui/sequence_editor.h \
     ui/sequence_step.h \
     ui/settings_dialog.h \
-    ui/shruthi_editor.h \
     ui/shruthi_editor_dial.h \
     RtMidi.h \
     config.h \
@@ -49,10 +49,10 @@ SOURCES = \
     ui/keyboard_dialog.cpp \
     ui/keyboard_widget.cpp \
     ui/library_dialog.cpp \
+    ui/main_window.cpp \
     ui/sequence_editor.cpp \
     ui/sequence_step.cpp \
     ui/settings_dialog.cpp \
-    ui/shruthi_editor.cpp \
     ui/shruthi_editor_dial.cpp \
     RtMidi.cpp \
     config.cpp \
@@ -71,10 +71,10 @@ SOURCES = \
 FORMS = \
     ui/keyboard_dialog.ui \
     ui/library_dialog.ui \
+    ui/main_window.ui \
     ui/sequence_editor.ui \
     ui/sequence_step.ui \
     ui/settings_dialog.ui \
-    ui/shruthi_editor.ui \
     ui/shruthi_editor_dial.ui
 
 RESOURCES = \

@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
-#include "ui/shruthi_editor.h"
+#include "ui/main_window.h"
 #include "ui/settings_dialog.h"
 #include "labels.h"
 #include "patch.h"
