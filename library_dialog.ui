@@ -31,7 +31,7 @@
    <item row="0" column="3">
     <widget class="QPushButton" name="sendChanged">
      <property name="text">
-      <string>SendChanged</string>
+      <string>Send Changed</string>
      </property>
     </widget>
    </item>
