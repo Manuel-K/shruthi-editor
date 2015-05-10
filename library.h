@@ -17,8 +17,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#ifndef LIBRARY_H
-#define LIBRARY_H
+#ifndef SHRUTHI_LIBRARY_H
+#define SHRUTHI_LIBRARY_H
 
 #include <vector>
 #include "patch.h"
@@ -123,4 +123,4 @@ class Library {
 
 };
 
-#endif // LIBRARY_H
+#endif // SHRUTHI_LIBRARY_H

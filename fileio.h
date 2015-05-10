@@ -17,8 +17,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#ifndef FILEIO_H
-#define FILEIO_H
+#ifndef SHRUTHI_FILEIO_H
+#define SHRUTHI_FILEIO_H
 
 #include <QString>
 #include "message.h"
@@ -37,4 +37,4 @@ class FileIO
         static bool saveToDisk(const QString &location, const QByteArray &data);
 };
 
-#endif // FILEIO_H
+#endif // SHRUTHI_FILEIO_H
