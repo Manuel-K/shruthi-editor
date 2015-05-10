@@ -530,7 +530,7 @@ void ShruthiEditorMainWindow::openSettings() {
     prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
     prefs.setMidiChannel(MIDI_CHANNEL);
     prefs.setShruthiFilterBoard(SHRUTHI_FILTER_BOARD);
-    prefs.setWindowIcon(QIcon(":/shruthi-editor.png"));
+    prefs.setWindowIcon(QIcon(":/shruthi_editor.png"));
     if (prefs.exec()) {
         int in = prefs.getMidiInputPort();
         int out = prefs.getMidiOutputPort();

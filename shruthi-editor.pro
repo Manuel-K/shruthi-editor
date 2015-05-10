@@ -76,7 +76,8 @@ FORMS = \
     ui/shruthi_editor.ui \
     ui/shruthi_editor_dial.ui
 
-RESOURCES = shruthi-editor.qrc
+RESOURCES = \
+    ui/shruthi_editor.qrc
 
 
 #
@@ -113,14 +114,14 @@ macx {
     message(RtMidi will use macosx core.)
     DEFINES += __MACOSX_CORE__
     LIBS += -framework CoreMidi -framework CoreAudio -framework CoreFoundation
-    ICON = shruthi-editor.icns
+    ICON = ui/shruthi_editor.icns
 }
 
 win32 {
     message(RtMidi will use windows mm.)
     DEFINES += __WINDOWS_MM__
     LIBS += -lwinmm
-    RC_FILE = shruthi-editor.rc
+    RC_FILE = ui/shruthi_editor.rc
 }
 
 

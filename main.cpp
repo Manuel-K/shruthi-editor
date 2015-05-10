@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
         // Setup main_window
         ShruthiEditorMainWindow *main_window = new ShruthiEditorMainWindow(&editor);
-        main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
+        main_window->setWindowIcon(QIcon(":/shruthi_editor.png"));
         main_window->setFixedSize(main_window->width(), main_window->height());
         main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -95,19 +95,19 @@ int main(int argc, char *argv[]) {
         // Setup keyboard
         KeyboardDialog keys;
         keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(show()));
-        keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        keys.setWindowIcon(QIcon(":/shruthi_editor.png"));
 
         // Setup SequenceEditor
         SequenceEditor sequence_editor(&editor);
         sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(show()));
-        sequence_editor.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        sequence_editor.setWindowIcon(QIcon(":/shruthi_editor.png"));
         sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
         sequence_editor.connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));
         sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter2(int)), SLOT(redrawPatchParameter(int)));
 
         // Setup LibraryDialog
         LibraryDialog lib(&editor);
-        lib.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        lib.setWindowIcon(QIcon(":/shruthi_editor.png"));
         lib.connect(main_window, SIGNAL(showLibrary()), SLOT(show()));
         lib.connect(&editor, SIGNAL(redrawLibraryItems(int,int,int)), SLOT(redrawItems(int,int,int)));
 
