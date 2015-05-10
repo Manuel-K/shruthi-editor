@@ -42,6 +42,7 @@ HEADERS = \
     midiin.h \
     midiout.h \
     patch.h \
+    queueitem.h \
     sequence.h \
     signalrouter.h
 

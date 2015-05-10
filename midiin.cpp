@@ -18,6 +18,8 @@
 
 #include "midiin.h"
 #include "midi.h"
+#include "patch.h"
+
 #include <QDebug>
 
 

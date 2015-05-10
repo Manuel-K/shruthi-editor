@@ -20,7 +20,8 @@
 #define SHRUTHI_MIDIIN_H
 
 #include <QObject>
-#include "editor.h" // queueitem_t definition
+#include "queueitem.h"
+#include "message.h"
 #include "RtMidi.h"
 
 
