@@ -24,6 +24,7 @@
 #include <QScrollBar>
 #include <QMenu>
 #include <QFileDialog>
+#include <QMessageBox>
 
 // ******************************************
 LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
@@ -223,6 +224,10 @@ void LibraryDialog::fetch() {
 // ******************************************
 void LibraryDialog::send() {
 // ******************************************
+    const int &b = QMessageBox::question(this, "Send Programs", "This will overwrite the programs on the connected Shruthi.\nAre you sure?", "Yes", "No");
+    if (b) {
+        return;
+    }
     queueitem_t signal(LIBRARY_SEND);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
@@ -234,6 +239,10 @@ void LibraryDialog::send() {
 // ******************************************
 void LibraryDialog::sendChanged(){
 // ******************************************
+    const int &b = QMessageBox::question(this, "Send Changed Programs", "This will overwrite the programs on the connected Shruthi.\nAre you sure?", "Yes", "No");
+    if (b) {
+        return;
+    }
     queueitem_t signal(LIBRARY_SEND);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
     signal.int1 = 0;
