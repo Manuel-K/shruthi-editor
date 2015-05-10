@@ -700,9 +700,11 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
     qDebug() << "Editor::actionLibrarySend()" << what << start << end;
 #endif
 
+    emit displayStatusbar("Library: Started sending patches.");
     const int &st = end >= 0 ? end : (library.getNumberOfHWPrograms() - 1);
     library.send(what, start, st);
     emit redrawLibraryItems(what, start, end);
+    emit displayStatusbar("Library: Finished sending patches.");
 }
 
 
