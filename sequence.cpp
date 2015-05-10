@@ -16,9 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "lib_sequence.h"
-#include "lib_midi.h"
-#include "lib_labels.h"
+#include "sequence.h"
+#include "midi.h"
+#include "labels.h"
 #include <iostream>
 #include <QDebug>
 

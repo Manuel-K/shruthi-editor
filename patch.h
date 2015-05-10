@@ -18,7 +18,7 @@
 
 #ifndef SHRUTHI_PATCH_H
 #define SHRUTHI_PATCH_H
-#include "lib_labels.h"
+#include "labels.h"
 #include <vector>
 
 // ******************************************

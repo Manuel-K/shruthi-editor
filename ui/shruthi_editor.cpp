@@ -19,8 +19,8 @@
 #include <QtWidgets>
 #include "ui/shruthi_editor.h"
 #include "ui/settings_dialog.h"
-#include "lib_labels.h"
-#include "lib_patch.h"
+#include "labels.h"
+#include "patch.h"
 
 #define VERSION "0.23"
 

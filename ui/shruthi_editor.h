@@ -21,7 +21,7 @@
 
 #include "ui_shruthi_editor.h"
 
-#include "lib_editor.h"
+#include "editor.h"
 
 class QFileDialog;
 

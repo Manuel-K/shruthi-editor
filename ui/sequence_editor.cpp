@@ -22,7 +22,7 @@
 #include <QDebug>
 #include <iostream>
 
-#include "lib_sequence.h"
+#include "sequence.h"
 
 
 // ******************************************

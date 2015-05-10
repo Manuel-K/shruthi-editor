@@ -21,9 +21,9 @@
 #define LIBRARY_H
 
 #include <vector>
-#include "lib_patch.h"
-#include "lib_sequence.h"
-#include "lib_midiout.h"
+#include "patch.h"
+#include "sequence.h"
+#include "midiout.h"
 
 class QString;
 #include <QTime>

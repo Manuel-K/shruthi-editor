@@ -19,8 +19,8 @@
 #ifndef SHRUTHI_SIGNALROUTER_H
 #define SHRUTHI_SIGNALROUTER_H
 
-#include "lib_config.h"
-#include "lib_editor.h"
+#include "config.h"
+#include "editor.h"
 #include <QQueue>
 
 // ******************************************

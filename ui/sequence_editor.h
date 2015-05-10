@@ -21,7 +21,7 @@
 #define SEQUENCEEDITOR_H
 
 #include <QDialog>
-#include <lib_editor.h>
+#include <editor.h>
 
 namespace Ui {
 class SequenceEditor;

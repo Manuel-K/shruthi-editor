@@ -21,7 +21,7 @@
 #ifndef LIBRARY_DIALOG_H
 #define LIBRARY_DIALOG_H
 
-#include "lib_editor.h"
+#include "editor.h"
 
 #include <QDialog>
 #include <QListWidgetItem>

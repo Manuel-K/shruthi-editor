@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QSettings>
-#include "lib_config.h"
+#include "config.h"
 
 
 // ******************************************

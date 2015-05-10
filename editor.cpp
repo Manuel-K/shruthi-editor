@@ -16,9 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "lib_editor.h"
-#include "lib_fileio.h"
-#include "lib_midi.h"
+#include "editor.h"
+#include "fileio.h"
+#include "midi.h"
 
 #ifdef DEBUGMSGS
 #include <QDebug>

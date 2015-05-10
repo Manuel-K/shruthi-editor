@@ -25,9 +25,9 @@
 #include "ui/sequence_editor.h"
 #include "ui/library_dialog.h"
 
-#include "lib_editor.h"
-#include "lib_midiin.h"
-#include "lib_signalrouter.h"
+#include "editor.h"
+#include "midiin.h"
+#include "signalrouter.h"
 
 #ifdef FUSION
 #include <QStyleFactory>

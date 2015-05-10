@@ -19,10 +19,10 @@
 #ifndef SHRUTHI_LIB_EDITOR_H
 #define SHRUTHI_LIB_EDITOR_H
 
-#include "lib_patch.h"
-#include "lib_midiout.h"
-#include "lib_sequence.h"
-#include "lib_library.h"
+#include "patch.h"
+#include "midiout.h"
+#include "sequence.h"
+#include "library.h"
 
 
 // ******************************************

@@ -20,7 +20,7 @@
 #include "settings_dialog.h"
 #include <iostream>
 #include "RtMidi.h"
-#include "lib_labels.h"
+#include "labels.h"
 
 // ******************************************
 SettingsDialog::SettingsDialog(QWidget *parent):

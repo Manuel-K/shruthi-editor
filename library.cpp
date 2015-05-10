@@ -17,9 +17,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "lib_library.h"
-#include "lib_fileio.h"
-#include "lib_midi.h"
+#include "library.h"
+#include "fileio.h"
+#include "midi.h"
 
 #include <iostream>
 #include <QThread>

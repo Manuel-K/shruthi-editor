@@ -23,18 +23,6 @@
 
 
 HEADERS = \
-    RtMidi.h \
-    lib_config.h \
-    lib_editor.h \
-    lib_fileio.h \
-    lib_labels.h \
-    lib_library.h \
-    lib_midi.h \
-    lib_midiin.h \
-    lib_midiout.h \
-    lib_patch.h \
-    lib_sequence.h \
-    lib_signalrouter.h \
     ui/keyboard_dialog.h \
     ui/keyboard_widget.h \
     ui/library_dialog.h \
@@ -42,22 +30,21 @@ HEADERS = \
     ui/sequence_step.h \
     ui/settings_dialog.h \
     ui/shruthi_editor.h \
-    ui/shruthi_editor_dial.h
+    ui/shruthi_editor_dial.h \
+    RtMidi.h \
+    config.h \
+    editor.h \
+    fileio.h \
+    labels.h \
+    library.h \
+    midi.h \
+    midiin.h \
+    midiout.h \
+    patch.h \
+    sequence.h \
+    signalrouter.h
 
 SOURCES = \
-    RtMidi.cpp \
-    main.cpp \
-    lib_config.cpp \
-    lib_editor.cpp \
-    lib_fileio.cpp \
-    lib_labels.cpp \
-    lib_library.cpp \
-    lib_midi.cpp \
-    lib_midiin.cpp \
-    lib_midiout.cpp \
-    lib_patch.cpp \
-    lib_sequence.cpp \
-    lib_signalrouter.cpp \
     ui/keyboard_dialog.cpp \
     ui/keyboard_widget.cpp \
     ui/library_dialog.cpp \
@@ -65,7 +52,20 @@ SOURCES = \
     ui/sequence_step.cpp \
     ui/settings_dialog.cpp \
     ui/shruthi_editor.cpp \
-    ui/shruthi_editor_dial.cpp
+    ui/shruthi_editor_dial.cpp \
+    RtMidi.cpp \
+    config.cpp \
+    editor.cpp \
+    fileio.cpp \
+    labels.cpp \
+    library.cpp \
+    main.cpp \
+    midi.cpp \
+    midiin.cpp \
+    midiout.cpp \
+    patch.cpp \
+    sequence.cpp \
+    signalrouter.cpp
 
 FORMS = \
     ui/keyboard_dialog.ui \

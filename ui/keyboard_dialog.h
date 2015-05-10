@@ -20,7 +20,7 @@
 #define KEYBOARD_DIALOG_H
 
 #include "ui_keyboard_dialog.h"
-#include "lib_editor.h"
+#include "editor.h"
 
 // ******************************************
 class KeyboardDialog : public QDialog {

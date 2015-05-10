@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "lib_midiin.h"
-#include "lib_midi.h"
+#include "midiin.h"
+#include "midi.h"
 #include <QDebug>
 
 

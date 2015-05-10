@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "lib_fileio.h"
+#include "fileio.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
