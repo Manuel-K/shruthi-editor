@@ -215,7 +215,7 @@ void LibraryDialog::fetch() {
     queueitem_t signal(LIBRARY_FETCH);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
-    signal.int2 = 15; // TODO: change to -1
+    signal.int2 = -1;
     emit enqueue(signal);
 }
 
@@ -226,7 +226,7 @@ void LibraryDialog::send() {
     queueitem_t signal(LIBRARY_SEND);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
-    signal.int2 = 15; // TODO: change to -1
+    signal.int2 = -1;
     emit enqueue(signal);
 }
 
