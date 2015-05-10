@@ -470,9 +470,6 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
         library.setNumberOfHWPrograms(numberOfPrograms);
-        //library.fetch(0, numberOfPrograms - 1); //DEBUG
-        //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
-        //library.fetchSequences(0, numberOfPrograms - 1); //DEBUG
         emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
     } else {
         emit displayStatusbar("Received unknown sysex.");

@@ -36,17 +36,12 @@ Library::Library(MidiOut *out):
     fetchNextSequenceRequest = 0;
 
     growVectorsTo(16);
-
-    //loadLibrary("library_complete.syx"); //DEBUG
-    //listPatches(); //DEBUG
-    //listSequences(); //DEBUG
 }
 
 
 // ******************************************
 Library::~Library() {
 // ******************************************
-    //saveLibrary("library.syx"); //DEBUG
 }
 
 
@@ -147,8 +142,6 @@ void Library::storeSequence(const int &id, const Sequence &sequence) {
 void Library::listSequences() const {
 // ******************************************
     std::cout << "List of sequences:" << std::endl;
-
-
 
     const unsigned int &num = sequences.size();
     for (unsigned int i = 0; i < num; i++) {
@@ -343,7 +336,6 @@ bool Library::receivedPatch(const unsigned char *sysex) {
         mPatchMoved.at(fetchNextIncomingPatch) = false;
         fetchNextIncomingPatch++;
 
-        //listPatches(); //DEBUG
         ret = keepFetching();
     } else {
         abortFetching();
@@ -399,7 +391,6 @@ bool Library::receivedSequence(const unsigned char *seq) {
     mSequenceMoved.at(fetchNextIncomingSequence) = false;
     fetchNextIncomingSequence++;
 
-    //listSequences(); //DEBUG
     return keepFetching();
 }
 
