@@ -16,25 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#ifndef SHRUTHI_MESSAGE_H
+#define SHRUTHI_MESSAGE_H
 
-#ifndef FILEIO_H
-#define FILEIO_H
+#include <vector>
+typedef std::vector<unsigned char> Message;
 
-#include <QString>
-#include "message.h"
-
-
-// ******************************************
-class FileIO
-// ******************************************
-{
-    public:
-        static const int MAX_READ_SIZE = 1048576; // 1MB
-        static bool loadFromDisk(const QString &location, Message &data);
-        static void appendToCharVector(const QByteArray &byteArray, Message &data);
-        static void appendToByteArray(const Message &data, QByteArray &byteArray);
-        static void appendToByteArray(const unsigned char *data, const unsigned int &amount, QByteArray &byteArray);
-        static bool saveToDisk(const QString &location, const QByteArray &data);
-};
-
-#endif // FILEIO_H
+#endif

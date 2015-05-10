@@ -298,13 +298,13 @@ void Editor::actionSendData(const int &what) {
 #endif
     bool statusP = true;
     if (what&FLAG_PATCH) {
-        std::vector<unsigned char> temp;
+        Message temp;
         patch.generateSysex(&temp);
         statusP = midiout.write(temp);
     }
     bool statusS = true;
     if (what&FLAG_SEQUENCE) {
-        std::vector<unsigned char> temp;
+        Message temp;
         sequence.generateSysex(&temp);
         statusS = midiout.write(temp);
 
@@ -498,7 +498,7 @@ void Editor::actionSetPatchname(QString name) {
 // ******************************************
 void Editor::actionFileIOLoad(QString path, const int &what) {
 // ******************************************
-    std::vector<unsigned char> temp;
+    Message temp;
     bool status = FileIO::loadFromDisk(path, temp);
     bool statusP = status;
     bool statusS = status;
@@ -523,13 +523,13 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
         }
     } else if (status) {
         if (what&FLAG_PATCH) {
-            std::vector<unsigned char> ptc;
+            Message ptc;
             // ignore return value; if it fails, ptc is empty:
             Midi::getPatch(&temp, &ptc);
             statusP = patch.parseSysex(&ptc);
         }
         if (what&FLAG_SEQUENCE) {
-            std::vector<unsigned char> seq;
+            Message seq;
             // ignore return value; if it fails, seq is empty:
             Midi::getSequence(&temp, &seq);
             statusS = sequence.parseSysex(&seq);
@@ -589,7 +589,7 @@ void Editor::actionFileIOSave(QString path, const int &what) {
         patch.packData(data);
         FileIO::appendToByteArray(data, 92, ba);
     } else {
-        std::vector<unsigned char> temp;
+        Message temp;
         if (what&FLAG_PATCH) {
             patch.generateSysex(&temp);
         }

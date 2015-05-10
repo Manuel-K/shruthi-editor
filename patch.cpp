@@ -632,7 +632,7 @@ int Patch::convertCCValue(const unsigned int &val, int &id, const int &filter)
 
 
 // ******************************************
-bool Patch::parseSysex(const std::vector<unsigned char> *message) {
+bool Patch::parseSysex(const Message *message) {
 // ******************************************
     Message payload;
     if (!Midi::parseSysex(message, &payload)) {
@@ -650,7 +650,7 @@ bool Patch::parseSysex(const std::vector<unsigned char> *message) {
 
 
 // ******************************************
-void Patch::generateSysex(std::vector<unsigned char> *message) const {
+void Patch::generateSysex(Message *message) const {
 // ******************************************
     unsigned char temp[92];
     packData(temp);

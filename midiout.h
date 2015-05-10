@@ -19,6 +19,8 @@
 #ifndef SHRUTHI_MIDIOUT_H
 #define SHRUTHI_MIDIOUT_H
 #include "RtMidi.h"
+#include "message.h"
+
 
 // ******************************************
 class MidiOut {
@@ -27,7 +29,7 @@ class MidiOut {
         MidiOut();
         ~MidiOut();
         bool open(const unsigned int &channel);
-        bool write(std::vector<unsigned char> &sysex);
+        bool write(Message &sysex);
 
         // Wrappers:
         bool nrpn(const int &nrpn, const int &value);

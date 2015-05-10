@@ -37,6 +37,7 @@ HEADERS = \
     fileio.h \
     labels.h \
     library.h \
+    message.h \
     midi.h \
     midiin.h \
     midiout.h \

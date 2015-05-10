@@ -24,7 +24,7 @@
 
 
 // ******************************************
-bool FileIO::loadFromDisk(const QString &location, std::vector<unsigned char> &data) {
+bool FileIO::loadFromDisk(const QString &location, Message &data) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Patch::loadFromDisk(" << location << ")";
@@ -55,7 +55,7 @@ bool FileIO::loadFromDisk(const QString &location, std::vector<unsigned char> &d
 
 
 // ******************************************
-void FileIO::appendToCharVector(const QByteArray &byteArray, std::vector<unsigned char> &data) {
+void FileIO::appendToCharVector(const QByteArray &byteArray, Message &data) {
 // ******************************************
     const unsigned int &len = byteArray.length();
     for (unsigned int i = 0; i < len; i++) {
@@ -65,7 +65,7 @@ void FileIO::appendToCharVector(const QByteArray &byteArray, std::vector<unsigne
 
 
 // ******************************************
-void FileIO::appendToByteArray(const std::vector<unsigned char> &data, QByteArray &byteArray) {
+void FileIO::appendToByteArray(const Message &data, QByteArray &byteArray) {
 // ******************************************
     const unsigned int &len = data.size();
     for (unsigned int i = 0; i < len; i++) {

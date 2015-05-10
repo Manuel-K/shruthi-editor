@@ -43,7 +43,7 @@ const int Sequence::ERROR_RETURN = -111;
 
 
 // ******************************************
-bool Sequence::parseSysex(const std::vector<unsigned char> *message) {
+bool Sequence::parseSysex(const Message *message) {
 // ******************************************
     // len should be 75
     if (message->size() != 75) {
@@ -68,7 +68,7 @@ bool Sequence::parseSysex(const std::vector<unsigned char> *message) {
 
 
 // ******************************************
-void Sequence::generateSysex(std::vector<unsigned char> *message) const {
+void Sequence::generateSysex(Message *message) const {
 // ******************************************
     unsigned char temp[32];
     packData(temp);

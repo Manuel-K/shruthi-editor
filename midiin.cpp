@@ -87,12 +87,12 @@ bool NRPN::parse(int b0, int b1, int b2) {
 
 
 // ******************************************
-void MidiIn::process(const std::vector<unsigned char> *message) {
+void MidiIn::process(const Message *message) {
 // ******************************************
     int size = message->size();
 
     if (size >= 4) {
-        std::vector<unsigned char> payload;
+        Message payload;
         if (!Midi::parseSysex(message, &payload)) {
             // We have a problem! Do something. Warn the user or make a cup of tea.
             queueitem_t signal(SYSEX_RECEIVED);
@@ -148,7 +148,7 @@ void MidiIn::process(const std::vector<unsigned char> *message) {
 
 
 // ******************************************
-void mycallback(double deltatime, std::vector<unsigned char> *message, void *userData) {
+void mycallback(double deltatime, Message *message, void *userData) {
 // ******************************************
     Q_UNUSED(deltatime);
     ((MidiIn*)userData)->process(message);

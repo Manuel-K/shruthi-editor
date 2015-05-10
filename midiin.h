@@ -48,7 +48,7 @@ class MidiIn : public QObject {
     public:
         ~MidiIn();
         MidiIn();
-        void process(const std::vector<unsigned char> *message);
+        void process(const Message *message);
 
     private:
         bool open(const unsigned int &port);

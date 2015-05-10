@@ -85,10 +85,10 @@ bool MidiOut::open(const unsigned int &port) {
 
 
 // ******************************************
-bool MidiOut::write(std::vector<unsigned char> &sysex) {
+bool MidiOut::write(Message &sysex) {
 // ******************************************
     if (!opened) {
-        qDebug() << "MidiOut::write(std::vector<unsigned char>&): could not send. Port not opened.";
+        qDebug() << "MidiOut::write(Message&): could not send. Port not opened.";
         return false;
     }
 
@@ -97,7 +97,7 @@ bool MidiOut::write(std::vector<unsigned char> &sysex) {
         return true;
     }
     catch (RtMidiError &error) {
-        qDebug() << "MidiOut::write(std::vector<unsigned char>): could not send. Error on sending.";
+        qDebug() << "MidiOut::write(Message&): could not send. Error on sending.";
         error.printMessage();
     }
     return false;
@@ -107,7 +107,7 @@ bool MidiOut::write(std::vector<unsigned char> &sysex) {
 // ******************************************
 bool MidiOut::write(const unsigned char &c1, const unsigned char &c2, const unsigned char &c3) {
 // ******************************************
-    std::vector<unsigned char> message;
+    Message message;
     message.push_back(c1);
     message.push_back(c2);
     message.push_back(c3);
@@ -118,7 +118,7 @@ bool MidiOut::write(const unsigned char &c1, const unsigned char &c2, const unsi
 // ******************************************
 bool MidiOut::write(const unsigned char &c1, const unsigned char &c2) {
 // ******************************************
-    std::vector<unsigned char> message;
+    Message message;
     message.push_back(c1);
     message.push_back(c2);
     return write(message);
@@ -135,7 +135,7 @@ bool MidiOut::write(const unsigned char &c1, const unsigned char &c2) {
 // ******************************************
 bool MidiOut::request(const unsigned char &which) {
 // ******************************************
-    std::vector<unsigned char> message;
+    Message message;
 
     for (int i = 0; i < 6; i++) {
         message.push_back(Midi::sysexHead[i]);
@@ -287,11 +287,11 @@ bool MidiOut::writeRequest(const int &slot, const unsigned char &which)
         qDebug() << "MidiOut::writeRequest(): Slot" << slot << "is invalid.";
         return false;
     }
-    std::vector<unsigned char> payload;
+    Message payload;
     payload.push_back(slot >> 8);
     payload.push_back(slot & 0xff);
 
-    std::vector<unsigned char> message;
+    Message message;
     Midi::generateSysex(&payload, which, 0x00, &message);
 
     return write(message);

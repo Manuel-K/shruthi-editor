@@ -214,7 +214,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
 // ******************************************
     QTime t;
     t.start();
-    std::vector<unsigned char> temp;
+    Message temp;
     bool ret = true;
 
     bool force = !(what&FLAG_CHANGED);
@@ -436,7 +436,7 @@ bool Library::saveLibrary(const QString &path) {
 // ******************************************
     QByteArray ba;
 
-    std::vector<unsigned char> temp;
+    Message temp;
 
     const int &psize = patches.size();
     const int &ssize = sequences.size();
@@ -466,7 +466,7 @@ bool Library::saveLibrary(const QString &path) {
 // ******************************************
 bool Library::loadLibrary(const QString &path, bool append) {
 // ******************************************
-    std::vector<unsigned char> temp;
+    Message temp;
 
     if (!FileIO::loadFromDisk(path, temp)) {
         return false;
@@ -486,7 +486,7 @@ bool Library::loadLibrary(const QString &path, bool append) {
     int lastPosition = 0;
     bool keepGoing = true;
 
-    std::vector<unsigned char> ptc;
+    Message ptc;
     Patch tempPatch;
     while(keepGoing) {
         //std::cout << "patch " << patch << " " << lastPosition << std::endl;
@@ -509,7 +509,7 @@ bool Library::loadLibrary(const QString &path, bool append) {
     keepGoing = true;
     lastPosition = 0;
 
-    std::vector<unsigned char> seq;
+    Message seq;
     Sequence tempSequence;
 
     while(keepGoing) {

@@ -19,7 +19,8 @@
 #ifndef SHRUTHI_PATCH_H
 #define SHRUTHI_PATCH_H
 #include "labels.h"
-#include <vector>
+#include "message.h"
+
 
 // ******************************************
 struct param_t {
@@ -64,8 +65,8 @@ class Patch {
 
         bool unpackData(const unsigned char *sysex);
         void packData(unsigned char res[]) const;
-        bool parseSysex(const std::vector<unsigned char> *message);
-        void generateSysex(std::vector<unsigned char> *message) const;
+        bool parseSysex(const Message *message);
+        void generateSysex(Message *message) const;
 
         bool equals(const Patch &other) const;
         void set(const Patch &other);

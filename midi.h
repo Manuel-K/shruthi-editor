@@ -19,8 +19,7 @@
 #ifndef SHRUTHI_MIDI_H
 #define SHRUTHI_MIDI_H
 
-#include <vector>
-typedef std::vector<unsigned char> Message;
+#include "message.h"
 
 
 class Midi {
@@ -28,10 +27,10 @@ class Midi {
         static const unsigned char sysexHead[6];
         static const unsigned char sysexFoot;
         static unsigned char calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end);
-        static unsigned char calculateChecksum(const std::vector<unsigned char> *message);
-        static bool checkSysexHeadFoot(const std::vector<unsigned char> *message);
+        static unsigned char calculateChecksum(const Message *message);
+        static bool checkSysexHeadFoot(const Message *message);
         static bool checkSysexHeadFoot(const Message *message, const unsigned int start, const unsigned int end);
-        static bool parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data);
+        static bool parseSysex(const Message *message, Message *data);
         static void generateSysex(const Message *payload, const int command, const int argument, Message *message);
         static int findNextPatch(const Message *message, const unsigned int start = 0);
         static int getPatch(const Message *message, Message *patch, const unsigned int start = 0);

@@ -19,11 +19,13 @@
 #ifndef SHRUTHI_SEQUENCE_H
 #define SHRUTHI_SEQUENCE_H
 
-#include <vector>
+#include "message.h"
+
 
 namespace SequenceParameter {
     enum SequenceParameter {ACTIVE, NOTE, TIE, VELOCITY, VALUE};
 }
+
 
 // ******************************************
 class Sequence {
@@ -35,8 +37,8 @@ public:
 
     void unpackData(const unsigned char *data);
     void packData(unsigned char data[]) const;
-    bool parseSysex(const std::vector<unsigned char> *message);
-    void generateSysex(std::vector<unsigned char> *message) const;
+    bool parseSysex(const Message *message);
+    void generateSysex(Message *message) const;
 
     const int &getParamByID(const int &id) const;
     const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;

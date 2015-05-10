@@ -19,6 +19,7 @@
 #ifndef SHRUTHI_LIB_EDITOR_H
 #define SHRUTHI_LIB_EDITOR_H
 
+#include "message.h"
 #include "patch.h"
 #include "midiout.h"
 #include "sequence.h"

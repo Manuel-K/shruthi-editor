@@ -49,7 +49,7 @@ unsigned char Midi::calculateChecksum(unsigned char sysex[], unsigned int start,
 
 
 // ******************************************
-unsigned char Midi::calculateChecksum(const std::vector<unsigned char> *message)
+unsigned char Midi::calculateChecksum(const Message *message)
 // ******************************************
 {
     unsigned long chk = 0;
@@ -61,7 +61,7 @@ unsigned char Midi::calculateChecksum(const std::vector<unsigned char> *message)
 
 
 // ******************************************
-bool Midi::checkSysexHeadFoot(const std::vector<unsigned char> *message) {
+bool Midi::checkSysexHeadFoot(const Message *message) {
 // ******************************************
     const unsigned int size = message->size();
 
@@ -163,7 +163,7 @@ unsigned char Midi::getArgument(const Message *message, const unsigned int start
 
 
 // ******************************************
-bool Midi::parseSysex(const std::vector<unsigned char> *message, std::vector<unsigned char> *data)
+bool Midi::parseSysex(const Message *message, Message *data)
 // ******************************************
 {
     const unsigned int size = message->size();
