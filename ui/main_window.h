@@ -22,6 +22,7 @@
 #include "ui_main_window.h"
 
 #include "editor.h"
+#include "config.h"
 
 class QFileDialog;
 
@@ -88,7 +89,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
 
     signals:
         void enqueue(queueitem_t);
-        void settingsChanged(int, int, unsigned char, int);
+        void settingsChanged(Config);
         void showKeyboard();
         void showSequenceEditor();
         void showLibrary();

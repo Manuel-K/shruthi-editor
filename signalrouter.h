@@ -43,7 +43,7 @@ class SignalRouter : public QObject {
         void run();
         void enqueue(queueitem_t);
         void editorFinished();
-        void settingsChanged(int, int, unsigned char, int);
+        void settingsChanged(Config conf);
 
     signals:
         void editorProcess(queueitem_t);

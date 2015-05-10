@@ -37,6 +37,7 @@
 int main(int argc, char *argv[]) {
 // ******************************************
     qRegisterMetaType<queueitem_t>("queueitem_t");
+    qRegisterMetaType<Config>("Config");
 
     int retVal;
 
@@ -122,7 +123,7 @@ int main(int argc, char *argv[]) {
         sr.connect(&midiin, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
         sr.connect(&keys, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
         sr.connect(&lib, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(main_window, SIGNAL(settingsChanged(int,int,unsigned char,int)), SLOT(settingsChanged(int,int,unsigned char,int)));
+        sr.connect(main_window, SIGNAL(settingsChanged(Config)), SLOT(settingsChanged(Config)));
 
         // start signal router
         srThread.start();

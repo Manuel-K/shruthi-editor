@@ -51,10 +51,10 @@ void SignalRouter::run() {
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::run()";
 #endif
-    emit setMidiInputPort(config.getMidiInputPort());
-    emit setMidiOutputPort(config.getMidiOutputPort());
-    emit setMidiChannel(config.getMidiChannel());
-    emit setShruthiFilterBoard(config.getShruthiFilterBoard());
+    emit setMidiInputPort(config.midiInputPort());
+    emit setMidiOutputPort(config.midiOutputPort());
+    emit setMidiChannel(config.midiChannel());
+    emit setShruthiFilterBoard(config.shruthiFilterBoard());
     editorEnabled=true;
     editorWorking=false;
 }
@@ -86,35 +86,25 @@ void SignalRouter::editorFinished() {
 
 
 // ******************************************
-void SignalRouter::settingsChanged(int in, int out, unsigned char channel, int filter) {
+void SignalRouter::settingsChanged(Config conf) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::settingsChanged: in" << in << ", out:" << out << ", channel:" << channel;
 #endif
     // setMidiInputPort and setMidiOutputPort have to be emited, even if the value didn't change.
-    emit setMidiInputPort(in);
-    emit setMidiOutputPort(out);
-    emit setMidiChannel(channel);
+    emit setMidiInputPort(conf.midiInputPort());
+    emit setMidiOutputPort(conf.midiOutputPort());
+    emit setMidiChannel(conf.midiChannel());
 
-    bool writeConfig = false;
-    if (config.getMidiInputPort() != in || config.getMidiOutputPort() != out) {
-        config.setMidiInputPort(in);
-        config.setMidiOutputPort(out);
-        writeConfig = true;
+    if (config.shruthiFilterBoard() != conf.shruthiFilterBoard()) {
+        emit setShruthiFilterBoard(conf.shruthiFilterBoard());
     }
-    if (config.getMidiChannel() != channel) {
-        config.setMidiChannel(channel);
-        writeConfig = true;
-    }
-    if (config.getShruthiFilterBoard() != filter) {
-        config.setShruthiFilterBoard(filter);
-        emit setShruthiFilterBoard(filter);
-        writeConfig = true;
-    }
-    if (writeConfig) {
+
+    if (!config.equals(conf)) {
 #ifdef DEBUGMSGS
         qDebug() << "Config was changed. Saving.";
 #endif
+        config.set(conf);
         config.save();
     }
 }

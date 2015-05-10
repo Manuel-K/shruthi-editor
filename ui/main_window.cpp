@@ -532,11 +532,12 @@ void ShruthiEditorMainWindow::openSettings() {
     prefs.setShruthiFilterBoard(SHRUTHI_FILTER_BOARD);
     prefs.setWindowIcon(QIcon(":/shruthi_editor.png"));
     if (prefs.exec()) {
-        int in = prefs.getMidiInputPort();
-        int out = prefs.getMidiOutputPort();
-        unsigned char channel = prefs.getMidiChannel();
-        int filterboard = prefs.getShruthiFilterBoard();
-        emit settingsChanged(in, out, channel, filterboard);
+        Config conf;
+        conf.setMidiInputPort(prefs.getMidiInputPort());
+        conf.setMidiOutputPort(prefs.getMidiOutputPort());
+        conf.setMidiChannel(prefs.getMidiChannel());
+        conf.setShruthiFilterBoard(prefs.getShruthiFilterBoard());
+        emit settingsChanged(conf);
     }
     prefs.done(1);
 }

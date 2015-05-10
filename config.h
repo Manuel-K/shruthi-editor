@@ -23,21 +23,23 @@
 class Config {
 // ******************************************
     public:
-        void save();
         void load();
+        void save();
+        const int &midiInputPort() const;
         void setMidiInputPort(int in);
-        const int &getMidiInputPort() const;
+        const int &midiOutputPort() const;
         void setMidiOutputPort(int out);
-        const int &getMidiOutputPort() const;
+        const unsigned char &midiChannel() const;
         void setMidiChannel(unsigned char);
-        const unsigned char &getMidiChannel() const;
-        const int &getShruthiFilterBoard() const;
+        const int &shruthiFilterBoard() const;
         void setShruthiFilterBoard(int value);
+        void set(const Config &other);
+        bool equals(const Config &other);
 
     private:
-        int midiInputPort;
-        int midiOutputPort;
-        unsigned char midiChannel;
-        int shruthiFilterBoard;
+        int mMidiInputPort;
+        int mMidiOutputPort;
+        unsigned char mMidiChannel;
+        int mShruthiFilterBoard;
 };
 #endif
