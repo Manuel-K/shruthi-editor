@@ -767,8 +767,11 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
 void Editor::actionLibraryLoad(const QString &path, const int &flags) {
 // ******************************************
     //TODO respect flags
-    //TODO status bar messages
-    library.loadLibrary(path, flags&Library::FLAG_APPEND);
+    if (library.loadLibrary(path, flags&Library::FLAG_APPEND)) {
+        emit displayStatusbar("Library loaded from disk.");
+    } else {
+        emit displayStatusbar("Could not load library from disk.");
+    }
     emit redrawLibraryItems(flags, 0, library.getNumberOfPrograms() - 1);
 }
 
@@ -778,8 +781,11 @@ void Editor::actionLibrarySave(const QString &path, const int &flags) {
 // ******************************************
     Q_UNUSED(flags);
     //TODO respect flags
-    //TODO status bar messages
-    library.saveLibrary(path);
+    if (library.saveLibrary(path)) {
+        emit displayStatusbar("Library saved to disk.");
+    } else {
+        emit displayStatusbar("Could not save library to disk.");
+    }
 }
 
 
