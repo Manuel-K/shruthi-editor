@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SHRUTHI_LIB_EDITOR_H
-#define SHRUTHI_LIB_EDITOR_H
+#ifndef SHRUTHI_EDITOR_H
+#define SHRUTHI_EDITOR_H
 
 #include "message.h"
 #include "patch.h"
