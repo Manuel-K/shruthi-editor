@@ -33,7 +33,6 @@ Editor::Editor(): library(&midiout) {
 #endif
     shruthiFilterBoard = 0;
     firmwareVersion = 0;
-    numberOfPrograms = 16; // only internal
 }
 
 
@@ -120,13 +119,6 @@ const Library &Editor::getLibrary() const {
 
 
 // ******************************************
-const int &Editor::getNumberOfPrograms() const {
-// ******************************************
-    return numberOfPrograms;
-}
-
-
-// ******************************************
 void Editor::process(queueitem_t item) {
 // ******************************************
     switch(item.action) {
@@ -186,6 +178,9 @@ void Editor::process(queueitem_t item) {
             break;
         case LIBRARY_SEND:
             actionLibrarySend(item.int0, item.int1, item.int2);
+            break;
+        case LIBRARY_DELETE:
+            actionLibraryDelete(item.int1, item.int2); // ignore flags (item.int0)
             break;
         case LIBRARY_LOAD:
             actionLibraryLoad(item.string, item.int0);
@@ -470,15 +465,15 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         }
     } else if (command == 0x0b and size == 0) {
         // number of banks
-        numberOfPrograms = 16 + argument * 64; // internal + external
+        const int &numberOfPrograms = 16 + argument * 64; // internal + external
 #ifdef DEBUGMSGS
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
-        library.increaseNumberOfProgramsTo(numberOfPrograms);
+        library.setNumberOfHWPrograms(numberOfPrograms);
         //library.fetch(0, numberOfPrograms - 1); //DEBUG
         //library.fetchPatches(142, numberOfPrograms - 1); //DEBUG
         //library.fetchSequences(0, numberOfPrograms - 1); //DEBUG
-        emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, numberOfPrograms - 1);
+        emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
@@ -687,7 +682,7 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
-    const int &st = stop >= 0 ? stop : (numberOfPrograms - 1);
+    const int &st = stop >= 0 ? stop : (library.getNumberOfHWPrograms() - 1);
     if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
         library.fetch(start, st);
     } else if ((what&FLAG_PATCH)) {
@@ -705,7 +700,7 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
     qDebug() << "Editor::actionLibrarySend()" << what << start << end;
 #endif
 
-    const int &st = end >= 0 ? end : (numberOfPrograms - 1);
+    const int &st = end >= 0 ? end : (library.getNumberOfHWPrograms() - 1);
     library.send(what, start, st);
     emit redrawLibraryItems(what, start, end);
 }
@@ -783,6 +778,17 @@ void Editor::actionLibrarySave(const QString &path, const int &flags) {
     //TODO respect flags
     //TODO status bar messages
     library.saveLibrary(path);
+}
+
+
+// ******************************************
+void Editor::actionLibraryDelete(const unsigned int &start, const unsigned int &end) {
+// ******************************************;
+#ifdef DEBUGMSGS
+    qDebug() << "Editor::actionLibraryDelete()" << start << end;
+#endif
+    library.deletePrograms(start, end);
+    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
 }
 
 

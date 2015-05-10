@@ -26,29 +26,16 @@
 #include <stdint.h> // needed for hash calculation
 
 // ******************************************
-Library::Library(MidiOut *out) {
+Library::Library(MidiOut *out):
+    midiout(out), numberOfPrograms(0), numberOfHWPrograms(16) {
 // ******************************************
-    patches.reserve(16);
-    mPatchEdited.reserve(16);
-    mPatchMoved.reserve(16);
-    sequences.reserve(16);
-    mSequenceEdited.reserve(16);
-    mSequenceMoved.reserve(16);
-
-    midiout = out;
-
-    fetchPatchMode = false;
-    fetchSequenceMode = false;
-    fetchStart = 0;
-    fetchEnd = 0;
+    abortFetching();
     fetchNextIncomingPatch = 0;
     fetchNextPatchRequest = 0;
     fetchNextIncomingSequence = 0;
     fetchNextSequenceRequest = 0;
 
-    numberOfPrograms = 16;
-    growPatchVectors(16);
-    growSequenceVectors(16);
+    growVectorsTo(16);
 
     //loadLibrary("library_complete.syx"); //DEBUG
     //listPatches(); //DEBUG
@@ -308,9 +295,10 @@ bool Library::fetch(const int &from, const int &to) {
 // ******************************************
 void Library::abortFetching() {
 // ******************************************
-    fetchEnd = 0;
     fetchPatchMode = false;
     fetchSequenceMode = false;
+    fetchStart = 0;
+    fetchEnd = 0;
 }
 
 
@@ -344,10 +332,7 @@ bool Library::receivedPatch(const unsigned char *sysex) {
 #endif
 
     // allocate space in vectors
-    const int &temp = (fetchNextIncomingPatch - patches.size() + 1);
-    if (temp > 0) {
-        growPatchVectors(temp);
-    }
+    growVectorsTo(fetchNextIncomingPatch + 1);
 
     Patch tempp;
     bool ret = tempp.unpackData(sysex);
@@ -407,10 +392,7 @@ bool Library::receivedSequence(const unsigned char *seq) {
 #endif
 
     // allocate space in vectors
-    const int &temp = (fetchNextIncomingSequence - sequences.size() + 1);
-    if (temp > 0) {
-        growSequenceVectors(temp);
-    }
+    growVectorsTo(fetchNextIncomingSequence + 1);
 
     sequences.at(fetchNextIncomingSequence).unpackData(seq);
     mSequenceEdited.at(fetchNextIncomingSequence) = false;
@@ -429,6 +411,32 @@ bool Library::isFetchingSequences() const {
     std::cout << "Library::isFetchingSequences() " << fetchSequenceMode << " " << fetchNextIncomingSequence << " " << fetchEnd << std::endl;
 #endif
     return (fetchSequenceMode && fetchNextIncomingSequence <= fetchEnd);
+}
+
+
+// ******************************************
+void Library::deletePrograms(const int &from, const int &to) {
+// ******************************************
+#ifdef DEBUGMSGS
+    std::cout << "Library::deletePrograms(" << from << ", " << to << ");" << std::endl;
+#endif
+    patches.erase(patches.begin() + from, patches.begin() + to + 1);
+    mPatchMoved.erase(mPatchMoved.begin() + from, mPatchMoved.begin() + to + 1);
+    mPatchEdited.erase(mPatchEdited.begin() + from, mPatchEdited.begin() + to + 1);
+    sequences.erase(sequences.begin() + from, sequences.begin() + to + 1);
+    mSequenceMoved.erase(mSequenceMoved.begin() + from, mSequenceMoved.begin() + to + 1);
+    mSequenceEdited.erase(mSequenceEdited.begin() + from, mSequenceEdited.begin() + to + 1);
+
+    numberOfPrograms -= to - from + 1;
+
+    // make sure that we have at least the number of hw programs
+    growVectorsTo(numberOfHWPrograms);
+
+    // Mark as moved:
+    for (int i = from; i < numberOfPrograms; i++) {
+        mPatchMoved.at(i) = true;
+        mSequenceMoved.at(i) = true;
+    }
 }
 
 
@@ -475,8 +483,8 @@ bool Library::loadLibrary(const QString &path, bool append) {
 
     bool statusp = true;
     bool statuss = true;
-    unsigned int patch = 0;
-    unsigned int sequence = 0;
+    int patch = 0;
+    int sequence = 0;
 
     if (append) {
         patch = patches.size();
@@ -497,13 +505,7 @@ bool Library::loadLibrary(const QString &path, bool append) {
         //std::cout << "ret " << ret << std::endl;
         if(retp >= 0 && statusp) {
             lastPosition = retp + 195;
-            if (patch >= patches.size()) {
-                growPatchVectors(1);
-            }
-            // add init sequence if only patch is loaded
-            if (patch >= sequences.size()) {
-                growSequenceVectors(1);
-            }
+            growVectorsTo(patch + 1);
             patches.at(patch).set(tempPatch);
             mPatchEdited.at(patch) = false;
             mPatchMoved.at(patch) = false;
@@ -528,13 +530,7 @@ bool Library::loadLibrary(const QString &path, bool append) {
 
         if (rets >= 0 && statuss) {
             lastPosition = rets + 95;
-            if (sequence >= sequences.size()) {
-                growSequenceVectors(1);
-            }
-            // add init patch if only sequence is loaded
-            if (sequence >= patches.size()) {
-                growPatchVectors(1);
-            }
+            growVectorsTo(sequence + 1);
             sequences.at(sequence).set(tempSequence);
             mSequenceEdited.at(sequence) = false;
             mSequenceMoved.at(sequence) = false;
@@ -555,36 +551,24 @@ bool Library::loadLibrary(const QString &path, bool append) {
 
 
 // ******************************************
-const unsigned int &Library::getNumberOfPrograms() const {
+const int &Library::getNumberOfPrograms() const {
 // ******************************************
     return numberOfPrograms;
 }
 
 
 // ******************************************
-void Library::increaseNumberOfProgramsTo(const unsigned int &num) {
+const int &Library::getNumberOfHWPrograms() const {
 // ******************************************
-    if (num > numberOfPrograms) {
-        setNumberOfPrograms(num);
-    }
+    return numberOfHWPrograms;
 }
 
 
 // ******************************************
-void Library::setNumberOfPrograms(const unsigned int &num) {
+void Library::setNumberOfHWPrograms(const int &num) {
 // ******************************************
-    // Be really careful with this function. Most of the times
-    // increaseNumberOfProgramsTo() has more suitable behavior.
-    patches.reserve(num);
-    mPatchEdited.reserve(num);
-    mPatchMoved.reserve(num);
-    sequences.reserve(num);
-    mSequenceEdited.reserve(num);
-    mSequenceMoved.reserve(num);
-
-    growPatchVectors(num - numberOfPrograms);
-    growSequenceVectors(num - numberOfPrograms);
-    numberOfPrograms = num;
+    numberOfHWPrograms = num;
+    growVectorsTo(num);
 }
 
 
@@ -656,25 +640,28 @@ bool Library::keepFetching() {
 
 
 // ******************************************
-void Library::growPatchVectors(const int &amount) {
+void Library::growVectorsTo(const int &num) {
 // ******************************************
-    for (int i = 0; i < amount; i++) {
-        patches.push_back(Patch());
-        mPatchEdited.push_back(false);
-        mPatchMoved.push_back(false);
+    const int &amount = num - numberOfPrograms;
+    if (amount > 0) {
+        numberOfPrograms = num;
+        patches.reserve(num);
+        mPatchEdited.reserve(num);
+        mPatchMoved.reserve(num);
+        sequences.reserve(num);
+        mSequenceEdited.reserve(num);
+        mSequenceMoved.reserve(num);
+
+
+        for (int i = 0; i < amount; i++) {
+            patches.push_back(Patch());
+            mPatchEdited.push_back(false);
+            mPatchMoved.push_back(false);
+            sequences.push_back(Sequence());
+            mSequenceMoved.push_back(false);
+            mSequenceEdited.push_back(false);
+        }
     }
-}
-
-
-// ******************************************
-void Library::growSequenceVectors(const int &amount) {
-// ******************************************
-    for (int i = 0; i < amount; i++) {
-        sequences.push_back(Sequence());
-        mSequenceMoved.push_back(false);
-        mSequenceEdited.push_back(false);
-    }
-
 }
 
 

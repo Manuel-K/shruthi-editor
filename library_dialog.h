@@ -82,6 +82,7 @@ class LibraryDialog : public QDialog {
         void patchCMSendChanged();
         void sequenceCMSend();
         void sequenceCMSendChanged();
+        void bothCMdelete();
         void patchMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
         void sequenceMove(const QModelIndex & parent, int start, int end, const QModelIndex & destination, int row);
 

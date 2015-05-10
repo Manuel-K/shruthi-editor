@@ -35,7 +35,7 @@ enum ACTIONS
     NOTE_PANIC, SYSEX_SHRUTHI_INFO_REQUEST, SEQUENCE_PARAMETER_CHANGE_EDITOR,
     SYSEX_FETCH_SEQUENCE, SYSEX_SEND_SEQUENCE, RESET_SEQUENCE,
     LIBRARY_FETCH, LIBRARY_STORE, LIBRARY_RECALL, LIBRARY_SEND, LIBRARY_MOVE,
-    LIBRARY_LOAD, LIBRARY_SAVE};
+    LIBRARY_LOAD, LIBRARY_SAVE, LIBRARY_DELETE};
 
 
 // ******************************************
@@ -107,8 +107,6 @@ class Editor : public QObject {
 
         const Library &getLibrary() const;
 
-        const int &getNumberOfPrograms() const;
-
         // keep in sync with Library::FLAGs
         static const int FLAG_PATCH = 1;
         static const int FLAG_SEQUENCE = 2;
@@ -138,6 +136,7 @@ class Editor : public QObject {
         void actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target);
         void actionLibraryLoad(const QString &path, const int &flags);
         void actionLibrarySave(const QString &path, const int &flags);
+        void actionLibraryDelete(const unsigned int &start, const unsigned int &end);
 
         Patch patch;
         Sequence sequence;
@@ -146,7 +145,6 @@ class Editor : public QObject {
         unsigned char channel;
         int shruthiFilterBoard;
         int firmwareVersion;
-        int numberOfPrograms;
 
     public slots:
         void process(queueitem_t item);

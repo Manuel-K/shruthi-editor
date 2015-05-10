@@ -67,12 +67,14 @@ class Library {
         bool receivedSequence(const unsigned char *seq);
         bool isFetchingSequences() const;
 
+        void deletePrograms(const int &from, const int &to);
+
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path, bool append = false);
 
-        const unsigned int &getNumberOfPrograms() const;
-        void increaseNumberOfProgramsTo(const unsigned int &num);
-        void setNumberOfPrograms(const unsigned int &num);
+        const int &getNumberOfPrograms() const;
+        const int &getNumberOfHWPrograms() const;
+        void setNumberOfHWPrograms(const int &num);
 
         int nextPatch() const;
         int nextSequence() const;
@@ -96,8 +98,7 @@ class Library {
 
         const Sequence init_sequence;
 
-        void growPatchVectors(const int &amount);
-        void growSequenceVectors(const int &amount);
+        void growVectorsTo(const int &num);
 
         QString calculateSequenceHash(const unsigned int &id) const;
         static QString calculateHash(const unsigned char *key, const unsigned int &len);
@@ -117,7 +118,8 @@ class Library {
 
         QTime time;
 
-        unsigned int numberOfPrograms;
+        int numberOfPrograms;
+        int numberOfHWPrograms;
 
 };
 

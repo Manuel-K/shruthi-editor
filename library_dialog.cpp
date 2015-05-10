@@ -35,7 +35,7 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     editor = edit;
 
     ui->patchList->addItem("If you can read this,");
-    ui->patchList->addItem("something is wrong!");
+    ui->sequenceList->addItem("something is wrong!");
 
     dontScroll = false;
     dontSyncSelection = false;
@@ -57,11 +57,15 @@ LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
     patchContextMenu = new QMenu(this);
     patchContextMenu->addAction("Store", this, SLOT(patchCMStore()));
     patchContextMenu->addSeparator();
+    patchContextMenu->addAction("Delete Program", this, SLOT(bothCMdelete()));
+    patchContextMenu->addSeparator();
     patchContextMenu->addAction("Send", this, SLOT(patchCMSend()));
     patchContextMenu->addAction("Send Changed", this, SLOT(patchCMSendChanged()));
 
     sequenceContextMenu = new QMenu(this);
     sequenceContextMenu->addAction("Store", this, SLOT(sequenceCMStore()));
+    sequenceContextMenu->addSeparator();
+    sequenceContextMenu->addAction("Delete Program", this, SLOT(bothCMdelete()));
     sequenceContextMenu->addSeparator();
     sequenceContextMenu->addAction("Send", this, SLOT(sequenceCMSend()));
     sequenceContextMenu->addAction("Send Changed", this, SLOT(sequenceCMSendChanged()));
@@ -119,21 +123,15 @@ void LibraryDialog::setFont(QListWidgetItem *item, bool edited, bool moved) {
 // ******************************************
 void LibraryDialog::redrawItems(int what, int start, int stop) {
 // ******************************************
+    // TODO: set text immediately or ignore what
     if ((what&Library::FLAG_PATCH) || (what&Library::FLAG_SEQUENCE)) {
         // add missing items
         const int &amount = stop - ui->patchList->count() + 1;
         if (amount > 0) {
             //std::cout << "amount: " << amount << std::endl;
             for (int i = 0; i < amount; i++) {
-                ui->patchList->addItem("temp");
-            }
-        }
-        // add missing items
-        const int &amount2 = stop - ui->sequenceList->count() + 1;
-        if (amount2 > 0) {
-            //std::cout << "amountS: " << amount2 << std::endl;
-            for (int i = 0; i < amount2; i++) {
-                ui->sequenceList->addItem("temp");
+                ui->patchList->addItem(" ");
+                ui->sequenceList->addItem(" ");
             }
         }
     }
@@ -151,7 +149,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
             const bool &e = library.patchEdited(i);
             const bool &m = library.patchMoved(i);
             setFont(item, e, m);
-            item->setTextColor(i < editor->getNumberOfPrograms() ? colorOnHW : colorNotOnHW);
+            item->setTextColor(i < library.getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
         }
     }
     if (what&Library::FLAG_SEQUENCE) {
@@ -165,7 +163,15 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
             const bool &e = library.sequenceEdited(i);
             const bool &m = library.sequenceMoved(i);
             setFont(item, e, m);
-            item->setTextColor(i < editor->getNumberOfPrograms() ? colorOnHW : colorNotOnHW);
+            item->setTextColor(i < library.getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
+        }
+    }
+
+    // cleanup items:
+    if (ui->patchList->count() - library.getNumberOfPrograms() > 0) {
+        for (int i = ui->patchList->count() - 1; i >= library.getNumberOfPrograms(); i--) {
+            delete ui->patchList->takeItem(i);
+            delete ui->sequenceList->takeItem(i);
         }
     }
 }
@@ -276,7 +282,9 @@ void LibraryDialog::save() {
 // ******************************************
 void LibraryDialog::libraryRange(const ACTIONS &action, const int &flags, const int &from, const int &to) {
 // ******************************************
-    std::cout << "LibraryDialog::sendRange() " << flags << " " << from << " " << to << std::endl;
+#ifdef DEBUGMSGS
+    std::cout << "LibraryDialog::libraryRange() " << flags << " " << from << " " << to << std::endl;
+#endif
     queueitem_t signal(action);
     signal.int0 = flags;
     signal.int1 = from;
@@ -447,6 +455,16 @@ void LibraryDialog::sequenceCMSendChanged() {
         flag |= Library::FLAG_PATCH;
     }
     librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+}
+
+
+// ******************************************
+void LibraryDialog::bothCMdelete() {
+// ******************************************
+#ifdef DEBUGMSGS
+    std::cout << "LibraryDialog::bothCMdelete()" << std::endl;
+#endif
+    librarySelectedRanges(ui->patchList, LIBRARY_DELETE, 0);
 }
 
 
