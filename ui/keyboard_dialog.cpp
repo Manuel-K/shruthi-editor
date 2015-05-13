@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
-#include "keyboard_dialog.h"
+#include "ui/keyboard_dialog.h"
 
 // ******************************************
 KeyboardDialog::KeyboardDialog(QWidget *parent):
