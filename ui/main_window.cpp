@@ -37,6 +37,8 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
     MIDI_INPUT_PORT = 0;
     MIDI_OUTPUT_PORT = 0;
     SHRUTHI_FILTER_BOARD = 0;
+    MIDI_INPUT_STATUS = false;
+    MIDI_OUTPUT_STATUS = false;
 
     lastProgramFileMode = 2;
 
