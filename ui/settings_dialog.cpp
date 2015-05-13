@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <QtWidgets>
 #include "ui/settings_dialog.h"
+#include "ui_settings_dialog.h"
 #include <iostream>
 #include "RtMidi.h"
 #include "labels.h"

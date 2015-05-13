@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <QtCore>
 #include <QDebug>
+#include <QStatusBar>
 
 #include "ui/main_window.h"
 #include "ui/keyboard_dialog.h"

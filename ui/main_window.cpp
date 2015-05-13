@@ -19,6 +19,7 @@
 #include <QtWidgets>
 #include "editor.h"
 #include "ui/main_window.h"
+#include "ui_main_window.h"
 #include "ui/settings_dialog.h"
 #include "labels.h"
 #include "patch.h"

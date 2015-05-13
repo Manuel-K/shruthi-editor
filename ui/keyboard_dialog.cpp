@@ -16,13 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <QtWidgets>
 #include "ui/keyboard_dialog.h"
+#include "ui_keyboard_dialog.h"
 
 // ******************************************
 KeyboardDialog::KeyboardDialog(QWidget *parent):
     QDialog(parent),
-    ui(new Ui::keyboard) {
+    ui(new Ui::KeyboardDialog) {
 // ******************************************
     ui->setupUi(this);
 

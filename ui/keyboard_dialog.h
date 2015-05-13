@@ -19,8 +19,14 @@
 #ifndef KEYBOARD_DIALOG_H
 #define KEYBOARD_DIALOG_H
 
-#include "ui_keyboard_dialog.h"
 #include "queueitem.h"
+
+#include <QDialog>
+
+namespace Ui {
+class KeyboardDialog;
+}
+
 
 // ******************************************
 class KeyboardDialog : public QDialog {
@@ -32,7 +38,7 @@ class KeyboardDialog : public QDialog {
         ~KeyboardDialog();
 
     private:
-        Ui::keyboard *ui;
+        Ui::KeyboardDialog *ui;
         unsigned char noteVelocity;
         static const int defaultOctave = 0;
 

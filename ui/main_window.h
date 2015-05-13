@@ -19,13 +19,20 @@
 #ifndef SHRUTHI_EDITOR_MAIN_WINDOW_H
 #define SHRUTHI_EDITOR_MAIN_WINDOW_H
 
-#include "ui_main_window.h"
 #include "config.h"
 #include "queueitem.h"
+
+#include <QMainWindow>
+
+namespace Ui {
+class MainWindow;
+}
 
 class Editor;
 
 class QFileDialog;
+class QLabel;
+class QComboBox;
 
 // ******************************************
 class ShruthiEditorMainWindow : public QMainWindow {
