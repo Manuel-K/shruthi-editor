@@ -21,7 +21,9 @@
 #define SEQUENCEEDITOR_H
 
 #include <QDialog>
-#include <editor.h>
+#include "queueitem.h"
+
+class Editor;
 
 namespace Ui {
 class SequenceEditor;
@@ -34,14 +36,14 @@ class SequenceEditor : public QDialog
         Q_OBJECT
 
     public:
-        explicit SequenceEditor(Editor *edit, QWidget *parent = 0);
+        explicit SequenceEditor(const Editor *edit, QWidget *parent = 0);
         ~SequenceEditor();
 
     private:
         void sendSequenceUpdate();
 
         Ui::SequenceEditor *ui;
-        Editor *editor;
+        const Editor *editor;
 
     public slots:
         void redrawPatchParameter(int id);

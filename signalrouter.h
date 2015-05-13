@@ -20,7 +20,8 @@
 #define SHRUTHI_SIGNALROUTER_H
 
 #include "config.h"
-#include "editor.h"
+#include "queueitem.h"
+#include <QObject>
 #include <QQueue>
 
 // ******************************************

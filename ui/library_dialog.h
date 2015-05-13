@@ -21,10 +21,12 @@
 #ifndef LIBRARY_DIALOG_H
 #define LIBRARY_DIALOG_H
 
-#include "editor.h"
-
+#include "queueitem.h"
 #include <QDialog>
 #include <QListWidgetItem>
+
+class Library;
+
 namespace Ui {
 class LibraryDialog;
 }
@@ -38,7 +40,7 @@ class LibraryDialog : public QDialog {
         Q_OBJECT
 
     public:
-        explicit LibraryDialog(Editor *edit, QWidget *parent = 0);
+        explicit LibraryDialog(const Library *lib, QWidget *parent = 0);
         ~LibraryDialog();
 
     private:
@@ -52,7 +54,7 @@ class LibraryDialog : public QDialog {
 
 
         Ui::LibraryDialog *ui;
-        Editor *editor;
+        const Library *library;
 
         QFont normalFont;
         QFont movedFont;

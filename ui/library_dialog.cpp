@@ -17,8 +17,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "library_dialog.h"
+#include "ui/library_dialog.h"
 #include "ui_library_dialog.h"
+#include "library.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -27,13 +28,12 @@
 #include <QMessageBox>
 
 // ******************************************
-LibraryDialog::LibraryDialog(Editor *edit, QWidget *parent) :
+LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::LibraryDialog) {
+    ui(new Ui::LibraryDialog),
+    library(lib) {
 // ******************************************
     ui->setupUi(this);
-
-    editor = edit;
 
     ui->patchList->addItem("If you can read this,");
     ui->sequenceList->addItem("something is wrong!");
@@ -137,20 +137,18 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         }
     }
 
-    const Library &library = editor->getLibrary();
-
     if (what&Library::FLAG_PATCH) {
         QListWidgetItem *item;
         // setup items
         //std::cout << "redrawPatchNames " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->patchList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library.recallPatch(i).getName());
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library->recallPatch(i).getName());
 
-            const bool &e = library.patchEdited(i);
-            const bool &m = library.patchMoved(i);
+            const bool &e = library->patchEdited(i);
+            const bool &m = library->patchMoved(i);
             setFont(item, e, m);
-            item->setTextColor(i < library.getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
+            item->setTextColor(i < library->getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
         }
     }
     if (what&Library::FLAG_SEQUENCE) {
@@ -159,18 +157,18 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         //std::cout << "redrawSequenceInfo " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->sequenceList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library.getSequenceIdentifier(i));
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library->getSequenceIdentifier(i));
 
-            const bool &e = library.sequenceEdited(i);
-            const bool &m = library.sequenceMoved(i);
+            const bool &e = library->sequenceEdited(i);
+            const bool &m = library->sequenceMoved(i);
             setFont(item, e, m);
-            item->setTextColor(i < library.getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
+            item->setTextColor(i < library->getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
         }
     }
 
     // cleanup items:
-    if (ui->patchList->count() - library.getNumberOfPrograms() > 0) {
-        for (int i = ui->patchList->count() - 1; i >= library.getNumberOfPrograms(); i--) {
+    if (ui->patchList->count() - library->getNumberOfPrograms() > 0) {
+        for (int i = ui->patchList->count() - 1; i >= library->getNumberOfPrograms(); i--) {
             delete ui->patchList->takeItem(i);
             delete ui->sequenceList->takeItem(i);
         }

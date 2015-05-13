@@ -20,9 +20,10 @@
 #define SHRUTHI_EDITOR_MAIN_WINDOW_H
 
 #include "ui_main_window.h"
-
-#include "editor.h"
 #include "config.h"
+#include "queueitem.h"
+
+class Editor;
 
 class QFileDialog;
 
@@ -32,7 +33,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
     Q_OBJECT
 
     public:
-        ShruthiEditorMainWindow(Editor* edit, QWidget *parent = 0);
+        ShruthiEditorMainWindow(const Editor* edit, QWidget *parent = 0);
         ~ShruthiEditorMainWindow();
 
     private:
@@ -42,7 +43,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         QComboBox *injectQFileDialog(QFileDialog *d);
 
         Ui::MainWindow *ui;
-        Editor* editor;
+        const Editor* editor;
         int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT, SHRUTHI_FILTER_BOARD;
         unsigned char MIDI_CHANNEL;
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;

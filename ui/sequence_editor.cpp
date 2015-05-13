@@ -17,7 +17,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "sequence_editor.h"
+#include "editor.h"
+#include "ui/sequence_editor.h"
 #include "ui_sequence_editor.h"
 #include <QDebug>
 #include <iostream>
@@ -26,13 +27,12 @@
 
 
 // ******************************************
-SequenceEditor::SequenceEditor(Editor *edit, QWidget *parent) :
+SequenceEditor::SequenceEditor(const Editor *edit, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SequenceEditor) {
+    ui(new Ui::SequenceEditor),
+    editor(edit) {
 // ******************************************
     ui->setupUi(this);
-
-    editor = edit;
 
     SequenceStep *step;
     for (unsigned int s = 0; s < Sequence::NUMBER_OF_STEPS; s++) {

@@ -17,6 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
+#include "editor.h"
 #include "ui/main_window.h"
 #include "ui/settings_dialog.h"
 #include "labels.h"
@@ -25,12 +26,12 @@
 #define VERSION "0.23"
 
 // ******************************************
-ShruthiEditorMainWindow::ShruthiEditorMainWindow(Editor *edit, QWidget *parent):
+ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *parent):
     QMainWindow(parent),
-    ui(new Ui::MainWindow) {
+    ui(new Ui::MainWindow),
+    editor(edit) {
 // ******************************************
     ui->setupUi(this);
-    editor = edit;
 
     MIDI_CHANNEL = 1;
     MIDI_INPUT_PORT = 0;
