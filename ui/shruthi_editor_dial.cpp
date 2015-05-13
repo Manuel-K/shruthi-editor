@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "shruthi_editor_dial.h"
+#include "ui/shruthi_editor_dial.h"
 #include "ui_shruthi_editor_dial.h"
 
 

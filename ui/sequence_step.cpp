@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "sequence_step.h"
+#include "ui/sequence_step.h"
 #include "ui_sequence_step.h"
 #include <iostream>
 

@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
-#include "settings_dialog.h"
+#include "ui/settings_dialog.h"
 #include <iostream>
 #include "RtMidi.h"
 #include "labels.h"
