@@ -21,7 +21,6 @@
 #define SEQUENCESTEP_H
 
 #include <QWidget>
-#include <QFrame>
 
 namespace Ui {
 class SequenceStep;
