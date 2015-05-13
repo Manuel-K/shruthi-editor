@@ -21,7 +21,7 @@
 #include <QDebug>
 
 // ******************************************
-QStringList Labels::ModulationSource = QStringList()
+const QStringList Labels::ModulationSource = QStringList()
 // ******************************************
   << "Lfo 1"
   << "Lfo 2"
@@ -58,7 +58,7 @@ QStringList Labels::ModulationSource = QStringList()
 
 
 // ******************************************
-QStringList Labels::ModulationDestination = QStringList()
+const QStringList Labels::ModulationDestination = QStringList()
 // ******************************************
   << "Filter cutoff"
   << "VCA gain"
@@ -90,7 +90,7 @@ QStringList Labels::ModulationDestination = QStringList()
 
 
 // ******************************************
-QStringList Labels::OscillatorAlgorithm = QStringList()
+const QStringList Labels::OscillatorAlgorithm = QStringList()
 // ******************************************
   << "Silence"
   << "Sawtooth"
@@ -129,7 +129,7 @@ QStringList Labels::OscillatorAlgorithm = QStringList()
   << "Vibes";
 
 // ******************************************
-QStringList Labels::SubOscillatorAlgorithm = QStringList()
+const QStringList Labels::SubOscillatorAlgorithm = QStringList()
 // ******************************************
   << "square, 1 octave below"
   << "triangle, 1 octave below"
@@ -144,7 +144,7 @@ QStringList Labels::SubOscillatorAlgorithm = QStringList()
   << "low-pitched discontinuity";
 
 // ******************************************
-QStringList Labels::LfoWave = QStringList()
+const QStringList Labels::LfoWave = QStringList()
 // ******************************************
   << "Triangle"
   << "Square"
@@ -169,7 +169,7 @@ QStringList Labels::LfoWave = QStringList()
   << "Wave 16";
 
 // ******************************************
-QStringList Labels::LfoMode = QStringList()
+const QStringList Labels::LfoMode = QStringList()
 // ******************************************
   << "Free"
   << "Slave"
@@ -177,13 +177,13 @@ QStringList Labels::LfoMode = QStringList()
   << "Oneshot";
 
 // ******************************************
-QStringList Labels::Status = QStringList()
+const QStringList Labels::Status = QStringList()
 // ******************************************
   << "OFF"
   << "ON";
 
 // ******************************************
-QStringList Labels::Operator = QStringList()
+const QStringList Labels::Operator = QStringList()
 // ******************************************
   << "Sum"
   << "Sync"
@@ -201,7 +201,7 @@ QStringList Labels::Operator = QStringList()
   << "Ping Png Seq";
 
 // ******************************************
-QStringList Labels::CvOperator = QStringList()
+const QStringList Labels::CvOperator = QStringList()
 // ******************************************
   << "Off"
   << "Sum"
@@ -216,7 +216,7 @@ QStringList Labels::CvOperator = QStringList()
 
 
 // ******************************************
-QStringList Labels::LFORate = QStringList()
+const QStringList Labels::LFORate = QStringList()
 // ******************************************
   << "x1"
   << "x2"
@@ -257,14 +257,14 @@ QString Labels::OffOnFormatter(int value) {
 
 
 // ******************************************
-QStringList Labels::OffOn = QStringList()
+const QStringList Labels::OffOn = QStringList()
 // ******************************************
         << "Off"
         << "On";
 
 
 // ******************************************
-QStringList Labels::FilterBoard = QStringList()
+const QStringList Labels::FilterBoard = QStringList()
 // ******************************************
 /* Filter 0*/ << "SMR4 (lpf)"
 /* Filter 1*/ << "SSM2044 (ssm)"
@@ -277,7 +277,7 @@ QStringList Labels::FilterBoard = QStringList()
 
 
 // ******************************************
-QStringList Labels::FilterSVFMode1 = QStringList()
+const QStringList Labels::FilterSVFMode1 = QStringList()
 // ******************************************
   << "Lowpass"
   << "Bandpass"
@@ -288,7 +288,7 @@ QStringList Labels::FilterSVFMode1 = QStringList()
 
 
 // ******************************************
-QStringList Labels::FilterSVFMode2 = QStringList()
+const QStringList Labels::FilterSVFMode2 = QStringList()
 // ******************************************
   << "Lowpass (parallel)"
   << "Bandpass (parallel)"
@@ -299,7 +299,7 @@ QStringList Labels::FilterSVFMode2 = QStringList()
 
 
 // ******************************************
-QStringList Labels::FilterDSPMode = QStringList()
+const QStringList Labels::FilterDSPMode = QStringList()
 // ******************************************
         << "LP > FX"
         << "HP > FX"
@@ -309,7 +309,7 @@ QStringList Labels::FilterDSPMode = QStringList()
 
 
 // ******************************************
-QStringList Labels::FilterDSPFx = QStringList()
+const QStringList Labels::FilterDSPFx = QStringList()
 // ******************************************
         << "Distortion (distrt)"
         << "Bit crusher (crushr)"
@@ -330,14 +330,14 @@ QStringList Labels::FilterDSPFx = QStringList()
 
 
 // ******************************************
-QStringList Labels::FilterPolivoksMode = QStringList()
+const QStringList Labels::FilterPolivoksMode = QStringList()
 // ******************************************
         << "Lowpass"
         << "Bandpass";
 
 
 // ******************************************
-QStringList Labels::Filter4PMMode = QStringList()
+const QStringList Labels::Filter4PMMode = QStringList()
 // ******************************************
         << "4-pole LP"
         << "3-pole LP"
@@ -357,7 +357,7 @@ QStringList Labels::Filter4PMMode = QStringList()
 
 
 // ******************************************
-QStringList Labels::Filter4PMResonanceFlavor = QStringList()
+const QStringList Labels::Filter4PMResonanceFlavor = QStringList()
 // ******************************************
         << "Liquid"
         << "MS"
@@ -366,7 +366,7 @@ QStringList Labels::Filter4PMResonanceFlavor = QStringList()
 
 
 // ******************************************
-QStringList Labels::FilterSPMode = QStringList()
+const QStringList Labels::FilterSPMode = QStringList()
 // ******************************************
         << "Lowpass"
         << "Bandpass"
@@ -375,7 +375,7 @@ QStringList Labels::FilterSPMode = QStringList()
 
 
 // ******************************************
-QStringList Labels::SequencerMode = QStringList()
+const QStringList Labels::SequencerMode = QStringList()
 // ******************************************
         << "Step"
         << "Arpeggiator"
@@ -383,7 +383,7 @@ QStringList Labels::SequencerMode = QStringList()
 
 
 // ******************************************
-QStringList Labels::ArpeggiatorDirection = QStringList()
+const QStringList Labels::ArpeggiatorDirection = QStringList()
 // ******************************************
         << "Up"
         << "Down"
@@ -393,7 +393,7 @@ QStringList Labels::ArpeggiatorDirection = QStringList()
 
 
 // ******************************************
-QStringList Labels::GrooveTemplate = QStringList()
+const QStringList Labels::GrooveTemplate = QStringList()
 // ******************************************
         << "Swing"
         << "Shuffle"
@@ -404,7 +404,7 @@ QStringList Labels::GrooveTemplate = QStringList()
 
 
 // ******************************************
-QStringList Labels::SequencerClockDivision = QStringList()
+const QStringList Labels::SequencerClockDivision = QStringList()
 // ******************************************
         << "1/1"
         << "1/2"
@@ -446,7 +446,7 @@ QString Labels::ArpeggiatorPatternFormatter(int value)
 
 
 // ******************************************
-QStringList Labels::Notes = QStringList()
+const QStringList Labels::Notes = QStringList()
 // ******************************************
         << "C"
         << "C#"
@@ -471,7 +471,7 @@ QString Labels::NoteFormatter(int value)
 
 
 // ******************************************
-QStringList Labels::HexValues = QStringList()
+const QStringList Labels::HexValues = QStringList()
 // ******************************************
         << "0"
         << "1"

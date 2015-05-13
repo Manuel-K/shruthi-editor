@@ -22,40 +22,40 @@
 
 class Labels {
     public:
-        static QStringList ModulationSource;
-        static QStringList ModulationDestination;
-        static QStringList OscillatorAlgorithm;
-        static QStringList SubOscillatorAlgorithm;
-        static QStringList LfoWave;
-        static QStringList LfoMode;
-        static QStringList Status;
-        static QStringList Operator;
-        static QStringList CvOperator;
+        static const QStringList ModulationSource;
+        static const QStringList ModulationDestination;
+        static const QStringList OscillatorAlgorithm;
+        static const QStringList SubOscillatorAlgorithm;
+        static const QStringList LfoWave;
+        static const QStringList LfoMode;
+        static const QStringList Status;
+        static const QStringList Operator;
+        static const QStringList CvOperator;
         static QString LfoRateFormatter(int value); // used for labels
-        static QStringList OffOn;
+        static const QStringList OffOn;
         static QString OffOnFormatter(int value);
         // The following labels are used for the filter boards:
-        static QStringList FilterBoard;
-        static QStringList FilterSVFMode1;
-        static QStringList FilterSVFMode2;
-        static QStringList FilterDSPMode;
-        static QStringList FilterDSPFx;
-        static QStringList FilterPolivoksMode;
-        static QStringList Filter4PMMode;
-        static QStringList Filter4PMResonanceFlavor;
-        static QStringList FilterSPMode;
+        static const QStringList FilterBoard;
+        static const QStringList FilterSVFMode1;
+        static const QStringList FilterSVFMode2;
+        static const QStringList FilterDSPMode;
+        static const QStringList FilterDSPFx;
+        static const QStringList FilterPolivoksMode;
+        static const QStringList Filter4PMMode;
+        static const QStringList Filter4PMResonanceFlavor;
+        static const QStringList FilterSPMode;
         // The following labels are used for the sequencer:
-        static QStringList SequencerMode;
-        static QStringList ArpeggiatorDirection;
-        static QStringList GrooveTemplate;
-        static QStringList SequencerClockDivision;
+        static const QStringList SequencerMode;
+        static const QStringList ArpeggiatorDirection;
+        static const QStringList GrooveTemplate;
+        static const QStringList SequencerClockDivision;
         static QString TempoFormatter(int value); // used for labels
         static QString ArpeggiatorPatternFormatter(int value); // used for labels
-        static QStringList Notes;
+        static const QStringList Notes;
         static QString NoteFormatter(int value);
-        static QStringList HexValues;
+        static const QStringList HexValues;
 
     private:
-        static QStringList LFORate; // used for LfoRateFormatter
+        static const QStringList LFORate; // used for LfoRateFormatter
 };
 #endif

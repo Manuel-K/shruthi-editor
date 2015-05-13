@@ -29,7 +29,7 @@ struct param_t {
     QString short_name;
     int min;
     int max;
-    QStringList* dropdown;
+    const QStringList* dropdown;
     QString (*formatter)(int);
     int cc;
 };

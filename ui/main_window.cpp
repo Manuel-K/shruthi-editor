@@ -222,7 +222,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
 
     // Parameter 92:
-    QStringList *p92combo = NULL;
+    const QStringList *p92combo = NULL;
     bool p92dial = false;
 
     const param_t p92 = Patch::parameter(92, filter);
@@ -254,7 +254,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
 
     // Parameter 93:
-    QStringList *p93combo = NULL;
+    const QStringList *p93combo = NULL;
     bool p93dial = false;
 
     const param_t p93 = Patch::parameter(93, filter);
