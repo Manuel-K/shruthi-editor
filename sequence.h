@@ -36,9 +36,9 @@ public:
     bool parseSysex(const Message *message);
     void generateSysex(Message *message) const;
 
-    const int &getParamByID(const int &id) const;
-    const int &getParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
-    void setParamById(const int &id, const int &val);
+    const int &getValueByID(const int &id) const;
+    const int &getValue(const int &step, const SequenceParameter::SequenceParameter &sp) const;
+    void setValueById(const int &id, const int &val);
     static int calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp);
     void reset();
 

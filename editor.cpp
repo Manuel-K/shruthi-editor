@@ -105,23 +105,23 @@ Editor::~Editor() {
 
 
 // ******************************************
-const int &Editor::getParam(int id) const {
+const int &Editor::getPatchValue(int id) const {
 // ******************************************
-    return patch->getParam(id);
+    return patch->getValue(id);
 }
 
 
 // ******************************************
-const QString &Editor::getName() const {
+const QString &Editor::getPatchName() const {
 // ******************************************
     return patch->getName();
 }
 
 
 // ******************************************
-const int &Editor::getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const {
+const int &Editor::getSequenceValue(const int &step, const SequenceParameter::SequenceParameter &sp) const {
 // ******************************************
-    return sequence->getParam(step, sp);
+    return sequence->getValue(step, sp);
 }
 
 
@@ -224,8 +224,8 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionPatchParameterChangeEditor(" << id << "," << value << ")";
 #endif
-    if (patch->getParam(id) != value) {
-        patch->setParam(id, value);
+    if (patch->getValue(id) != value) {
+        patch->setValue(id, value);
 
         //strange hack to fix arpeggiator range
         //firmware 1.03 maps 1->1, 2->1, 3->2, 4->3
@@ -239,7 +239,7 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
                 emit displayStatusbar("Could not send changes as NRPN.");
             }
         } else {
-            const param_t &param = Patch::parameter(id, shruthiFilterBoard);
+            const PatchParameter &param = Patch::parameter(id, shruthiFilterBoard);
             const int &cc = param.cc;
             const int &val = 127.0 * (value - param.min) / param.max;
             if (cc >= 0) {
@@ -377,7 +377,7 @@ void Editor::actionPatchParameterChangeMidi(int id, int value) {
 
     if (Patch::parameters[id].min < 0 && value >= 127)
         value-=256; //2s complement
-    patch->setParam(id, value);
+    patch->setValue(id, value);
     if (Patch::hasUI(id)) {
         emit redrawPatchParamter(id);
     }
@@ -671,7 +671,7 @@ void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSequenceParameterChangeEditor()" << id << value;
 #endif
-    sequence->setParamById(id, value);
+    sequence->setValueById(id, value);
 }
 
 

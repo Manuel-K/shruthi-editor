@@ -195,7 +195,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
     // Parameter 84:
     bool p84dial = false;
-    const param_t p84 = Patch::parameter(84, filter);
+    const PatchParameter p84 = Patch::parameter(84, filter);
     if (p84.short_name != NULL) {
         ui->c84->setName(p84.short_name + ":");
         if (p84.dropdown == NULL) {
@@ -211,7 +211,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 
     // Parameter 85:
     bool p85dial = false;
-    const param_t p85 = Patch::parameter(85, filter);
+    const PatchParameter p85 = Patch::parameter(85, filter);
     if (p85.short_name != NULL) {
         ui->c85->setName(p85.short_name + ":");
         if (p85.dropdown == NULL) {
@@ -229,7 +229,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     const QStringList *p92combo = NULL;
     bool p92dial = false;
 
-    const param_t p92 = Patch::parameter(92, filter);
+    const PatchParameter p92 = Patch::parameter(92, filter);
     if (p92.short_name != NULL) {
         if (p92.dropdown == NULL) {
             ui->c92d->setName(p92.short_name + ":");
@@ -261,7 +261,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
     const QStringList *p93combo = NULL;
     bool p93dial = false;
 
-    const param_t p93 = Patch::parameter(93, filter);
+    const PatchParameter p93 = Patch::parameter(93, filter);
     if (p93.short_name != NULL) {
         if (p93.dropdown == NULL) {
             ui->c93d->setName(p93.short_name + ":");
@@ -621,7 +621,7 @@ void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 // ******************************************
 void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
 // ******************************************
-    const param_t param = Patch::parameter(id, SHRUTHI_FILTER_BOARD);
+    const PatchParameter param = Patch::parameter(id, SHRUTHI_FILTER_BOARD);
 
     QString wid = QString("c%1").arg(id);
 
@@ -639,7 +639,7 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
         }
         const bool &wasEnabled = temp->isEnabled();
         temp->setEnabled(false);
-        temp->setCurrentIndex(editor->getParam(id));
+        temp->setCurrentIndex(editor->getPatchValue(id));
         temp->setEnabled(wasEnabled);
     } else if (Patch::belongsToModMatrix(id)) {
         QDial* temp = this->findChild<QDial*>(wid);
@@ -648,14 +648,14 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
         }
         const bool &wasEnabled = temp->isEnabled();
         temp->setEnabled(false);
-        temp->setValue(editor->getParam(id));
+        temp->setValue(editor->getPatchValue(id));
         temp->setEnabled(wasEnabled);
     } else {
         ShruthiEditorDial* temp = this->findChild<ShruthiEditorDial*>(wid);
         if (!temp) {
             return;
         }
-        temp->setValue(editor->getParam(id));
+        temp->setValue(editor->getPatchValue(id));
     }
 }
 
@@ -667,7 +667,7 @@ void ShruthiEditorMainWindow::redrawAllPatchParameters() {
             redrawPatchParameter(i);
         }
     }
-    ui->patch_name->setText(editor->getName());
+    ui->patch_name->setText(editor->getPatchName());
 }
 
 

@@ -38,9 +38,9 @@ class Editor : public QObject {
     public:
         Editor();
         ~Editor();
-        const int &getParam(int id) const;
-        const QString &getName() const;
-        const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
+        const int &getPatchValue(int id) const;
+        const QString &getPatchName() const;
+        const int &getSequenceValue(const int &step, const SequenceParameter::SequenceParameter &sp) const;
 
         const Library *getLibrary() const;
 

@@ -82,7 +82,7 @@ void Sequence::generateSysex(Message *message) const {
 }
 
 // ******************************************
-const int &Sequence::getParam(const int &step, const SequenceParameter::SequenceParameter &sp) const {
+const int &Sequence::getValue(const int &step, const SequenceParameter::SequenceParameter &sp) const {
 // ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
@@ -265,7 +265,7 @@ void Sequence::print() const {
 
 
 // ******************************************
-void Sequence::setParamById(const int &id, const int &val) {
+void Sequence::setValueById(const int &id, const int &val) {
 // ******************************************
     if (id < 0 || id >= 80) {
         return;
@@ -316,7 +316,7 @@ int Sequence::calculateParamId(const int &step, const SequenceParameter::Sequenc
 
 
 // ******************************************
-const int &Sequence::getParamByID(const int &id) const {
+const int &Sequence::getValueByID(const int &id) const {
 // ******************************************
     if (id < 0 || id >= 80) {
         return ERROR_RETURN;

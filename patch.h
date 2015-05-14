@@ -23,7 +23,7 @@
 
 
 // ******************************************
-struct param_t {
+struct PatchParameter {
 // ******************************************
     QString name;
     QString short_name;
@@ -36,7 +36,7 @@ struct param_t {
 
 
 // ******************************************
-static const param_t param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
+static const PatchParameter param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
 // ******************************************
 
 
@@ -46,15 +46,15 @@ class Patch {
     public:
         Patch();
 
-        static param_t parameter(const int &id, int filter = 0);
+        static PatchParameter parameter(const int &id, int filter = 0);
 
         static bool enabled(const int &id);
         static bool hasUI(const int &id);
         static bool sendAsNRPN(const int &id);
         static bool belongsToModMatrix(const int &id);
 
-        void setParam(const int &id, int value);
-        const int &getParam(const int &id) const;
+        void setValue(const int &id, int value);
+        const int &getValue(const int &id) const;
         static QString formatParameterValue(const int &id, const int &value, int filter = 0);
         void setName(const QString &name);
         const QString &getName() const;
@@ -74,7 +74,7 @@ class Patch {
         static unsigned char ccToId(const unsigned char &cc, const int &filter);
         static int convertCCValue(const unsigned int &val, int &id, const int &filter);
 
-        static const param_t parameters[]; // use this with caution
+        static const PatchParameter parameters[]; // use this with caution
         static const unsigned char parameterCount;
         static const unsigned char filterBoardCount;
 
@@ -85,10 +85,10 @@ class Patch {
         int data[110];
         unsigned char version;
 
-        static const param_t parameter84[];
-        static const param_t parameter85[];
-        static const param_t parameter92[];
-        static const param_t parameter93[];
+        static const PatchParameter parameter84[];
+        static const PatchParameter parameter85[];
+        static const PatchParameter parameter92[];
+        static const PatchParameter parameter93[];
 
         static const unsigned char INIT_PATCH[];
         static const unsigned char INIT_PATCH_PRE100[];

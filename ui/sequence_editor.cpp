@@ -113,14 +113,14 @@ void SequenceEditor::redrawPatchParameter(int id) {
         }
         const bool &temp = cb->isEnabled();
         cb->setEnabled(false);
-        cb->setCurrentIndex(editor->getParam(id));
+        cb->setCurrentIndex(editor->getPatchValue(id));
         cb->setEnabled(temp);
     } else {
         ShruthiEditorDial *dial = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(id));
         if (!dial) {
             return;
         }
-        dial->setValue(editor->getParam(id));
+        dial->setValue(editor->getPatchValue(id));
     }
 }
 
@@ -149,11 +149,11 @@ void SequenceEditor::redrawAllSequenceParameters() {
         if (!s) {
             continue;
         }
-        s->setActive(editor->getSequenceParam(i, SequenceParameter::ACTIVE));
-        s->setNoteOctave(editor->getSequenceParam(i, SequenceParameter::NOTE));
-        s->setTie(editor->getSequenceParam(i, SequenceParameter::TIE));
-        s->setVelocity(editor->getSequenceParam(i, SequenceParameter::VELOCITY));
-        s->setValue(editor->getSequenceParam(i, SequenceParameter::VALUE));
+        s->setActive(editor->getSequenceValue(i, SequenceParameter::ACTIVE));
+        s->setNoteOctave(editor->getSequenceValue(i, SequenceParameter::NOTE));
+        s->setTie(editor->getSequenceValue(i, SequenceParameter::TIE));
+        s->setVelocity(editor->getSequenceValue(i, SequenceParameter::VELOCITY));
+        s->setValue(editor->getSequenceValue(i, SequenceParameter::VALUE));
     }
 }
 

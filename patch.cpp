@@ -32,7 +32,7 @@ const unsigned char Patch::parameterCount = 110;
 
 
 // ******************************************
-const param_t Patch::parameters [110] = {
+const PatchParameter Patch::parameters [110] = {
 // ******************************************
     /* Long name, short name, min, max, labels, value formatter, cc */
     /*0*/ {"Oscillator 1 shape", "Shape", 0, 34, &Labels::OscillatorAlgorithm, NULL, 20},
@@ -155,7 +155,7 @@ const unsigned char Patch::filterBoardCount = 8;
 
 
 // ******************************************
-const param_t Patch::parameter84 [8] = {
+const PatchParameter Patch::parameter84 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 /*Filter 1*/ {"SSM high pass", "High Pass", 0, 127, NULL, NULL, 12},
@@ -169,7 +169,7 @@ const param_t Patch::parameter84 [8] = {
 
 
 // ******************************************
-const param_t Patch::parameter85 [8] = {
+const PatchParameter Patch::parameter85 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 /*Filter 1*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
@@ -183,7 +183,7 @@ const param_t Patch::parameter85 [8] = {
 
 
 // ******************************************
-const param_t Patch::parameter92 [8] = {
+const PatchParameter Patch::parameter92 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
 /*Filter 1*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
@@ -197,7 +197,7 @@ const param_t Patch::parameter92 [8] = {
 
 
 // ******************************************
-const param_t Patch::parameter93 [8] = {
+const PatchParameter Patch::parameter93 [8] = {
 // ******************************************
 /*Filter 0*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
 /*Filter 1*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
@@ -231,7 +231,7 @@ const param_t Patch::parameter93 [8] = {
 
 
 // ******************************************
-param_t Patch::parameter(const int &id, int filter)
+PatchParameter Patch::parameter(const int &id, int filter)
 // ******************************************
 {
     if (id >= parameterCount || filter >= filterBoardCount) {
@@ -313,14 +313,14 @@ Patch::Patch() {
 
 
 // ******************************************
-void Patch::setParam(const int &id, int const value) {
+void Patch::setValue(const int &id, int const value) {
 // ******************************************
     data[id] = value;
 }
 
 
 // ******************************************
-const int &Patch::getParam(const int &id) const {
+const int &Patch::getValue(const int &id) const {
 // ******************************************
     return data[id];
 }
@@ -330,7 +330,7 @@ const int &Patch::getParam(const int &id) const {
 QString Patch::formatParameterValue(const int &id, const int &value, int filter)
 // ******************************************
 {
-    const param_t &param_entry = parameter(id, filter);
+    const PatchParameter &param_entry = parameter(id, filter);
 
     if (param_entry.dropdown) {
         return (*param_entry.dropdown).at(value);
@@ -398,7 +398,7 @@ void Patch::randomizePatch(const int &filter) {
     unpackData(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) { // do we want to randomize sequencer settings?
-            const param_t param = parameter(i, filter);
+            const PatchParameter param = parameter(i, filter);
             data[i] = (rand() %(param.max-param.min))+param.min;
         }
     }
