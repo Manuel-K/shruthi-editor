@@ -74,7 +74,6 @@ class Patch {
         static unsigned char ccToId(const unsigned char &cc, const int &filter);
         static int convertCCValue(const unsigned int &val, int &id, const int &filter);
 
-        static const PatchParameter parameters[]; // use this with caution
         static const unsigned char parameterCount;
         static const unsigned char filterBoardCount;
 
@@ -85,6 +84,7 @@ class Patch {
         int data[110];
         unsigned char version;
 
+        static const PatchParameter parameters[];
         static const PatchParameter parameter84[];
         static const PatchParameter parameter85[];
         static const PatchParameter parameter92[];

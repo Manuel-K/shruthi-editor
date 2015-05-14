@@ -375,8 +375,9 @@ void Editor::actionPatchParameterChangeMidi(int id, int value) {
         return;
     }
 
-    if (Patch::parameters[id].min < 0 && value >= 127)
+    if (Patch::parameter(id).min < 0 && value >= 127) {
         value-=256; //2s complement
+    }
     patch->setValue(id, value);
     if (Patch::hasUI(id)) {
         emit redrawPatchParamter(id);
