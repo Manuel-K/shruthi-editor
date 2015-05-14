@@ -572,10 +572,10 @@ void Library::rememberShruthiProgram(const int &patch, const int &sequence) {
 
 bool Library::recallShruthiProgramm() {
     if (mRememberedCurrentShruthiProgram) {
-        bool response = midiout->automaticProgramChange(mMidiChannel,
-                                                        firmwareVersion,
-                                                        mCurrentShruthiPatch,
-                                                        mCurrentShruthiSequence);
+        bool response = midiout->programChange(mMidiChannel, mCurrentShruthiPatch);
+        if (response && firmwareVersionRequested && firmwareVersion < 1000) {
+            response = midiout->programChangeSequence(mMidiChannel, mCurrentShruthiSequence);
+        }
         if (response) {
             mRememberedCurrentShruthiProgram = false;
         }

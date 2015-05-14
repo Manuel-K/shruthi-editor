@@ -38,7 +38,6 @@ class MidiOut {
         bool programChange(const unsigned char &channel, const int &program);
         bool programChangeSequence(const unsigned char &channel, const int &sequence);
         bool controlChange(const unsigned char &channel, const unsigned char &controller, const unsigned char &value);
-        bool automaticProgramChange(const unsigned char &channel, const int &firmwareVersion, const int &patch, const int &sequence);
 
         // Requests:
         bool patchTransferRequest();

@@ -202,15 +202,6 @@ bool MidiOut::controlChange(const unsigned char &channel, const unsigned char &c
 }
 
 
-bool MidiOut::automaticProgramChange(const unsigned char &channel, const int &firmwareVersion, const int &patch, const int &sequence) {
-    if (firmwareVersion >= 1000) {
-        return programChange(channel, patch);
-    } else {
-        return programChange(channel, patch) && programChangeSequence(channel, sequence);
-    }
-}
-
-
 //
 // Requests:
 //
