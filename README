@@ -118,3 +118,4 @@ v0.22 * scalable keyboad with flexible amount of keys
 v0.23 * combined patch/sequence load and save dialogs (with type selection)
       * combined patch/sequence send and fetch menu action
       * added program library
+      * minor cosmetic changes
