@@ -89,15 +89,15 @@ const int &Sequence::getValue(const int &step, const SequenceParameter::Sequence
 
     switch (sp) {
         case SequenceParameter::ACTIVE:
-            return stepsActive[step];
+            return mActive[step];
         case SequenceParameter::NOTE:
-            return stepsNote[step];
+            return mNote[step];
         case SequenceParameter::TIE:
-            return stepsTie[step];
+            return mTie[step];
         case SequenceParameter::VALUE:
-            return stepsValue[step];
+            return mValue[step];
         case SequenceParameter::VELOCITY:
-            return stepsVelocity[step];
+            return mVelocity[step];
         default:
             return ERROR_RETURN;
     }
@@ -113,19 +113,19 @@ void Sequence::setValue(const int &step, const SequenceParameter::SequenceParame
 
     switch (sp) {
         case SequenceParameter::ACTIVE:
-            stepsActive[step] = val;
+            mActive[step] = val;
             break;
         case SequenceParameter::NOTE:
-            stepsNote[step] = val;
+            mNote[step] = val;
             break;
         case SequenceParameter::TIE:
-            stepsTie[step] = val;
+            mTie[step] = val;
             break;
         case SequenceParameter::VALUE:
-            stepsValue[step] = val;
+            mValue[step] = val;
             break;
         case SequenceParameter::VELOCITY:
-            stepsVelocity[step] = val;
+            mVelocity[step] = val;
             break;
         default:
             break;
@@ -137,11 +137,11 @@ void Sequence::setValue(const int &step, const SequenceParameter::SequenceParame
 void Sequence::unpackData(const unsigned char *data) {
 // ******************************************
     for (unsigned int i = 0; i < 16; i++) {
-        stepsActive[i] = data[2*i] >> 7; //1==on or 0==silence
-        stepsNote[i] = data[2*i] & 0x7F; // 0..127
-        stepsTie[i] = data[2*i+1] >> 7; //0==note or 1==tie/slide
-        stepsVelocity[i] = (data[2*i+1] & 0x70) >> 4; // 0..7
-        stepsValue[i] = data[2*i+1] & 0x0F; // 0..F
+        mActive[i] = data[2*i] >> 7; //1==on or 0==silence
+        mNote[i] = data[2*i] & 0x7F; // 0..127
+        mTie[i] = data[2*i+1] >> 7; //0==note or 1==tie/slide
+        mVelocity[i] = (data[2*i+1] & 0x70) >> 4; // 0..7
+        mValue[i] = data[2*i+1] & 0x0F; // 0..F
     }
 #ifdef DEBUGMSGS
     print();
@@ -153,8 +153,8 @@ void Sequence::unpackData(const unsigned char *data) {
 void Sequence::packData(unsigned char data[]) const {
 // ******************************************
     for (unsigned int i = 0; i < 16; i++) {
-        data[2*i] = stepsActive[i] << 7 | stepsNote[i];
-        data[2*i+1] = stepsTie[i] << 7 | stepsVelocity[i] << 4 | stepsValue[i];
+        data[2*i] = mActive[i] << 7 | mNote[i];
+        data[2*i+1] = mTie[i] << 7 | mVelocity[i] << 4 | mValue[i];
     }
 }
 
@@ -192,11 +192,11 @@ void Sequence::reset() {
 bool Sequence::equals(const Sequence &other) const {
 // ******************************************
     for (int s = 0; s < NUMBER_OF_STEPS; s++) {
-        if(stepsActive[s] != other.stepsActive[s] ||
-                stepsNote[s] != other.stepsNote[s] ||
-                stepsTie[s] != other.stepsTie[s] ||
-                stepsValue[s] != other.stepsValue[s] ||
-                stepsVelocity[s] != other.stepsVelocity[s]) {
+        if(mActive[s] != other.mActive[s] ||
+                mNote[s] != other.mNote[s] ||
+                mTie[s] != other.mTie[s] ||
+                mValue[s] != other.mValue[s] ||
+                mVelocity[s] != other.mVelocity[s]) {
             return false;
         }
     }
@@ -209,11 +209,11 @@ bool Sequence::equals(const Sequence &other) const {
 void Sequence::set(const Sequence &other) {
 // ******************************************
     for (int s = 0; s < NUMBER_OF_STEPS; s++) {
-        stepsActive[s] = other.stepsActive[s];
-        stepsNote[s] = other.stepsNote[s];
-        stepsTie[s] = other.stepsTie[s];
-        stepsValue[s] = other.stepsValue[s];
-        stepsVelocity[s] = other.stepsVelocity[s];
+        mActive[s] = other.mActive[s];
+        mNote[s] = other.mNote[s];
+        mTie[s] = other.mTie[s];
+        mValue[s] = other.mValue[s];
+        mVelocity[s] = other.mVelocity[s];
     }
 }
 
@@ -223,8 +223,8 @@ void Sequence::print() const {
 // ******************************************
     QString typestr;
     for (unsigned int i = 0; i < 16; i++) {
-        if (stepsActive[i]) {
-            if (stepsTie[i]) {
+        if (mActive[i]) {
+            if (mTie[i]) {
                 typestr = "-";
             } else {
                 typestr = "♪";
@@ -234,7 +234,7 @@ void Sequence::print() const {
         }
 
         //std::cout << i << ": " << active[i] << " " << note[i] << " " << tie[i] << " " << velocity[i] << " " << value[i] << std::endl;
-        std::cout << (QString("%1").arg(i, 2)).toUtf8().constData() << ": " << Labels::NoteFormatter(stepsNote[i]).toUtf8().constData() << " " << typestr.toUtf8().constData()  << stepsVelocity[i]  << " " << Labels::HexValues.at(stepsValue[i]).toUtf8().constData() << std::endl;
+        std::cout << (QString("%1").arg(i, 2)).toUtf8().constData() << ": " << Labels::NoteFormatter(mNote[i]).toUtf8().constData() << " " << typestr.toUtf8().constData()  << mVelocity[i]  << " " << Labels::HexValues.at(mValue[i]).toUtf8().constData() << std::endl;
     }
 }
 
