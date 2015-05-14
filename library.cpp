@@ -273,7 +273,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
 
 
 // ******************************************
-bool Library::fetch(const int &from, const int &to) {
+bool Library::startFetching(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
@@ -303,7 +303,7 @@ void Library::abortFetching() {
 
 
 // ******************************************
-bool Library::fetchPatches(const int &from, const int &to) {
+bool Library::startFetchingPatches(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
@@ -362,7 +362,7 @@ bool Library::isFetchingPatches() const {
 
 
 // ******************************************
-bool Library::fetchSequences(const int &from, const int &to) {
+bool Library::startFetchingSequences(const int &from, const int &to) {
 // ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.

@@ -695,11 +695,11 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 #endif
     const int &st = stop >= 0 ? stop : (library->getNumberOfHWPrograms() - 1);
     if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
-        library->fetch(start, st);
+        library->startFetching(start, st);
     } else if ((what&FLAG_PATCH)) {
-        library->fetchPatches(start, st);
+        library->startFetchingPatches(start, st);
     } else if ((what&FLAG_SEQUENCE)) {
-        library->fetchSequences(start, st);
+        library->startFetchingSequences(start, st);
     }
 }
 
