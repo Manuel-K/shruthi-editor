@@ -22,11 +22,10 @@
 #include "RtMidi.h"
 #include "labels.h"
 
-// ******************************************
+
 SettingsDialog::SettingsDialog(QWidget *parent):
     QDialog(parent),
     ui(new Ui::SettingsDialog) {
-// ******************************************
     ui->setupUi(this);
     getPortInfo();
 
@@ -37,17 +36,12 @@ SettingsDialog::SettingsDialog(QWidget *parent):
 }
 
 
-// ******************************************
-SettingsDialog::~SettingsDialog()
-// ******************************************
-{
+SettingsDialog::~SettingsDialog() {
     delete ui;
 }
 
 
-// ******************************************
 void SettingsDialog::getPortInfo() {
-// ******************************************
     RtMidiIn  *midiin = 0;
     RtMidiOut *midiout = 0;
     QString name;
@@ -98,56 +92,45 @@ void SettingsDialog::getPortInfo() {
         ui->midiOutputPort->addItem(name);
     }
 
-    cleanup:
+cleanup:
     delete midiin;
+    midiin = NULL;
     delete midiout;
+    midiout = NULL;
 }
 
 
-// ******************************************
 void SettingsDialog::setMidiPorts(const int &in, const int &out) {
-// ******************************************
     ui->midiInputPort->setCurrentIndex(in);
     ui->midiOutputPort->setCurrentIndex(out);
 }
 
 
-// ******************************************
 int SettingsDialog::getMidiInputPort() {
-// ******************************************
     return ui->midiInputPort->currentIndex();
 }
 
 
-// ******************************************
 int SettingsDialog::getMidiOutputPort() {
-// ******************************************
     return ui->midiOutputPort->currentIndex();
 }
 
 
-// ******************************************
 void SettingsDialog::setMidiChannel(const unsigned char &channel) {
-// ******************************************
     ui->midiChannel->setValue(channel+1);
 }
 
 
-// ******************************************
 unsigned char SettingsDialog::getMidiChannel() {
-// ******************************************
     return ui->midiChannel->value()-1;
 }
 
-// ******************************************
+
 void SettingsDialog::setShruthiFilterBoard(const int &index) {
-// ******************************************
     ui->shruthiFilterBoard->setCurrentIndex(index);
 }
 
 
-// ******************************************
 int SettingsDialog::getShruthiFilterBoard() {
-// ******************************************
     return ui->shruthiFilterBoard->currentIndex();
 }

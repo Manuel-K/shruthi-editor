@@ -23,23 +23,17 @@
 #endif
 
 
-// ******************************************
 #ifdef PRE094SYSEXHEADER
 const unsigned char Midi::sysexHead[6]={0xf0,0x00,0x20,0x77,0x00,0x02}; // pre 0.94
 #else
 const unsigned char Midi::sysexHead[6]={0xf0,0x00,0x21,0x02,0x00,0x02}; // post 0.94
 #endif
-// ******************************************
 
 
-// ******************************************
 const unsigned char Midi::sysexFoot=0xf7;
-// ******************************************
 
 
-// ******************************************
 unsigned char Midi::calculateChecksum(unsigned char sysex[], unsigned int start, unsigned int end) {
-// ******************************************
     unsigned long chk=0;
     for (unsigned int i=start; i<end;i++) {
         chk+=sysex[i];
@@ -48,10 +42,7 @@ unsigned char Midi::calculateChecksum(unsigned char sysex[], unsigned int start,
 }
 
 
-// ******************************************
-unsigned char Midi::calculateChecksum(const Message *message)
-// ******************************************
-{
+unsigned char Midi::calculateChecksum(const Message *message) {
     unsigned long chk = 0;
     for (unsigned int i = 0; i < message->size(); i++) {
         chk += message->at(i);
@@ -60,9 +51,7 @@ unsigned char Midi::calculateChecksum(const Message *message)
 }
 
 
-// ******************************************
 bool Midi::checkSysexHeadFoot(const Message *message) {
-// ******************************************
     const unsigned int size = message->size();
 
     // Check if data is even (note: header + footer are uneven)
@@ -88,9 +77,7 @@ bool Midi::checkSysexHeadFoot(const Message *message) {
 }
 
 
-// ******************************************
 bool Midi::checkSysexHeadFoot(const Message *message, const unsigned int start, const unsigned int end) {
-// ******************************************
     const unsigned int size = message->size();
 
 #ifdef DEBUGMSGS
@@ -118,33 +105,22 @@ bool Midi::checkSysexHeadFoot(const Message *message, const unsigned int start, 
 }
 
 
-// ******************************************
-unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1)
-// ******************************************
-{
+unsigned char Midi::nibbleToByte(unsigned char n0, unsigned char n1) {
     return n0<<4 | n1;
 }
 
 
-// ******************************************
-unsigned char Midi::byteToUpperNibble(unsigned char n)
-// ******************************************
-{
+unsigned char Midi::byteToUpperNibble(unsigned char n) {
     return (n >> 4) & 0x0F;
 }
 
 
-// ******************************************
-unsigned char Midi::byteToLowerNibble(unsigned char n)
-// ******************************************
-{
+unsigned char Midi::byteToLowerNibble(unsigned char n) {
     return n & 0x0F;
 }
 
 
-// ******************************************
 unsigned char Midi::getCommand(const Message *message, const unsigned int start) {
-// ******************************************
     if (message->size() < start + 6) {
         return 0;
     }
@@ -152,9 +128,7 @@ unsigned char Midi::getCommand(const Message *message, const unsigned int start)
 }
 
 
-// ******************************************
 unsigned char Midi::getArgument(const Message *message, const unsigned int start) {
-// ******************************************
     if (message->size() < start + 7) {
         return 0;
     }
@@ -162,10 +136,7 @@ unsigned char Midi::getArgument(const Message *message, const unsigned int start
 }
 
 
-// ******************************************
-bool Midi::parseSysex(const Message *message, Message *data)
-// ******************************************
-{
+bool Midi::parseSysex(const Message *message, Message *data) {
     const unsigned int size = message->size();
 
     if (!checkSysexHeadFoot(message)) {
@@ -184,10 +155,7 @@ bool Midi::parseSysex(const Message *message, Message *data)
 }
 
 
-// ******************************************
-void Midi::generateSysex(const Message *payload, const int command, const int argument, Message *message)
-// ******************************************
-{
+void Midi::generateSysex(const Message *payload, const int command, const int argument, Message *message) {
     const unsigned int size = payload->size();
     message->reserve(2 * size + 11);
 
@@ -212,9 +180,7 @@ void Midi::generateSysex(const Message *payload, const int command, const int ar
 }
 
 
-// ******************************************
 int Midi::findNextPatch(const Message *message, const unsigned int start) {
-// ******************************************
     const int &size = message->size();
 
     for (int i = start; i < size - 194; i++) {
@@ -231,9 +197,7 @@ int Midi::findNextPatch(const Message *message, const unsigned int start) {
 }
 
 
-// ******************************************
 int Midi::getPatch(const Message *message, Message *patch, const unsigned int start) {
-// ******************************************
     const int &st = findNextPatch(message, start);
 
     if (st < 0) {
@@ -250,9 +214,7 @@ int Midi::getPatch(const Message *message, Message *patch, const unsigned int st
 }
 
 
-// ******************************************
 int Midi::findNextSequence(const Message *message, const unsigned int start) {
-// ******************************************
     const int &size = message->size();
 
     for (int i = start; i < size - 74; i++) {
@@ -266,13 +228,10 @@ int Midi::findNextSequence(const Message *message, const unsigned int start) {
     }
 
     return -1;
-
 }
 
 
-// ******************************************
 int Midi::getSequence(const Message *message, Message *sequence, const unsigned int start) {
-// ******************************************
     const int &st = findNextSequence(message, start);
 
     if (st < 0) {
@@ -286,5 +245,4 @@ int Midi::getSequence(const Message *message, Message *sequence, const unsigned 
     }
 
     return st;
-
 }

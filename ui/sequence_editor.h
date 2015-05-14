@@ -29,10 +29,8 @@ namespace Ui {
 class SequenceEditor;
 }
 
-// ******************************************
-class SequenceEditor : public QDialog
-// ******************************************
-{
+
+class SequenceEditor : public QDialog {
         Q_OBJECT
 
     public:

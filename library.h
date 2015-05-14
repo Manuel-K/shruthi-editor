@@ -28,10 +28,8 @@ class QString;
 class QTime;
 class MidiOut;
 
-// ******************************************
-class Library {
-// ******************************************
 
+class Library {
     public:
         Library(MidiOut *out);
         ~Library();

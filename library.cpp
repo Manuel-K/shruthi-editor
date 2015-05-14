@@ -27,13 +27,12 @@
 #include <QTime>
 #include <stdint.h> // needed for hash calculation
 
-// ******************************************
+
 Library::Library(MidiOut *out):
     midiout(out),
     time(new QTime),
     numberOfPrograms(0),
     numberOfHWPrograms(16) {
-// ******************************************
     abortFetching();
     fetchNextIncomingPatch = 0;
     fetchNextPatchRequest = 0;
@@ -44,24 +43,18 @@ Library::Library(MidiOut *out):
 }
 
 
-// ******************************************
 Library::~Library() {
-// ******************************************
     delete time;
     time = NULL;
 }
 
 
-// ******************************************
 const Patch &Library::recallPatch(const int &id) const {
-// ******************************************
     return patches.at(id);
 }
 
 
-// ******************************************
 void Library::storePatch(const int &id, const Patch &patch) {
-// ******************************************
     if (!patches.at(id).equals(patch)) {
         patches.at(id).set(patch);
         mPatchEdited.at(id) = true;
@@ -70,9 +63,7 @@ void Library::storePatch(const int &id, const Patch &patch) {
 }
 
 
-// ******************************************
 void Library::listPatches() const {
-// ******************************************
     std::cout << "List of patches:" << std::endl;
 
     const unsigned int &num = patches.size();
@@ -85,9 +76,7 @@ void Library::listPatches() const {
 }
 
 
-// ******************************************
 void Library::movePatch(const int &from, const int &to) {
-// ******************************************
     if (from == to) {
         return;
     }
@@ -113,30 +102,22 @@ void Library::movePatch(const int &from, const int &to) {
 }
 
 
-// ******************************************
 bool Library::patchMoved(const int &id) const {
-// ******************************************
     return mPatchMoved.at(id);
 }
 
 
-// ******************************************
 bool Library::patchEdited(const int &id) const {
-// ******************************************
     return mPatchEdited.at(id);
 }
 
 
-// ******************************************
 const Sequence &Library::recallSequence(const int &id) const {
-// ******************************************
     return sequences.at(id);
 }
 
 
-// ******************************************
 void Library::storeSequence(const int &id, const Sequence &sequence) {
-// ******************************************
     if (!sequences.at(id).equals(sequence)) {
         sequences.at(id).set(sequence);
         mSequenceEdited.at(id) = true;
@@ -145,9 +126,7 @@ void Library::storeSequence(const int &id, const Sequence &sequence) {
 }
 
 
-// ******************************************
 void Library::listSequences() const {
-// ******************************************
     std::cout << "List of sequences:" << std::endl;
 
     const unsigned int &num = sequences.size();
@@ -160,9 +139,7 @@ void Library::listSequences() const {
 }
 
 
-// ******************************************
 void Library::moveSequence(const int &from, const int &to) {
-// ******************************************
     if (from == to) {
         return;
     }
@@ -188,37 +165,27 @@ void Library::moveSequence(const int &from, const int &to) {
 }
 
 
-// ******************************************
 bool Library::sequenceMoved(const int &id) const {
-// ******************************************
     return mSequenceMoved.at(id);
 }
 
 
-// ******************************************
 bool Library::sequenceEdited(const int &id) const {
-// ******************************************
     return mSequenceEdited.at(id);
 }
 
 
-// ******************************************
 bool Library::sequenceIsInit(const int &id) const {
-// ******************************************
     return sequences.at(id).equals(init_sequence);
 }
 
 
-// ******************************************
 QString Library::getSequenceIdentifier(const int &id) const {
-// ******************************************
     return (sequenceIsInit(id) ? QString("init") : QString("custom (%1)").arg(calculateSequenceHash(id).toUtf8().constData()));
 }
 
 
-// ******************************************
 bool Library::send(const int &what, const int &from, const int &to) {
-// ******************************************
     QTime t;
     t.start();
     Message temp;
@@ -272,9 +239,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
 }
 
 
-// ******************************************
 bool Library::startFetching(const int &from, const int &to) {
-// ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchPatchMode = true;
@@ -292,9 +257,7 @@ bool Library::startFetching(const int &from, const int &to) {
 }
 
 
-// ******************************************
 void Library::abortFetching() {
-// ******************************************
     fetchPatchMode = false;
     fetchSequenceMode = false;
     fetchStart = 0;
@@ -302,9 +265,7 @@ void Library::abortFetching() {
 }
 
 
-// ******************************************
 bool Library::startFetchingPatches(const int &from, const int &to) {
-// ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchPatchMode = true;
@@ -319,9 +280,7 @@ bool Library::startFetchingPatches(const int &from, const int &to) {
 }
 
 
-// ******************************************
 bool Library::receivedPatch(const unsigned char *sysex) {
-// ******************************************
     if (!fetchPatchMode || fetchNextIncomingPatch > fetchEnd) {
         abortFetching();
         return false;
@@ -351,9 +310,7 @@ bool Library::receivedPatch(const unsigned char *sysex) {
 }
 
 
-// ******************************************
 bool Library::isFetchingPatches() const {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "Library::isFetchingPatches() " << fetchPatchMode << " " << fetchNextIncomingPatch << " " << fetchEnd << std::endl;
 #endif
@@ -361,9 +318,7 @@ bool Library::isFetchingPatches() const {
 }
 
 
-// ******************************************
 bool Library::startFetchingSequences(const int &from, const int &to) {
-// ******************************************
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchSequenceMode = true;
@@ -378,9 +333,7 @@ bool Library::startFetchingSequences(const int &from, const int &to) {
 }
 
 
-// ******************************************
 bool Library::receivedSequence(const unsigned char *seq) {
-// ******************************************
     if (!fetchSequenceMode || fetchNextIncomingSequence > fetchEnd) {
         abortFetching();
         return false;
@@ -402,9 +355,7 @@ bool Library::receivedSequence(const unsigned char *seq) {
 }
 
 
-// ******************************************
 bool Library::isFetchingSequences() const {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "Library::isFetchingSequences() " << fetchSequenceMode << " " << fetchNextIncomingSequence << " " << fetchEnd << std::endl;
 #endif
@@ -412,9 +363,7 @@ bool Library::isFetchingSequences() const {
 }
 
 
-// ******************************************
 void Library::deletePrograms(const int &from, const int &to) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "Library::deletePrograms(" << from << ", " << to << ");" << std::endl;
 #endif
@@ -438,9 +387,7 @@ void Library::deletePrograms(const int &from, const int &to) {
 }
 
 
-// ******************************************
 bool Library::saveLibrary(const QString &path) {
-// ******************************************
     QByteArray ba;
 
     Message temp;
@@ -470,9 +417,7 @@ bool Library::saveLibrary(const QString &path) {
 }
 
 
-// ******************************************
 bool Library::loadLibrary(const QString &path, bool append) {
-// ******************************************
     Message temp;
 
     if (!FileIO::loadFromDisk(path, temp)) {
@@ -548,45 +493,33 @@ bool Library::loadLibrary(const QString &path, bool append) {
 }
 
 
-// ******************************************
 const int &Library::getNumberOfPrograms() const {
-// ******************************************
     return numberOfPrograms;
 }
 
 
-// ******************************************
 const int &Library::getNumberOfHWPrograms() const {
-// ******************************************
     return numberOfHWPrograms;
 }
 
 
-// ******************************************
 void Library::setNumberOfHWPrograms(const int &num) {
-// ******************************************
     numberOfHWPrograms = num;
     growVectorsTo(num);
 }
 
 
-// ******************************************
 const unsigned int &Library::nextPatch() const {
-// ******************************************
     return fetchNextIncomingPatch;
 }
 
 
-// ******************************************
 const unsigned int &Library::nextSequence() const {
-// ******************************************
     return fetchNextIncomingSequence;
 }
 
 
-// ******************************************
 bool Library::keepFetching() {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "Library::keepFetching(): Patches " << fetchPatchMode << " " << fetchNextPatchRequest << " " << fetchEnd << std::endl;
     std::cout << "Library::keepFetching(): Sequences " << fetchSequenceMode << " " << fetchNextSequenceRequest << " " << fetchEnd << std::endl;
@@ -637,9 +570,7 @@ bool Library::keepFetching() {
 }
 
 
-// ******************************************
 void Library::growVectorsTo(const int &num) {
-// ******************************************
     const int &amount = num - numberOfPrograms;
     if (amount > 0) {
         numberOfPrograms = num;
@@ -663,20 +594,14 @@ void Library::growVectorsTo(const int &num) {
 }
 
 
-// ******************************************
 QString Library::calculateSequenceHash(const unsigned int &id) const {
-// ******************************************
-    // uses public domain code for Bob Jenkins' One-at-a-Time Hash
-    // source: http://burtleburtle.net/bob/hash/doobs.html
     unsigned char key[32];
     sequences.at(id).packData(key);
     return calculateHash(key, 32);
 }
 
 
-// ******************************************
 QString Library::calculateHash(const unsigned char *key, const unsigned int &len) {
-// ******************************************
     // uses public domain code for Bob Jenkins' One-at-a-Time Hash
     // source: http://burtleburtle.net/bob/hash/doobs.html
     uint32_t hash;

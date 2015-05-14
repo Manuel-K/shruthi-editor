@@ -27,12 +27,11 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-// ******************************************
+
 LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LibraryDialog),
     library(lib) {
-// ******************************************
     ui->setupUi(this);
 
     ui->patchList->addItem("If you can read this,");
@@ -91,20 +90,15 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     // synchronize selection changes:
     connect(ui->patchList, SIGNAL(itemSelectionChanged()), this, SLOT(syncToSequenceSelection()));
     connect(ui->sequenceList, SIGNAL(itemSelectionChanged()), this, SLOT(syncToPatchSelection()));
-
 }
 
 
-// ******************************************
 LibraryDialog::~LibraryDialog() {
-// ******************************************
     delete ui;
 }
 
 
-// ******************************************
 void LibraryDialog::setFont(QListWidgetItem *item, bool edited, bool moved) {
-// ******************************************
     if (edited) {
         if (moved) {
             item->setFont(editedMovedFont);
@@ -121,9 +115,7 @@ void LibraryDialog::setFont(QListWidgetItem *item, bool edited, bool moved) {
 }
 
 
-// ******************************************
 void LibraryDialog::redrawItems(int what, int start, int stop) {
-// ******************************************
     // TODO: set text immediately or ignore what
     if ((what&Library::FLAG_PATCH) || (what&Library::FLAG_SEQUENCE)) {
         // add missing items
@@ -176,9 +168,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
 }
 
 
-// ******************************************
 void LibraryDialog::recall(const int &flags, const int &id) {
-// ******************************************
     QueueItem signal(QueueAction::LIBRARY_RECALL);
     signal.int0 = flags;
     signal.int1 = id;
@@ -186,9 +176,7 @@ void LibraryDialog::recall(const int &flags, const int &id) {
 }
 
 
-// ******************************************
 void LibraryDialog::move(const int &flags, const int &from, const int &to) {
-// ******************************************
     QueueItem signal(QueueAction::LIBRARY_MOVE);
     signal.int0 = flags;
     signal.int1 = from;
@@ -198,9 +186,7 @@ void LibraryDialog::move(const int &flags, const int &from, const int &to) {
 }
 
 
-// ******************************************
 void LibraryDialog::store(const int &flags, const int &id) {
-// ******************************************
     QueueItem signal(QueueAction::LIBRARY_STORE);
     signal.int0 = flags;
     signal.int1 = id;
@@ -208,9 +194,7 @@ void LibraryDialog::store(const int &flags, const int &id) {
 }
 
 
-// ******************************************
 void LibraryDialog::fetch() {
-// ******************************************
     QueueItem signal(QueueAction::LIBRARY_FETCH);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
@@ -219,9 +203,7 @@ void LibraryDialog::fetch() {
 }
 
 
-// ******************************************
 void LibraryDialog::send() {
-// ******************************************
     const int &b = QMessageBox::question(this, "Send Programs", "This will overwrite the programs on the connected Shruthi.\nAre you sure?", "Yes", "No");
     if (b) {
         return;
@@ -234,9 +216,7 @@ void LibraryDialog::send() {
 }
 
 
-// ******************************************
 void LibraryDialog::sendChanged(){
-// ******************************************
     const int &b = QMessageBox::question(this, "Send Changed Programs", "This will overwrite the programs on the connected Shruthi.\nAre you sure?", "Yes", "No");
     if (b) {
         return;
@@ -249,9 +229,7 @@ void LibraryDialog::sendChanged(){
 }
 
 
-// ******************************************
 void LibraryDialog::loadReplace() {
-// ******************************************
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
         QueueItem signal(QueueAction::LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
@@ -260,9 +238,7 @@ void LibraryDialog::loadReplace() {
 }
 
 
-// ******************************************
 void LibraryDialog::loadAppend() {
-// ******************************************
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
         QueueItem signal(QueueAction::LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_APPEND);
@@ -271,9 +247,7 @@ void LibraryDialog::loadAppend() {
 }
 
 
-// ******************************************
 void LibraryDialog::save() {
-// ******************************************
     QString path = QFileDialog::getSaveFileName(this, "Save Library", ".", "SysEx files (*.syx)");
     if (path != "") {
         if (!path.endsWith(".syx", Qt::CaseInsensitive)) {
@@ -286,9 +260,7 @@ void LibraryDialog::save() {
 }
 
 
-// ******************************************
 void LibraryDialog::libraryRange(const QueueAction::QueueAction &action, const int &flags, const int &from, const int &to) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::libraryRange() " << flags << from << to;
 #endif
@@ -300,9 +272,7 @@ void LibraryDialog::libraryRange(const QueueAction::QueueAction &action, const i
 }
 
 
-// ******************************************
 void LibraryDialog::librarySelectedRanges(QListWidget *list, const QueueAction::QueueAction &action, const int &flags) {
-// ******************************************
     if (list->currentRow() < 0) {
         // no selection
         return;
@@ -342,9 +312,7 @@ void LibraryDialog::librarySelectedRanges(QListWidget *list, const QueueAction::
 //
 
 
-// ******************************************
 void LibraryDialog::patchOpenContextMenu(QPoint p) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::patchOpenContextMenu";
 #endif
@@ -352,9 +320,7 @@ void LibraryDialog::patchOpenContextMenu(QPoint p) {
 }
 
 
-// ******************************************
 void LibraryDialog::sequenceOpenContextMenu(QPoint p) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::sequenceOpenContextMenu";
 #endif
@@ -362,13 +328,10 @@ void LibraryDialog::sequenceOpenContextMenu(QPoint p) {
 }
 
 
-// ******************************************
 void LibraryDialog::patchRecall(QListWidgetItem *item) {
-// ******************************************
     Q_UNUSED(item);
     const int &c = ui->patchList->currentRow();
 
-//    std::cout << "recall " << c << std::endl;
     int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_SEQUENCE;
@@ -377,13 +340,10 @@ void LibraryDialog::patchRecall(QListWidgetItem *item) {
 }
 
 
-// ******************************************
 void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
-// ******************************************
     Q_UNUSED(item);
     const int &c = ui->sequenceList->currentRow();
 
-//    std::cout << "recall " << c << std::endl;
     int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
@@ -393,12 +353,9 @@ void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
 }
 
 
-// ******************************************
 void LibraryDialog::patchCMStore() {
-// ******************************************
     const int &c = ui->patchList->currentRow();
 
-//    std::cout << "store " << c << std::endl;
     int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_SEQUENCE;
@@ -407,12 +364,9 @@ void LibraryDialog::patchCMStore() {
 }
 
 
-// ******************************************
 void LibraryDialog::sequenceCMStore() {
-// ******************************************
     const int &c = ui->sequenceList->currentRow();
 
-//    std::cout << "store " << c << std::endl;
     int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
@@ -421,9 +375,7 @@ void LibraryDialog::sequenceCMStore() {
 }
 
 
-// ******************************************
 void LibraryDialog::patchCMSend() {
-// ******************************************
     int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_SEQUENCE;
@@ -432,9 +384,7 @@ void LibraryDialog::patchCMSend() {
 }
 
 
-// ******************************************
 void LibraryDialog::patchCMSendChanged() {
-// ******************************************
     int flag = Library::FLAG_PATCH | Library::FLAG_CHANGED;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_SEQUENCE;
@@ -443,9 +393,7 @@ void LibraryDialog::patchCMSendChanged() {
 }
 
 
-// ******************************************
 void LibraryDialog::sequenceCMSend() {
-// ******************************************
     int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
@@ -454,9 +402,7 @@ void LibraryDialog::sequenceCMSend() {
 }
 
 
-// ******************************************
 void LibraryDialog::sequenceCMSendChanged() {
-// ******************************************
     int flag = Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
@@ -465,9 +411,7 @@ void LibraryDialog::sequenceCMSendChanged() {
 }
 
 
-// ******************************************
 void LibraryDialog::bothCMdelete() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::bothCMdelete()";
 #endif
@@ -475,9 +419,7 @@ void LibraryDialog::bothCMdelete() {
 }
 
 
-// ******************************************
 void LibraryDialog::patchMove(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
-// ******************************************
     Q_UNUSED(parent);
     Q_UNUSED(destination);
 
@@ -485,8 +427,6 @@ void LibraryDialog::patchMove(const QModelIndex &parent, int start, int end, con
         qDebug() << "We have a serious problem";
         return;
     }
-
-    //std::cout << "patchMove" << std::endl;
 
     syncToSequenceSelection();
 
@@ -498,9 +438,7 @@ void LibraryDialog::patchMove(const QModelIndex &parent, int start, int end, con
 }
 
 
-// ******************************************
 void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
-// ******************************************
     Q_UNUSED(parent);
     Q_UNUSED(destination);
 
@@ -508,8 +446,6 @@ void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, 
         qDebug() << "We have a serious problem";
         return;
     }
-
-    //std::cout << "seqMove" << std::endl;
 
     syncToPatchSelection();
 
@@ -521,40 +457,30 @@ void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, 
 }
 
 
-// ******************************************
 void LibraryDialog::syncToSequenceScrollBar(int val) {
-// ******************************************
     if (dontScroll || !ui->sync->isChecked()) {
         return;
     }
-    //std::cout << "pscroll " << val << std::endl;
     dontScroll = true;
     ui->sequenceList->verticalScrollBar()->setValue(val);
     dontScroll = false;
 }
 
 
-// ******************************************
 void LibraryDialog::syncToPatchScrollBar(int val) {
-// ******************************************
     if (dontScroll || !ui->sync->isChecked()) {
         return;
     }
-    //std::cout << "sscroll " << val << std::endl;
     dontScroll = true;
     ui->patchList->verticalScrollBar()->setValue(val);
     dontScroll = false;
 }
 
 
-// ******************************************
 void LibraryDialog::syncToSequenceSelection() {
-// ******************************************
     if (dontSyncSelection || !ui->sync->isChecked()) {
         return;
     }
-
-    //std::cout << "LibraryDialog::syncToSequenceSelection();" << std::endl;
 
     dontSyncSelection = true;
     int rows = ui->patchList->count();
@@ -565,14 +491,10 @@ void LibraryDialog::syncToSequenceSelection() {
 }
 
 
-// ******************************************
 void LibraryDialog::syncToPatchSelection() {
-// ******************************************
     if (dontSyncSelection || !ui->sync->isChecked()) {
         return;
     }
-
-    //std::cout << "LibraryDialog::syncToPatchSelection();" << std::endl;
 
     dontSyncSelection = true;
     int rows = ui->sequenceList->count();
@@ -581,5 +503,3 @@ void LibraryDialog::syncToPatchSelection() {
     }
     dontSyncSelection = false;
 }
-
-

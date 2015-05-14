@@ -23,9 +23,7 @@
 // #endif
 
 
-// ******************************************
 SignalRouter::SignalRouter() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::SignalRouter()";
 #endif
@@ -35,9 +33,7 @@ SignalRouter::SignalRouter() {
 }
 
 
-// ******************************************
 SignalRouter::~SignalRouter() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::~SignalRouter()";
 #endif
@@ -45,9 +41,7 @@ SignalRouter::~SignalRouter() {
 }
 
 
-// ******************************************
 void SignalRouter::run() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::run()";
 #endif
@@ -60,9 +54,7 @@ void SignalRouter::run() {
 }
 
 
-// ******************************************
 void SignalRouter::enqueue(QueueItem item) {
-// ******************************************
     if (editorWorking)
         queue.enqueue(item);
     else if (editorEnabled) {
@@ -73,9 +65,7 @@ void SignalRouter::enqueue(QueueItem item) {
 }
 
 
-// ******************************************
 void SignalRouter::editorFinished() {
-// ******************************************
     if (editorEnabled) {
         if (!queue.isEmpty())
             emit editorProcess(queue.dequeue());
@@ -85,9 +75,7 @@ void SignalRouter::editorFinished() {
 }
 
 
-// ******************************************
 void SignalRouter::settingsChanged(Config conf) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::settingsChanged: in" << conf.midiInputPort() << ", out:" << conf.midiOutputPort() << ", channel:" << conf.midiChannel() << ", filter:" << conf.shruthiFilterBoard();
 #endif

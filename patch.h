@@ -22,27 +22,22 @@
 #include "message.h"
 
 
-// ******************************************
+
 struct PatchParameter {
-// ******************************************
-    QString name;
-    QString short_name;
-    int min;
-    int max;
-    const QStringList* string_values;
-    QString (*formatter)(int);
-    int cc;
+        QString name;
+        QString short_name;
+        int min;
+        int max;
+        const QStringList* string_values;
+        QString (*formatter)(int);
+        int cc;
 };
 
 
-// ******************************************
 static const PatchParameter param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
-// ******************************************
 
 
-// ******************************************
 class Patch {
-// ******************************************
     public:
         Patch();
 

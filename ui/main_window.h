@@ -34,10 +34,9 @@ class QFileDialog;
 class QLabel;
 class QComboBox;
 
-// ******************************************
+
 class ShruthiEditorMainWindow : public QMainWindow {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         ShruthiEditorMainWindow(const Editor* edit, QWidget *parent = 0);

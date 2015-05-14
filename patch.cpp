@@ -26,14 +26,10 @@
 #include <math.h>
 
 
-// ******************************************
 const unsigned char Patch::parameterCount = 110;
-// ******************************************
 
 
-// ******************************************
 const PatchParameter Patch::parameters [110] = {
-// ******************************************
     /* Long name, short name, min, max, labels, value formatter, cc */
     /*0*/ {"Oscillator 1 shape", "Shape", 0, 34, &Labels::OscillatorAlgorithm, NULL, 20},
     /*1*/ {"Oscillator 1 parameter", "Param", 0, 127, NULL, NULL, 21},
@@ -149,64 +145,54 @@ const PatchParameter Patch::parameters [110] = {
 };
 
 
-// ******************************************
 const unsigned char Patch::filterBoardCount = 8;
-// ******************************************
 
 
-// ******************************************
 const PatchParameter Patch::parameter84 [8] = {
-// ******************************************
-/*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 1*/ {"SSM high pass", "High Pass", 0, 127, NULL, NULL, 12},
-/*Filter 2*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
-/*Filter 3*/ {"DSP FX Parameter 1", "Param. 1", 0, 127, NULL, NULL, 12},
-/*Filter 4*/ {"Polivoks overdrive", "Overdrive", 0, 1, NULL, Labels::OffOnFormatter, 90}, // &Labels::OffOn
-/*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 6*/ {"Delay time", "Time", 0, 127, NULL, NULL, 12},
-/*Filter 7*/ {"SP feedback", "Feedback", 0, 127, NULL, NULL, 12}, // TODO: check cc
+    /*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 1*/ {"SSM high pass", "High Pass", 0, 127, NULL, NULL, 12},
+    /*Filter 2*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
+    /*Filter 3*/ {"DSP FX Parameter 1", "Param. 1", 0, 127, NULL, NULL, 12},
+    /*Filter 4*/ {"Polivoks overdrive", "Overdrive", 0, 1, NULL, Labels::OffOnFormatter, 90}, // &Labels::OffOn
+    /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 6*/ {"Delay time", "Time", 0, 127, NULL, NULL, 12},
+    /*Filter 7*/ {"SP feedback", "Feedback", 0, 127, NULL, NULL, 12}, // TODO: check cc
 };
 
 
-// ******************************************
 const PatchParameter Patch::parameter85 [8] = {
-// ******************************************
-/*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 1*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 2*/ {"SVF filter resonance 2", "Res2", 0, 127, NULL, NULL, 13},
-/*Filter 3*/ {"DSP FX Parameter 2", "Param. 2", 0, 63, NULL, NULL, 13},
-/*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, Labels::OffOnFormatter, 91}, // &Labels::OffOn
-/*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 6*/ {"Delay level", "Level", 0, 63, NULL, NULL, 13},
-/*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 1*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 2*/ {"SVF filter resonance 2", "Res2", 0, 127, NULL, NULL, 13},
+    /*Filter 3*/ {"DSP FX Parameter 2", "Param. 2", 0, 63, NULL, NULL, 13},
+    /*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, Labels::OffOnFormatter, 91}, // &Labels::OffOn
+    /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 6*/ {"Delay level", "Level", 0, 63, NULL, NULL, 13},
+    /*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 };
 
 
-// ******************************************
 const PatchParameter Patch::parameter92 [8] = {
-// ******************************************
-/*Filter 0*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
-/*Filter 1*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
-/*Filter 2*/ {"SVF filter mode 1", "Mode 1", 0, 5, &Labels::FilterSVFMode1, NULL, 85},
-/*Filter 3*/ {"DSP FX mode", "FX Mode", 0, 4, &Labels::FilterDSPMode, NULL, 87},
-/*Filter 4*/ {"Polivoks filter mode", "Mode", 0, 1, &Labels::FilterPolivoksMode, NULL, 89},
-/*Filter 5*/ {"4PM filter mode", "Mode", 0, 14, &Labels::Filter4PMMode, NULL, 92},
-/*Filter 6*/ {"Delay feedback", "Feedback", 0, 15, NULL, NULL, 94},
-/*Filter 7*/ {"SP mode", "Mode", 0, 3, &Labels::FilterSPMode, NULL, 96},
+    /*Filter 0*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
+    /*Filter 1*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
+    /*Filter 2*/ {"SVF filter mode 1", "Mode 1", 0, 5, &Labels::FilterSVFMode1, NULL, 85},
+    /*Filter 3*/ {"DSP FX mode", "FX Mode", 0, 4, &Labels::FilterDSPMode, NULL, 87},
+    /*Filter 4*/ {"Polivoks filter mode", "Mode", 0, 1, &Labels::FilterPolivoksMode, NULL, 89},
+    /*Filter 5*/ {"4PM filter mode", "Mode", 0, 14, &Labels::Filter4PMMode, NULL, 92},
+    /*Filter 6*/ {"Delay feedback", "Feedback", 0, 15, NULL, NULL, 94},
+    /*Filter 7*/ {"SP mode", "Mode", 0, 3, &Labels::FilterSPMode, NULL, 96},
 };
 
 
-// ******************************************
 const PatchParameter Patch::parameter93 [8] = {
-// ******************************************
-/*Filter 0*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
-/*Filter 1*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
-/*Filter 2*/ {"SVF filter mode 2", "Mode 2", 0, 5, &Labels::FilterSVFMode2, NULL, 86},
-/*Filter 3*/ {"DSP FX Program", "FX Program", 0, 15, &Labels::FilterDSPFx, NULL, 88},
-/*Filter 4*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-/*Filter 5*/ {"4PM resonance flavor", "Resonance Flavor", 0, 3, &Labels::Filter4PMResonanceFlavor, NULL, 93},
-/*Filter 6*/ {"Delay EQ flavor", "EQ Flavor", 0, 15, NULL, NULL, 95},
-/*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 0*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
+    /*Filter 1*/ {NULL, NULL, 0, 5, NULL, NULL, -1},
+    /*Filter 2*/ {"SVF filter mode 2", "Mode 2", 0, 5, &Labels::FilterSVFMode2, NULL, 86},
+    /*Filter 3*/ {"DSP FX Program", "FX Program", 0, 15, &Labels::FilterDSPFx, NULL, 88},
+    /*Filter 4*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
+    /*Filter 5*/ {"4PM resonance flavor", "Resonance Flavor", 0, 3, &Labels::Filter4PMResonanceFlavor, NULL, 93},
+    /*Filter 6*/ {"Delay EQ flavor", "EQ Flavor", 0, 15, NULL, NULL, 95},
+    /*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 };
 
 
@@ -230,10 +216,7 @@ const PatchParameter Patch::parameter93 [8] = {
  */
 
 
-// ******************************************
-PatchParameter Patch::parameter(const int &id, int filter)
-// ******************************************
-{
+PatchParameter Patch::parameter(const int &id, int filter) {
     if (id >= parameterCount || filter >= filterBoardCount) {
 #ifdef DEBUGMSGS
         qDebug() << "Patch::parameter() called with invalid arguments." << id << filter;
@@ -243,93 +226,72 @@ PatchParameter Patch::parameter(const int &id, int filter)
 
     // Handle different filters:
     switch (id) {
-    case 84:
-        return parameter84[filter];
-    case 85:
-        return parameter85[filter];
-    case 92:
-        return parameter92[filter];
-    case 93:
-        return parameter93[filter];
-    default:
-        return parameters[id];
+        case 84:
+            return parameter84[filter];
+        case 85:
+            return parameter85[filter];
+        case 92:
+            return parameter92[filter];
+        case 93:
+            return parameter93[filter];
+        default:
+            return parameters[id];
     }
 }
 
 
-// ******************************************
 const unsigned char Patch::INIT_PATCH[] =
-// ******************************************
-    {1, 0, 0, 0, 1, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
-    90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
-    2, 8, 0, 21, 2, 0, 21, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
-    105, 116, 32, 32, 32, 32, 0, 0, 120, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0, 0, 0, 37};
+{1, 0, 0, 0, 1, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
+ 90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
+ 2, 8, 0, 21, 2, 0, 21, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
+ 105, 116, 32, 32, 32, 32, 0, 0, 120, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0, 0, 0, 37};
 
 
-// ******************************************
 const unsigned char Patch::INIT_PATCH_PRE100[] =
-// ******************************************
-    {1, 0, 0, 0, 2, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
-    90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
-    2, 8, 0, 10, 2, 0, 11, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
-    105, 116, 32, 32, 32, 32, 1, 0, 12, 0, 13, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 33};
-    // Note: pairwise equal for 0.93 and 0.98
+{1, 0, 0, 0, 2, 16, 244, 12, 32, 0, 0, 0, 96, 0, 32, 0, 0, 50, 20, 60, 0, 40,
+ 90, 30, 0, 80, 0, 0, 0, 3, 0, 0, 0, 4, 0, 19, 5, 0, 19, 2, 0, 0, 3, 0, 1, 8, 0,
+ 2, 8, 0, 10, 2, 0, 11, 3, 0, 20, 1, 63, 21, 1, 16, 8, 6, 32, 0, 6, 16, 105, 110,
+ 105, 116, 32, 32, 32, 32, 1, 0, 12, 0, 13, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 33};
+// Note: pairwise equal for 0.93 and 0.98
 
 
-// ******************************************
 bool Patch::enabled(const int &id) {
-// ******************************************
     return (id < 68 || id == 84 || id == 85 || (id >= 92 && id < parameterCount));
 }
 
 
-// ******************************************
 bool Patch::hasUI(const int &id) {
-// ******************************************
     return (id < 68 || id == 84 || id == 85 || (id >= 92 && id <= 99));
 }
 
 
-// ******************************************
 bool Patch::sendAsNRPN(const int &id) {
-// ******************************************
     return (id < 68 || id == 84 || id == 85 || (id >= 92 && id < 108));
 }
 
 
-// ******************************************
 bool Patch::belongsToModMatrix(const int &id) {
-// ******************************************
     return (32 <= id && id <= 67);
 }
 
 
-// ******************************************
 Patch::Patch() {
-// ******************************************
     resetPatch();
     srand(time(NULL));
 }
 
 
-// ******************************************
 void Patch::setValue(const int &id, int const value) {
-// ******************************************
     data[id] = value;
 }
 
 
-// ******************************************
 const int &Patch::getValue(const int &id) const {
-// ******************************************
     return data[id];
 }
 
 
-// ******************************************
-QString Patch::formatParameterValue(const int &id, const int &value, int filter)
-// ******************************************
-{
+QString Patch::formatParameterValue(const int &id, const int &value, int filter) {
     const PatchParameter &param_entry = parameter(id, filter);
 
     if (param_entry.string_values) {
@@ -343,34 +305,26 @@ QString Patch::formatParameterValue(const int &id, const int &value, int filter)
 }
 
 
-// ******************************************
 void Patch::setName(const QString &new_name) {
-// ******************************************
     name=new_name;
 }
 
 
-// ******************************************
 const QString &Patch::getName() const {
-// ******************************************
     return name;
 }
 
-// ******************************************
 QString Patch::getVersionString() const {
-// ******************************************
-    if (version==33) {
+    if (version == 33) {
         return "0.9x";
-    } else if (version==37) {
+    } else if (version == 37) {
         return "1.xx";
     }
     return "Unknown";
 }
 
 
-// ******************************************
 void Patch::printPatch() const {
-// ******************************************
     std::cout << "name: " << name.toUtf8().constData() << std::endl;
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) {
@@ -381,9 +335,7 @@ void Patch::printPatch() const {
 }
 
 
-// ******************************************
 void Patch::resetPatch(unsigned int version) {
-// ******************************************
     if (version >= 1000) {
         unpackData(INIT_PATCH);
     } else {
@@ -392,9 +344,7 @@ void Patch::resetPatch(unsigned int version) {
 }
 
 
-// ******************************************
 void Patch::randomizePatch(const int &filter) {
-// ******************************************
     unpackData(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) { // do we want to randomize sequencer settings?
@@ -402,13 +352,11 @@ void Patch::randomizePatch(const int &filter) {
             data[i] = (rand() %(param.max-param.min))+param.min;
         }
     }
-    name="random";
+    name = "random";
 }
 
 
-// ******************************************
 bool Patch::unpackData(const unsigned char sysex[]) {
-// ******************************************
     // check if version field contains valid entry
     if (!(sysex[91] == 33 || sysex[91] == 37)) {
         return false;
@@ -450,13 +398,6 @@ bool Patch::unpackData(const unsigned char sysex[]) {
         temp[105] = temp[81] % 16; // arp_range
         temp[106] = temp[82]; // arp_pattern
         temp[107] = temp[83]; // arp_clock_division
-
-        //for (int i = 100; i < 108; i++) {
-        //    std::cout << i << " " << parameters[i].name.toUtf8().constData() << ": "
-        //              << formatParameterValue(i, temp[i]).toUtf8().constData() << std::endl;
-        //}
-        //std::cout << "    Legato: " << sys_legato << std::endl;
-        //std::cout << "    Portamento: " << sys_portamento << std::endl;
     }
 
     // fix negative values (2s complement):
@@ -473,15 +414,13 @@ bool Patch::unpackData(const unsigned char sysex[]) {
     QStringList tmp_name = QStringList();
     for (int i=68; i<76; i++)
         tmp_name << QString("%1").arg((char)data[i]);
-    name=tmp_name.join("").trimmed();
+    name = tmp_name.join("").trimmed();
 
     return true;
 }
 
 
-// ******************************************
 void Patch::packData(unsigned char res[]) const {
-// ******************************************
     int temp[parameterCount];
     // copy data:
     for (int i = 0; i < parameterCount; i++)
@@ -514,19 +453,18 @@ void Patch::packData(unsigned char res[]) const {
 
     // set name:
     QString temp_name = QString("%1").arg(name, -8, ' '); // pad name
-    for (unsigned int i=0; i<8; i++) //->(68,76):
-        temp[68+i]=temp_name.at(i).toLatin1();
+    for (unsigned int i = 0; i < 8; i++) { //->(68,76):
+        temp[68 + i] = temp_name.at(i).toLatin1();
+    }
 
     // copy data
-    for (unsigned int i=0; i<92 ;i++)
+    for (unsigned int i=0; i<92; i++) {
         res[i] = (char) temp[i];
+    }
 }
 
 
-// ******************************************
-unsigned char Patch::ccToId(const unsigned char &cc, const int &filter)
-// ******************************************
-{
+unsigned char Patch::ccToId(const unsigned char &cc, const int &filter) {
     // Oscillator 1
     if (cc >= 20 && cc <= 22) {
         return cc - 20;
@@ -609,12 +547,10 @@ unsigned char Patch::ccToId(const unsigned char &cc, const int &filter)
 }
 
 
-// ******************************************
-int Patch::convertCCValue(const unsigned int &val, int &id, const int &filter)
-// ******************************************
-{
-    if (id >= parameterCount)
+int Patch::convertCCValue(const unsigned int &val, int &id, const int &filter) {
+    if (id >= parameterCount) {
         return 255; // Not supported
+    }
     const int min = parameter(id, filter).min;
     const int max = parameter(id, filter).max;
     const double perc = val / 127.0;
@@ -622,8 +558,9 @@ int Patch::convertCCValue(const unsigned int &val, int &id, const int &filter)
     // Try to emulate Shruthi's LFO rate extrapolation:
     if (id == 25  || id == 29) {
         int temp = min + floor(perc * (max - min));
-        if (temp == 143)
+        if (temp == 143) {
             return 142;
+        }
         return temp;
     }
 
@@ -631,9 +568,7 @@ int Patch::convertCCValue(const unsigned int &val, int &id, const int &filter)
 }
 
 
-// ******************************************
 bool Patch::parseSysex(const Message *message) {
-// ******************************************
     Message payload;
     if (!Midi::parseSysex(message, &payload)) {
         return false;
@@ -649,9 +584,7 @@ bool Patch::parseSysex(const Message *message) {
 }
 
 
-// ******************************************
 void Patch::generateSysex(Message *message) const {
-// ******************************************
     unsigned char temp[92];
     packData(temp);
 
@@ -664,9 +597,7 @@ void Patch::generateSysex(Message *message) const {
 }
 
 
-// ******************************************
 bool Patch::equals(const Patch &other) const {
-// ******************************************
     for (unsigned int i = 0; i < parameterCount; i++) {
         if (enabled(i) && data[i] != other.data[i]) {
             return false;
@@ -688,14 +619,10 @@ bool Patch::equals(const Patch &other) const {
 }
 
 
-// ******************************************
 void Patch::set(const Patch &other) {
-// ******************************************
     for (unsigned int i = 0; i < parameterCount; i++) {
         data[i] = other.data[i];
     }
     version = other.version;
     name = other.name;
 }
-
-

@@ -19,9 +19,8 @@
 #ifndef SHRUTHI_CONFIG_H
 #define SHRUTHI_CONFIG_H
 
-// ******************************************
+
 class Config {
-// ******************************************
     public:
         Config();
         void load();

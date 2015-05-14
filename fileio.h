@@ -24,10 +24,8 @@
 #include "message.h"
 
 
-// ******************************************
-class FileIO
-// ******************************************
-{
+
+class FileIO {
     public:
         static const int MAX_READ_SIZE = 1048576; // 1MB
         static bool loadFromDisk(const QString &location, Message &data);

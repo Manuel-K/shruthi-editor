@@ -36,9 +36,8 @@
 #include <QStyleFactory>
 #endif
 
-// ******************************************
+
 int main(int argc, char *argv[]) {
-// ******************************************
     qRegisterMetaType<QueueItem>("QueueItem");
     qRegisterMetaType<Config>("Config");
 

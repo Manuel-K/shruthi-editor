@@ -20,9 +20,8 @@
 #include "ui/keyboard_widget.h"
 
 
-// ******************************************
-KeyboardWidget::KeyboardWidget(QWidget *parent, unsigned int numberOfKeys_) : QWidget(parent) {
-// ******************************************
+KeyboardWidget::KeyboardWidget(QWidget *parent, unsigned int numberOfKeys_):
+    QWidget(parent) {
     numberOfKeys = numberOfKeys_;
     automaticNumberOfKeys = true;
     keySizeRatio = 0.35; // for 25 keys
@@ -33,66 +32,58 @@ KeyboardWidget::KeyboardWidget(QWidget *parent, unsigned int numberOfKeys_) : QW
 }
 
 
-// ******************************************
 KeyboardWidget::~KeyboardWidget() {
-// ******************************************
     destroyKeys();
 }
 
 
-// ******************************************
+
 void KeyboardWidget::resizeEvent(QResizeEvent *event) {
-// ******************************************
     Q_UNUSED(event);
     setKeySize();
 }
 
 
-// ******************************************
+
 bool KeyboardWidget::isBlackKey(int i) {
-// ******************************************
     i = i % 12;
     return (i == 2 || i == 4 || i == 7 || i == 9 || i == 11);
 }
 
 
-// ******************************************
 int KeyboardWidget::numWhiteKeys(int i) {
-// ******************************************
     const int octaves = i / 12;
     const int base = octaves * 7;
     switch(i % 12) {
-    case 1:
-        return 1 + base;
-    case 2:
-        return 1 + base;
-    case 3:
-        return 2 + base;
-    case 4:
-        return 2 + base;
-    case 5:
-        return 3 + base;
-    case 6:
-        return 4 + base;
-    case 7:
-        return 4 + base;
-    case 8:
-        return 5 + base;
-    case 9:
-        return 5 + base;
-    case 10:
-        return 6 + base;
-    case 11:
-        return 6 + base;
-    default: // 0
-        return 0 + base;
+        case 1:
+            return 1 + base;
+        case 2:
+            return 1 + base;
+        case 3:
+            return 2 + base;
+        case 4:
+            return 2 + base;
+        case 5:
+            return 3 + base;
+        case 6:
+            return 4 + base;
+        case 7:
+            return 4 + base;
+        case 8:
+            return 5 + base;
+        case 9:
+            return 5 + base;
+        case 10:
+            return 6 + base;
+        case 11:
+            return 6 + base;
+        default: // 0
+            return 0 + base;
     }
 }
 
 
-// ******************************************
 void KeyboardWidget::setKeySize() {
-// ******************************************
     unsigned int newVisibleNumberOfKeys = numberOfKeys;
     int w = this->width();
     int h = this->height();
@@ -163,9 +154,7 @@ void KeyboardWidget::setKeySize() {
 }
 
 
-// ******************************************
 void KeyboardWidget::raiseKeys() {
-// ******************************************
     for (unsigned int i = 1; i <= visibleNumberOfKeys; i++) {
         if (isBlackKey(i)) {
             keys.at(i - 1)->raise();
@@ -174,18 +163,14 @@ void KeyboardWidget::raiseKeys() {
 }
 
 
-// ******************************************
 void KeyboardWidget::setKeyVisibility() {
-// ******************************************
     for (unsigned int i = 1; i <= keys.size(); i++) {
         keys.at(i - 1)->setHidden(i > visibleNumberOfKeys);
     }
 }
 
 
-// ******************************************
 void KeyboardWidget::setupKeys() {
-// ******************************************
     visibleNumberOfKeys = 0;
 
     QPushButton *b;
@@ -207,10 +192,7 @@ void KeyboardWidget::setupKeys() {
 }
 
 
-// ******************************************
-void KeyboardWidget::destroyKeys()
-// ******************************************
-{
+void KeyboardWidget::destroyKeys() {
     QPushButton *temp;
     unsigned int len = keys.size();
     for (unsigned int i = 0; i < len; i++) {
@@ -221,9 +203,7 @@ void KeyboardWidget::destroyKeys()
 }
 
 
-// ******************************************
 void KeyboardWidget::setNumberOfKeys(const unsigned int &value) {
-// ******************************************
     numberOfKeys = value;
 
     // It would be nice to reuse buttons, but it is simpler to delete them all.
@@ -233,93 +213,67 @@ void KeyboardWidget::setNumberOfKeys(const unsigned int &value) {
 }
 
 
-// ******************************************
 unsigned int KeyboardWidget::getNumberOfKeys() const {
-// ******************************************
     return numberOfKeys;
 }
 
 
-// ******************************************
 int KeyboardWidget::getBaseNote() const {
-// ******************************************
     return baseNote;
 }
 
 
-// ******************************************
 void KeyboardWidget::setBaseNote(int value) {
-// ******************************************
     baseNote = value;
 }
 
 
-// ******************************************
 int KeyboardWidget::getMinimalKeyWidth() const {
-// ******************************************
     return minimalKeyWidth;
 }
 
 
-// ******************************************
 void KeyboardWidget::setMinimalKeyWidth(int value) {
-// ******************************************
     minimalKeyWidth = value;
 }
 
 
-// ******************************************
 double KeyboardWidget::getBlackKeyHeightFactor() const {
-// ******************************************
     return blackKeyHeightFactor;
 }
 
 
-// ******************************************
 void KeyboardWidget::setBlackKeyHeightFactor(double value) {
-// ******************************************
     blackKeyHeightFactor = value;
 }
 
 
-// ******************************************
 double KeyboardWidget::getKeySizeRatio() const {
-// ******************************************
     return keySizeRatio;
 }
 
 
-// ******************************************
 void KeyboardWidget::setKeySizeRatio(double value) {
-// ******************************************
     keySizeRatio = value;
 }
 
 
-// ******************************************
 bool KeyboardWidget::getAutomaticNumberOfKeys() const {
-// ******************************************
     return automaticNumberOfKeys;
 }
 
 
-// ******************************************
 void KeyboardWidget::setAutomaticNumberOfKeys(bool value) {
-// ******************************************
     automaticNumberOfKeys = value;
 }
 
 
-// ******************************************
 int KeyboardWidget::getOctave() const {
-// ******************************************
     return octave;
 }
 
 
-// ******************************************
 void KeyboardWidget::setOctave(int value) {
-// ******************************************
     octave = value;
 }
 
@@ -329,18 +283,14 @@ void KeyboardWidget::setOctave(int value) {
 //
 
 
-// ******************************************
 void KeyboardWidget::keyPressed() {
-// ******************************************
     QPushButton* s = (QPushButton*) sender();
     QString id = s->objectName();
     emit keyPressed(baseNote + 12 * octave + id.toInt());
 }
 
 
-// ******************************************
 void KeyboardWidget::keyReleased() {
-// ******************************************
     QPushButton* s = (QPushButton*) sender();
     QString id = s->objectName();
     emit keyReleased(baseNote + 12 * octave + id.toInt());

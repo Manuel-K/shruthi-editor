@@ -25,14 +25,15 @@
 #include "patch.h"
 #include <iostream>
 
+
 #define VERSION "0.23"
 
-// ******************************************
+
 ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     editor(edit) {
-// ******************************************
+
     ui->setupUi(this);
 
     MIDI_CHANNEL = 1;
@@ -140,17 +141,12 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
 }
 
 
-// ******************************************
-ShruthiEditorMainWindow::~ShruthiEditorMainWindow()
-// ******************************************
-{
+ShruthiEditorMainWindow::~ShruthiEditorMainWindow() {
     delete ui;
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::setMidiInputPort(int midiin) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiInputPort(" << midiin << ")";
 #endif
@@ -158,9 +154,7 @@ void ShruthiEditorMainWindow::setMidiInputPort(int midiin) {
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::setMidiOutputPort(int midiout) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiOutputPort(" << midiout << ")";
 #endif
@@ -168,9 +162,7 @@ void ShruthiEditorMainWindow::setMidiOutputPort(int midiout) {
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setMidiChannel(" << channel << ")";
 #endif
@@ -178,10 +170,7 @@ void ShruthiEditorMainWindow::setMidiChannel(unsigned char channel) {
 }
 
 
-// ******************************************
-void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
-// ******************************************
-{
+void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
 #ifdef DEBUGMSGS
     qDebug() << "shruthiEditorMainWindow::setShruthiFilterBoard(" << filter << ")";
 #endif
@@ -308,24 +297,23 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter)
 }
 
 
-// ******************************************
-// ******************************************
+//
 // Local UI Signal Handlers
-// ******************************************
-// ******************************************
+//
 
-// ******************************************
+
 void ShruthiEditorMainWindow::comboBoxChanged(int val) {
-// ******************************************
     // Never send 'no current item set' i.e. -1:
-    if (val == -1)
+    if (val == -1) {
         return;
+    }
 
     QComboBox* s = (QComboBox*) sender();
 
     // Don't send changed signal if element is disabled:
-    if (!s->isEnabled())
+    if (!s->isEnabled()) {
         return;
+    }
 
     QString id = s->objectName();
     id.remove(0,1);
@@ -335,11 +323,8 @@ void ShruthiEditorMainWindow::comboBoxChanged(int val) {
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::dialChanged(int val) {
-// ******************************************
     QDial* s = (QDial*) sender();
-
     QString id = s->objectName();
 
     // Fix for additional dials (e.g. parameter 92/93):
@@ -362,34 +347,29 @@ void ShruthiEditorMainWindow::dialChanged(int val) {
     }
 
     // Don't send changed signal if element is disabled:
-    if (!s->isEnabled())
+    if (!s->isEnabled()) {
         return;
+    }
 
     QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, param, val);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::dialChanged(int id, int val) {
-// ******************************************
     QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id, val);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::patchNameChanged() {
-// ******************************************
     QString name = ui->patch_name->text();
     QueueItem signal(QueueAction::SET_PATCHNAME, name);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::loadProgram() {
-// ******************************************
     QFileDialog *d = new QFileDialog(this);
     d->setWindowTitle("Open program");
     d->setNameFilter("All possible files (*.syx *.sp);;SysEx files (*.syx);;Shruthi patches (*.sp)");
@@ -403,7 +383,6 @@ void ShruthiEditorMainWindow::loadProgram() {
     QStringList filenames = d->selectedFiles();
     const int &index = cb->currentIndex();
     int flag = cb->currentIndex() + 1; // combo box and flags have to be kept in sync!
-
 
     delete d;
     d = NULL;
@@ -419,9 +398,7 @@ void ShruthiEditorMainWindow::loadProgram() {
 }
 
 
-// ******************************************
 QComboBox *ShruthiEditorMainWindow::injectQFileDialog(QFileDialog *d) {
-// ******************************************
     QComboBox *cb = new QComboBox(d);
     cb->addItem("Patch");
     cb->addItem("Sequence");
@@ -446,9 +423,7 @@ QComboBox *ShruthiEditorMainWindow::injectQFileDialog(QFileDialog *d) {
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::saveProgram() {
-// ******************************************
     QFileDialog *d = new QFileDialog(this);
     d->setWindowTitle("Save program");
     //d->setNameFilter("SysEx files (*.syx);;Shruthi patches (*.sp);;Shruthi patches (*.sp)");
@@ -465,7 +440,6 @@ void ShruthiEditorMainWindow::saveProgram() {
     const int &index = cb->currentIndex();
     int flag = cb->currentIndex() + 1; // combo box and flags have to be kept in sync!
 
-
     delete d;
     d = NULL;
 
@@ -481,57 +455,43 @@ void ShruthiEditorMainWindow::saveProgram() {
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::fetchProgram() {
-// ******************************************
     QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::sendProgram() {
-// ******************************************
     QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::fetchPatch() {
-// ******************************************
     QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::sendPatch() {
-// ******************************************
     QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_PATCH);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::fetchSequence() {
-// ******************************************
     QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::sendSequence() {
-// ******************************************
     QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::openSettings() {
-// ******************************************
     SettingsDialog prefs(this);
     prefs.setFixedSize(prefs.width(),prefs.height());
     prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
@@ -550,79 +510,63 @@ void ShruthiEditorMainWindow::openSettings() {
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::resetPatch() {
-// ******************************************
     QueueItem signal(QueueAction::RESET_PATCH);
     signal.int0 = 1000;
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::resetPatchPre100() {
-// ******************************************
     QueueItem signal(QueueAction::RESET_PATCH);
     signal.int0 = 98;
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::resetSequence() {
-// ******************************************
     QueueItem signal(QueueAction::RESET_SEQUENCE);
     emit enqueue(signal);
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::randomizePatch() {
-// ******************************************
     QueueItem signal(QueueAction::RANDOMIZE_PATCH);
     emit enqueue(signal);
 }
 
 
-// ******************************************
+
 void ShruthiEditorMainWindow::quitShruthiEditor() {
-// ******************************************
     QApplication::exit(0);
 }
 
 
-// ******************************************
+
 void ShruthiEditorMainWindow::aboutShruthiEditor() {
-// ******************************************
     QMessageBox::about(this,"About Shruthi-Editor",
-        QString::fromUtf8("Shruti-Editor Version "VERSION".\n\n Copyright (C) 2011-2015 Manuel Krönig."));
+                       QString::fromUtf8("Shruti-Editor Version "VERSION".\n\n Copyright (C) 2011-2015 Manuel Krönig."));
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::aboutQt() {
-// ******************************************
     QMessageBox::aboutQt(this);
 }
 
 
-// ******************************************
+
 void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
-// ******************************************
     Q_UNUSED(event);
     quitShruthiEditor();
 }
 
 
-// ******************************************
-// ******************************************
+//
 // Redraw Signal Handlers
-// ******************************************
-// ******************************************
+//
 
-// ******************************************
+
 void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
-// ******************************************
     const PatchParameter param = Patch::parameter(id, SHRUTHI_FILTER_BOARD);
 
     QString wid = QString("c%1").arg(id);
@@ -661,9 +605,8 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
     }
 }
 
-// ******************************************
+
 void ShruthiEditorMainWindow::redrawAllPatchParameters() {
-// ******************************************
     for (int i=0; i<100; i++) {
         if (Patch::hasUI(i)) {
             redrawPatchParameter(i);
@@ -673,37 +616,34 @@ void ShruthiEditorMainWindow::redrawAllPatchParameters() {
 }
 
 
-// ******************************************
-// ******************************************
+//
 // Statusbar
-// ******************************************
-// ******************************************
+//
 
-// ******************************************
+
 void ShruthiEditorMainWindow::midiInputStatusChanged(bool st) {
-// ******************************************
-    MIDI_INPUT_STATUS=st;
+    MIDI_INPUT_STATUS = st;
     displayMidiStatusChanged(st, MIDI_OUTPUT_STATUS);
 }
 
 
-// ******************************************
+
 void ShruthiEditorMainWindow::midiOutputStatusChanged(bool st) {
-// ******************************************
-    MIDI_OUTPUT_STATUS=st;
-    displayMidiStatusChanged(MIDI_INPUT_STATUS,st);
+    MIDI_OUTPUT_STATUS = st;
+    displayMidiStatusChanged(MIDI_INPUT_STATUS, st);
 }
 
 
-// ******************************************
+
 void ShruthiEditorMainWindow::displayMidiStatusChanged(const bool &in, const bool &out) {
-// ******************************************
     QString status = "MidiIn: ";
-    if (!in)
+    if (!in) {
         status += "not ";
+    }
     status += "ready. MidiOut: ";
-    if (!out)
+    if (!out) {
         status += "not ";
+    }
     status += "ready.";
     statusBar()->showMessage(status);
 
@@ -712,21 +652,14 @@ void ShruthiEditorMainWindow::displayMidiStatusChanged(const bool &in, const boo
         QueueItem signal(QueueAction::SYSEX_SHRUTHI_INFO_REQUEST);
         emit enqueue(signal);
     }
-
 }
 
 
-// ******************************************
 void ShruthiEditorMainWindow::displayStatusbar(QString msg) {
-// ******************************************
     statusBar()->showMessage(msg);
 }
 
 
-// ******************************************
-void ShruthiEditorMainWindow::setStatusbarVersionLabel(QString text)
-// ******************************************
-{
+void ShruthiEditorMainWindow::setStatusbarVersionLabel(QString text) {
     statusbarVersionLabel->setText(text + " ");
 }
-

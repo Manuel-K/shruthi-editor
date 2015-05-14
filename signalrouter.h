@@ -24,10 +24,9 @@
 #include <QObject>
 #include <QQueue>
 
-// ******************************************
+
 class SignalRouter : public QObject {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         SignalRouter();

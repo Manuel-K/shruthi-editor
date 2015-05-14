@@ -27,13 +27,11 @@
 #endif
 
 
-// ******************************************
 Editor::Editor():
     midiout(new MidiOut),
     patch(new Patch),
     sequence(new Sequence),
     library(new Library(midiout)) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug("Editor::Editor()");
 #endif
@@ -42,10 +40,7 @@ Editor::Editor():
 }
 
 
-// ******************************************
-void Editor::run()
-// ******************************************
-{
+void Editor::run() {
 #ifdef DEBUGMSGS
     qDebug("Editor::run()");
 #endif
@@ -54,9 +49,7 @@ void Editor::run()
 }
 
 
-// ******************************************
 bool Editor::setMidiOutputPort(int out) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::setMidiPorts:" << out;
 #endif
@@ -66,9 +59,7 @@ bool Editor::setMidiOutputPort(int out) {
 }
 
 
-// ******************************************
 void Editor::setMidiChannel(unsigned char channel) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::setMidiChannel:" << channel;
 #endif
@@ -76,10 +67,7 @@ void Editor::setMidiChannel(unsigned char channel) {
 }
 
 
-// ******************************************
-void Editor::setShruthiFilterBoard(int filter)
-// ******************************************
-{
+void Editor::setShruthiFilterBoard(int filter) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::setShruthiFilterBoard:" << filter;
 #endif
@@ -87,9 +75,7 @@ void Editor::setShruthiFilterBoard(int filter)
 }
 
 
-// ******************************************
 Editor::~Editor() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::~Editor()";
 #endif
@@ -104,37 +90,27 @@ Editor::~Editor() {
 }
 
 
-// ******************************************
 const int &Editor::getPatchValue(int id) const {
-// ******************************************
     return patch->getValue(id);
 }
 
 
-// ******************************************
 const QString &Editor::getPatchName() const {
-// ******************************************
     return patch->getName();
 }
 
 
-// ******************************************
 const int &Editor::getSequenceValue(const int &step, const SequenceParameter::SequenceParameter &sp) const {
-// ******************************************
     return sequence->getValue(step, sp);
 }
 
 
-// ******************************************
 const Library *Editor::getLibrary() const {
-// ******************************************
     return library;
 }
 
 
-// ******************************************
 void Editor::process(QueueItem item) {
-// ******************************************
     switch(item.action) {
         case QueueAction::PATCH_PARAMETER_CHANGE_EDITOR:
             actionPatchParameterChangeEditor(item.int0, item.int1);
@@ -142,7 +118,7 @@ void Editor::process(QueueItem item) {
         case QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR:
             actionSequenceParameterChangeEditor(item.int0, item.int1);
             break;
-         case QueueAction::SYSEX_FETCH_REQUEST:
+        case QueueAction::SYSEX_FETCH_REQUEST:
             actionFetchRequest(item.int0);
             break;
         case QueueAction::SYSEX_SEND_DATA:
@@ -218,9 +194,7 @@ void Editor::process(QueueItem item) {
 }
 
 
-// ******************************************
 void Editor::actionPatchParameterChangeEditor(int id, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionPatchParameterChangeEditor(" << id << "," << value << ")";
 #endif
@@ -253,9 +227,8 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
     }
 }
 
-// ******************************************
+
 void Editor::actionFetchRequest(const int &what) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionFetchRequest()";
 #endif
@@ -277,7 +250,6 @@ void Editor::actionFetchRequest(const int &what) {
 
     }
 
-
     QString swhat = "unknown";
     QString sWhat = "Unknown";
     QString pl = "";
@@ -293,20 +265,15 @@ void Editor::actionFetchRequest(const int &what) {
         sWhat = "Sequence";
     }
 
-
     if (statusP && statusS) {
         emit displayStatusbar(sWhat + " transfer request" + pl + " sent.");
     } else {
         emit displayStatusbar("Could not send " + swhat + " transfer request" + pl + ".");
     }
-
-
 }
 
 
-// ******************************************
 void Editor::actionSendData(const int &what) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSendData()";
 #endif
@@ -337,7 +304,6 @@ void Editor::actionSendData(const int &what) {
         sWhat = "Sequence";
     }
 
-
     if (statusP && statusS) {
         emit displayStatusbar(sWhat + " sent.");
     } else {
@@ -346,10 +312,7 @@ void Editor::actionSendData(const int &what) {
 }
 
 
-// ******************************************
-void Editor::actionShruthiInfoRequest()
-// ******************************************
-{
+void Editor::actionShruthiInfoRequest() {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionShruthiInfoRequest()";
 #endif
@@ -365,9 +328,7 @@ void Editor::actionShruthiInfoRequest()
 }
 
 
-// ******************************************
 void Editor::actionPatchParameterChangeMidi(int id, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionPatchParameterChangeMidi(" << id << "," << value << ")";
 #endif
@@ -388,45 +349,40 @@ void Editor::actionPatchParameterChangeMidi(int id, int value) {
 }
 
 
-// ******************************************
 void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if (!midiout->noteOn(channel, note, velocity))
+    if (!midiout->noteOn(channel, note, velocity)) {
         emit displayStatusbar("Could not send note on message.");
+    }
 }
 
 
-// ******************************************
 void Editor::actionNoteOff(unsigned char note) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << ")";
 #endif
-    if (!midiout->noteOff(channel, note))
+    if (!midiout->noteOff(channel, note)) {
         emit displayStatusbar("Could not send note off message.");
+    }
 }
 
 
-// ******************************************
 void Editor::actionNotePanic() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNotePanic(" << channel << ")";
 #endif
-    if (midiout->allNotesOff(channel))
+    if (midiout->allNotesOff(channel)) {
         emit displayStatusbar("Sent all notes off message.");
-    else
+    } else {
         emit displayStatusbar("Could not send all notes off message.");
+    }
 }
 
 
-// ******************************************
 void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
                                  unsigned int size, unsigned char* message) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSysexReceived(" << size << ",...)";
 #endif
@@ -499,9 +455,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 }
 
 
-// ******************************************
 void Editor::actionSetPatchname(QString name) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSetPatchname(" << name << ")";
 #endif
@@ -510,9 +464,7 @@ void Editor::actionSetPatchname(QString name) {
 }
 
 
-// ******************************************
 void Editor::actionFileIOLoad(QString path, const int &what) {
-// ******************************************
     Message temp;
     bool status = FileIO::loadFromDisk(path, temp);
     bool statusP = status;
@@ -594,9 +546,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
 }
 
 
-// ******************************************
 void Editor::actionFileIOSave(QString path, const int &what) {
-// ******************************************
     QByteArray ba;
 
     if (path.endsWith(".sp", Qt::CaseInsensitive)) {
@@ -640,9 +590,7 @@ void Editor::actionFileIOSave(QString path, const int &what) {
 }
 
 
-// ******************************************
 void Editor::actionResetPatch(unsigned int version) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionResetPatch()";
 #endif
@@ -653,9 +601,7 @@ void Editor::actionResetPatch(unsigned int version) {
 }
 
 
-// ******************************************
 void Editor::actionRandomizePatch() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
@@ -666,9 +612,7 @@ void Editor::actionRandomizePatch() {
 }
 
 
-// ******************************************
 void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &value) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSequenceParameterChangeEditor()" << id << value;
 #endif
@@ -676,9 +620,7 @@ void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &
 }
 
 
-// ******************************************
 void Editor::actionResetSequence() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionResetSequence()";
 #endif
@@ -688,9 +630,7 @@ void Editor::actionResetSequence() {
 }
 
 
-// ******************************************
 void Editor::actionLibraryFetch(const unsigned int &what, const int &start, const int &stop) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
@@ -705,9 +645,7 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 }
 
 
-// ******************************************
 void Editor::actionLibrarySend(const unsigned int &what, const int &start, const int &end) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibrarySend()" << what << start << end;
 #endif
@@ -720,9 +658,7 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
 }
 
 
-// ******************************************
 void Editor::actionLibraryRecall(const unsigned int &what, const unsigned int &id) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryRecall()";
 #endif
@@ -739,9 +675,7 @@ void Editor::actionLibraryRecall(const unsigned int &what, const unsigned int &i
 }
 
 
-// ******************************************
 void Editor::actionLibraryStore(const unsigned int &what, const unsigned int &id) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryStore()";
 #endif
@@ -756,9 +690,7 @@ void Editor::actionLibraryStore(const unsigned int &what, const unsigned int &id
 }
 
 
-// ******************************************
 void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryMove()";
 #endif
@@ -771,13 +703,10 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
     const int &s = std::min(start, target);
     const int &t = std::max(start, target);
     emit redrawLibraryItems(what, s, t);
-
 }
 
 
-// ******************************************
 void Editor::actionLibraryLoad(const QString &path, const int &flags) {
-// ******************************************
     //TODO respect flags
     if (library->loadLibrary(path, flags&Library::FLAG_APPEND)) {
         emit displayStatusbar("Library loaded from disk.");
@@ -788,9 +717,7 @@ void Editor::actionLibraryLoad(const QString &path, const int &flags) {
 }
 
 
-// ******************************************
 void Editor::actionLibrarySave(const QString &path, const int &flags) {
-// ******************************************
     Q_UNUSED(flags);
     //TODO respect flags
     if (library->saveLibrary(path)) {
@@ -801,15 +728,10 @@ void Editor::actionLibrarySave(const QString &path, const int &flags) {
 }
 
 
-// ******************************************
 void Editor::actionLibraryDelete(const unsigned int &start, const unsigned int &end) {
-// ******************************************;
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryDelete()" << start << end;
 #endif
     library->deletePrograms(start, end);
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
 }
-
-
-

@@ -23,34 +23,30 @@
 #include <QDebug>
 
 
-// ******************************************
+//
+// NRPN
+//
+
+
 NRPN::NRPN() {
-// ******************************************
-    nrpnMsb=0;
-    nrpn=-1;
-    valueMsb=0;
+    nrpnMsb = 0;
+    nrpn = -1;
+    valueMsb = 0;
     value=-1;
 }
 
 
-// ******************************************
 int NRPN::getValue(){
-// ******************************************
     return value;
 }
 
 
-// ******************************************
 int NRPN::getNRPN(){
-// ******************************************
     return nrpn;
 }
 
 
-// ******************************************
-bool MidiIn::isNRPN(const unsigned char &n0, const unsigned char &n1)
-// ******************************************
-{
+bool MidiIn::isNRPN(const unsigned char &n0, const unsigned char &n1) {
     return n0 == 176 && (n1 == 6 || n1 == 38 || n1 == 98 || n1 == 99);
 }
 
@@ -60,26 +56,26 @@ bool MidiIn::isNRPN(const unsigned char &n0, const unsigned char &n1)
 //    176 98 2 (NRPN LSB set to 2, from the table below: Oscillator 1 range)
 //    176 6 1 (Data Entry MSB set to 1 -- value above 127 or negative)
 //    176 38 116 (Data Entry LSB set to 116, because 116 - 128 = -12)
-// ******************************************
 bool NRPN::parse(int b0, int b1, int b2) {
-// ******************************************
-    if (b0==176) switch(b1) {
-        case 38://DATA_LSB
-            value=b2 | (valueMsb<<7);
-            valueMsb=0;
-            return (nrpn>=0 && nrpn <= 107);
-        case 6://DATA_MSB
-            valueMsb=b2;
-            return false;
-        case 98://NRPN_LSB
-            nrpn=b2 | (nrpnMsb << 7);
-            nrpnMsb=0;
-            return false;
-        case 99: //NRPN_MSB
-           nrpnMsb=b2;
-           return false;
-        default:
-           break;
+    if (b0 == 176) {
+        switch(b1) {
+            case 38: //DATA_LSB
+                value = b2 | (valueMsb << 7);
+                valueMsb = 0;
+                return (nrpn >= 0 && nrpn <= 107);
+            case 6: //DATA_MSB
+                valueMsb = b2;
+                return false;
+            case 98: //NRPN_LSB
+                nrpn = b2 | (nrpnMsb << 7);
+                nrpnMsb = 0;
+                return false;
+            case 99: //NRPN_MSB
+                nrpnMsb = b2;
+                return false;
+            default:
+                break;
+        }
     }
 #ifdef DEBUGMSGS
     qDebug() << "NRPN_Parser: Received unknown message:" << b0 << "," << b1 << "," << b2;
@@ -88,9 +84,12 @@ bool NRPN::parse(int b0, int b1, int b2) {
 }
 
 
-// ******************************************
+//
+// MidiIn
+//
+
+
 void MidiIn::process(const Message *message) {
-// ******************************************
     int size = message->size();
 
     if (size >= 4) {
@@ -125,7 +124,7 @@ void MidiIn::process(const Message *message) {
         signal.message = msg;
         signal.size = payload.size();
         emit enqueue(signal);
-    } else if (size==3) {
+    } else if (size == 3) {
         if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
             // Parse as NRPN
             if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
@@ -149,18 +148,14 @@ void MidiIn::process(const Message *message) {
 }
 
 
-// ******************************************
 void mycallback(double deltatime, Message *message, void *userData) {
-// ******************************************
     Q_UNUSED(deltatime);
     ((MidiIn*)userData)->process(message);
     // Don't try to delete the message!
 }
 
 
-// ******************************************
 MidiIn::MidiIn() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::MidiIn()";
 #endif
@@ -183,9 +178,7 @@ MidiIn::MidiIn() {
 }
 
 
-// ******************************************
 MidiIn::~MidiIn() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::~MidiIn()";
 #endif
@@ -193,9 +186,7 @@ MidiIn::~MidiIn() {
 }
 
 
-// ******************************************
 void MidiIn::setMidiInputPort(int in) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::setMidiPorts";
 #endif
@@ -204,10 +195,7 @@ void MidiIn::setMidiInputPort(int in) {
 }
 
 
-// ******************************************
-void MidiIn::setShruthiFilterBoard(int filter)
-// ******************************************
-{
+void MidiIn::setShruthiFilterBoard(int filter) {
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::setShruthiFilterBoard:" << filter;
 #endif
@@ -215,14 +203,13 @@ void MidiIn::setShruthiFilterBoard(int filter)
 }
 
 
-// ******************************************
 bool MidiIn::open(const unsigned int &port) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::open(" << port << ")";
 #endif
-    if (input==port && opened)
+    if (input == port && opened) {
         return true;
+    }
 
     if (opened) {
         midiin->closePort();
@@ -246,11 +233,10 @@ bool MidiIn::open(const unsigned int &port) {
 #endif
         opened = false;
     }
-    if (opened)
+    if (opened) {
         input = port;
-    else
+    } else {
         qWarning() << "MidiIn::open(): could not open midi port for reading.";
+    }
     return opened;
 }
-
-

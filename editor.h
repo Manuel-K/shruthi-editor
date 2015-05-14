@@ -30,10 +30,9 @@ class Sequence;
 class Library;
 
 
-// ******************************************
+
 class Editor : public QObject {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         Editor();

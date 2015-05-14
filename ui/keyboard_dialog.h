@@ -28,10 +28,8 @@ class KeyboardDialog;
 }
 
 
-// ******************************************
 class KeyboardDialog : public QDialog {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         explicit KeyboardDialog(QWidget *parent = 0);

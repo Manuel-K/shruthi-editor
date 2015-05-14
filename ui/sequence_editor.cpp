@@ -27,12 +27,10 @@
 #include "patch.h"
 
 
-// ******************************************
 SequenceEditor::SequenceEditor(const Editor *edit, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SequenceEditor),
     editor(edit) {
-// ******************************************
     ui->setupUi(this);
 
     SequenceStep *step;
@@ -82,17 +80,12 @@ SequenceEditor::SequenceEditor(const Editor *edit, QWidget *parent) :
 }
 
 
-// ******************************************
 SequenceEditor::~SequenceEditor() {
-// ******************************************
     delete ui;
-
 }
 
 
-// ******************************************
 void SequenceEditor::sendSequenceUpdate() {
-// ******************************************
     if (ui->autoSendSequence->isChecked()) {
         QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
         emit enqueue(signal);
@@ -100,9 +93,7 @@ void SequenceEditor::sendSequenceUpdate() {
 }
 
 
-// ******************************************
 void SequenceEditor::redrawPatchParameter(int id) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor::redrawPatchParameter();" << id << std::endl;
 #endif
@@ -125,9 +116,7 @@ void SequenceEditor::redrawPatchParameter(int id) {
 }
 
 
-// ******************************************
 void SequenceEditor::redrawAllPatchParameters() {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor::redrawAllPatchParameters();" << std::endl;
 #endif
@@ -137,9 +126,7 @@ void SequenceEditor::redrawAllPatchParameters() {
 }
 
 
-// ******************************************
 void SequenceEditor::redrawAllSequenceParameters() {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor::redrawAllSequenceParameters()" << std::endl;
 #endif
@@ -158,9 +145,7 @@ void SequenceEditor::redrawAllSequenceParameters() {
 }
 
 
-// ******************************************
 void SequenceEditor::activeChanged(int step, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor active " << step << " " << value << std::endl;
 #endif
@@ -170,9 +155,7 @@ void SequenceEditor::activeChanged(int step, int value) {
 }
 
 
-// ******************************************
 void SequenceEditor::noteChanged(int step, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor note " << step << " " << value << std::endl;
 #endif
@@ -182,9 +165,7 @@ void SequenceEditor::noteChanged(int step, int value) {
 }
 
 
-// ******************************************
 void SequenceEditor::valueChanged(int step, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor value " << step << " " << value << std::endl;
 #endif
@@ -194,9 +175,7 @@ void SequenceEditor::valueChanged(int step, int value) {
 }
 
 
-// ******************************************
 void SequenceEditor::tieChanged(int step, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor tie " <<  step << " " << value << std::endl;
 #endif
@@ -206,9 +185,7 @@ void SequenceEditor::tieChanged(int step, int value) {
 }
 
 
-// ******************************************
 void SequenceEditor::velocityChanged(int step, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor velocity " << step << " " << value << std::endl;
 #endif
@@ -218,22 +195,21 @@ void SequenceEditor::velocityChanged(int step, int value) {
 }
 
 
-// ******************************************
 void SequenceEditor::comboBoxChanged(int value) {
-// ******************************************
     // Never send 'no current item set' i.e. -1:
-    if (value == -1)
+    if (value == -1) {
         return;
+    }
 
     QComboBox* s = (QComboBox*) sender();
 
     // Don't send changed signal if element is disabled:
-    if (!s->isEnabled())
+    if (!s->isEnabled()) {
         return;
+    }
 
     QString id = s->objectName();
     id.remove(0,1);
-
 
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor comboBoxChanged " << id.toInt() << " " << value << std::endl;
@@ -243,13 +219,9 @@ void SequenceEditor::comboBoxChanged(int value) {
 }
 
 
-// ******************************************
 void SequenceEditor::dialChanged(int id, int value) {
-// ******************************************
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor dialChanged " << id << " " << value << std::endl;
 #endif
     emit enqueue(QueueItem(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id, value));
 }
-
-

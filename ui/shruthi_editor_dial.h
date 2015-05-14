@@ -26,36 +26,35 @@ namespace Ui {
 class ShruthiEditorDial;
 }
 
-// ******************************************
+
 class ShruthiEditorDial : public QWidget {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
-public:
-    explicit ShruthiEditorDial(QWidget *parent = 0);
-    ~ShruthiEditorDial();
+    public:
+        explicit ShruthiEditorDial(QWidget *parent = 0);
+        ~ShruthiEditorDial();
 
-    void setParameter(const int &parameter_);
-    void setName(const QString &name);
-    void setLimits(const int &min, const int &max);
-    void setFormatter(QString (*formatter_)(int));
+        void setParameter(const int &parameter_);
+        void setName(const QString &name);
+        void setLimits(const int &min, const int &max);
+        void setFormatter(QString (*formatter_)(int));
 
-    void setValue(const int &value);
+        void setValue(const int &value);
 
 
-private:
-    Ui::ShruthiEditorDial *ui;
-    void setDisplay(const int &value);
+    private:
+        Ui::ShruthiEditorDial *ui;
+        void setDisplay(const int &value);
 
-    int parameter;
-    bool sendValueChanges;
-    QString (*formatter)(int);
+        int parameter;
+        bool sendValueChanges;
+        QString (*formatter)(int);
 
-private slots:
-    void valueChanged(int);
+    private slots:
+        void valueChanged(int);
 
-signals:
-    void valueChanged(int, int);
+    signals:
+        void valueChanged(int, int);
 };
 
 #endif // SHRUTHI_EDITOR_DIAL_H

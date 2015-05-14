@@ -25,10 +25,8 @@
 #include <vector>
 
 
-// ******************************************
 class KeyboardWidget : public QWidget {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         KeyboardWidget(QWidget *parent = 0, unsigned int numberOfKeys = 61);

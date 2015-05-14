@@ -20,9 +20,7 @@
 #include "config.h"
 
 
-// ******************************************
 Config::Config() {
-// ******************************************
     mMidiInputPort = 0;
     mMidiOutputPort = 0;
     mMidiChannel = 0;
@@ -30,9 +28,7 @@ Config::Config() {
 }
 
 
-// ******************************************
 void Config::save() {
-// ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     settings.setValue("midi/inputPort", mMidiInputPort);
     settings.setValue("midi/outputPort", mMidiOutputPort);
@@ -41,9 +37,7 @@ void Config::save() {
 }
 
 
-// ******************************************
 void Config::load() {
-// ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
     mMidiInputPort = settings.value("midi/inputPort", 0).toInt();
     mMidiOutputPort = settings.value("midi/outputPort", 0).toInt();
@@ -52,67 +46,47 @@ void Config::load() {
 }
 
 
-// ******************************************
 void Config::setMidiInputPort(int in) {
-// ******************************************
     mMidiInputPort = in;
 }
 
 
-// ******************************************
 const int &Config::midiInputPort() const {
-// ******************************************
     return mMidiInputPort;
 }
 
 
-// ******************************************
 void Config::setMidiOutputPort(int out) {
-// ******************************************
     mMidiOutputPort = out;
 }
 
 
-// ******************************************
 const int &Config::midiOutputPort() const {
-// ******************************************
     return mMidiOutputPort;
 }
 
 
-// ******************************************
 void Config::setMidiChannel(unsigned char channel) {
-// ******************************************
     mMidiChannel = channel;
 }
 
 
-// ******************************************
 const unsigned char &Config::midiChannel() const {
-// ******************************************
     return mMidiChannel;
 }
 
 
-// ******************************************
-const int &Config::shruthiFilterBoard() const
-// ******************************************
-{
+const int &Config::shruthiFilterBoard() const {
     return mShruthiFilterBoard;
 }
 
 
-// ******************************************
-void Config::setShruthiFilterBoard(int value)
-// ******************************************
-{
+void Config::setShruthiFilterBoard(int value) {
     mShruthiFilterBoard = value;
 }
 
 
-// ******************************************
 void Config::set(const Config &other) {
-// ******************************************
     mMidiChannel = other.mMidiChannel;
     mMidiInputPort = other.mMidiInputPort;
     mMidiOutputPort = other.mMidiOutputPort;
@@ -120,11 +94,9 @@ void Config::set(const Config &other) {
 }
 
 
-// ******************************************
 bool Config::equals(const Config &other) {
-// ******************************************
     return mMidiChannel == other.mMidiChannel &&
-    mMidiInputPort == other.mMidiInputPort &&
-    mMidiOutputPort == other.mMidiOutputPort &&
-    mShruthiFilterBoard == other.mShruthiFilterBoard;
+            mMidiInputPort == other.mMidiInputPort &&
+            mMidiOutputPort == other.mMidiOutputPort &&
+            mShruthiFilterBoard == other.mShruthiFilterBoard;
 }

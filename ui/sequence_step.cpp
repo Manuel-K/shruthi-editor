@@ -22,11 +22,9 @@
 #include <iostream>
 
 
-// ******************************************
 SequenceStep::SequenceStep(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SequenceStep) {
-// ******************************************
     ui->setupUi(this);
 
     step = 0;
@@ -55,9 +53,7 @@ SequenceStep::SequenceStep(QWidget *parent) :
 }
 
 
-// ******************************************
 SequenceStep::~SequenceStep() {
-// ******************************************
     delete ui;
 }
 
@@ -67,41 +63,31 @@ SequenceStep::~SequenceStep() {
 //
 
 
-// ******************************************
 void SequenceStep::setStep(const int &value) {
-// ******************************************
     step = value;
     ui->name->setText(QString("%1").arg(value));
 }
 
 
-// ******************************************
 void SequenceStep::setValueLabels(const QStringList &labels) {
-// ******************************************
     ui->value->clear();
     ui->value->addItems(labels);
 }
 
 
-// ******************************************
 void SequenceStep::setNoteLabels(const QStringList &labels) {
-// ******************************************
     ui->note->clear();
     ui->note->addItems(labels);
 }
 
 
-// ******************************************
 void SequenceStep::setOctaveLimits(const int &min, const int &max) {
-// ******************************************
     ui->octave->setMinimum(min);
     ui->octave->setMaximum(max);
 }
 
 
-// ******************************************
 void SequenceStep::setVelocityLimits(const int &min, const int &max) {
-// ******************************************
     ui->velocity->setMinimum(min);
     ui->velocity->setMaximum(max);
 }
@@ -112,27 +98,21 @@ void SequenceStep::setVelocityLimits(const int &min, const int &max) {
 //
 
 
-// ******************************************
 void SequenceStep::setActive(const int &value) {
-// ******************************************
     sendActive = false;
     ui->active->setChecked(value ? true : false);
     sendActive = true;
 }
 
 
-// ******************************************
 void SequenceStep::setValue(const int &value) {
-// ******************************************
     sendValue = false;
     ui->value->setCurrentIndex(value);
     sendValue = true;
 }
 
 
-// ******************************************
 void SequenceStep::setNoteOctave(const int &value) {
-// ******************************************
     const int &note  = (value - noteBase) % 12;
     const int &octave = (value - noteBase) / 12;
     sendNote = false;
@@ -142,36 +122,28 @@ void SequenceStep::setNoteOctave(const int &value) {
 }
 
 
-// ******************************************
 void SequenceStep::setNote(const int &value) {
-// ******************************************
     sendNote = false;
     ui->note->setCurrentIndex(value);
     sendNote = true;
 }
 
 
-// ******************************************
 void SequenceStep::setOctave(const int &value) {
-// ******************************************
     sendNote = false;
     ui->octave->setValue(value);
     sendNote = true;
 }
 
 
-// ******************************************
 void SequenceStep::setTie(const int &value) {
-// ******************************************
     sendTie = false;
     ui->tie->setChecked(value ? true : false);
     sendTie = true;
 }
 
 
-// ******************************************
 void SequenceStep::setVelocity(const int &value) {
-// ******************************************
     sendVelocity = false;
     ui->velocity->setValue(value);
     sendVelocity = true;
@@ -183,9 +155,7 @@ void SequenceStep::setVelocity(const int &value) {
 //
 
 
-// ******************************************
 void SequenceStep::activeChanged(int val) {
-// ******************************************
     if (!sendActive) {
         return;
     }
@@ -194,9 +164,7 @@ void SequenceStep::activeChanged(int val) {
 }
 
 
-// ******************************************
 void SequenceStep::noteChanged(int val) {
-// ******************************************
     if (!sendNote) {
         return;
     }
@@ -205,9 +173,7 @@ void SequenceStep::noteChanged(int val) {
 }
 
 
-// ******************************************
 void SequenceStep::octaveChanged(int val) {
-// ******************************************
     if (!sendNote) {
         return;
     }
@@ -216,9 +182,8 @@ void SequenceStep::octaveChanged(int val) {
 }
 
 
-// ******************************************
+
 void SequenceStep::valueChanged(int val) {
-// ******************************************
     if (!sendValue) {
         return;
     }
@@ -226,9 +191,8 @@ void SequenceStep::valueChanged(int val) {
 }
 
 
-// ******************************************
+
 void SequenceStep::tieChanged(int val) {
-// ******************************************
     if (!sendTie) {
         return;
     }
@@ -236,13 +200,9 @@ void SequenceStep::tieChanged(int val) {
 }
 
 
-// ******************************************
 void SequenceStep::velocityChanged(int val) {
-// ******************************************
     if (!sendVelocity) {
         return;
     }
     emit velocityChanged(step, val);
 }
-
-

@@ -23,9 +23,7 @@
 #include <QDebug>
 
 
-// ******************************************
 bool FileIO::loadFromDisk(const QString &location, Message &data) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Patch::loadFromDisk(" << location << ")";
 #endif
@@ -54,9 +52,7 @@ bool FileIO::loadFromDisk(const QString &location, Message &data) {
 }
 
 
-// ******************************************
 void FileIO::appendToCharVector(const QByteArray &byteArray, Message &data) {
-// ******************************************
     const unsigned int &len = byteArray.length();
     for (unsigned int i = 0; i < len; i++) {
         data.push_back(byteArray.at(i));
@@ -64,9 +60,7 @@ void FileIO::appendToCharVector(const QByteArray &byteArray, Message &data) {
 }
 
 
-// ******************************************
 void FileIO::appendToByteArray(const Message &data, QByteArray &byteArray) {
-// ******************************************
     const unsigned int &len = data.size();
     for (unsigned int i = 0; i < len; i++) {
         byteArray.append(data.at(i));
@@ -74,18 +68,14 @@ void FileIO::appendToByteArray(const Message &data, QByteArray &byteArray) {
 }
 
 
-// ******************************************
 void FileIO::appendToByteArray(const unsigned char *data, const unsigned int &amount, QByteArray &byteArray) {
-// ******************************************
     for (unsigned int i = 0; i < amount; i++) {
         byteArray.append(data[i]);
     }
 }
 
 
-// ******************************************
 bool FileIO::saveToDisk(const QString &location, const QByteArray &data) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "FileIO::saveToDisk(" << location << ")";
 #endif

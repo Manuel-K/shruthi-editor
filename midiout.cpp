@@ -20,9 +20,8 @@
 #include "midi.h"
 #include <QDebug>
 
-// ******************************************
+
 MidiOut::MidiOut() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiOut::MidiOut()";
 #endif
@@ -34,14 +33,11 @@ MidiOut::MidiOut() {
     catch (RtMidiError &error) {
         error.printMessage();
         qWarning() << "MidiOut::MidiOut(): could not initilize midi port for writing.";
-//         exit(EXIT_FAILURE);
     }
 }
 
 
-// ******************************************
 MidiOut::~MidiOut() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiOut::~MidiOut()";
 #endif
@@ -49,17 +45,17 @@ MidiOut::~MidiOut() {
 }
 
 
-// ******************************************
 bool MidiOut::open(const unsigned int &port) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "MidiOut::open(" << port << ")";
 #endif
-    if (output==port && opened)
+    if (output==port && opened) {
         return true;
+    }
 
-    if (opened)
+    if (opened) {
         midiout->closePort();
+    }
 
     if (port >= midiout->getPortCount()) {
         qWarning() << "MidiOut::open(): trying to open midi port for writing which doesn't exist.";
@@ -76,17 +72,16 @@ bool MidiOut::open(const unsigned int &port) {
 #endif
         opened = false;
     }
-    if (opened)
+    if (opened) {
         output = port;
-    else
+    } else {
         qWarning() << "MidiOut::open(): could not open midi port for writing.";
+    }
     return opened;
 }
 
 
-// ******************************************
 bool MidiOut::write(Message &sysex) {
-// ******************************************
     if (!opened) {
         qDebug() << "MidiOut::write(Message&): could not send. Port not opened.";
         return false;
@@ -104,9 +99,7 @@ bool MidiOut::write(Message &sysex) {
 }
 
 
-// ******************************************
 bool MidiOut::write(const unsigned char &c1, const unsigned char &c2, const unsigned char &c3) {
-// ******************************************
     Message message;
     message.push_back(c1);
     message.push_back(c2);
@@ -115,9 +108,7 @@ bool MidiOut::write(const unsigned char &c1, const unsigned char &c2, const unsi
 }
 
 
-// ******************************************
 bool MidiOut::write(const unsigned char &c1, const unsigned char &c2) {
-// ******************************************
     Message message;
     message.push_back(c1);
     message.push_back(c2);
@@ -125,16 +116,12 @@ bool MidiOut::write(const unsigned char &c1, const unsigned char &c2) {
 }
 
 
-// ******************************************
-// ******************************************
+//
 // Wrappers:
-// ******************************************
-// ******************************************
+//
 
 
-// ******************************************
 bool MidiOut::request(const unsigned char &which) {
-// ******************************************
     Message message;
 
     for (int i = 0; i < 6; i++) {
@@ -150,24 +137,22 @@ bool MidiOut::request(const unsigned char &which) {
 }
 
 
-// ******************************************
 bool MidiOut::nrpn(const int &nrpn, const int &value) {
-// ******************************************
     if (!opened) {
         qDebug() << "MidiOut::nrpn(): could not send. Port not opened.";
         return false;
     }
 
-    int nrpn_msb=nrpn>>7;
-    int nrpn_lsb=nrpn%128;
-    int value_msb;
-    int value_lsb;
-    if (value<0) {
-      value_msb=1;
-      value_lsb=(value+128)%128;
+    int nrpn_msb = nrpn >> 7;
+    int nrpn_lsb = nrpn % 128;
+    int value_msb = 0;
+    int value_lsb = 0;
+    if (value < 0) {
+        value_msb = 1;
+        value_lsb = (value + 128) % 128;
     } else {
-      value_msb=value>>7;
-      value_lsb=value%128;
+        value_msb = value >> 7;
+        value_lsb = value % 128;
     }
     return (write(176, 99, nrpn_msb) &&
             write(176, 98, nrpn_lsb) &&
@@ -177,30 +162,22 @@ bool MidiOut::nrpn(const int &nrpn, const int &value) {
 
 
 
-// ******************************************
 bool MidiOut::noteOn(const unsigned char &channel, const unsigned char &note, const unsigned char &velocity) {
-// ******************************************
-    return write((144|channel),note,velocity);
+    return write((144 | channel), note, velocity);
 }
 
 
-// ******************************************
 bool MidiOut::noteOff(const unsigned char &channel, const unsigned char &note) {
-// ******************************************
-    return write((128|channel),note,0);
+    return write((128 | channel), note, 0);
 }
 
 
-// ******************************************
 bool MidiOut::allNotesOff(const unsigned char &channel) {
-// ******************************************
-    return controlChange(channel,123,0);
+    return controlChange(channel, 123, 0);
 }
 
 
-// ******************************************
 bool MidiOut::programChange(const unsigned char &channel, const int &program) {
-// ******************************************
     const int &bank = program / 128;
     const int &p = program % 128;
 
@@ -208,9 +185,7 @@ bool MidiOut::programChange(const unsigned char &channel, const int &program) {
 }
 
 
-// ******************************************
 bool MidiOut::controlChange(const unsigned char &channel, const unsigned char &controller, const unsigned char &value) {
-// ******************************************
     if (!opened) {
         qDebug() << "MidiOut::controlChange(): could not send. Port not opened.";
         return false;
@@ -219,70 +194,47 @@ bool MidiOut::controlChange(const unsigned char &channel, const unsigned char &c
 }
 
 
-// ******************************************
-// ******************************************
+//
 // Requests:
-// ******************************************
-// ******************************************
+//
 
 
-// ******************************************
 bool MidiOut::patchTransferRequest() {
-// ******************************************
     return request(0x11);
 }
 
 
-// ******************************************
-bool MidiOut::sequenceTransferRequest()
-// ******************************************
-{
+bool MidiOut::sequenceTransferRequest() {
     return request(0x12);
 }
 
 
-// ******************************************
-bool MidiOut::versionRequest()
-// ******************************************
-{
+bool MidiOut::versionRequest() {
     return request(0x1c);
 }
 
 
-// ******************************************
 bool MidiOut::numBanksRequest() {
-// ******************************************
     return request(0x1b);
 }
 
 
-// ******************************************
 bool MidiOut::currentPatchSequenceRequest() {
-// ******************************************
     return request(0x1a);
 }
 
 
-// ******************************************
-bool MidiOut::patchWriteRequest(const int &slot)
-// ******************************************
-{
+bool MidiOut::patchWriteRequest(const int &slot) {
     return writeRequest(slot, 0x21);
 }
 
 
-// ******************************************
-bool MidiOut::sequenceWriteRequest(const int &slot)
-// ******************************************
-{
+bool MidiOut::sequenceWriteRequest(const int &slot) {
     return writeRequest(slot, 0x22);
 }
 
 
-// ******************************************
-bool MidiOut::writeRequest(const int &slot, const unsigned char &which)
-// ******************************************
-{
+bool MidiOut::writeRequest(const int &slot, const unsigned char &which) {
     if (slot < 0) {
         qDebug() << "MidiOut::writeRequest(): Slot" << slot << "is invalid.";
         return false;

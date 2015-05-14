@@ -34,9 +34,7 @@ class LibraryDialog;
 class QFont;
 
 
-// ******************************************
 class LibraryDialog : public QDialog {
-// ******************************************
         Q_OBJECT
 
     public:

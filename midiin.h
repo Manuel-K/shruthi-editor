@@ -25,9 +25,8 @@
 #include "RtMidi.h"
 
 
-// ******************************************
+
 class NRPN {
-// ******************************************
     public:
         NRPN();
         int getValue();
@@ -41,10 +40,9 @@ class NRPN {
         int value;
 };
 
-// ******************************************
+
 class MidiIn : public QObject {
-// ******************************************
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         ~MidiIn();

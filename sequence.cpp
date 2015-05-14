@@ -23,27 +23,19 @@
 #include <QDebug>
 
 
-// ******************************************
 Sequence::Sequence() {
-// ******************************************
     reset();
 }
 
 
-// ******************************************
 Sequence::~Sequence() {
-// ******************************************
 }
 
 
-// ******************************************
 const int Sequence::ERROR_RETURN = -111;
-// ******************************************
 
 
-// ******************************************
 bool Sequence::parseSysex(const Message *message) {
-// ******************************************
     // len should be 75
     if (message->size() != 75) {
         qDebug() << "Sequence::parseFullSysex(): wrong length.";
@@ -66,9 +58,7 @@ bool Sequence::parseSysex(const Message *message) {
 }
 
 
-// ******************************************
 void Sequence::generateSysex(Message *message) const {
-// ******************************************
     unsigned char temp[32];
     packData(temp);
 
@@ -80,9 +70,8 @@ void Sequence::generateSysex(Message *message) const {
     Midi::generateSysex(&payload, 0x02, 0x00, message);
 }
 
-// ******************************************
+
 const int &Sequence::getValue(const int &step, const SequenceParameter::SequenceParameter &sp) const {
-// ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
     }
@@ -104,9 +93,7 @@ const int &Sequence::getValue(const int &step, const SequenceParameter::Sequence
 }
 
 
-// ******************************************
 void Sequence::setValue(const int &step, const SequenceParameter::SequenceParameter &sp, const int &val) {
-// ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return;
     }
@@ -133,9 +120,7 @@ void Sequence::setValue(const int &step, const SequenceParameter::SequenceParame
 }
 
 
-// ******************************************
 void Sequence::unpackData(const unsigned char *data) {
-// ******************************************
     for (unsigned int i = 0; i < 16; i++) {
         mActive[i] = data[2*i] >> 7; //1==on or 0==silence
         mNote[i] = data[2*i] & 0x7F; // 0..127
@@ -149,9 +134,7 @@ void Sequence::unpackData(const unsigned char *data) {
 }
 
 
-// ******************************************
 void Sequence::packData(unsigned char data[]) const {
-// ******************************************
     for (unsigned int i = 0; i < 16; i++) {
         data[2*i] = mActive[i] << 7 | mNote[i];
         data[2*i+1] = mTie[i] << 7 | mVelocity[i] << 4 | mValue[i];
@@ -159,9 +142,7 @@ void Sequence::packData(unsigned char data[]) const {
 }
 
 
-// ******************************************
 unsigned char Sequence::INIT_SEQUENCE[] = {
-// ******************************************
     0x80 | 48, 0x00 | 0x70 | 0x0,
     0x80 | 48, 0x80 | 0x50 | 0x0,
     0x80 | 60, 0x00 | 0x50 | 0x0,
@@ -181,16 +162,12 @@ unsigned char Sequence::INIT_SEQUENCE[] = {
 };
 
 
-// ******************************************
 void Sequence::reset() {
-// ******************************************
     unpackData(INIT_SEQUENCE);
 }
 
 
-// ******************************************
 bool Sequence::equals(const Sequence &other) const {
-// ******************************************
     for (int s = 0; s < NUMBER_OF_STEPS; s++) {
         if(mActive[s] != other.mActive[s] ||
                 mNote[s] != other.mNote[s] ||
@@ -205,9 +182,7 @@ bool Sequence::equals(const Sequence &other) const {
 }
 
 
-// ******************************************
 void Sequence::set(const Sequence &other) {
-// ******************************************
     for (int s = 0; s < NUMBER_OF_STEPS; s++) {
         mActive[s] = other.mActive[s];
         mNote[s] = other.mNote[s];
@@ -218,9 +193,7 @@ void Sequence::set(const Sequence &other) {
 }
 
 
-// ******************************************
 void Sequence::print() const {
-// ******************************************
     QString typestr;
     for (unsigned int i = 0; i < 16; i++) {
         if (mActive[i]) {
@@ -239,9 +212,7 @@ void Sequence::print() const {
 }
 
 
-// ******************************************
 void Sequence::setValueById(const int &id, const int &val) {
-// ******************************************
     if (id < 0 || id >= 80) {
         return;
     }
@@ -267,25 +238,23 @@ void Sequence::setValueById(const int &id, const int &val) {
 }
 
 
-// ******************************************
 int Sequence::calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp) {
-// ******************************************
     if (step < 0 || step >= NUMBER_OF_STEPS) {
         return ERROR_RETURN;
     }
 
     switch(sp) {
-    case SequenceParameter::ACTIVE:
-        return 5 * step;
-    case SequenceParameter::NOTE:
-        return 5 * step + 1;
-    case SequenceParameter::TIE:
-        return 5 * step + 2;
-    case SequenceParameter::VELOCITY:
-        return 5 * step + 3;
-    case SequenceParameter::VALUE:
-        return 5 * step + 4;
-    default:
-        return ERROR_RETURN;
+        case SequenceParameter::ACTIVE:
+            return 5 * step;
+        case SequenceParameter::NOTE:
+            return 5 * step + 1;
+        case SequenceParameter::TIE:
+            return 5 * step + 2;
+        case SequenceParameter::VELOCITY:
+            return 5 * step + 3;
+        case SequenceParameter::VALUE:
+            return 5 * step + 4;
+        default:
+            return ERROR_RETURN;
     }
 }

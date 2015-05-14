@@ -22,9 +22,7 @@
 #include <QString>
 
 namespace QueueAction {
-// ******************************************
 enum QueueAction {
-// ******************************************
     PATCH_PARAMETER_CHANGE_EDITOR, SYSEX_FETCH_REQUEST,
     SYSEX_SEND_DATA, PATCH_PARAMETER_CHANGE_MIDI, SYSEX_RECEIVED,
     SET_PATCHNAME, FILEIO_LOAD, FILEIO_SAVE,
@@ -36,58 +34,57 @@ enum QueueAction {
 };
 }
 
-// ******************************************
+
 struct QueueItem {
-// ******************************************
-    QueueAction::QueueAction action;
-    int int0;
-    int int1;
-    int int2;
-    QString string;
-    unsigned int size;
-    unsigned char *message;
-    // constructors:
-    QueueItem() {
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a) {
-        action = a;
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a, int i0, int i1, int i2) {
-        action = a;
-        int0 = i0;
-        int1 = i1;
-        int2 = i2;
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a, int i0, int i1) {
-        action = a;
-        int0 = i0;
-        int1 = i1;
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a, int i0) {
-        action = a;
-        int0 = i0;
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a, QString s) {
-        action = a;
-        string = s;
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a, QString s, int i0) {
-        action = a;
-        string = s;
-        int0 = i0;
-        message = NULL;
-    }
-    QueueItem(QueueAction::QueueAction a, unsigned char *m, unsigned int s) {
-        action = a;
-        message = m;
-        size = s;
-    }
+        QueueAction::QueueAction action;
+        int int0;
+        int int1;
+        int int2;
+        QString string;
+        unsigned int size;
+        unsigned char *message;
+        // constructors:
+        QueueItem() {
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a) {
+            action = a;
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a, int i0, int i1, int i2) {
+            action = a;
+            int0 = i0;
+            int1 = i1;
+            int2 = i2;
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a, int i0, int i1) {
+            action = a;
+            int0 = i0;
+            int1 = i1;
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a, int i0) {
+            action = a;
+            int0 = i0;
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a, QString s) {
+            action = a;
+            string = s;
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a, QString s, int i0) {
+            action = a;
+            string = s;
+            int0 = i0;
+            message = NULL;
+        }
+        QueueItem(QueueAction::QueueAction a, unsigned char *m, unsigned int s) {
+            action = a;
+            message = m;
+            size = s;
+        }
 };
 
 #endif

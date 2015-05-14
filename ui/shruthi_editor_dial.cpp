@@ -21,11 +21,9 @@
 #include "ui_shruthi_editor_dial.h"
 
 
-// ******************************************
 ShruthiEditorDial::ShruthiEditorDial(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ShruthiEditorDial) {
-// ******************************************
     ui->setupUi(this);
 
     sendValueChanges = true;
@@ -38,55 +36,41 @@ ShruthiEditorDial::ShruthiEditorDial(QWidget *parent) :
 }
 
 
-// ******************************************
 ShruthiEditorDial::~ShruthiEditorDial() {
-// ******************************************
     delete ui;
 }
 
 
-// ******************************************
 void ShruthiEditorDial::setParameter(const int &parameter_) {
-// ******************************************
     parameter = parameter_;
 }
 
 
-// ******************************************
 void ShruthiEditorDial::setName(const QString &name) {
-// ******************************************
     ui->name->setText(name);
 }
 
 
-// ******************************************
 void ShruthiEditorDial::setLimits(const int &min, const int &max) {
-// ******************************************
     ui->dial->setMinimum(min);
     ui->dial->setMaximum(max);
 }
 
 
-// ******************************************
 void ShruthiEditorDial::setFormatter(QString (*formatter_)(int)) {
-// ******************************************
     formatter = formatter_;
     valueChanged(ui->dial->value());
 }
 
 
-// ******************************************
 void ShruthiEditorDial::setValue(const int &value) {
-// ******************************************
     sendValueChanges = false;
     ui->dial->setValue(value);
     sendValueChanges = true;
 }
 
 
-// ******************************************
 void ShruthiEditorDial::setDisplay(const int &value) {
-// ******************************************
     if (!formatter) {
         ui->display->setText(QString("%1").arg(value));
     } else {
@@ -100,9 +84,7 @@ void ShruthiEditorDial::setDisplay(const int &value) {
 //
 
 
-// ******************************************
 void ShruthiEditorDial::valueChanged(int value) {
-// ******************************************
     setDisplay(value);
     if (sendValueChanges) {
         emit valueChanged(parameter, value);

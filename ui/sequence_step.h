@@ -26,10 +26,8 @@ namespace Ui {
 class SequenceStep;
 }
 
-// ******************************************
-class SequenceStep : public QWidget
-// ******************************************
-{
+
+class SequenceStep : public QWidget {
         Q_OBJECT
 
     public:

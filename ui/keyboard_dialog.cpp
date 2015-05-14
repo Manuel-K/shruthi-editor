@@ -23,11 +23,10 @@
 #include <QDebug>
 #endif
 
-// ******************************************
+
 KeyboardDialog::KeyboardDialog(QWidget *parent):
     QDialog(parent),
     ui(new Ui::KeyboardDialog) {
-// ******************************************
     ui->setupUi(this);
 
     noteVelocity = 64;
@@ -45,10 +44,7 @@ KeyboardDialog::KeyboardDialog(QWidget *parent):
 }
 
 
-// ******************************************
-KeyboardDialog::~KeyboardDialog()
-// ******************************************
-{
+KeyboardDialog::~KeyboardDialog() {
     delete ui;
 }
 
@@ -56,9 +52,8 @@ KeyboardDialog::~KeyboardDialog()
 // Slots:
 //
 
-// ******************************************
+
 void KeyboardDialog::keyPressed(int key) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::keyPressed()" << key;
 #endif
@@ -66,9 +61,8 @@ void KeyboardDialog::keyPressed(int key) {
     emit enqueue(signal);
 }
 
-// ******************************************
+
 void KeyboardDialog::panicPushed() {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::panicPushed()";
 #endif
@@ -76,9 +70,8 @@ void KeyboardDialog::panicPushed() {
     emit enqueue(signal);
 }
 
-// ******************************************
+
 void KeyboardDialog::keyReleased(int key) {
-// ******************************************
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::keyReleased()" << key;
 #endif
@@ -87,9 +80,7 @@ void KeyboardDialog::keyReleased(int key) {
 }
 
 
-// ******************************************
 void KeyboardDialog::setVelocity(int vel) {
-// ******************************************
     noteVelocity = vel;
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::setVelocity()" << vel;
@@ -97,9 +88,7 @@ void KeyboardDialog::setVelocity(int vel) {
 }
 
 
-// ******************************************
 void KeyboardDialog::setOctave(int oct) {
-// ******************************************
     ui->keys->setOctave(oct);
 #ifdef DEBUGMSGS
     qDebug() << "setOctave()" << oct;
