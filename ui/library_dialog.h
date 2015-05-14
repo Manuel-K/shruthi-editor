@@ -65,8 +65,8 @@ class LibraryDialog : public QDialog {
         QMenu *patchContextMenu;
         QMenu *sequenceContextMenu;
 
-        bool dontScroll; // to prevent scroll bar bouncing
-        bool dontSyncSelection; // to prevent selection bouncing
+        bool dontCopyScrollBarPosition; // to prevent scroll bar bouncing
+        bool dontCopySelection; // to prevent selection bouncing
 
     public slots:
         void redrawItems(int what, int start, int stop);
@@ -100,10 +100,10 @@ class LibraryDialog : public QDialog {
         void loadAppend();
         void save();
 
-        void syncToSequenceScrollBar(int val);
-        void syncToPatchScrollBar(int val);
-        void syncToSequenceSelection();
-        void syncToPatchSelection();
+        void copyScrollBarPositionFromPatchToSequence(int val);
+        void copyScrollBarPositionFromSequenceToPatch(int val);
+        void copySelectionFromPatchToSequence();
+        void copySelectionFromSequenceToPatch();
 
     signals:
         void enqueue(QueueItem);

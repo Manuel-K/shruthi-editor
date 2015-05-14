@@ -37,8 +37,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     ui->patchList->addItem("If you can read this,");
     ui->sequenceList->addItem("something is wrong!");
 
-    dontScroll = false;
-    dontSyncSelection = false;
+    dontCopyScrollBarPosition = false;
+    dontCopySelection = false;
 
     // Setup fonts
     normalFont = ui->patchList->item(0)->font();
@@ -91,11 +91,11 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     connect(ui->save, SIGNAL(clicked()), this, SLOT(save()));
 
     // synchronize list widget scrolling:
-    connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToSequenceScrollBar(int)));
-    connect(ui->sequenceList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(syncToPatchScrollBar(int)));
+    connect(ui->patchList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(copyScrollBarPositionFromPatchToSequence(int)));
+    connect(ui->sequenceList->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(copyScrollBarPositionFromSequenceToPatch(int)));
     // synchronize selection changes:
-    connect(ui->patchList, SIGNAL(itemSelectionChanged()), this, SLOT(syncToSequenceSelection()));
-    connect(ui->sequenceList, SIGNAL(itemSelectionChanged()), this, SLOT(syncToPatchSelection()));
+    connect(ui->patchList, SIGNAL(itemSelectionChanged()), this, SLOT(copySelectionFromPatchToSequence()));
+    connect(ui->sequenceList, SIGNAL(itemSelectionChanged()), this, SLOT(copySelectionFromSequenceToPatch()));
 }
 
 
@@ -502,7 +502,7 @@ void LibraryDialog::patchMove(const QModelIndex &parent, int start, int end, con
         return;
     }
 
-    syncToSequenceSelection();
+    copySelectionFromPatchToSequence();
 
     int flag = Library::FLAG_PATCH;
     if (ui->sync->isChecked()) {
@@ -521,7 +521,7 @@ void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, 
         return;
     }
 
-    syncToPatchSelection();
+    copySelectionFromSequenceToPatch();
 
     int flag = Library::FLAG_SEQUENCE;
     if (ui->sync->isChecked()) {
@@ -531,49 +531,49 @@ void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, 
 }
 
 
-void LibraryDialog::syncToSequenceScrollBar(int val) {
-    if (dontScroll || !ui->sync->isChecked()) {
+void LibraryDialog::copyScrollBarPositionFromPatchToSequence(int val) {
+    if (dontCopyScrollBarPosition || !ui->sync->isChecked()) {
         return;
     }
-    dontScroll = true;
+    dontCopyScrollBarPosition = true;
     ui->sequenceList->verticalScrollBar()->setValue(val);
-    dontScroll = false;
+    dontCopyScrollBarPosition = false;
 }
 
 
-void LibraryDialog::syncToPatchScrollBar(int val) {
-    if (dontScroll || !ui->sync->isChecked()) {
+void LibraryDialog::copyScrollBarPositionFromSequenceToPatch(int val) {
+    if (dontCopyScrollBarPosition || !ui->sync->isChecked()) {
         return;
     }
-    dontScroll = true;
+    dontCopyScrollBarPosition = true;
     ui->patchList->verticalScrollBar()->setValue(val);
-    dontScroll = false;
+    dontCopyScrollBarPosition = false;
 }
 
 
-void LibraryDialog::syncToSequenceSelection() {
-    if (dontSyncSelection || !ui->sync->isChecked()) {
+void LibraryDialog::copySelectionFromPatchToSequence() {
+    if (dontCopySelection || !ui->sync->isChecked()) {
         return;
     }
 
-    dontSyncSelection = true;
+    dontCopySelection = true;
     int rows = ui->patchList->count();
     for (int i = 0; i < rows; i++) {
         ui->sequenceList->item(i)->setSelected(ui->patchList->item(i)->isSelected());
     }
-    dontSyncSelection = false;
+    dontCopySelection = false;
 }
 
 
-void LibraryDialog::syncToPatchSelection() {
-    if (dontSyncSelection || !ui->sync->isChecked()) {
+void LibraryDialog::copySelectionFromSequenceToPatch() {
+    if (dontCopySelection || !ui->sync->isChecked()) {
         return;
     }
 
-    dontSyncSelection = true;
+    dontCopySelection = true;
     int rows = ui->sequenceList->count();
     for (int i = 0; i < rows; i++) {
         ui->patchList->item(i)->setSelected(ui->sequenceList->item(i)->isSelected());
     }
-    dontSyncSelection = false;
+    dontCopySelection = false;
 }
