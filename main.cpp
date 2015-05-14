@@ -17,9 +17,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QApplication>
-#include <QtCore>
+#ifdef DEBUGMSGS
 #include <QDebug>
+#endif
 #include <QStatusBar>
+#include <QThread>
 
 #include "ui/main_window.h"
 #include "ui/keyboard_dialog.h"
