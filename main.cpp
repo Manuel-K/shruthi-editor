@@ -17,26 +17,29 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QApplication>
-#include <QtCore>
+#ifdef DEBUGMSGS
 #include <QDebug>
+#endif
+#include <QStatusBar>
+#include <QThread>
 
-#include "shruthi-editor.h"
-#include "keyboard-dialog.h"
-#include "sequence_editor.h"
-#include "library_dialog.h"
+#include "ui/main_window.h"
+#include "ui/keyboard_dialog.h"
+#include "ui/sequence_editor.h"
+#include "ui/library_dialog.h"
 
-#include "lib_editor.h"
-#include "lib_midiin.h"
-#include "lib_signalrouter.h"
+#include "editor.h"
+#include "midiin.h"
+#include "signalrouter.h"
 
 #ifdef FUSION
 #include <QStyleFactory>
 #endif
 
-// ******************************************
+
 int main(int argc, char *argv[]) {
-// ******************************************
-    qRegisterMetaType<queueitem_t>("queueitem_t");
+    qRegisterMetaType<QueueItem>("QueueItem");
+    qRegisterMetaType<Config>("Config");
 
     int retVal;
 
@@ -59,7 +62,7 @@ int main(int argc, char *argv[]) {
         editor.moveToThread(&editorThread);
 
         // editor: incoming signals
-        editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)), SLOT(process(queueitem_t)));
+        editor.connect(&sr, SIGNAL(editorProcess(QueueItem)), SLOT(process(QueueItem)));
         editor.connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
         editor.connect(&sr, SIGNAL(setMidiChannel(unsigned char)), SLOT(setMidiChannel(unsigned char)));
         editor.connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
@@ -76,7 +79,7 @@ int main(int argc, char *argv[]) {
 
         // Setup main_window
         ShruthiEditorMainWindow *main_window = new ShruthiEditorMainWindow(&editor);
-        main_window->setWindowIcon(QIcon(":/shruthi-editor.png"));
+        main_window->setWindowIcon(QIcon(":/shruthi_editor.png"));
         main_window->setFixedSize(main_window->width(), main_window->height());
         main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -93,21 +96,21 @@ int main(int argc, char *argv[]) {
         main_window->connect(&midiin, SIGNAL(midiInputStatusChanged(bool)), SLOT(midiInputStatusChanged(bool)));
 
         // Setup keyboard
-        Keyboard keys;
+        KeyboardDialog keys;
         keys.connect(main_window, SIGNAL(showKeyboard()), SLOT(show()));
-        keys.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        keys.setWindowIcon(QIcon(":/shruthi_editor.png"));
 
         // Setup SequenceEditor
         SequenceEditor sequence_editor(&editor);
         sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(show()));
-        sequence_editor.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        sequence_editor.setWindowIcon(QIcon(":/shruthi_editor.png"));
         sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
         sequence_editor.connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));
         sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter2(int)), SLOT(redrawPatchParameter(int)));
 
         // Setup LibraryDialog
-        LibraryDialog lib(&editor);
-        lib.setWindowIcon(QIcon(":/shruthi-editor.png"));
+        LibraryDialog lib(editor.getLibrary());
+        lib.setWindowIcon(QIcon(":/shruthi_editor.png"));
         lib.connect(main_window, SIGNAL(showLibrary()), SLOT(show()));
         lib.connect(&editor, SIGNAL(redrawLibraryItems(int,int,int)), SLOT(redrawItems(int,int,int)));
 
@@ -117,12 +120,12 @@ int main(int argc, char *argv[]) {
 
         // signalrouter: incoming signals
         sr.connect(&editor, SIGNAL(finished()), SLOT(editorFinished()));
-        sr.connect(main_window, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&sequence_editor, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&midiin, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&keys, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&lib, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(main_window, SIGNAL(settingsChanged(int,int,unsigned char,int)), SLOT(settingsChanged(int,int,unsigned char,int)));
+        sr.connect(main_window, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&sequence_editor, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&midiin, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&keys, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&lib, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(main_window, SIGNAL(settingsChanged(Config)), SLOT(settingsChanged(Config)));
 
         // start signal router
         srThread.start();

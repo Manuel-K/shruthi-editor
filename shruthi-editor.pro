@@ -22,58 +22,65 @@
 #
 
 
-HEADERS =   RtMidi.h \
-            settings-dialog.h \
-            shruthi-editor.h \
-            lib_patch.h \
-            lib_labels.h \
-            lib_editor.h \
-            lib_config.h \
-            lib_midiout.h \
-            lib_midiin.h \
-            keyboard-dialog.h \
-            lib_signalrouter.h \
-            lib_midi.h \
-            keyboard_widget.h \
-            lib_fileio.h \
-            lib_sequence.h \
-            sequence_editor.h \
-            sequence_step.h \
-            shruthi_editor_dial.h \
-            lib_library.h \
-            library_dialog.h
+HEADERS = \
+    ui/keyboard_dialog.h \
+    ui/keyboard_widget.h \
+    ui/library_dialog.h \
+    ui/main_window.h \
+    ui/sequence_editor.h \
+    ui/sequence_step.h \
+    ui/settings_dialog.h \
+    ui/shruthi_editor_dial.h \
+    RtMidi.h \
+    config.h \
+    editor.h \
+    fileio.h \
+    labels.h \
+    library.h \
+    message.h \
+    midi.h \
+    midiin.h \
+    midiout.h \
+    patch.h \
+    queueitem.h \
+    sequence.h \
+    sequence_parameter.h \
+    signalrouter.h
 
-SOURCES =   RtMidi.cpp \
-            settings-dialog.cpp \
-            shruthi-editor.cpp \
-            main.cpp \
-            lib_patch.cpp \
-            lib_labels.cpp \
-            lib_editor.cpp \
-            lib_config.cpp \
-            lib_midiout.cpp \
-            lib_midiin.cpp \
-            keyboard-dialog.cpp \
-            lib_signalrouter.cpp \
-            lib_midi.cpp \
-            keyboard_widget.cpp \
-            lib_fileio.cpp \
-            lib_sequence.cpp \
-            sequence_editor.cpp \
-            sequence_step.cpp \
-            shruthi_editor_dial.cpp \
-            lib_library.cpp \
-            library_dialog.cpp
+SOURCES = \
+    ui/keyboard_dialog.cpp \
+    ui/keyboard_widget.cpp \
+    ui/library_dialog.cpp \
+    ui/main_window.cpp \
+    ui/sequence_editor.cpp \
+    ui/sequence_step.cpp \
+    ui/settings_dialog.cpp \
+    ui/shruthi_editor_dial.cpp \
+    RtMidi.cpp \
+    config.cpp \
+    editor.cpp \
+    fileio.cpp \
+    labels.cpp \
+    library.cpp \
+    main.cpp \
+    midi.cpp \
+    midiin.cpp \
+    midiout.cpp \
+    patch.cpp \
+    sequence.cpp \
+    signalrouter.cpp
 
-FORMS =     settings-dialog.ui \
-            shruthi-editor.ui \
-            keyboard.ui \
-            sequence_editor.ui \
-            sequence_step.ui \
-            shruthi_editor_dial.ui \
-            library_dialog.ui
+FORMS = \
+    ui/keyboard_dialog.ui \
+    ui/library_dialog.ui \
+    ui/main_window.ui \
+    ui/sequence_editor.ui \
+    ui/sequence_step.ui \
+    ui/settings_dialog.ui \
+    ui/shruthi_editor_dial.ui
 
-RESOURCES = shruthi-editor.qrc
+RESOURCES = \
+    ui/shruthi_editor.qrc
 
 
 #
@@ -110,14 +117,14 @@ macx {
     message(RtMidi will use macosx core.)
     DEFINES += __MACOSX_CORE__
     LIBS += -framework CoreMidi -framework CoreAudio -framework CoreFoundation
-    ICON = shruthi-editor.icns
+    ICON = ui/shruthi_editor.icns
 }
 
 win32 {
     message(RtMidi will use windows mm.)
     DEFINES += __WINDOWS_MM__
     LIBS += -lwinmm
-    RC_FILE = shruthi-editor.rc
+    RC_FILE = ui/shruthi_editor.rc
 }
 
 

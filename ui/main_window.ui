@@ -1,0 +1,1873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Manuel Krönig</author>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>990</width>
+    <height>681</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Shruthi-Editor</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>2</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>2</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="gOsc1">
+      <property name="title">
+       <string>Oscillator 1:</string>
+      </property>
+      <widget class="QComboBox" name="c0">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>241</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l0">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Shape:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l11">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sub-Osc:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c11">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>140</y>
+         <width>241</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c1" native="true">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>60</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c2" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>60</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c9" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>60</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <zorder>c2</zorder>
+      <zorder>c1</zorder>
+      <zorder>c0</zorder>
+      <zorder>l0</zorder>
+      <zorder>l11</zorder>
+      <zorder>c11</zorder>
+      <zorder>c9</zorder>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="gOsc2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>14</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Oscillator 2/Patch Name:</string>
+      </property>
+      <widget class="QLabel" name="l4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Shape:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c4">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>241</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l_patch_name">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Name:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="patch_name">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>140</y>
+         <width>241</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="maxLength">
+        <number>8</number>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c5" native="true">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>60</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c6" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>60</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c7" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>60</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="gFil">
+      <property name="title">
+       <string>Filter:</string>
+      </property>
+      <widget class="ShruthiEditorDial" name="c12" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c13" native="true">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c14" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c15" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c84" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>100</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c85" native="true">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>100</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QStackedWidget" name="sw9293">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>100</y>
+         <width>171</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="sw9293_d">
+        <widget class="ShruthiEditorDial" name="c93d" native="true">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>0</y>
+           <width>81</width>
+           <height>71</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="ShruthiEditorDial" name="c92d" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>81</width>
+           <height>71</height>
+          </rect>
+         </property>
+        </widget>
+        <zorder>c92d</zorder>
+        <zorder>c93d</zorder>
+       </widget>
+       <widget class="QWidget" name="sw9293_cb">
+        <widget class="QWidget" name="w93" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>40</y>
+           <width>161</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="l93">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>161</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Mode2:</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="c93">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>141</width>
+            <height>24</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="w92" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>161</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <widget class="QComboBox" name="c92">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>141</width>
+            <height>24</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="l92">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>161</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Mode1:</string>
+          </property>
+         </widget>
+        </widget>
+        <zorder>w92</zorder>
+        <zorder>w93</zorder>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="gEnv1">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Envelope 1:</string>
+      </property>
+      <widget class="ShruthiEditorDial" name="c16" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c17" native="true">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c18" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c19" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QGroupBox" name="gEnv2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>8</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Envelope 2:</string>
+      </property>
+      <widget class="ShruthiEditorDial" name="c20" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c21" native="true">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c22" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c23" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QGroupBox" name="gMix">
+      <property name="title">
+       <string>Mixer:</string>
+      </property>
+      <widget class="QComboBox" name="c3">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>50</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Operator:</string>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c8" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c10" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="gLFO1">
+      <property name="title">
+       <string>LFO 1:</string>
+      </property>
+      <widget class="QComboBox" name="c24">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>241</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l24">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Shape:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c27">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>80</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l27">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sync Mode:</string>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c25" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>50</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c26" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>50</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QGroupBox" name="gLFO2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>9</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>LFO 2:</string>
+      </property>
+      <widget class="QLabel" name="l28">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Shape:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c28">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>241</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l31">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sync Mode:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c31">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>80</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c29" native="true">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>50</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c30" native="true">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>50</y>
+         <width>81</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QGroupBox" name="gOp">
+      <property name="title">
+       <string>Operator 1/2:</string>
+      </property>
+      <widget class="QComboBox" name="c94">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c95">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>50</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c96">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>50</y>
+         <width>71</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c99">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>80</y>
+         <width>71</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c97">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c98">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>80</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_39">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Operator:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_40">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Input 1:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_41">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Input 2:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QGroupBox" name="gMod1">
+      <property name="title">
+       <string>Modulation Matrix:</string>
+      </property>
+      <widget class="QComboBox" name="c32">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c33">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>60</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_25">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Amount:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_26">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Source:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_27">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Target:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c36">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>100</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c35">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c39">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>140</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c38">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c42">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>180</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c41">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>180</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QWidget" name="w34" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>50</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c34">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d34">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w40" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>130</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c40">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d40">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w43" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>170</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c43">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d43">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w37" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>90</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c37">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d37">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QGroupBox" name="gMod2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>16</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Modulation Matrix 2:</string>
+      </property>
+      <widget class="QComboBox" name="c44">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c45">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>60</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c50">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c53">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>180</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c47">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c51">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>140</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c48">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>100</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c54">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>180</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_42">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Amount:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_43">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Source:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_46">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Target:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="w46" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>50</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c46">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d46">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w49" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>90</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c49">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d49">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w52" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>130</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c52">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d52">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w55" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>170</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QLabel" name="d55">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QDial" name="c55">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QGroupBox" name="gMod3">
+      <property name="title">
+       <string>Modulation Matrix 3:</string>
+      </property>
+      <widget class="QComboBox" name="c66">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>180</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c60">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>100</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c56">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c59">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c57">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>60</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c65">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>180</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c63">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>140</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="c62">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>121</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_47">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>30</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Amount:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_48">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Source:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_49">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Target:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="w58" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>50</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c58">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d58">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w61" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>90</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c61">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d61">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w64" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>130</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c64">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d64">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="w67" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>170</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <widget class="QDial" name="c67">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>0</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="d67">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>990</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Fi&amp;le</string>
+    </property>
+    <addaction name="actionLoadProgram"/>
+    <addaction name="actionSaveProgram"/>
+    <addaction name="separator"/>
+    <addaction name="actionResetPatch"/>
+    <addaction name="actionResetPatchPre100"/>
+    <addaction name="actionRandomizePatch"/>
+    <addaction name="separator"/>
+    <addaction name="actionResetSequence"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuMidi">
+    <property name="title">
+     <string>Shr&amp;uthi</string>
+    </property>
+    <addaction name="actionFetchProgram"/>
+    <addaction name="actionSendProgram"/>
+    <addaction name="separator"/>
+    <addaction name="actionFetchPatch"/>
+    <addaction name="actionSendPatch"/>
+    <addaction name="separator"/>
+    <addaction name="actionFetchSequence"/>
+    <addaction name="actionSendSequence"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpenSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAboutShruthiEditor"/>
+    <addaction name="actionAboutQt"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionKeyboard"/>
+    <addaction name="actionOpenSequenceEditor"/>
+    <addaction name="actionOpenLibrary"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuMidi"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <action name="actionLoadProgram">
+   <property name="text">
+    <string>&amp;Load Program...</string>
+   </property>
+  </action>
+  <action name="actionSaveProgram">
+   <property name="text">
+    <string>&amp;Save Program...</string>
+   </property>
+  </action>
+  <action name="actionFetchPatch">
+   <property name="text">
+    <string>Fetc&amp;h Patch</string>
+   </property>
+  </action>
+  <action name="actionSendPatch">
+   <property name="text">
+    <string>Send &amp;Patch</string>
+   </property>
+  </action>
+  <action name="actionOpenSettings">
+   <property name="text">
+    <string>S&amp;ettings...</string>
+   </property>
+  </action>
+  <action name="actionResetPatch">
+   <property name="text">
+    <string>&amp;Reset Patch</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionAboutShruthiEditor">
+   <property name="text">
+    <string>&amp;About Shruthi-Editor</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="actionRandomizePatch">
+   <property name="text">
+    <string>Randomize &amp;Patch</string>
+   </property>
+  </action>
+  <action name="actionKeyboard">
+   <property name="text">
+    <string>Open &amp;Keyboard</string>
+   </property>
+  </action>
+  <action name="actionResetPatchPre100">
+   <property name="text">
+    <string>Reset Patch (pre &amp;1.00)</string>
+   </property>
+  </action>
+  <action name="actionOpenSequenceEditor">
+   <property name="text">
+    <string>Open &amp;Sequence Editor</string>
+   </property>
+  </action>
+  <action name="actionFetchSequence">
+   <property name="text">
+    <string>Fet&amp;ch Sequence</string>
+   </property>
+  </action>
+  <action name="actionSendSequence">
+   <property name="text">
+    <string>Se&amp;nd Sequence</string>
+   </property>
+  </action>
+  <action name="actionLoadSequence">
+   <property name="text">
+    <string>L&amp;oad Sequence...</string>
+   </property>
+  </action>
+  <action name="actionSaveSequence">
+   <property name="text">
+    <string>S&amp;ave Sequence...</string>
+   </property>
+  </action>
+  <action name="actionResetSequence">
+   <property name="text">
+    <string>R&amp;eset Sequence</string>
+   </property>
+  </action>
+  <action name="actionOpenLibrary">
+   <property name="text">
+    <string>Open &amp;Library</string>
+   </property>
+  </action>
+  <action name="actionFetchProgram">
+   <property name="text">
+    <string>&amp;Fetch Program</string>
+   </property>
+  </action>
+  <action name="actionSendProgram">
+   <property name="text">
+    <string>&amp;Send Program</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ShruthiEditorDial</class>
+   <extends>QWidget</extends>
+   <header>ui/shruthi_editor_dial.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
