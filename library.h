@@ -116,11 +116,9 @@ class Library {
 
         unsigned int fetchStart;
         unsigned int fetchEnd;
+        unsigned int fetchNextRequest;
         unsigned int fetchNextIncomingPatch;
-        unsigned int fetchNextPatchRequest;
-
         unsigned int fetchNextIncomingSequence;
-        unsigned int fetchNextSequenceRequest;
 
         QTime *time;
 

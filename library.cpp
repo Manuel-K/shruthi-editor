@@ -36,10 +36,9 @@ Library::Library(MidiOut *out):
     firmwareVersion(0),
     firmwareVersionRequested(false) {
     abortFetching();
+    fetchNextRequest = 0;
     fetchNextIncomingPatch = 0;
-    fetchNextPatchRequest = 0;
     fetchNextIncomingSequence = 0;
-    fetchNextSequenceRequest = 0;
 
     mRememberedCurrentShruthiProgram = false;
 
@@ -267,16 +266,15 @@ bool Library::startFetching(const int &flags, const int &from, const int &to) {
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
     fetchStart = from;
     fetchEnd = to;
+    fetchNextRequest = from;
 
     if (flags&FLAG_PATCH) {
         fetchPatchMode = true;
         fetchNextIncomingPatch = from;
-        fetchNextPatchRequest = from;
     }
     if (flags&FLAG_SEQUENCE) {
         fetchSequenceMode = true;
         fetchNextIncomingSequence = from;
-        fetchNextSequenceRequest = from;
     }
     time->start();
 
@@ -590,11 +588,11 @@ bool Library::recallShruthiProgramm() {
 
 bool Library::keepFetching() {
 #ifdef DEBUGMSGS
-    std::cout << "Library::keepFetching(): Patches " << fetchPatchMode << " " << fetchNextPatchRequest << " " << fetchEnd << std::endl;
-    std::cout << "Library::keepFetching(): Sequences " << fetchSequenceMode << " " << fetchNextSequenceRequest << " " << fetchEnd << std::endl;
+    std::cout << "Library::keepFetching(): Patches " << fetchPatchMode << " " << fetchNextRequest << " " << fetchEnd << std::endl;
+    std::cout << "Library::keepFetching(): Sequences " << fetchSequenceMode << " " << fetchNextRequest << " " << fetchEnd << std::endl;
 #endif
-    const bool ptc_enabled = fetchPatchMode && fetchNextPatchRequest <= fetchEnd;
-    const bool seq_enabled = fetchSequenceMode && fetchNextSequenceRequest <= fetchEnd;
+    const bool ptc_enabled = fetchPatchMode && fetchNextIncomingPatch <= fetchEnd;
+    const bool seq_enabled = fetchSequenceMode && fetchNextIncomingSequence <= fetchEnd;
 
     if (!ptc_enabled && !seq_enabled) {
         // Finished fetching. Display statistics:
@@ -615,23 +613,34 @@ bool Library::keepFetching() {
         return recallShruthiProgramm();
     }
 
-    const bool prefer_patch = fetchNextPatchRequest <= fetchNextSequenceRequest;
-
-    bool ret;
-
-    if ((ptc_enabled && prefer_patch) || (ptc_enabled && !seq_enabled)) {
-        ret = midiout->programChange(mMidiChannel, fetchNextPatchRequest) && midiout->patchTransferRequest();
-        if (ret) {
-            fetchNextPatchRequest++;
-        }
-    } else {
-        ret = midiout->programChange(mMidiChannel, fetchNextSequenceRequest) && midiout->sequenceTransferRequest();
-        if (ret) {
-            fetchNextSequenceRequest++;
-        }
+    // If fetching patches and sequences only request next program after receiving a sequence:
+    if (fetchPatchMode && fetchSequenceMode && fetchNextIncomingSequence < fetchNextIncomingPatch) {
+        return true;
     }
 
-    if (!ret) {
+    bool ret = true;
+    const bool &oldShruthi = firmwareVersionRequested && firmwareVersion < 1000;
+
+    if (fetchPatchMode || (fetchSequenceMode && !oldShruthi)) {
+        ret = midiout->programChange(mMidiChannel, fetchNextRequest);
+    }
+
+    // change sequence manually for pre 1.00 firmware:
+    if (ret && fetchSequenceMode && oldShruthi) {
+        ret = midiout->programChangeSequence(mMidiChannel, fetchNextRequest);
+    }
+
+    if (ret && fetchPatchMode) {
+        ret = midiout->patchTransferRequest();
+    }
+
+    if (ret && fetchSequenceMode) {
+        ret =  midiout->sequenceTransferRequest();
+    }
+
+    if (ret) {
+        fetchNextRequest++;
+    } else {
         abortFetching();
     }
 
