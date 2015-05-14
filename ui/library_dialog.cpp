@@ -61,6 +61,7 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     patchContextMenu->addAction("Delete Program", this, SLOT(patchCMDelete()));
     patchContextMenu->addAction("Reset", this, SLOT(patchCMReset()));
     patchContextMenu->addSeparator();
+    patchContextMenu->addAction("Fetch", this, SLOT(patchCMFetch()));
     patchContextMenu->addAction("Send", this, SLOT(patchCMSend()));
     patchContextMenu->addAction("Send Changed", this, SLOT(patchCMSendChanged()));
 
@@ -71,6 +72,7 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     sequenceContextMenu->addAction("Delete Program", this, SLOT(sequenceCMDelete()));
     sequenceContextMenu->addAction("Reset", this, SLOT(sequenceCMReset()));
     sequenceContextMenu->addSeparator();
+    sequenceContextMenu->addAction("Fetch", this, SLOT(sequenceCMFetch()));
     sequenceContextMenu->addAction("Send", this, SLOT(sequenceCMSend()));
     sequenceContextMenu->addAction("Send Changed", this, SLOT(sequenceCMSendChanged()));
 
@@ -402,7 +404,7 @@ void LibraryDialog::sequenceCMSend() {
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
     }
-    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
+    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
@@ -411,7 +413,25 @@ void LibraryDialog::sequenceCMSendChanged() {
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
     }
-    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
+    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_SEND, flag);
+}
+
+
+void LibraryDialog::patchCMFetch() {
+    int flag = Library::FLAG_PATCH;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_SEQUENCE;
+    }
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_FETCH, flag);
+}
+
+
+void LibraryDialog::sequenceCMFetch() {
+    int flag = Library::FLAG_SEQUENCE;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_PATCH;
+    }
+    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_FETCH, flag);
 }
 
 

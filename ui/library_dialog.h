@@ -82,6 +82,8 @@ class LibraryDialog : public QDialog {
         void patchCMSendChanged();
         void sequenceCMSend();
         void sequenceCMSendChanged();
+        void patchCMFetch();
+        void sequenceCMFetch();
         void patchCMDelete();
         void sequenceCMDelete();
         void patchCMReset();
