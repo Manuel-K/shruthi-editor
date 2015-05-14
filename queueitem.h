@@ -23,7 +23,7 @@
 
 namespace QueueAction {
 // ******************************************
-enum ACTION {
+enum QueueAction {
 // ******************************************
     PATCH_PARAMETER_CHANGE_EDITOR, SYSEX_FETCH_REQUEST,
     SYSEX_SEND_DATA, PATCH_PARAMETER_CHANGE_MIDI, SYSEX_RECEIVED,
@@ -39,7 +39,7 @@ enum ACTION {
 // ******************************************
 struct QueueItem {
 // ******************************************
-    QueueAction::ACTION action;
+    QueueAction::QueueAction action;
     int int0;
     int int1;
     int int2;
@@ -50,40 +50,40 @@ struct QueueItem {
     QueueItem() {
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a) {
+    QueueItem(QueueAction::QueueAction a) {
         action = a;
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a, int i0, int i1, int i2) {
+    QueueItem(QueueAction::QueueAction a, int i0, int i1, int i2) {
         action = a;
         int0 = i0;
         int1 = i1;
         int2 = i2;
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a, int i0, int i1) {
+    QueueItem(QueueAction::QueueAction a, int i0, int i1) {
         action = a;
         int0 = i0;
         int1 = i1;
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a, int i0) {
+    QueueItem(QueueAction::QueueAction a, int i0) {
         action = a;
         int0 = i0;
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a, QString s) {
+    QueueItem(QueueAction::QueueAction a, QString s) {
         action = a;
         string = s;
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a, QString s, int i0) {
+    QueueItem(QueueAction::QueueAction a, QString s, int i0) {
         action = a;
         string = s;
         int0 = i0;
         message = NULL;
     }
-    QueueItem(QueueAction::ACTION a, unsigned char *m, unsigned int s) {
+    QueueItem(QueueAction::QueueAction a, unsigned char *m, unsigned int s) {
         action = a;
         message = m;
         size = s;

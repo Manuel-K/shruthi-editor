@@ -287,7 +287,7 @@ void LibraryDialog::save() {
 
 
 // ******************************************
-void LibraryDialog::libraryRange(const QueueAction::ACTION &action, const int &flags, const int &from, const int &to) {
+void LibraryDialog::libraryRange(const QueueAction::QueueAction &action, const int &flags, const int &from, const int &to) {
 // ******************************************
 #ifdef DEBUGMSGS
     std::cout << "LibraryDialog::libraryRange() " << flags << " " << from << " " << to << std::endl;
@@ -301,7 +301,7 @@ void LibraryDialog::libraryRange(const QueueAction::ACTION &action, const int &f
 
 
 // ******************************************
-void LibraryDialog::librarySelectedRanges(QListWidget *list, const QueueAction::ACTION &action, const int &flags) {
+void LibraryDialog::librarySelectedRanges(QListWidget *list, const QueueAction::QueueAction &action, const int &flags) {
 // ******************************************
     if (list->currentRow() < 0) {
         // no selection
