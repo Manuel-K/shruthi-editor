@@ -137,7 +137,7 @@ const PatchParameter Patch::parameters [110] = {
     /*103*/ {"Groove amount", "Grv amt", 0, 127, NULL, NULL, 77},
     /*104*/ {"Arpeggiator direction", "Arp dir", 0, 4, &Labels::ArpeggiatorDirection, NULL, 78}, // 0..3 according to manual
     /*105*/ {"Arpeggiator range", "Arp rng", 1, 4, NULL, NULL, 79},
-    /*106*/ {"Arpeggiator pattern", "Art pat", 0, 15, NULL, Labels::ArpeggiatorPatternFormatter, 80}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
+    /*106*/ {"Arpeggiator pattern", "Arp pat", 0, 15, NULL, Labels::ArpeggiatorPatternFormatter, 80}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
     /*107*/ {"Sequencer Clock Division", "Cld div", 0, 11, &Labels::SequencerClockDivision, NULL, 81},
     /* no NRPN support: */
     /*108*/ {"Portamento", "Portamento", 0, 63, NULL, NULL, 84},
