@@ -35,6 +35,7 @@ class Library {
         ~Library();
 
         void setFirmwareVersion(const int &version);
+        void setFirmwareVersionRequested();
 
         const Patch &recallPatch(const int &id) const;
         void storePatch(const int &id, const Patch &patch);
@@ -124,6 +125,7 @@ class Library {
         int numberOfHWPrograms;
 
         int firmwareVersion;
+        bool firmwareVersionRequested;
 };
 
 #endif // SHRUTHI_LIBRARY_H

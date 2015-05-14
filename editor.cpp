@@ -320,6 +320,7 @@ void Editor::actionShruthiInfoRequest() {
     qDebug() << "Editor::actionShruthiInfoRequest()";
 #endif
     if (midiout->versionRequest() && midiout->numBanksRequest()) {
+        library->setFirmwareVersionRequested();
         //emit displayStatusbar("Version request sent.");
 #ifdef DEBUGMSGS
         std::cout  << "Version and number of banks requests sent." << std::endl;

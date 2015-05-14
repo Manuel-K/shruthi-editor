@@ -33,7 +33,8 @@ Library::Library(MidiOut *out):
     time(new QTime),
     numberOfPrograms(0),
     numberOfHWPrograms(16),
-    firmwareVersion(0) {
+    firmwareVersion(0),
+    firmwareVersionRequested(false) {
     abortFetching();
     fetchNextIncomingPatch = 0;
     fetchNextPatchRequest = 0;
@@ -52,6 +53,10 @@ Library::~Library() {
 
 void Library::setFirmwareVersion(const int &version) {
     firmwareVersion = version;
+}
+
+void Library::setFirmwareVersionRequested() {
+    firmwareVersionRequested = true;
 }
 
 
@@ -403,8 +408,11 @@ void Library::insertProgram(const int &id) {
 #ifdef DEBUGMSGS
     std::cout << "Library::insertProgram(" << id << ");" << std::endl;
 #endif
-
-    patches.insert(patches.begin() + id + 1, Patch(firmwareVersion));
+    if (firmwareVersionRequested) {
+        patches.insert(patches.begin() + id + 1, Patch(firmwareVersion));
+    } else {
+        patches.insert(patches.begin() + id + 1, Patch());
+    }
     mPatchMoved.insert(mPatchMoved.begin() + id + 1, false);
     mPatchEdited.insert(mPatchEdited.begin() + id + 1, true);
     sequences.insert(sequences.begin() + id + 1, Sequence());
@@ -616,7 +624,11 @@ void Library::growVectorsTo(const int &num) {
 
 
         for (int i = 0; i < amount; i++) {
-            patches.push_back(Patch(firmwareVersion));
+            if (firmwareVersionRequested) {
+                patches.push_back(Patch(firmwareVersion));
+            } else {
+                patches.push_back(Patch());
+            }
             mPatchEdited.push_back(false);
             mPatchMoved.push_back(false);
             sequences.push_back(Sequence());
