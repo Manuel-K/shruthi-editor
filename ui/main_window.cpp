@@ -426,8 +426,7 @@ QComboBox *ShruthiEditorMainWindow::injectQFileDialog(QFileDialog *d) {
 void ShruthiEditorMainWindow::saveProgram() {
     QFileDialog *d = new QFileDialog(this);
     d->setWindowTitle("Save program");
-    //d->setNameFilter("SysEx files (*.syx);;Shruthi patches (*.sp);;Shruthi patches (*.sp)");
-    d->setNameFilter("SysEx files (*.syx)");
+    d->setNameFilter("SysEx files (*.syx);;Shruthi patches (*.sp)");
     d->setAcceptMode(QFileDialog::AcceptSave);
     d->setFileMode(QFileDialog::AnyFile);
     d->setDefaultSuffix("syx");
@@ -445,7 +444,6 @@ void ShruthiEditorMainWindow::saveProgram() {
 
     if (success && filenames.size() > 0) {
         lastProgramFileMode = index;
-        std::cout << filenames.at(0).toUtf8().constData() << " " << flag << std::endl;
         if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
             flag = Editor::FLAG_PATCH;
         }
