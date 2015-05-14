@@ -17,14 +17,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "editor.h"
+#include "library.h"
+#include "midiout.h"
 #include "fileio.h"
 #include "midi.h"
-
-#include "patch.h"
-#include "midiout.h"
-#include "sequence.h"
-#include "library.h"
-
 
 #ifdef DEBUGMSGS
 #include <QDebug>
