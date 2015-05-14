@@ -387,6 +387,27 @@ void Library::deletePrograms(const int &from, const int &to) {
 }
 
 
+void Library::insertProgram(const int &id) {
+#ifdef DEBUGMSGS
+    std::cout << "Library::insertProgram(" << id << ");" << std::endl;
+#endif
+
+    patches.insert(patches.begin() + id + 1, Patch());
+    mPatchMoved.insert(mPatchMoved.begin() + id + 1, false);
+    mPatchEdited.insert(mPatchEdited.begin() + id + 1, true);
+    sequences.insert(sequences.begin() + id + 1, Sequence());
+    mSequenceMoved.insert(mSequenceMoved.begin() + id + 1, false);
+    mSequenceEdited.insert(mSequenceEdited.begin() + id + 1, true);
+    numberOfPrograms += 1;
+
+    // Mark as moved:
+    for (int i = id + 2; i < numberOfPrograms; i++) {
+        mPatchMoved.at(i) = true;
+        mSequenceMoved.at(i) = true;
+    }
+}
+
+
 bool Library::saveLibrary(const QString &path) {
     QByteArray ba;
 

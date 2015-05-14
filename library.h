@@ -66,6 +66,7 @@ class Library {
         bool isFetchingSequences() const;
 
         void deletePrograms(const int &from, const int &to);
+        void insertProgram(const int &id);
 
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path, bool append = false);

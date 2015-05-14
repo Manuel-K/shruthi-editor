@@ -73,6 +73,7 @@ class Editor : public QObject {
         void actionLibraryLoad(const QString &path, const int &flags);
         void actionLibrarySave(const QString &path, const int &flags);
         void actionLibraryDelete(const unsigned int &start, const unsigned int &end);
+        void actionLibraryInsert(const unsigned int &id);
 
         MidiOut *midiout;
         Patch *patch;

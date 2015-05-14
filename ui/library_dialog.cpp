@@ -57,7 +57,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     patchContextMenu = new QMenu(this);
     patchContextMenu->addAction("Store", this, SLOT(patchCMStore()));
     patchContextMenu->addSeparator();
-    patchContextMenu->addAction("Delete Program", this, SLOT(bothCMdelete()));
+    patchContextMenu->addAction("Insert Program After", this, SLOT(patchCMInsert()));
+    patchContextMenu->addAction("Delete Program", this, SLOT(patchCMDelete()));
     patchContextMenu->addSeparator();
     patchContextMenu->addAction("Send", this, SLOT(patchCMSend()));
     patchContextMenu->addAction("Send Changed", this, SLOT(patchCMSendChanged()));
@@ -65,7 +66,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     sequenceContextMenu = new QMenu(this);
     sequenceContextMenu->addAction("Store", this, SLOT(sequenceCMStore()));
     sequenceContextMenu->addSeparator();
-    sequenceContextMenu->addAction("Delete Program", this, SLOT(bothCMdelete()));
+    sequenceContextMenu->addAction("Insert Program After", this, SLOT(sequenceCMInsert()));
+    sequenceContextMenu->addAction("Delete Program", this, SLOT(sequenceCMDelete()));
     sequenceContextMenu->addSeparator();
     sequenceContextMenu->addAction("Send", this, SLOT(sequenceCMSend()));
     sequenceContextMenu->addAction("Send Changed", this, SLOT(sequenceCMSendChanged()));
@@ -411,11 +413,37 @@ void LibraryDialog::sequenceCMSendChanged() {
 }
 
 
-void LibraryDialog::bothCMdelete() {
+void LibraryDialog::patchCMDelete() {
 #ifdef DEBUGMSGS
-    qDebug() << "LibraryDialog::bothCMdelete()";
+    qDebug() << "LibraryDialog::patchCMDelete()";
 #endif
     librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_DELETE, 0);
+}
+
+
+void LibraryDialog::sequenceCMDelete() {
+#ifdef DEBUGMSGS
+    qDebug() << "LibraryDialog::patchCMDelete()";
+#endif
+    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_DELETE, 0);
+}
+
+
+void LibraryDialog::patchCMInsert() {
+#ifdef DEBUGMSGS
+    qDebug() << "LibraryDialog::patchCMInsert()";
+#endif
+    QueueItem item(QueueAction::LIBRARY_INSERT, ui->patchList->currentRow());
+    emit enqueue(item);
+}
+
+
+void LibraryDialog::sequenceCMInsert() {
+#ifdef DEBUGMSGS
+    qDebug() << "LibraryDialog::sequenceCMInsert()";
+#endif
+    QueueItem item(QueueAction::LIBRARY_INSERT, ui->patchList->currentRow());
+    emit enqueue(item);
 }
 
 
