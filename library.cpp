@@ -41,6 +41,8 @@ Library::Library(MidiOut *out):
     fetchNextIncomingSequence = 0;
     fetchNextSequenceRequest = 0;
 
+    mRememberedCurrentShruthiProgram = false;
+
     growVectorsTo(16);
 }
 
@@ -57,6 +59,11 @@ void Library::setFirmwareVersion(const int &version) {
 
 void Library::setFirmwareVersionRequested() {
     firmwareVersionRequested = true;
+}
+
+
+void Library::setMidiChannel(const unsigned char &channel) {
+    mMidiChannel = channel;
 }
 
 
@@ -248,11 +255,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
     }
 
     std::cout << "Sending finished. Time elapsed: " << t.elapsed() << " ms." << std::endl;
-    if (ret) {
-        ret = midiout->programChange(0, to);
-    }
     return ret;
-
 }
 
 
@@ -537,6 +540,29 @@ const unsigned int &Library::nextSequence() const {
 }
 
 
+void Library::rememberShruthiProgram(const int &patch, const int &sequence) {
+    mCurrentShruthiPatch = patch;
+    mCurrentShruthiSequence = sequence;
+    mRememberedCurrentShruthiProgram = true;
+}
+
+
+bool Library::recallShruthiProgramm() {
+    if (mRememberedCurrentShruthiProgram) {
+        bool response = midiout->automaticProgramChange(mMidiChannel,
+                                                        firmwareVersion,
+                                                        mCurrentShruthiPatch,
+                                                        mCurrentShruthiSequence);
+        if (response) {
+            mRememberedCurrentShruthiProgram = false;
+        }
+        return response;
+    }
+    return true; // don't need to do anything
+}
+
+
+
 bool Library::keepFetching() {
 #ifdef DEBUGMSGS
     std::cout << "Library::keepFetching(): Patches " << fetchPatchMode << " " << fetchNextPatchRequest << " " << fetchEnd << std::endl;
@@ -561,7 +587,7 @@ bool Library::keepFetching() {
         std::cout << ". It took " << time->elapsed() << " ms to fetch " << fetchEnd - fetchStart + 1 << " programs." << std::endl;
 
         abortFetching();
-        return true;
+        return recallShruthiProgramm();
     }
 
     const bool prefer_patch = fetchNextPatchRequest <= fetchNextSequenceRequest;
@@ -569,12 +595,12 @@ bool Library::keepFetching() {
     bool ret;
 
     if ((ptc_enabled && prefer_patch) || (ptc_enabled && !seq_enabled)) {
-        ret = midiout->programChange(0, fetchNextPatchRequest) && midiout->patchTransferRequest();
+        ret = midiout->programChange(mMidiChannel, fetchNextPatchRequest) && midiout->patchTransferRequest();
         if (ret) {
             fetchNextPatchRequest++;
         }
     } else {
-        ret = midiout->programChange(0, fetchNextSequenceRequest) && midiout->sequenceTransferRequest();
+        ret = midiout->programChange(mMidiChannel, fetchNextSequenceRequest) && midiout->sequenceTransferRequest();
         if (ret) {
             fetchNextSequenceRequest++;
         }

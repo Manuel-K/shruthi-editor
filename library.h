@@ -36,6 +36,7 @@ class Library {
 
         void setFirmwareVersion(const int &version);
         void setFirmwareVersionRequested();
+        void setMidiChannel(const unsigned char &channel);
 
         const Patch &recallPatch(const int &id) const;
         void storePatch(const int &id, const Patch &patch);
@@ -79,6 +80,9 @@ class Library {
 
         const unsigned int &nextPatch() const;
         const unsigned int &nextSequence() const;
+
+        void rememberShruthiProgram(const int &patch, const int &sequence);
+        bool recallShruthiProgramm();
 
         // keep in sync with Editor::FLAGs
         static const int FLAG_PATCH = 1;
@@ -124,6 +128,12 @@ class Library {
 
         int firmwareVersion;
         bool firmwareVersionRequested;
+
+        unsigned char mMidiChannel;
+
+        int mCurrentShruthiPatch;
+        int mCurrentShruthiSequence;
+        bool mRememberedCurrentShruthiProgram;
 };
 
 #endif // SHRUTHI_LIBRARY_H

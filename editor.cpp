@@ -398,6 +398,13 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
             firmwareVersion = message[0] * 1000 + message[1];
             library->setFirmwareVersion(firmwareVersion);
         }
+    } else if (command == 0x0a && argument == 0x00) {
+        const int &patchNo = message[0] | message[1] << 8;
+        const int &sequenceNo = message[2] | message[3] << 8;
+        library->rememberShruthiProgram(patchNo, sequenceNo);
+#ifdef DEBUGMSGS
+        qDebug() << "Current program: " << patchNo << sequenceNo;
+#endif
     } else if (command == 0x01 && argument == 0x00) {
         bool ret = (size == 92);
 
@@ -639,9 +646,12 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
+
+    bool error = !midiout->currentPatchSequenceRequest();
+
     const int &st = stop >= 0 ? stop : (library->getNumberOfHWPrograms() - 1);
 
-    if (library->startFetching(what, start, st)) {
+    if (!error && library->startFetching(what, start, st)) {
         emit displayStatusbar("Started to fetch the library.");
     } else {
         emit displayStatusbar("Could not start fetching the library.");

@@ -185,12 +185,29 @@ bool MidiOut::programChange(const unsigned char &channel, const int &program) {
 }
 
 
+bool MidiOut::programChangeSequence(const unsigned char &channel, const int &sequence) {
+    const int &bank = sequence / 128 | 0x40;
+    const int &p = sequence % 128;
+
+    return controlChange(channel, 0, bank) && write((0xc0|channel), p);
+}
+
+
 bool MidiOut::controlChange(const unsigned char &channel, const unsigned char &controller, const unsigned char &value) {
     if (!opened) {
         qDebug() << "MidiOut::controlChange(): could not send. Port not opened.";
         return false;
     }
     return write((176|channel),controller,value);
+}
+
+
+bool MidiOut::automaticProgramChange(const unsigned char &channel, const int &firmwareVersion, const int &patch, const int &sequence) {
+    if (firmwareVersion >= 1000) {
+        return programChange(channel, patch);
+    } else {
+        return programChange(channel, patch) && programChangeSequence(channel, sequence);
+    }
 }
 
 
