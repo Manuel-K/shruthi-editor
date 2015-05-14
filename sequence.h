@@ -36,20 +36,14 @@ public:
     bool parseSysex(const Message *message);
     void generateSysex(Message *message) const;
 
-    const int &getValueByID(const int &id) const;
     const int &getValue(const int &step, const SequenceParameter::SequenceParameter &sp) const;
+    void setValue(const int &step, const SequenceParameter::SequenceParameter &sp, const int &val);
     void setValueById(const int &id, const int &val);
     static int calculateParamId(const int &step, const SequenceParameter::SequenceParameter &sp);
     void reset();
 
     bool equals(const Sequence &other) const;
     void set(const Sequence &other);
-
-    const int &getActive(const int &step) const;
-    const int &getNote(const int &step) const;
-    const int &getTie(const int &step) const;
-    const int &getVelocity(const int &step) const;
-    const int &getValue(const int &step) const;
 
     static const int NUMBER_OF_STEPS = 16;
     static const int ERROR_RETURN;

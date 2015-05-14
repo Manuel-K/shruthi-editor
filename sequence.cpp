@@ -33,7 +33,6 @@ Sequence::Sequence() {
 // ******************************************
 Sequence::~Sequence() {
 // ******************************************
-
 }
 
 
@@ -89,18 +88,47 @@ const int &Sequence::getValue(const int &step, const SequenceParameter::Sequence
     }
 
     switch (sp) {
-    case SequenceParameter::ACTIVE:
-        return stepsActive[step];
-    case SequenceParameter::NOTE:
-        return stepsNote[step];
-    case SequenceParameter::TIE:
-        return stepsTie[step];
-    case SequenceParameter::VALUE:
-        return stepsValue[step];
-    case SequenceParameter::VELOCITY:
-        return stepsVelocity[step];
-    default:
-        return ERROR_RETURN;
+        case SequenceParameter::ACTIVE:
+            return stepsActive[step];
+        case SequenceParameter::NOTE:
+            return stepsNote[step];
+        case SequenceParameter::TIE:
+            return stepsTie[step];
+        case SequenceParameter::VALUE:
+            return stepsValue[step];
+        case SequenceParameter::VELOCITY:
+            return stepsVelocity[step];
+        default:
+            return ERROR_RETURN;
+    }
+}
+
+
+// ******************************************
+void Sequence::setValue(const int &step, const SequenceParameter::SequenceParameter &sp, const int &val) {
+// ******************************************
+    if (step < 0 || step >= NUMBER_OF_STEPS) {
+        return;
+    }
+
+    switch (sp) {
+        case SequenceParameter::ACTIVE:
+            stepsActive[step] = val;
+            break;
+        case SequenceParameter::NOTE:
+            stepsNote[step] = val;
+            break;
+        case SequenceParameter::TIE:
+            stepsTie[step] = val;
+            break;
+        case SequenceParameter::VALUE:
+            stepsValue[step] = val;
+            break;
+        case SequenceParameter::VELOCITY:
+            stepsVelocity[step] = val;
+            break;
+        default:
+            break;
     }
 }
 
@@ -191,59 +219,6 @@ void Sequence::set(const Sequence &other) {
 
 
 // ******************************************
-const int &Sequence::getActive(const int &step) const {
-// ******************************************
-    if (step < 0 || step >= NUMBER_OF_STEPS) {
-        return ERROR_RETURN;
-    }
-    return stepsActive[step];
-}
-
-
-// ******************************************
-const int &Sequence::getNote(const int &step) const {
-// ******************************************
-    if (step < 0 || step >= NUMBER_OF_STEPS) {
-        return ERROR_RETURN;
-    }
-    return stepsNote[step];
-}
-
-
-// ******************************************
-const int &Sequence::getTie(const int &step) const {
-// ******************************************
-    if (step < 0 || step >= NUMBER_OF_STEPS) {
-        return ERROR_RETURN;
-    }
-    return stepsTie[step];
-
-}
-
-
-// ******************************************
-const int &Sequence::getVelocity(const int &step) const {
-// ******************************************
-    if (step < 0 || step >= NUMBER_OF_STEPS) {
-        return ERROR_RETURN;
-    }
-    return stepsVelocity[step];
-}
-
-
-// ******************************************
-const int &Sequence::getValue(const int &step) const {
-// ******************************************
-    if (step < 0 || step >= NUMBER_OF_STEPS) {
-        return ERROR_RETURN;
-    }
-    return stepsValue[step];
-}
-
-
-
-
-// ******************************************
 void Sequence::print() const {
 // ******************************************
     QString typestr;
@@ -271,22 +246,23 @@ void Sequence::setValueById(const int &id, const int &val) {
         return;
     }
 
+    const int &step = id / 5;
     switch(id % 5) {
-    case 1: // note
-        stepsNote[id / 5] = val;
-        break;
-    case 2: // tie
-        stepsTie[id / 5] = val;
-        break;
-    case 3: // velocity
-        stepsVelocity[id / 5] = val;
-        break;
-    case 4: // value
-        stepsValue[id / 5] = val;
-        break;
-    default: // 0:active
-        stepsActive[id / 5] = val;
-        break;
+        case 1: // note
+            setValue(step, SequenceParameter::NOTE, val);
+            break;
+        case 2: // tie
+            setValue(step, SequenceParameter::TIE, val);
+            break;
+        case 3: // velocity
+            setValue(step, SequenceParameter::VELOCITY, val);
+            break;
+        case 4: // value
+            setValue(step, SequenceParameter::VALUE, val);
+            break;
+        default: // 0:active
+            setValue(step, SequenceParameter::ACTIVE, val);
+            break;
     }
 }
 
@@ -313,26 +289,3 @@ int Sequence::calculateParamId(const int &step, const SequenceParameter::Sequenc
         return ERROR_RETURN;
     }
 }
-
-
-// ******************************************
-const int &Sequence::getValueByID(const int &id) const {
-// ******************************************
-    if (id < 0 || id >= 80) {
-        return ERROR_RETURN;
-    }
-
-    switch(id % 5) {
-    case 1: // note
-        return stepsNote[id / 5];
-    case 2: // tie
-        return stepsTie[id / 5];
-    case 3: // velocity
-        return stepsVelocity[id / 5];
-    case 4: // value
-        return stepsValue[id / 5];
-    default: // 0:active
-        return stepsActive[id / 5];
-    }
-}
-
