@@ -61,7 +61,7 @@ void SignalRouter::run() {
 
 
 // ******************************************
-void SignalRouter::enqueue(queueitem_t item) {
+void SignalRouter::enqueue(QueueItem item) {
 // ******************************************
     if (editorWorking)
         queue.enqueue(item);

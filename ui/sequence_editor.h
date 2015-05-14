@@ -61,7 +61,7 @@ class SequenceEditor : public QDialog
         void dialChanged(int id, int value);
 
     signals:
-        void enqueue(queueitem_t);
+        void enqueue(QueueItem);
 };
 
 #endif // SEQUENCEEDITOR_H

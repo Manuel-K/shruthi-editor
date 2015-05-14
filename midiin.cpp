@@ -97,7 +97,7 @@ void MidiIn::process(const Message *message) {
         Message payload;
         if (!Midi::parseSysex(message, &payload)) {
             // We have a problem! Do something. Warn the user or make a cup of tea.
-            queueitem_t signal(SYSEX_RECEIVED);
+            QueueItem signal(QueueAction::SYSEX_RECEIVED);
             signal.int0 = Midi::getCommand(message);
             signal.int1 = Midi::getArgument(message);
             signal.size = 0;
@@ -119,7 +119,7 @@ void MidiIn::process(const Message *message) {
             msg[i] = payload.at(i);
         }
 
-        queueitem_t signal(SYSEX_RECEIVED);
+        QueueItem signal(QueueAction::SYSEX_RECEIVED);
         signal.int0 = Midi::getCommand(message);
         signal.int1 = Midi::getArgument(message);
         signal.message = msg;
@@ -129,7 +129,7 @@ void MidiIn::process(const Message *message) {
         if (isNRPN(message->at(0), message->at(1))) { // might want to check if firmwareVersion < 1000
             // Parse as NRPN
             if (nrpn.parse((int)message->at(0),(int)message->at(1),(int)message->at(2))) {
-                queueitem_t signal(PATCH_PARAMETER_CHANGE_MIDI, nrpn.getNRPN(), nrpn.getValue());
+                QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_MIDI, nrpn.getNRPN(), nrpn.getValue());
                 emit enqueue(signal);
             }
         } else {
@@ -142,7 +142,7 @@ void MidiIn::process(const Message *message) {
                     warnedCC = true;
                 }
             }
-            queueitem_t signal(PATCH_PARAMETER_CHANGE_MIDI, id, value);
+            QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_MIDI, id, value);
             emit enqueue(signal);
         }
     }

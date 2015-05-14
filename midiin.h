@@ -79,7 +79,7 @@ class MidiIn : public QObject {
         void setShruthiFilterBoard(int filter);
 
     signals:
-        void enqueue(queueitem_t);
+        void enqueue(QueueItem);
         void midiInputStatusChanged(bool);
 };
 

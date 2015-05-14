@@ -179,7 +179,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
 // ******************************************
 void LibraryDialog::recall(const int &flags, const int &id) {
 // ******************************************
-    queueitem_t signal(LIBRARY_RECALL);
+    QueueItem signal(QueueAction::LIBRARY_RECALL);
     signal.int0 = flags;
     signal.int1 = id;
     emit enqueue(signal);
@@ -189,7 +189,7 @@ void LibraryDialog::recall(const int &flags, const int &id) {
 // ******************************************
 void LibraryDialog::move(const int &flags, const int &from, const int &to) {
 // ******************************************
-    queueitem_t signal(LIBRARY_MOVE);
+    QueueItem signal(QueueAction::LIBRARY_MOVE);
     signal.int0 = flags;
     signal.int1 = from;
     signal.int2 = to;
@@ -201,7 +201,7 @@ void LibraryDialog::move(const int &flags, const int &from, const int &to) {
 // ******************************************
 void LibraryDialog::store(const int &flags, const int &id) {
 // ******************************************
-    queueitem_t signal(LIBRARY_STORE);
+    QueueItem signal(QueueAction::LIBRARY_STORE);
     signal.int0 = flags;
     signal.int1 = id;
     emit enqueue(signal);
@@ -211,7 +211,7 @@ void LibraryDialog::store(const int &flags, const int &id) {
 // ******************************************
 void LibraryDialog::fetch() {
 // ******************************************
-    queueitem_t signal(LIBRARY_FETCH);
+    QueueItem signal(QueueAction::LIBRARY_FETCH);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
     signal.int2 = -1;
@@ -226,7 +226,7 @@ void LibraryDialog::send() {
     if (b) {
         return;
     }
-    queueitem_t signal(LIBRARY_SEND);
+    QueueItem signal(QueueAction::LIBRARY_SEND);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
     signal.int1 = 0;
     signal.int2 = -1;
@@ -241,7 +241,7 @@ void LibraryDialog::sendChanged(){
     if (b) {
         return;
     }
-    queueitem_t signal(LIBRARY_SEND);
+    QueueItem signal(QueueAction::LIBRARY_SEND);
     signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
     signal.int1 = 0;
     signal.int2 = -1;
@@ -254,7 +254,7 @@ void LibraryDialog::loadReplace() {
 // ******************************************
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
-        queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        QueueItem signal(QueueAction::LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
         emit enqueue(signal);
     }
 }
@@ -265,7 +265,7 @@ void LibraryDialog::loadAppend() {
 // ******************************************
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
-        queueitem_t signal(LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_APPEND);
+        QueueItem signal(QueueAction::LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_APPEND);
         emit enqueue(signal);
     }
 }
@@ -280,19 +280,19 @@ void LibraryDialog::save() {
             path.append(".syx");
         }
 
-        queueitem_t signal(LIBRARY_SAVE, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        QueueItem signal(QueueAction::LIBRARY_SAVE, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
         emit enqueue(signal);
     }
 }
 
 
 // ******************************************
-void LibraryDialog::libraryRange(const ACTIONS &action, const int &flags, const int &from, const int &to) {
+void LibraryDialog::libraryRange(const QueueAction::ACTION &action, const int &flags, const int &from, const int &to) {
 // ******************************************
 #ifdef DEBUGMSGS
     std::cout << "LibraryDialog::libraryRange() " << flags << " " << from << " " << to << std::endl;
 #endif
-    queueitem_t signal(action);
+    QueueItem signal(action);
     signal.int0 = flags;
     signal.int1 = from;
     signal.int2 = to;
@@ -301,7 +301,7 @@ void LibraryDialog::libraryRange(const ACTIONS &action, const int &flags, const 
 
 
 // ******************************************
-void LibraryDialog::librarySelectedRanges(QListWidget *list, const ACTIONS &action, const int &flags) {
+void LibraryDialog::librarySelectedRanges(QListWidget *list, const QueueAction::ACTION &action, const int &flags) {
 // ******************************************
     if (list->currentRow() < 0) {
         // no selection
@@ -428,7 +428,7 @@ void LibraryDialog::patchCMSend() {
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_SEQUENCE;
     }
-    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
@@ -439,7 +439,7 @@ void LibraryDialog::patchCMSendChanged() {
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_SEQUENCE;
     }
-    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
@@ -450,7 +450,7 @@ void LibraryDialog::sequenceCMSend() {
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
     }
-    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
@@ -461,7 +461,7 @@ void LibraryDialog::sequenceCMSendChanged() {
     if (ui->sync->isChecked()) {
         flag |= Library::FLAG_PATCH;
     }
-    librarySelectedRanges(ui->patchList, LIBRARY_SEND, flag);
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
@@ -471,7 +471,7 @@ void LibraryDialog::bothCMdelete() {
 #ifdef DEBUGMSGS
     std::cout << "LibraryDialog::bothCMdelete()" << std::endl;
 #endif
-    librarySelectedRanges(ui->patchList, LIBRARY_DELETE, 0);
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_DELETE, 0);
 }
 
 

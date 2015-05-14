@@ -137,79 +137,79 @@ const Library *Editor::getLibrary() const {
 
 
 // ******************************************
-void Editor::process(queueitem_t item) {
+void Editor::process(QueueItem item) {
 // ******************************************
     switch(item.action) {
-        case PATCH_PARAMETER_CHANGE_EDITOR:
+        case QueueAction::PATCH_PARAMETER_CHANGE_EDITOR:
             actionPatchParameterChangeEditor(item.int0, item.int1);
             break;
-        case SEQUENCE_PARAMETER_CHANGE_EDITOR:
+        case QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR:
             actionSequenceParameterChangeEditor(item.int0, item.int1);
             break;
-         case SYSEX_FETCH_REQUEST:
+         case QueueAction::SYSEX_FETCH_REQUEST:
             actionFetchRequest(item.int0);
             break;
-        case SYSEX_SEND_DATA:
+        case QueueAction::SYSEX_SEND_DATA:
             actionSendData(item.int0);
             break;
-        case SYSEX_SHRUTHI_INFO_REQUEST:
+        case QueueAction::SYSEX_SHRUTHI_INFO_REQUEST:
             actionShruthiInfoRequest();
             break;
-        case PATCH_PARAMETER_CHANGE_MIDI:
+        case QueueAction::PATCH_PARAMETER_CHANGE_MIDI:
             actionPatchParameterChangeMidi(item.int0, item.int1);
             break;
-        case NOTE_ON:
+        case QueueAction::NOTE_ON:
             actionNoteOn(item.int0,item.int1);
             break;
-        case NOTE_OFF:
+        case QueueAction::NOTE_OFF:
             actionNoteOff(item.int0);
             break;
-        case NOTE_PANIC:
+        case QueueAction::NOTE_PANIC:
             actionNotePanic();
             break;
-        case SYSEX_RECEIVED:
+        case QueueAction::SYSEX_RECEIVED:
             actionSysexReceived(item.int0, item.int1, item.size, item.message);
             break;
-        case SET_PATCHNAME:
+        case QueueAction::SET_PATCHNAME:
             actionSetPatchname(item.string);
             break;
-        case FILEIO_LOAD:
+        case QueueAction::FILEIO_LOAD:
             actionFileIOLoad(item.string, item.int0);
             break;
-        case FILEIO_SAVE:
+        case QueueAction::FILEIO_SAVE:
             actionFileIOSave(item.string, item.int0);
             break;
-        case RESET_PATCH:
+        case QueueAction::RESET_PATCH:
             actionResetPatch(item.int0);
             break;
-        case LIBRARY_FETCH:
+        case QueueAction::LIBRARY_FETCH:
             actionLibraryFetch(item.int0, item.int1, item.int2);
             break;
-        case LIBRARY_RECALL:
+        case QueueAction::LIBRARY_RECALL:
             actionLibraryRecall(item.int0, item.int1);
             break;
-        case LIBRARY_STORE:
+        case QueueAction::LIBRARY_STORE:
             actionLibraryStore(item.int0, item.int1);
             break;
-        case LIBRARY_MOVE:
+        case QueueAction::LIBRARY_MOVE:
             actionLibraryMove(item.int0, item.int1, item.int2);
             break;
-        case LIBRARY_SEND:
+        case QueueAction::LIBRARY_SEND:
             actionLibrarySend(item.int0, item.int1, item.int2);
             break;
-        case LIBRARY_DELETE:
+        case QueueAction::LIBRARY_DELETE:
             actionLibraryDelete(item.int1, item.int2); // ignore flags (item.int0)
             break;
-        case LIBRARY_LOAD:
+        case QueueAction::LIBRARY_LOAD:
             actionLibraryLoad(item.string, item.int0);
             break;
-        case LIBRARY_SAVE:
+        case QueueAction::LIBRARY_SAVE:
             actionLibrarySave(item.string, item.int0);
             break;
-        case RESET_SEQUENCE:
+        case QueueAction::RESET_SEQUENCE:
             actionResetSequence();
             break;
-        case RANDOMIZE_PATCH:
+        case QueueAction::RANDOMIZE_PATCH:
             actionRandomizePatch();
             break;
         default:

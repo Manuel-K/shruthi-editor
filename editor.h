@@ -84,7 +84,7 @@ class Editor : public QObject {
         int firmwareVersion;
 
     public slots:
-        void process(queueitem_t item);
+        void process(QueueItem item);
         bool setMidiOutputPort(int out);
         void setMidiChannel(unsigned char channel);
         void setShruthiFilterBoard(int filter);

@@ -35,19 +35,19 @@ class SignalRouter : public QObject {
 
         bool editorWorking;
         bool editorEnabled;
-        QQueue<queueitem_t> queue;
+        QQueue<QueueItem> queue;
 
     private:
         Config config;
 
     public slots:
         void run();
-        void enqueue(queueitem_t);
+        void enqueue(QueueItem);
         void editorFinished();
         void settingsChanged(Config conf);
 
     signals:
-        void editorProcess(queueitem_t);
+        void editorProcess(QueueItem);
         void setMidiInputPort(int);
         void setMidiOutputPort(int);
         void setMidiChannel(unsigned char);

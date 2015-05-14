@@ -58,7 +58,7 @@ void KeyboardDialog::keyPressed(int key) {
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::keyPressed()" << key;
 #endif
-    queueitem_t signal(NOTE_ON, key, noteVelocity);
+    QueueItem signal(QueueAction::NOTE_ON, key, noteVelocity);
     emit enqueue(signal);
 }
 
@@ -68,7 +68,7 @@ void KeyboardDialog::panicPushed() {
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::panicPushed()";
 #endif
-    queueitem_t signal(NOTE_PANIC);
+    QueueItem signal(QueueAction::NOTE_PANIC);
     emit enqueue(signal);
 }
 
@@ -78,7 +78,7 @@ void KeyboardDialog::keyReleased(int key) {
 #ifdef DEBUGMSGS
     qDebug() << "Keyboard::keyReleased()" << key;
 #endif
-    queueitem_t signal(NOTE_OFF, key);
+    QueueItem signal(QueueAction::NOTE_OFF, key);
     emit enqueue(signal);
 }
 

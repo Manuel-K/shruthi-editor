@@ -50,6 +50,6 @@ class KeyboardDialog : public QDialog {
         void panicPushed();
 
     signals:
-        void enqueue(queueitem_t);
+        void enqueue(QueueItem);
 };
 #endif

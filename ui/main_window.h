@@ -96,7 +96,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         void aboutQt();
 
     signals:
-        void enqueue(queueitem_t);
+        void enqueue(QueueItem);
         void settingsChanged(Config);
         void showKeyboard();
         void showSequenceEditor();

@@ -94,7 +94,7 @@ SequenceEditor::~SequenceEditor() {
 void SequenceEditor::sendSequenceUpdate() {
 // ******************************************
     if (ui->autoSendSequence->isChecked()) {
-        queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
+        QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
         emit enqueue(signal);
     }
 }
@@ -164,7 +164,7 @@ void SequenceEditor::activeChanged(int step, int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor active " << step << " " << value << std::endl;
 #endif
-    queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::ACTIVE), value);
+    QueueItem signal(QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::ACTIVE), value);
     emit enqueue(signal);
     sendSequenceUpdate();
 }
@@ -176,7 +176,7 @@ void SequenceEditor::noteChanged(int step, int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor note " << step << " " << value << std::endl;
 #endif
-    queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::NOTE), value);
+    QueueItem signal(QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::NOTE), value);
     emit enqueue(signal);
     sendSequenceUpdate();
 }
@@ -188,7 +188,7 @@ void SequenceEditor::valueChanged(int step, int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor value " << step << " " << value << std::endl;
 #endif
-    queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::VALUE), value);
+    QueueItem signal(QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::VALUE), value);
     emit enqueue(signal);
     sendSequenceUpdate();
 }
@@ -200,7 +200,7 @@ void SequenceEditor::tieChanged(int step, int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor tie " <<  step << " " << value << std::endl;
 #endif
-    queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::TIE), value);
+    QueueItem signal(QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::TIE), value);
     emit enqueue(signal);
     sendSequenceUpdate();
 }
@@ -212,7 +212,7 @@ void SequenceEditor::velocityChanged(int step, int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor velocity " << step << " " << value << std::endl;
 #endif
-    queueitem_t signal(SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::VELOCITY), value);
+    QueueItem signal(QueueAction::SEQUENCE_PARAMETER_CHANGE_EDITOR, Sequence::calculateParamId(step, SequenceParameter::VELOCITY), value);
     emit enqueue(signal);
     sendSequenceUpdate();
 }
@@ -238,7 +238,7 @@ void SequenceEditor::comboBoxChanged(int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor comboBoxChanged " << id.toInt() << " " << value << std::endl;
 #endif
-    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), value);
+    QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), value);
     emit enqueue(signal);
 }
 
@@ -249,7 +249,7 @@ void SequenceEditor::dialChanged(int id, int value) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor dialChanged " << id << " " << value << std::endl;
 #endif
-    emit enqueue(queueitem_t(PATCH_PARAMETER_CHANGE_EDITOR, id, value));
+    emit enqueue(QueueItem(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id, value));
 }
 
 

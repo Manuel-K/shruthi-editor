@@ -328,7 +328,7 @@ void ShruthiEditorMainWindow::comboBoxChanged(int val) {
     QString id = s->objectName();
     id.remove(0,1);
 
-    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), val);
+    QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id.toInt(), val);
     emit enqueue(signal);
 }
 
@@ -363,7 +363,7 @@ void ShruthiEditorMainWindow::dialChanged(int val) {
     if (!s->isEnabled())
         return;
 
-    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, param, val);
+    QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, param, val);
     emit enqueue(signal);
 }
 
@@ -371,7 +371,7 @@ void ShruthiEditorMainWindow::dialChanged(int val) {
 // ******************************************
 void ShruthiEditorMainWindow::dialChanged(int id, int val) {
 // ******************************************
-    queueitem_t signal(PATCH_PARAMETER_CHANGE_EDITOR, id, val);
+    QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id, val);
     emit enqueue(signal);
 }
 
@@ -380,7 +380,7 @@ void ShruthiEditorMainWindow::dialChanged(int id, int val) {
 void ShruthiEditorMainWindow::patchNameChanged() {
 // ******************************************
     QString name = ui->patch_name->text();
-    queueitem_t signal(SET_PATCHNAME, name);
+    QueueItem signal(QueueAction::SET_PATCHNAME, name);
     emit enqueue(signal);
 }
 
@@ -411,7 +411,7 @@ void ShruthiEditorMainWindow::loadProgram() {
         if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
             flag = Editor::FLAG_PATCH;
         }
-        queueitem_t signal(FILEIO_LOAD, filenames.first(), flag);
+        QueueItem signal(QueueAction::FILEIO_LOAD, filenames.first(), flag);
         emit enqueue(signal);
     }
 }
@@ -473,7 +473,7 @@ void ShruthiEditorMainWindow::saveProgram() {
         if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
             flag = Editor::FLAG_PATCH;
         }
-        queueitem_t signal(FILEIO_SAVE, filenames.first(), flag);
+        QueueItem signal(QueueAction::FILEIO_SAVE, filenames.first(), flag);
         emit enqueue(signal);
     }
 }
@@ -482,7 +482,7 @@ void ShruthiEditorMainWindow::saveProgram() {
 // ******************************************
 void ShruthiEditorMainWindow::fetchProgram() {
 // ******************************************
-    queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
@@ -490,7 +490,7 @@ void ShruthiEditorMainWindow::fetchProgram() {
 // ******************************************
 void ShruthiEditorMainWindow::sendProgram() {
 // ******************************************
-    queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
@@ -498,7 +498,7 @@ void ShruthiEditorMainWindow::sendProgram() {
 // ******************************************
 void ShruthiEditorMainWindow::fetchPatch() {
 // ******************************************
-    queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH);
+    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH);
     emit enqueue(signal);
 }
 
@@ -506,7 +506,7 @@ void ShruthiEditorMainWindow::fetchPatch() {
 // ******************************************
 void ShruthiEditorMainWindow::sendPatch() {
 // ******************************************
-    queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_PATCH);
+    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_PATCH);
     emit enqueue(signal);
 }
 
@@ -514,7 +514,7 @@ void ShruthiEditorMainWindow::sendPatch() {
 // ******************************************
 void ShruthiEditorMainWindow::fetchSequence() {
 // ******************************************
-    queueitem_t signal(SYSEX_FETCH_REQUEST, Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
@@ -522,7 +522,7 @@ void ShruthiEditorMainWindow::fetchSequence() {
 // ******************************************
 void ShruthiEditorMainWindow::sendSequence() {
 // ******************************************
-    queueitem_t signal(SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
     emit enqueue(signal);
 }
 
@@ -551,7 +551,7 @@ void ShruthiEditorMainWindow::openSettings() {
 // ******************************************
 void ShruthiEditorMainWindow::resetPatch() {
 // ******************************************
-    queueitem_t signal(RESET_PATCH);
+    QueueItem signal(QueueAction::RESET_PATCH);
     signal.int0 = 1000;
     emit enqueue(signal);
 }
@@ -560,7 +560,7 @@ void ShruthiEditorMainWindow::resetPatch() {
 // ******************************************
 void ShruthiEditorMainWindow::resetPatchPre100() {
 // ******************************************
-    queueitem_t signal(RESET_PATCH);
+    QueueItem signal(QueueAction::RESET_PATCH);
     signal.int0 = 98;
     emit enqueue(signal);
 }
@@ -569,7 +569,7 @@ void ShruthiEditorMainWindow::resetPatchPre100() {
 // ******************************************
 void ShruthiEditorMainWindow::resetSequence() {
 // ******************************************
-    queueitem_t signal(RESET_SEQUENCE);
+    QueueItem signal(QueueAction::RESET_SEQUENCE);
     emit enqueue(signal);
 }
 
@@ -577,7 +577,7 @@ void ShruthiEditorMainWindow::resetSequence() {
 // ******************************************
 void ShruthiEditorMainWindow::randomizePatch() {
 // ******************************************
-    queueitem_t signal(RANDOMIZE_PATCH);
+    QueueItem signal(QueueAction::RANDOMIZE_PATCH);
     emit enqueue(signal);
 }
 
@@ -707,7 +707,7 @@ void ShruthiEditorMainWindow::displayMidiStatusChanged(const bool &in, const boo
 
     // It's rather hacky to do this here, but it works:
     if (in && out) {
-        queueitem_t signal(SYSEX_SHRUTHI_INFO_REQUEST);
+        QueueItem signal(QueueAction::SYSEX_SHRUTHI_INFO_REQUEST);
         emit enqueue(signal);
     }
 

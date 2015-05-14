@@ -45,12 +45,12 @@ class LibraryDialog : public QDialog {
 
     private:
         void setFont(QListWidgetItem *item, bool edited, bool moved);
-        void libraryRange(const ACTIONS &action, const int &flags, const int &from, const int &to);
+        void libraryRange(const QueueAction::ACTION &action, const int &flags, const int &from, const int &to);
         void move(const int &flags, const int &from, const int &to);
         void store(const int &flags, const int &id);
         void recall(const int &flags, const int &id);
 
-        void librarySelectedRanges(QListWidget *list, const ACTIONS &action, const int &flags);
+        void librarySelectedRanges(QListWidget *list, const QueueAction::ACTION &action, const int &flags);
 
 
         Ui::LibraryDialog *ui;
@@ -101,7 +101,7 @@ class LibraryDialog : public QDialog {
         void syncToPatchSelection();
 
     signals:
-        void enqueue(queueitem_t);
+        void enqueue(QueueItem);
 
 };
 

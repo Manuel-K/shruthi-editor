@@ -37,7 +37,7 @@
 // ******************************************
 int main(int argc, char *argv[]) {
 // ******************************************
-    qRegisterMetaType<queueitem_t>("queueitem_t");
+    qRegisterMetaType<QueueItem>("QueueItem");
     qRegisterMetaType<Config>("Config");
 
     int retVal;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
         editor.moveToThread(&editorThread);
 
         // editor: incoming signals
-        editor.connect(&sr, SIGNAL(editorProcess(queueitem_t)), SLOT(process(queueitem_t)));
+        editor.connect(&sr, SIGNAL(editorProcess(QueueItem)), SLOT(process(QueueItem)));
         editor.connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
         editor.connect(&sr, SIGNAL(setMidiChannel(unsigned char)), SLOT(setMidiChannel(unsigned char)));
         editor.connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
@@ -119,11 +119,11 @@ int main(int argc, char *argv[]) {
 
         // signalrouter: incoming signals
         sr.connect(&editor, SIGNAL(finished()), SLOT(editorFinished()));
-        sr.connect(main_window, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&sequence_editor, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&midiin, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&keys, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
-        sr.connect(&lib, SIGNAL(enqueue(queueitem_t)), SLOT(enqueue(queueitem_t)));
+        sr.connect(main_window, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&sequence_editor, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&midiin, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&keys, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
+        sr.connect(&lib, SIGNAL(enqueue(QueueItem)), SLOT(enqueue(QueueItem)));
         sr.connect(main_window, SIGNAL(settingsChanged(Config)), SLOT(settingsChanged(Config)));
 
         // start signal router
