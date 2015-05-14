@@ -58,14 +58,12 @@ class Library {
 
         bool send(const int &what, const int &from, const int &to);
 
-        bool startFetching(const int &from, const int &to);
+        bool startFetching(const int &flags, const int &from, const int &to);
         void abortFetching();
 
-        bool startFetchingPatches(const int &from, const int &to);
         bool receivedPatch(const unsigned char *sysex);
         bool isFetchingPatches() const;
 
-        bool startFetchingSequences(const int &from, const int &to);
         bool receivedSequence(const unsigned char *seq);
         bool isFetchingSequences() const;
 

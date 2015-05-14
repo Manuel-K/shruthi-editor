@@ -256,18 +256,25 @@ bool Library::send(const int &what, const int &from, const int &to) {
 }
 
 
-bool Library::startFetching(const int &from, const int &to) {
+bool Library::startFetching(const int &flags, const int &from, const int &to) {
+    if (!(flags&FLAG_PATCH) && !(flags&FLAG_SEQUENCE)) {
+        return false;
+    }
     // Note:
     // Shruthi displays the first patches number as 1, but calls it 0 internally.
-    fetchPatchMode = true;
-    fetchSequenceMode = true;
     fetchStart = from;
     fetchEnd = to;
-    fetchNextIncomingPatch = from;
-    fetchNextPatchRequest = from;
-    fetchNextIncomingSequence = from;
-    fetchNextSequenceRequest = from;
 
+    if (flags&FLAG_PATCH) {
+        fetchPatchMode = true;
+        fetchNextIncomingPatch = from;
+        fetchNextPatchRequest = from;
+    }
+    if (flags&FLAG_SEQUENCE) {
+        fetchSequenceMode = true;
+        fetchNextIncomingSequence = from;
+        fetchNextSequenceRequest = from;
+    }
     time->start();
 
     return keepFetching();
@@ -279,21 +286,6 @@ void Library::abortFetching() {
     fetchSequenceMode = false;
     fetchStart = 0;
     fetchEnd = 0;
-}
-
-
-bool Library::startFetchingPatches(const int &from, const int &to) {
-    // Note:
-    // Shruthi displays the first patches number as 1, but calls it 0 internally.
-    fetchPatchMode = true;
-    fetchStart = from;
-    fetchEnd = to;
-    fetchNextIncomingPatch = from;
-    fetchNextPatchRequest = from;
-
-    time->start();
-
-    return keepFetching();
 }
 
 
@@ -332,21 +324,6 @@ bool Library::isFetchingPatches() const {
     std::cout << "Library::isFetchingPatches() " << fetchPatchMode << " " << fetchNextIncomingPatch << " " << fetchEnd << std::endl;
 #endif
     return (fetchPatchMode && fetchNextIncomingPatch <= fetchEnd);
-}
-
-
-bool Library::startFetchingSequences(const int &from, const int &to) {
-    // Note:
-    // Shruthi displays the first patches number as 1, but calls it 0 internally.
-    fetchSequenceMode = true;
-    fetchStart = from;
-    fetchEnd = to;
-    fetchNextIncomingSequence = from;
-    fetchNextSequenceRequest = from;
-
-    time->start();
-
-    return keepFetching();
 }
 
 

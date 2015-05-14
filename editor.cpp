@@ -640,12 +640,11 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
     const int &st = stop >= 0 ? stop : (library->getNumberOfHWPrograms() - 1);
-    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
-        library->startFetching(start, st);
-    } else if ((what&FLAG_PATCH)) {
-        library->startFetchingPatches(start, st);
-    } else if ((what&FLAG_SEQUENCE)) {
-        library->startFetchingSequences(start, st);
+
+    if (library->startFetching(what, start, st)) {
+        emit displayStatusbar("Started to fetch the library.");
+    } else {
+        emit displayStatusbar("Could not start fetching the library.");
     }
 }
 
@@ -655,11 +654,14 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
     qDebug() << "Editor::actionLibrarySend()" << what << start << end;
 #endif
 
-    emit displayStatusbar("Library: Started sending patches.");
+    emit displayStatusbar("Started sending the library.");
     const int &st = end >= 0 ? end : (library->getNumberOfHWPrograms() - 1);
-    library->send(what, start, st);
-    emit redrawLibraryItems(what, start, end);
-    emit displayStatusbar("Library: Finished sending patches.");
+    if (library->send(what, start, st)) {
+        emit displayStatusbar("Finished sending the library.");
+    } else {
+        emit displayStatusbar("An error occured during sending of the library.");
+    }
+    emit redrawLibraryItems(what, start, end); // always do this; there could be a partial success
 }
 
 
