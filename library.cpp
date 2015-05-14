@@ -408,6 +408,31 @@ void Library::insertProgram(const int &id) {
 }
 
 
+void Library::resetPrograms(const int &flags, const int &from, const int &to) {
+#ifdef DEBUGMSGS
+    std::cout << "Library::resetPrograms(" << flags << ", " << from << ", " << to << ");" << std::endl;
+#endif
+    if (flags&FLAG_PATCH) {
+        for (int i = from; i <= to; i++) {
+            if (firmwareVersionRequested) {
+                patches.at(i).resetPatch(firmwareVersion);
+            } else {
+                patches.at(i).resetPatch();
+            }
+            mPatchMoved.at(i) = false;
+            mPatchEdited.at(i) = true;
+        }
+    }
+    if (flags&FLAG_SEQUENCE) {
+        for (int i = from; i <= to; i++) {
+            sequences.at(i).reset();
+            mSequenceMoved.at(i) = false;
+            mSequenceEdited.at(i) = true;
+        }
+    }
+}
+
+
 bool Library::saveLibrary(const QString &path) {
     QByteArray ba;
 

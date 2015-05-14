@@ -59,6 +59,7 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     patchContextMenu->addSeparator();
     patchContextMenu->addAction("Insert Program After", this, SLOT(patchCMInsert()));
     patchContextMenu->addAction("Delete Program", this, SLOT(patchCMDelete()));
+    patchContextMenu->addAction("Reset", this, SLOT(patchCMReset()));
     patchContextMenu->addSeparator();
     patchContextMenu->addAction("Send", this, SLOT(patchCMSend()));
     patchContextMenu->addAction("Send Changed", this, SLOT(patchCMSendChanged()));
@@ -68,6 +69,7 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     sequenceContextMenu->addSeparator();
     sequenceContextMenu->addAction("Insert Program After", this, SLOT(sequenceCMInsert()));
     sequenceContextMenu->addAction("Delete Program", this, SLOT(sequenceCMDelete()));
+    sequenceContextMenu->addAction("Reset", this, SLOT(sequenceCMReset()));
     sequenceContextMenu->addSeparator();
     sequenceContextMenu->addAction("Send", this, SLOT(sequenceCMSend()));
     sequenceContextMenu->addAction("Send Changed", this, SLOT(sequenceCMSendChanged()));
@@ -426,6 +428,30 @@ void LibraryDialog::sequenceCMDelete() {
     qDebug() << "LibraryDialog::patchCMDelete()";
 #endif
     librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_DELETE, 0);
+}
+
+
+void LibraryDialog::patchCMReset() {
+#ifdef DEBUGMSGS
+    qDebug() << "LibraryDialog::patchCMReset()";
+#endif
+    int flag = Library::FLAG_PATCH;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_SEQUENCE;
+    }
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_RESET, flag);
+}
+
+
+void LibraryDialog::sequenceCMReset() {
+#ifdef DEBUGMSGS
+    qDebug() << "LibraryDialog::sequenceCMReset()";
+#endif
+    int flag = Library::FLAG_SEQUENCE;
+    if (ui->sync->isChecked()) {
+        flag |= Library::FLAG_PATCH;
+    }
+    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_RESET, flag);
 }
 
 

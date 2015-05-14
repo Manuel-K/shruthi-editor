@@ -175,6 +175,9 @@ void Editor::process(QueueItem item) {
         case QueueAction::LIBRARY_INSERT:
             actionLibraryInsert(item.int0);
             break;
+        case QueueAction::LIBRARY_RESET:
+            actionLibraryReset(item.int0, item.int1, item.int2);
+            break;
         case QueueAction::LIBRARY_LOAD:
             actionLibraryLoad(item.string, item.int0);
             break;
@@ -762,4 +765,13 @@ void Editor::actionLibraryInsert(const unsigned int &id) {
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, id, library->getNumberOfPrograms() - 1);
 
 
+}
+
+
+void Editor::actionLibraryReset(const unsigned int &flags, const unsigned int &start, const unsigned int &end) {
+#ifdef DEBUGMSG
+    qDebug() << "Editor::actionLibraryReset()" << flags << start << end;
+#endif
+    library->resetPrograms(flags, start, end);
+    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, end);
 }

@@ -70,6 +70,7 @@ class Library {
 
         void deletePrograms(const int &from, const int &to);
         void insertProgram(const int &id);
+        void resetPrograms(const int &flags, const int &from, const int &to);
 
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path, bool append = false);
