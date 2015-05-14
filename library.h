@@ -26,7 +26,7 @@
 #include "midiout.h"
 
 class QString;
-#include <QTime>
+class QTime;
 
 // ******************************************
 class Library {
@@ -116,7 +116,7 @@ class Library {
         unsigned int fetchNextIncomingSequence;
         unsigned int fetchNextSequenceRequest;
 
-        QTime time;
+        QTime *time;
 
         int numberOfPrograms;
         int numberOfHWPrograms;

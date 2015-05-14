@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
         sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter2(int)), SLOT(redrawPatchParameter(int)));
 
         // Setup LibraryDialog
-        LibraryDialog lib(&editor.getLibrary());
+        LibraryDialog lib(editor.getLibrary());
         lib.setWindowIcon(QIcon(":/shruthi_editor.png"));
         lib.connect(main_window, SIGNAL(showLibrary()), SLOT(show()));
         lib.connect(&editor, SIGNAL(redrawLibraryItems(int,int,int)), SLOT(redrawItems(int,int,int)));

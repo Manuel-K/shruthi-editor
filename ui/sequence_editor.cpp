@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "sequence.h"
+#include "patch.h"
 
 
 // ******************************************

@@ -20,11 +20,7 @@
 #define SHRUTHI_SEQUENCE_H
 
 #include "message.h"
-
-
-namespace SequenceParameter {
-    enum SequenceParameter {ACTIVE, NOTE, TIE, VELOCITY, VALUE};
-}
+#include "sequence_parameter.h"
 
 
 // ******************************************

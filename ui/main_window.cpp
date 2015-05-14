@@ -23,6 +23,7 @@
 #include "ui/settings_dialog.h"
 #include "labels.h"
 #include "patch.h"
+#include <iostream>
 
 #define VERSION "0.23"
 

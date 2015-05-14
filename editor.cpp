@@ -20,13 +20,23 @@
 #include "fileio.h"
 #include "midi.h"
 
+#include "patch.h"
+#include "midiout.h"
+#include "sequence.h"
+#include "library.h"
+
+
 #ifdef DEBUGMSGS
 #include <QDebug>
 #endif
 
 
 // ******************************************
-Editor::Editor(): library(&midiout) {
+Editor::Editor():
+    midiout(new MidiOut),
+    patch(new Patch),
+    sequence(new Sequence),
+    library(new Library(midiout)) {
 // ******************************************
 #ifdef DEBUGMSGS
     qDebug("Editor::Editor()");
@@ -43,8 +53,8 @@ void Editor::run()
 #ifdef DEBUGMSGS
     qDebug("Editor::run()");
 #endif
-    emit setStatusbarVersionLabel(patch.getVersionString());
-    emit redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
+    emit setStatusbarVersionLabel(patch->getVersionString());
+    emit redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -54,7 +64,7 @@ bool Editor::setMidiOutputPort(int out) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::setMidiPorts:" << out;
 #endif
-    bool status = midiout.open(out);
+    bool status = midiout->open(out);
     emit midiOutputStatusChanged(status);
     return status;
 }
@@ -87,32 +97,40 @@ Editor::~Editor() {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::~Editor()";
 #endif
+    delete library;
+    library = NULL;
+    delete sequence;
+    sequence = NULL;
+    delete patch;
+    patch = NULL;
+    delete midiout;
+    midiout = NULL;
 }
 
 
 // ******************************************
 const int &Editor::getParam(int id) const {
 // ******************************************
-    return patch.getParam(id);
+    return patch->getParam(id);
 }
 
 
 // ******************************************
 const QString &Editor::getName() const {
 // ******************************************
-    return patch.getName();
+    return patch->getName();
 }
 
 
 // ******************************************
 const int &Editor::getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const {
 // ******************************************
-    return sequence.getParam(step, sp);
+    return sequence->getParam(step, sp);
 }
 
 
 // ******************************************
-const Library &Editor::getLibrary() const {
+const Library *Editor::getLibrary() const {
 // ******************************************
     return library;
 }
@@ -210,8 +228,8 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionPatchParameterChangeEditor(" << id << "," << value << ")";
 #endif
-    if (patch.getParam(id) != value) {
-        patch.setParam(id, value);
+    if (patch->getParam(id) != value) {
+        patch->setParam(id, value);
 
         //strange hack to fix arpeggiator range
         //firmware 1.03 maps 1->1, 2->1, 3->2, 4->3
@@ -221,7 +239,7 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
         }
 
         if (Patch::sendAsNRPN(id)) {
-            if (!midiout.nrpn(id, value)) {
+            if (!midiout->nrpn(id, value)) {
                 emit displayStatusbar("Could not send changes as NRPN.");
             }
         } else {
@@ -229,7 +247,7 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
             const int &cc = param.cc;
             const int &val = 127.0 * (value - param.min) / param.max;
             if (cc >= 0) {
-                if (!midiout.controlChange(0, cc, val)) {
+                if (!midiout->controlChange(0, cc, val)) {
                     emit displayStatusbar("Could not send changes as CC.");
                 }
             } else {
@@ -247,7 +265,7 @@ void Editor::actionFetchRequest(const int &what) {
 #endif
     bool statusP = true;
     if (what&FLAG_PATCH) {
-        statusP = midiout.patchTransferRequest();
+        statusP = midiout->patchTransferRequest();
         if (statusP)
             emit displayStatusbar("Patch transfer request sent.");
         else
@@ -255,7 +273,7 @@ void Editor::actionFetchRequest(const int &what) {
     }
     bool statusS = true;
     if (what&FLAG_SEQUENCE) {
-        statusS = midiout.sequenceTransferRequest();
+        statusS = midiout->sequenceTransferRequest();
         if (statusS)
             emit displayStatusbar("Sequence transfer request sent.");
         else
@@ -299,14 +317,14 @@ void Editor::actionSendData(const int &what) {
     bool statusP = true;
     if (what&FLAG_PATCH) {
         Message temp;
-        patch.generateSysex(&temp);
-        statusP = midiout.write(temp);
+        patch->generateSysex(&temp);
+        statusP = midiout->write(temp);
     }
     bool statusS = true;
     if (what&FLAG_SEQUENCE) {
         Message temp;
-        sequence.generateSysex(&temp);
-        statusS = midiout.write(temp);
+        sequence->generateSysex(&temp);
+        statusS = midiout->write(temp);
 
     }
 
@@ -339,7 +357,7 @@ void Editor::actionShruthiInfoRequest()
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionShruthiInfoRequest()";
 #endif
-    if (midiout.versionRequest() && midiout.numBanksRequest()) {
+    if (midiout->versionRequest() && midiout->numBanksRequest()) {
         //emit displayStatusbar("Version request sent.");
 #ifdef DEBUGMSGS
         std::cout  << "Version and number of banks requests sent." << std::endl;
@@ -363,7 +381,7 @@ void Editor::actionPatchParameterChangeMidi(int id, int value) {
 
     if (Patch::parameters[id].min < 0 && value >= 127)
         value-=256; //2s complement
-    patch.setParam(id, value);
+    patch->setParam(id, value);
     if (Patch::hasUI(id)) {
         emit redrawPatchParamter(id);
     }
@@ -379,7 +397,7 @@ void Editor::actionNoteOn(unsigned char note, unsigned char velocity) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNoteOn(" << channel << "," << note << "," << velocity << ")";
 #endif
-    if (!midiout.noteOn(channel,note,velocity))
+    if (!midiout->noteOn(channel, note, velocity))
         emit displayStatusbar("Could not send note on message.");
 }
 
@@ -390,7 +408,7 @@ void Editor::actionNoteOff(unsigned char note) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNoteOff(" << channel << "," << note << ")";
 #endif
-    if (!midiout.noteOff(channel,note))
+    if (!midiout->noteOff(channel, note))
         emit displayStatusbar("Could not send note off message.");
 }
 
@@ -401,7 +419,7 @@ void Editor::actionNotePanic() {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionNotePanic(" << channel << ")";
 #endif
-    if (midiout.allNotesOff(channel))
+    if (midiout->allNotesOff(channel))
         emit displayStatusbar("Sent all notes off message.");
     else
         emit displayStatusbar("Could not send all notes off message.");
@@ -426,40 +444,40 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         bool ret = (size == 92);
 
         if (ret) {
-            if (library.isFetchingPatches()) {
-                ret = library.receivedPatch(message);
+            if (library->isFetchingPatches()) {
+                ret = library->receivedPatch(message);
                 if (ret) {
-                    emit redrawLibraryItems(FLAG_PATCH, library.nextPatch() - 1, library.nextPatch() - 1);
+                    emit redrawLibraryItems(FLAG_PATCH, library->nextPatch() - 1, library->nextPatch() - 1);
                 }
             } else {
-                ret = patch.unpackData(message);
+                ret = patch->unpackData(message);
             }
         }
 
         if (ret) {
-            emit displayStatusbar("Received valid patch (" + patch.getVersionString() + " format).");
+            emit displayStatusbar("Received valid patch (" + patch->getVersionString() + " format).");
             emit redrawAllPatchParameters();
-            emit setStatusbarVersionLabel(patch.getVersionString());
+            emit setStatusbarVersionLabel(patch->getVersionString());
         } else {
-            if (library.isFetchingPatches()) {
-                library.abortFetching();
+            if (library->isFetchingPatches()) {
+                library->abortFetching();
             }
             emit displayStatusbar("Received invalid patch.");
         }
     } else if (command == 0x02 && argument == 0x00) {
         if (size == 32) {
-            if (library.isFetchingSequences()) {
-                library.receivedSequence(message);
-                emit redrawLibraryItems(FLAG_SEQUENCE, library.nextSequence() - 1, library.nextSequence() - 1);
+            if (library->isFetchingSequences()) {
+                library->receivedSequence(message);
+                emit redrawLibraryItems(FLAG_SEQUENCE, library->nextSequence() - 1, library->nextSequence() - 1);
             } else {
-                sequence.unpackData(message);
+                sequence->unpackData(message);
             }
 
             emit displayStatusbar("Received valid sequence.");
             emit redrawAllSequenceParameters();
         } else {
-            if (library.isFetchingSequences()) {
-                library.abortFetching();
+            if (library->isFetchingSequences()) {
+                library->abortFetching();
             }
             emit displayStatusbar("Received invalid sequence.");
         }
@@ -469,8 +487,8 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 #ifdef DEBUGMSGS
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
-        library.setNumberOfHWPrograms(numberOfPrograms);
-        emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
+        library->setNumberOfHWPrograms(numberOfPrograms);
+        emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
@@ -490,7 +508,7 @@ void Editor::actionSetPatchname(QString name) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSetPatchname(" << name << ")";
 #endif
-    patch.setName(name);
+    patch->setName(name);
     emit displayStatusbar("Patch name set.");
 }
 
@@ -517,7 +535,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
                 qDebug() << i << ":" << temp[i];
 #endif
             }
-            statusP = patch.unpackData(data);
+            statusP = patch->unpackData(data);
         } else {
             statusP = false;
         }
@@ -526,13 +544,13 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
             Message ptc;
             // ignore return value; if it fails, ptc is empty:
             Midi::getPatch(&temp, &ptc);
-            statusP = patch.parseSysex(&ptc);
+            statusP = patch->parseSysex(&ptc);
         }
         if (what&FLAG_SEQUENCE) {
             Message seq;
             // ignore return value; if it fails, seq is empty:
             Midi::getSequence(&temp, &seq);
-            statusS = sequence.parseSysex(&seq);
+            statusS = sequence->parseSysex(&seq);
         }
     }
 
@@ -571,7 +589,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
     // Send required refresh signals
     if (statusP && (what&FLAG_PATCH)) {
         emit redrawAllPatchParameters();
-        emit setStatusbarVersionLabel(patch.getVersionString());
+        emit setStatusbarVersionLabel(patch->getVersionString());
     }
     if (statusS && (what&FLAG_SEQUENCE)) {
         emit redrawAllSequenceParameters();
@@ -586,15 +604,15 @@ void Editor::actionFileIOSave(QString path, const int &what) {
 
     if (path.endsWith(".sp", Qt::CaseInsensitive)) {
         unsigned char data[92];
-        patch.packData(data);
+        patch->packData(data);
         FileIO::appendToByteArray(data, 92, ba);
     } else {
         Message temp;
         if (what&FLAG_PATCH) {
-            patch.generateSysex(&temp);
+            patch->generateSysex(&temp);
         }
         if (what&FLAG_SEQUENCE) {
-            sequence.generateSysex(&temp);
+            sequence->generateSysex(&temp);
         }
         FileIO::appendToByteArray(temp, ba);
     }
@@ -631,10 +649,10 @@ void Editor::actionResetPatch(unsigned int version) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionResetPatch()";
 #endif
-    patch.resetPatch(version);
+    patch->resetPatch(version);
     emit redrawAllPatchParameters();
     emit displayStatusbar("Patch reset.");
-    emit setStatusbarVersionLabel(patch.getVersionString());
+    emit setStatusbarVersionLabel(patch->getVersionString());
 }
 
 
@@ -644,10 +662,10 @@ void Editor::actionRandomizePatch() {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
-    patch.randomizePatch(shruthiFilterBoard);
+    patch->randomizePatch(shruthiFilterBoard);
     emit redrawAllPatchParameters();
     emit displayStatusbar("Patch randomized.");
-    emit setStatusbarVersionLabel(patch.getVersionString());
+    emit setStatusbarVersionLabel(patch->getVersionString());
 }
 
 
@@ -657,7 +675,7 @@ void Editor::actionSequenceParameterChangeEditor(const unsigned &id, const int &
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionSequenceParameterChangeEditor()" << id << value;
 #endif
-    sequence.setParamById(id, value);
+    sequence->setParamById(id, value);
 }
 
 
@@ -667,7 +685,7 @@ void Editor::actionResetSequence() {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionResetSequence()";
 #endif
-    sequence.reset();
+    sequence->reset();
     emit redrawAllSequenceParameters();
     emit displayStatusbar("Sequence reset.");
 }
@@ -679,13 +697,13 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
-    const int &st = stop >= 0 ? stop : (library.getNumberOfHWPrograms() - 1);
+    const int &st = stop >= 0 ? stop : (library->getNumberOfHWPrograms() - 1);
     if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
-        library.fetch(start, st);
+        library->fetch(start, st);
     } else if ((what&FLAG_PATCH)) {
-        library.fetchPatches(start, st);
+        library->fetchPatches(start, st);
     } else if ((what&FLAG_SEQUENCE)) {
-        library.fetchSequences(start, st);
+        library->fetchSequences(start, st);
     }
 }
 
@@ -698,8 +716,8 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
 #endif
 
     emit displayStatusbar("Library: Started sending patches.");
-    const int &st = end >= 0 ? end : (library.getNumberOfHWPrograms() - 1);
-    library.send(what, start, st);
+    const int &st = end >= 0 ? end : (library->getNumberOfHWPrograms() - 1);
+    library->send(what, start, st);
     emit redrawLibraryItems(what, start, end);
     emit displayStatusbar("Library: Finished sending patches.");
 }
@@ -714,11 +732,11 @@ void Editor::actionLibraryRecall(const unsigned int &what, const unsigned int &i
     Q_UNUSED(what);
 
     if (what&FLAG_PATCH) {
-        patch.set(library.recallPatch(id));
+        patch->set(library->recallPatch(id));
         emit redrawAllPatchParameters();
     }
     if (what&FLAG_SEQUENCE) {
-        sequence.set(library.recallSequence(id));
+        sequence->set(library->recallSequence(id));
         emit redrawAllSequenceParameters();
     }
 }
@@ -731,11 +749,11 @@ void Editor::actionLibraryStore(const unsigned int &what, const unsigned int &id
     qDebug() << "Editor::actionLibraryStore()";
 #endif
     if (what&FLAG_PATCH) {
-        library.storePatch(id, patch);
+        library->storePatch(id, *patch);
         emit redrawLibraryItems(FLAG_PATCH, id, id);
     }
     if (what&FLAG_SEQUENCE) {
-        library.storeSequence(id, sequence);
+        library->storeSequence(id, *sequence);
         emit redrawLibraryItems(FLAG_SEQUENCE, id, id);
     }
 }
@@ -748,10 +766,10 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
     qDebug() << "Editor::actionLibraryMove()";
 #endif
     if (what&FLAG_PATCH) {
-        library.movePatch(start, target);
+        library->movePatch(start, target);
     }
     if (what&FLAG_SEQUENCE) {
-        library.moveSequence(start, target);
+        library->moveSequence(start, target);
     }
     const int &s = std::min(start, target);
     const int &t = std::max(start, target);
@@ -764,12 +782,12 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
 void Editor::actionLibraryLoad(const QString &path, const int &flags) {
 // ******************************************
     //TODO respect flags
-    if (library.loadLibrary(path, flags&Library::FLAG_APPEND)) {
+    if (library->loadLibrary(path, flags&Library::FLAG_APPEND)) {
         emit displayStatusbar("Library loaded from disk.");
     } else {
         emit displayStatusbar("Could not load library from disk.");
     }
-    emit redrawLibraryItems(flags, 0, library.getNumberOfPrograms() - 1);
+    emit redrawLibraryItems(flags, 0, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -778,7 +796,7 @@ void Editor::actionLibrarySave(const QString &path, const int &flags) {
 // ******************************************
     Q_UNUSED(flags);
     //TODO respect flags
-    if (library.saveLibrary(path)) {
+    if (library->saveLibrary(path)) {
         emit displayStatusbar("Library saved to disk.");
     } else {
         emit displayStatusbar("Could not save library to disk.");
@@ -792,8 +810,8 @@ void Editor::actionLibraryDelete(const unsigned int &start, const unsigned int &
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryDelete()" << start << end;
 #endif
-    library.deletePrograms(start, end);
-    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, 0, library.getNumberOfPrograms() - 1);
+    library->deletePrograms(start, end);
+    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
 }
 
 

@@ -23,11 +23,15 @@
 
 #include <iostream>
 #include <QThread>
+#include <QTime>
 #include <stdint.h> // needed for hash calculation
 
 // ******************************************
 Library::Library(MidiOut *out):
-    midiout(out), numberOfPrograms(0), numberOfHWPrograms(16) {
+    midiout(out),
+    time(new QTime),
+    numberOfPrograms(0),
+    numberOfHWPrograms(16) {
 // ******************************************
     abortFetching();
     fetchNextIncomingPatch = 0;
@@ -42,6 +46,8 @@ Library::Library(MidiOut *out):
 // ******************************************
 Library::~Library() {
 // ******************************************
+    delete time;
+    time = NULL;
 }
 
 
@@ -279,7 +285,7 @@ bool Library::fetch(const int &from, const int &to) {
     fetchNextIncomingSequence = from;
     fetchNextSequenceRequest = from;
 
-    time.start();
+    time->start();
 
     return keepFetching();
 }
@@ -306,7 +312,7 @@ bool Library::fetchPatches(const int &from, const int &to) {
     fetchNextIncomingPatch = from;
     fetchNextPatchRequest = from;
 
-    time.start();
+    time->start();
 
     return keepFetching();
 }
@@ -365,7 +371,7 @@ bool Library::fetchSequences(const int &from, const int &to) {
     fetchNextIncomingSequence = from;
     fetchNextSequenceRequest = from;
 
-    time.start();
+    time->start();
 
     return keepFetching();
 }
@@ -600,7 +606,7 @@ bool Library::keepFetching() {
         if (fetchSequenceMode) {
             std::cout << "sequences";
         }
-        std::cout << ". It took " << time.elapsed() << " ms to fetch " << fetchEnd - fetchStart + 1 << " programs." << std::endl;
+        std::cout << ". It took " << time->elapsed() << " ms to fetch " << fetchEnd - fetchStart + 1 << " programs." << std::endl;
 
         abortFetching();
         return true;

@@ -21,10 +21,13 @@
 
 #include "queueitem.h"
 #include "message.h"
-#include "patch.h"
-#include "midiout.h"
-#include "sequence.h"
-#include "library.h"
+#include "sequence_parameter.h"
+#include <QObject>
+
+class Patch;
+class MidiOut;
+class Sequence;
+class Library;
 
 
 // ******************************************
@@ -39,7 +42,7 @@ class Editor : public QObject {
         const QString &getName() const;
         const int &getSequenceParam(const int &step, const SequenceParameter::SequenceParameter &sp) const;
 
-        const Library &getLibrary() const;
+        const Library *getLibrary() const;
 
         // keep in sync with Library::FLAGs
         static const int FLAG_PATCH = 1;
@@ -72,10 +75,10 @@ class Editor : public QObject {
         void actionLibrarySave(const QString &path, const int &flags);
         void actionLibraryDelete(const unsigned int &start, const unsigned int &end);
 
-        Patch patch;
-        Sequence sequence;
-        Library library;
-        MidiOut midiout;
+        MidiOut *midiout;
+        Patch *patch;
+        Sequence *sequence;
+        Library *library;
         unsigned char channel;
         int shruthiFilterBoard;
         int firmwareVersion;

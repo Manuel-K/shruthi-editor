@@ -44,6 +44,7 @@ HEADERS = \
     patch.h \
     queueitem.h \
     sequence.h \
+    sequence_parameter.h \
     signalrouter.h
 
 SOURCES = \
