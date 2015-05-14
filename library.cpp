@@ -607,7 +607,7 @@ bool Library::keepFetching() {
         if (fetchSequenceMode) {
             std::cout << "sequences";
         }
-        std::cout << ". It took " << time->elapsed() << " ms to fetch " << fetchEnd - fetchStart + 1 << " programs." << std::endl;
+        std::cout << ". It took " << time->elapsed() << " ms to fetch " << fetchEnd - fetchStart + 1 << " program(s)." << std::endl;
 
         abortFetching();
         return recallShruthiProgramm();
