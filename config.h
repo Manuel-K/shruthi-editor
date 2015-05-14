@@ -23,6 +23,7 @@
 class Config {
 // ******************************************
     public:
+        Config();
         void load();
         void save();
         const int &midiInputPort() const;

@@ -21,6 +21,16 @@
 
 
 // ******************************************
+Config::Config() {
+// ******************************************
+    mMidiInputPort = 0;
+    mMidiOutputPort = 0;
+    mMidiChannel = 0;
+    mShruthiFilterBoard = 0;
+}
+
+
+// ******************************************
 void Config::save() {
 // ******************************************
     QSettings settings("Manuel Kroenig", "Shruthi-Editor");
