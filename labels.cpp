@@ -379,7 +379,7 @@ const QStringList Labels::SequencerClockDivision = QStringList()
 
 QString Labels::TempoFormatter(int value) {
     if (value < 40) {
-        return QString("External %1").arg(value);
+        return QString("ext");
     } else {
         return QString("%1").arg(value);
     }
@@ -390,7 +390,7 @@ QString Labels::ArpeggiatorPatternFormatter(int value) {
     if (value < 15) {
         return QString("%1").arg(value + 1);
     } else {
-        return "Sequence";
+        return "sq";
     }
 }
 
