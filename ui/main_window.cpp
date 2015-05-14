@@ -56,13 +56,14 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
     ShruthiEditorDial * tmp_sed;
     for (int i=0; i<100; i++) {
         if (Patch::hasUI(i)) {
-            if (Patch::parameter(i).dropdown) {
+            const PatchParameter &par = Patch::parameter(i, 2);
+            if (par.dropdown) {
                 tmp_c = this->findChild<QComboBox*>(QString("c%1").arg(i));
                 if (!tmp_c) {
                     qDebug() << "ComboBox" << QString("c%1").arg(i) << "could not be found!";
                     continue;
                 }
-                tmp_c->addItems(*(Patch::parameter(i).dropdown));
+                tmp_c->addItems(*(par.dropdown));
                 connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
             } else if (Patch::belongsToModMatrix(i)){ // small dials
                 tmp_d = this->findChild<QDial*>(QString("c%1").arg(i));
@@ -70,8 +71,8 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
                     qDebug() << "Dial" << QString("c%1").arg(i) << "could not be found!";
                     continue;
                 }
-                tmp_d->setMinimum(Patch::parameter(i).min);
-                tmp_d->setMaximum(Patch::parameter(i).max);
+                tmp_d->setMinimum(par.min);
+                tmp_d->setMaximum(par.max);
                 tmp_l = this->findChild<QLabel*>(QString("d%1").arg(i));
                 if (tmp_l) {
                     tmp_l->setText("0");
@@ -87,9 +88,9 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
                     continue;
                 }
                 tmp_sed->setParameter(i);
-                tmp_sed->setLimits(Patch::parameter(i).min, Patch::parameter(i).max);
-                tmp_sed->setName(Patch::parameter(i).short_name + ":");
-                tmp_sed->setFormatter(Patch::parameter(i).formatter);
+                tmp_sed->setLimits(par.min, par.max);
+                tmp_sed->setName(par.short_name + ":");
+                tmp_sed->setFormatter(par.formatter);
                 connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
             }
         }
@@ -97,15 +98,17 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
     // Setup additional dials for parameters 92 and 93:
     for (int i = 92; i <= 93; i++) {
         if (Patch::hasUI(i)) {
+            const PatchParameter &par = Patch::parameter(i, 2);
+
             tmp_sed = this->findChild<ShruthiEditorDial*>(QString("c%1d").arg(i));
             if (!tmp_sed) {
                 qDebug() << "ShruthiEditorDial" << QString("c%1d").arg(i) << "could not be found!";
                 continue;
             }
             tmp_sed->setParameter(i);
-            tmp_sed->setLimits(Patch::parameter(i).min, Patch::parameter(i).max);
-            tmp_sed->setName(Patch::parameter(i).short_name + ":");
-            tmp_sed->setFormatter(Patch::parameter(i).formatter);
+            tmp_sed->setLimits(par.min, par.max);
+            tmp_sed->setName(par.short_name + ":");
+            tmp_sed->setFormatter(par.formatter);
             connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
         }
     }
