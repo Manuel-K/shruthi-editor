@@ -395,6 +395,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         // Version info
         if (size == 2) {
             firmwareVersion = message[0] * 1000 + message[1];
+            library->setFirmwareVersion(firmwareVersion);
         }
     } else if (command == 0x01 && argument == 0x00) {
         bool ret = (size == 92);

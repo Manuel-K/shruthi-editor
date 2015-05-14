@@ -40,6 +40,7 @@ static const PatchParameter param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
 class Patch {
     public:
         Patch();
+        Patch(const unsigned int &version);
 
         static PatchParameter parameter(const int &id, int filter = 0);
 

@@ -34,6 +34,8 @@ class Library {
         Library(MidiOut *out);
         ~Library();
 
+        void setFirmwareVersion(const int &version);
+
         const Patch &recallPatch(const int &id) const;
         void storePatch(const int &id, const Patch &patch);
         void listPatches() const;
@@ -41,6 +43,7 @@ class Library {
 
         bool patchMoved(const int &id) const;
         bool patchEdited(const int &id) const;
+        QString getPatchIdentifier(const int &id) const;
 
         const Sequence &recallSequence(const int &id) const;
         void storeSequence(const int &id, const Sequence &sequence);
@@ -120,6 +123,7 @@ class Library {
         int numberOfPrograms;
         int numberOfHWPrograms;
 
+        int firmwareVersion;
 };
 
 #endif // SHRUTHI_LIBRARY_H

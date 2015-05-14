@@ -137,7 +137,7 @@ void LibraryDialog::redrawItems(int what, int start, int stop) {
         //std::cout << "redrawPatchNames " <<  start << " " << stop << std::endl;
         for (int i = start; i <= stop; i++) {
             item = ui->patchList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library->recallPatch(i).getName());
+            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library->getPatchIdentifier(i));
 
             const bool &e = library->patchEdited(i);
             const bool &m = library->patchMoved(i);

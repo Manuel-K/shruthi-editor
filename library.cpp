@@ -32,7 +32,8 @@ Library::Library(MidiOut *out):
     midiout(out),
     time(new QTime),
     numberOfPrograms(0),
-    numberOfHWPrograms(16) {
+    numberOfHWPrograms(16),
+    firmwareVersion(0) {
     abortFetching();
     fetchNextIncomingPatch = 0;
     fetchNextPatchRequest = 0;
@@ -46,6 +47,11 @@ Library::Library(MidiOut *out):
 Library::~Library() {
     delete time;
     time = NULL;
+}
+
+
+void Library::setFirmwareVersion(const int &version) {
+    firmwareVersion = version;
 }
 
 
@@ -109,6 +115,12 @@ bool Library::patchMoved(const int &id) const {
 
 bool Library::patchEdited(const int &id) const {
     return mPatchEdited.at(id);
+}
+
+
+QString Library::getPatchIdentifier(const int &id) const {
+    const Patch &p = patches.at(id);
+    return p.getName().leftJustified(9, ' ') + "(" + p.getVersionString() + ")";
 }
 
 
@@ -392,7 +404,7 @@ void Library::insertProgram(const int &id) {
     std::cout << "Library::insertProgram(" << id << ");" << std::endl;
 #endif
 
-    patches.insert(patches.begin() + id + 1, Patch());
+    patches.insert(patches.begin() + id + 1, Patch(firmwareVersion));
     mPatchMoved.insert(mPatchMoved.begin() + id + 1, false);
     mPatchEdited.insert(mPatchEdited.begin() + id + 1, true);
     sequences.insert(sequences.begin() + id + 1, Sequence());
@@ -604,7 +616,7 @@ void Library::growVectorsTo(const int &num) {
 
 
         for (int i = 0; i < amount; i++) {
-            patches.push_back(Patch());
+            patches.push_back(Patch(firmwareVersion));
             mPatchEdited.push_back(false);
             mPatchMoved.push_back(false);
             sequences.push_back(Sequence());

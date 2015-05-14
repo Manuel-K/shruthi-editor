@@ -281,6 +281,12 @@ Patch::Patch() {
 }
 
 
+Patch::Patch(const unsigned int &version) {
+    resetPatch(version);
+    srand(time(NULL));
+}
+
+
 void Patch::setValue(const int &id, int const value) {
     data[id] = value;
 }
