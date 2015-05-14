@@ -54,12 +54,12 @@ SequenceEditor::SequenceEditor(const Editor *edit, QWidget *parent) :
     QComboBox *cb;
     QLabel *l;
     for (unsigned int p = 100; p < 110; p++) {
-        if (Patch::parameter(p, 0).dropdown) {
+        if (Patch::parameter(p, 0).string_values) {
             cb = this->findChild<QComboBox*>(QString("c%1").arg(p));
             if (!cb) {
                 continue;
             }
-            cb->addItems(*Patch::parameter(p, 0).dropdown);
+            cb->addItems(*Patch::parameter(p, 0).string_values);
             connect(cb, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChanged(int)));
             l = this->findChild<QLabel*>(QString("l%1").arg(p));
             if (!l) {
@@ -106,7 +106,7 @@ void SequenceEditor::redrawPatchParameter(int id) {
 #ifdef DEBUGMSGS
     std::cout << "SequenceEditor::redrawPatchParameter();" << id << std::endl;
 #endif
-    if (Patch::parameter(id, 0).dropdown) {
+    if (Patch::parameter(id, 0).string_values) {
         QComboBox *cb = this->findChild<QComboBox*>(QString("c%1").arg(id));
         if (!cb) {
             return;

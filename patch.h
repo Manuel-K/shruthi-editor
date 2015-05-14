@@ -29,7 +29,7 @@ struct PatchParameter {
     QString short_name;
     int min;
     int max;
-    const QStringList* dropdown;
+    const QStringList* string_values;
     QString (*formatter)(int);
     int cc;
 };

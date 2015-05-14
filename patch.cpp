@@ -332,8 +332,8 @@ QString Patch::formatParameterValue(const int &id, const int &value, int filter)
 {
     const PatchParameter &param_entry = parameter(id, filter);
 
-    if (param_entry.dropdown) {
-        return (*param_entry.dropdown).at(value);
+    if (param_entry.string_values) {
+        return (*param_entry.string_values).at(value);
     } else {
         if (param_entry.formatter) {
             return (*param_entry.formatter)(value);
