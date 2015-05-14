@@ -290,7 +290,7 @@ void LibraryDialog::save() {
 void LibraryDialog::libraryRange(const QueueAction::QueueAction &action, const int &flags, const int &from, const int &to) {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "LibraryDialog::libraryRange() " << flags << " " << from << " " << to << std::endl;
+    qDebug() << "LibraryDialog::libraryRange() " << flags << from << to;
 #endif
     QueueItem signal(action);
     signal.int0 = flags;
@@ -346,7 +346,7 @@ void LibraryDialog::librarySelectedRanges(QListWidget *list, const QueueAction::
 void LibraryDialog::patchOpenContextMenu(QPoint p) {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "LibraryDialog::patchOpenContextMenu" << std::endl;
+    qDebug() << "LibraryDialog::patchOpenContextMenu";
 #endif
     patchContextMenu->popup(ui->patchList->mapToGlobal(p));
 }
@@ -356,7 +356,7 @@ void LibraryDialog::patchOpenContextMenu(QPoint p) {
 void LibraryDialog::sequenceOpenContextMenu(QPoint p) {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "LibraryDialog::sequenceOpenContextMenu" << std::endl;
+    qDebug() << "LibraryDialog::sequenceOpenContextMenu";
 #endif
     sequenceContextMenu->popup(ui->sequenceList->mapToGlobal(p));
 }
@@ -469,7 +469,7 @@ void LibraryDialog::sequenceCMSendChanged() {
 void LibraryDialog::bothCMdelete() {
 // ******************************************
 #ifdef DEBUGMSGS
-    std::cout << "LibraryDialog::bothCMdelete()" << std::endl;
+    qDebug() << "LibraryDialog::bothCMdelete()";
 #endif
     librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_DELETE, 0);
 }

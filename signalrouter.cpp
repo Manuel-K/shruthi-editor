@@ -89,7 +89,7 @@ void SignalRouter::editorFinished() {
 void SignalRouter::settingsChanged(Config conf) {
 // ******************************************
 #ifdef DEBUGMSGS
-    qDebug() << "SignalRouter::settingsChanged: in" << in << ", out:" << out << ", channel:" << channel;
+    qDebug() << "SignalRouter::settingsChanged: in" << conf.midiInputPort() << ", out:" << conf.midiOutputPort() << ", channel:" << conf.midiChannel() << ", filter:" << conf.shruthiFilterBoard();
 #endif
     // setMidiInputPort and setMidiOutputPort have to be emited, even if the value didn't change.
     emit setMidiInputPort(conf.midiInputPort());

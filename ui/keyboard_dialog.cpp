@@ -19,6 +19,10 @@
 #include "ui/keyboard_dialog.h"
 #include "ui_keyboard_dialog.h"
 
+#ifdef DEBUGMSGS
+#include <QDebug>
+#endif
+
 // ******************************************
 KeyboardDialog::KeyboardDialog(QWidget *parent):
     QDialog(parent),
