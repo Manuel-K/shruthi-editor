@@ -20,6 +20,7 @@
 #include "library.h"
 #include "fileio.h"
 #include "midi.h"
+#include "midiout.h"
 
 #include <iostream>
 #include <QThread>
@@ -570,14 +571,14 @@ void Library::setNumberOfHWPrograms(const int &num) {
 
 
 // ******************************************
-int Library::nextPatch() const {
+const unsigned int &Library::nextPatch() const {
 // ******************************************
     return fetchNextIncomingPatch;
 }
 
 
 // ******************************************
-int Library::nextSequence() const {
+const unsigned int &Library::nextSequence() const {
 // ******************************************
     return fetchNextIncomingSequence;
 }

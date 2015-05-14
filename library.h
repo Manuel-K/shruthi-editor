@@ -23,10 +23,10 @@
 #include <vector>
 #include "patch.h"
 #include "sequence.h"
-#include "midiout.h"
 
 class QString;
 class QTime;
+class MidiOut;
 
 // ******************************************
 class Library {
@@ -76,8 +76,8 @@ class Library {
         const int &getNumberOfHWPrograms() const;
         void setNumberOfHWPrograms(const int &num);
 
-        int nextPatch() const;
-        int nextSequence() const;
+        const unsigned int &nextPatch() const;
+        const unsigned int &nextSequence() const;
 
         // keep in sync with Editor::FLAGs
         static const int FLAG_PATCH = 1;
