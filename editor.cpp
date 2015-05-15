@@ -655,6 +655,16 @@ void Editor::actionLibraryFetch(const unsigned int &what, const int &start, cons
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryFetch()";
 #endif
+    if (library->isFetchingPatches() || library->isFetchingSequences()) {
+        // It would be nice to enqueue several fetch commands, but it isn't that easy if you
+        // consider the way fetching works. Therefore we take the easy way out.
+        // If we get the command to start another fetch we either ignore it or abort fetching.
+        if (stop < 0) {
+            library->abortFetching();
+            emit displayStatusbar("Aborted fetching the library.");
+        }
+        return;
+    }
 
     bool error = !midiout->currentPatchSequenceRequest();
 
