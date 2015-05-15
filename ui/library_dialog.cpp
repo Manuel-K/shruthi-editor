@@ -41,7 +41,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     dontCopySelection = false;
 
     // Setup fonts
-    normalFont = ui->patchList->item(0)->font();
+    normalFont = QFont("Monospace");
+    normalFont.setStyleHint(QFont::Monospace);
     normalFont.setBold(false);
     normalFont.setItalic(false);
     movedFont = normalFont;

@@ -94,11 +94,6 @@
       </property>
       <item>
        <widget class="QListWidget" name="patchList">
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-         </font>
-        </property>
         <property name="contextMenuPolicy">
          <enum>Qt::CustomContextMenu</enum>
         </property>
@@ -142,11 +137,6 @@
       </property>
       <item>
        <widget class="QListWidget" name="sequenceList">
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-         </font>
-        </property>
         <property name="contextMenuPolicy">
          <enum>Qt::CustomContextMenu</enum>
         </property>
