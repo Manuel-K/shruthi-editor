@@ -216,9 +216,18 @@ bool Library::send(const int &what, const int &from, const int &to) {
 
     bool force = !(what&FLAG_CHANGED);
 
+    const int &count = to - from;
     for (int i = from; i <= to; i++) {
+        // Calculate progress:
+        const double &done = i - from;
+        const int &progress = 100 * done / count;
+        const QString &progress_str = QString("%1%: ").arg(progress);
+
         if ((what&FLAG_PATCH) && (force || patchEdited(i) || patchMoved(i))) {
+            emit displayStatusbar(progress_str + QString("Sending patch %1.").arg(i));
+#ifdef DEBUGMSGS
             std::cout << i << " patch " << std::endl;
+#endif
             temp.clear();
             patches.at(i).generateSysex(&temp);
             ret = midiout->write(temp);
@@ -233,7 +242,10 @@ bool Library::send(const int &what, const int &from, const int &to) {
             QThread::msleep(250);
         }
         if (ret && (what&FLAG_SEQUENCE) && (force || sequenceEdited(i) || sequenceMoved(i))) {
+            emit displayStatusbar(progress_str + QString("Sending sequence %1.").arg(i));
+#ifdef DEBUGMSGS
             std::cout << i << " sequence " << std::endl;
+#endif
             temp.clear();
             sequences.at(i).generateSysex(&temp);
             ret = midiout->write(temp);

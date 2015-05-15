@@ -23,13 +23,16 @@
 #include <vector>
 #include "patch.h"
 #include "sequence.h"
+#include <QObject>
 
 class QString;
 class QTime;
 class MidiOut;
 
 
-class Library {
+class Library : public QObject {
+        Q_OBJECT
+
     public:
         Library(MidiOut *out);
         ~Library();
@@ -134,6 +137,9 @@ class Library {
         int mCurrentShruthiPatch;
         int mCurrentShruthiSequence;
         bool mRememberedCurrentShruthiProgram;
+
+    signals:
+        void displayStatusbar(QString);
 };
 
 #endif // SHRUTHI_LIBRARY_H

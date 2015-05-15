@@ -37,6 +37,9 @@ Editor::Editor():
 #endif
     shruthiFilterBoard = 0;
     firmwareVersion = 0;
+
+    // Relay status bar messages:
+    connect(library, SIGNAL(displayStatusbar(QString)), this, SIGNAL(displayStatusbar(QString)));
 }
 
 
