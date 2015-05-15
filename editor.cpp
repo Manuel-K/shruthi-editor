@@ -779,8 +779,6 @@ void Editor::actionLibraryInsert(const unsigned int &id) {
 #endif
     library->insert(id);
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, id, library->getNumberOfPrograms() - 1);
-
-
 }
 
 
