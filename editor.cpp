@@ -410,9 +410,10 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 #endif
     } else if (command == 0x01 && argument == 0x00) {
         bool ret = (size == 92);
-
+        QString progress;
         if (ret) {
             if (library->isFetchingPatches()) {
+                progress = library->fetchProgress();
                 ret = library->receivedPatch(message);
                 if (ret) {
                     emit redrawLibraryItems(FLAG_PATCH, library->nextPatch() - 1, library->nextPatch() - 1);
@@ -423,31 +424,33 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         }
 
         if (ret) {
-            emit displayStatusbar("Received valid patch (" + patch->getVersionString() + " format).");
+            emit displayStatusbar(progress + "Received valid patch (" + patch->getVersionString() + " format).");
             emit redrawAllPatchParameters();
             emit setStatusbarVersionLabel(patch->getVersionString());
         } else {
             if (library->isFetchingPatches()) {
                 library->abortFetching();
             }
-            emit displayStatusbar("Received invalid patch.");
+            emit displayStatusbar(progress + "Received invalid patch.");
         }
     } else if (command == 0x02 && argument == 0x00) {
+        QString progress;
         if (size == 32) {
             if (library->isFetchingSequences()) {
+                progress = library->fetchProgress();
                 library->receivedSequence(message);
                 emit redrawLibraryItems(FLAG_SEQUENCE, library->nextSequence() - 1, library->nextSequence() - 1);
             } else {
                 sequence->unpackData(message);
             }
 
-            emit displayStatusbar("Received valid sequence.");
+            emit displayStatusbar(progress + "Received valid sequence.");
             emit redrawAllSequenceParameters();
         } else {
             if (library->isFetchingSequences()) {
                 library->abortFetching();
             }
-            emit displayStatusbar("Received invalid sequence.");
+            emit displayStatusbar(progress + "Received invalid sequence.");
         }
     } else if (command == 0x0b and size == 0) {
         // number of banks

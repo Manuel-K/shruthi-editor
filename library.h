@@ -61,6 +61,7 @@ class Library {
 
         bool startFetching(const int &flags, const int &from, const int &to);
         void abortFetching();
+        QString fetchProgress() const;
 
         bool receivedPatch(const unsigned char *sysex);
         bool isFetchingPatches() const;

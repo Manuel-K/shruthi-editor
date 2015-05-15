@@ -290,6 +290,16 @@ void Library::abortFetching() {
 }
 
 
+QString Library::fetchProgress() const {
+    // calculate progress:
+    const int &num = (fetchEnd - fetchStart);
+    const double &done = (fetchNextRequest - fetchStart);
+    const int &progress = 100 * done / num;
+    const QString &str = QString("%1%: ").arg(progress);
+    return str;
+}
+
+
 bool Library::receivedPatch(const unsigned char *sysex) {
     if (!fetchPatchMode || fetchNextIncomingPatch > fetchEnd) {
         abortFetching();
