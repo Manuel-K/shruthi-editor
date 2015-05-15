@@ -56,8 +56,8 @@ class Patch {
         const QString &getName() const;
         QString getVersionString() const;
 
-        void resetPatch(unsigned int version = 1000);
-        void randomizePatch(const int &filter);
+        void reset(unsigned int version = 1000);
+        void randomize(const int &filter);
 
         bool unpackData(const unsigned char *sysex);
         void packData(unsigned char res[]) const;

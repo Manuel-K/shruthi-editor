@@ -57,8 +57,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     patchContextMenu = new QMenu(this);
     patchContextMenu->addAction("Store", this, SLOT(patchCMStore()));
     patchContextMenu->addSeparator();
-    patchContextMenu->addAction("Insert Program After", this, SLOT(patchCMInsert()));
-    patchContextMenu->addAction("Delete Program", this, SLOT(patchCMDelete()));
+    patchContextMenu->addAction("Insert Program After", this, SLOT(patchCMInsertAfter()));
+    patchContextMenu->addAction("Delete Program", this, SLOT(patchCMRemove()));
     patchContextMenu->addAction("Reset", this, SLOT(patchCMReset()));
     patchContextMenu->addSeparator();
     patchContextMenu->addAction("Fetch", this, SLOT(patchCMFetch()));
@@ -68,8 +68,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
     sequenceContextMenu = new QMenu(this);
     sequenceContextMenu->addAction("Store", this, SLOT(sequenceCMStore()));
     sequenceContextMenu->addSeparator();
-    sequenceContextMenu->addAction("Insert Program After", this, SLOT(sequenceCMInsert()));
-    sequenceContextMenu->addAction("Delete Program", this, SLOT(sequenceCMDelete()));
+    sequenceContextMenu->addAction("Insert Program After", this, SLOT(sequenceCMInsertAfter()));
+    sequenceContextMenu->addAction("Delete Program", this, SLOT(sequenceCMRemove()));
     sequenceContextMenu->addAction("Reset", this, SLOT(sequenceCMReset()));
     sequenceContextMenu->addSeparator();
     sequenceContextMenu->addAction("Fetch", this, SLOT(sequenceCMFetch()));
@@ -435,19 +435,19 @@ void LibraryDialog::sequenceCMFetch() {
 }
 
 
-void LibraryDialog::patchCMDelete() {
+void LibraryDialog::patchCMRemove() {
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::patchCMDelete()";
 #endif
-    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_DELETE, 0);
+    librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_REMOVE, 0);
 }
 
 
-void LibraryDialog::sequenceCMDelete() {
+void LibraryDialog::sequenceCMRemove() {
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::patchCMDelete()";
 #endif
-    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_DELETE, 0);
+    librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_REMOVE, 0);
 }
 
 
@@ -475,20 +475,20 @@ void LibraryDialog::sequenceCMReset() {
 }
 
 
-void LibraryDialog::patchCMInsert() {
+void LibraryDialog::patchCMInsertAfter() {
 #ifdef DEBUGMSGS
-    qDebug() << "LibraryDialog::patchCMInsert()";
+    qDebug() << "LibraryDialog::patchCMInsertAfter()";
 #endif
-    QueueItem item(QueueAction::LIBRARY_INSERT, ui->patchList->currentRow());
+    QueueItem item(QueueAction::LIBRARY_INSERT, ui->patchList->currentRow() + 1);
     emit enqueue(item);
 }
 
 
-void LibraryDialog::sequenceCMInsert() {
+void LibraryDialog::sequenceCMInsertAfter() {
 #ifdef DEBUGMSGS
-    qDebug() << "LibraryDialog::sequenceCMInsert()";
+    qDebug() << "LibraryDialog::sequenceCMInsertAfter()";
 #endif
-    QueueItem item(QueueAction::LIBRARY_INSERT, ui->patchList->currentRow());
+    QueueItem item(QueueAction::LIBRARY_INSERT, ui->sequenceList->currentRow() + 1);
     emit enqueue(item);
 }
 

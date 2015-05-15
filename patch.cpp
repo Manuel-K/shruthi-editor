@@ -276,13 +276,13 @@ bool Patch::belongsToModMatrix(const int &id) {
 
 
 Patch::Patch() {
-    resetPatch();
+    reset();
     srand(time(NULL));
 }
 
 
 Patch::Patch(const unsigned int &version) {
-    resetPatch(version);
+    reset(version);
     srand(time(NULL));
 }
 
@@ -341,7 +341,7 @@ void Patch::printPatch() const {
 }
 
 
-void Patch::resetPatch(unsigned int version) {
+void Patch::reset(unsigned int version) {
     if (version >= 1000) {
         unpackData(INIT_PATCH);
     } else {
@@ -350,7 +350,7 @@ void Patch::resetPatch(unsigned int version) {
 }
 
 
-void Patch::randomizePatch(const int &filter) {
+void Patch::randomize(const int &filter) {
     unpackData(INIT_PATCH);
     for (int i=0; i < parameterCount; i++) {
         if (enabled(i)) { // do we want to randomize sequencer settings?

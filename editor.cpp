@@ -169,8 +169,8 @@ void Editor::process(QueueItem item) {
         case QueueAction::LIBRARY_SEND:
             actionLibrarySend(item.int0, item.int1, item.int2);
             break;
-        case QueueAction::LIBRARY_DELETE:
-            actionLibraryDelete(item.int1, item.int2); // ignore flags (item.int0)
+        case QueueAction::LIBRARY_REMOVE:
+            actionLibraryRemove(item.int1, item.int2); // ignore flags (item.int0)
             break;
         case QueueAction::LIBRARY_INSERT:
             actionLibraryInsert(item.int0);
@@ -609,7 +609,7 @@ void Editor::actionResetPatch(unsigned int version) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionResetPatch()";
 #endif
-    patch->resetPatch(version);
+    patch->reset(version);
     emit redrawAllPatchParameters();
     emit displayStatusbar("Patch reset.");
     emit setStatusbarVersionLabel(patch->getVersionString());
@@ -620,7 +620,7 @@ void Editor::actionRandomizePatch() {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
-    patch->randomizePatch(shruthiFilterBoard);
+    patch->randomize(shruthiFilterBoard);
     emit redrawAllPatchParameters();
     emit displayStatusbar("Patch randomized.");
     emit setStatusbarVersionLabel(patch->getVersionString());
@@ -748,11 +748,11 @@ void Editor::actionLibrarySave(const QString &path, const int &flags) {
 }
 
 
-void Editor::actionLibraryDelete(const unsigned int &start, const unsigned int &end) {
+void Editor::actionLibraryRemove(const unsigned int &start, const unsigned int &end) {
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryDelete()" << start << end;
 #endif
-    library->deletePrograms(start, end);
+    library->remove(start, end);
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, library->getNumberOfPrograms() - 1);
 }
 
@@ -761,7 +761,7 @@ void Editor::actionLibraryInsert(const unsigned int &id) {
 #ifdef DEBUGMSG
     qDebug() << "Editor::actionLibraryInsert()" << id;
 #endif
-    library->insertProgram(id);
+    library->insert(id);
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, id, library->getNumberOfPrograms() - 1);
 
 
@@ -772,6 +772,6 @@ void Editor::actionLibraryReset(const unsigned int &flags, const unsigned int &s
 #ifdef DEBUGMSG
     qDebug() << "Editor::actionLibraryReset()" << flags << start << end;
 #endif
-    library->resetPrograms(flags, start, end);
+    library->reset(flags, start, end);
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, end);
 }

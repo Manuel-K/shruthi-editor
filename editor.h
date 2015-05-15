@@ -72,7 +72,7 @@ class Editor : public QObject {
         void actionLibraryMove(const unsigned int &what, const unsigned int &start, const unsigned int &target);
         void actionLibraryLoad(const QString &path, const int &flags);
         void actionLibrarySave(const QString &path, const int &flags);
-        void actionLibraryDelete(const unsigned int &start, const unsigned int &end);
+        void actionLibraryRemove(const unsigned int &start, const unsigned int &end);
         void actionLibraryInsert(const unsigned int &id);
         void actionLibraryReset(const unsigned int &flags, const unsigned int &start, const unsigned int &end);
 

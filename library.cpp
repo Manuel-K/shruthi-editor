@@ -358,7 +358,7 @@ bool Library::isFetchingSequences() const {
 }
 
 
-void Library::deletePrograms(const int &from, const int &to) {
+void Library::remove(const int &from, const int &to) {
 #ifdef DEBUGMSGS
     std::cout << "Library::deletePrograms(" << from << ", " << to << ");" << std::endl;
 #endif
@@ -382,40 +382,40 @@ void Library::deletePrograms(const int &from, const int &to) {
 }
 
 
-void Library::insertProgram(const int &id) {
+void Library::insert(const int &id) {
 #ifdef DEBUGMSGS
     std::cout << "Library::insertProgram(" << id << ");" << std::endl;
 #endif
     if (firmwareVersionRequested) {
-        patches.insert(patches.begin() + id + 1, Patch(firmwareVersion));
+        patches.insert(patches.begin() + id, Patch(firmwareVersion));
     } else {
-        patches.insert(patches.begin() + id + 1, Patch());
+        patches.insert(patches.begin() + id, Patch());
     }
-    mPatchMoved.insert(mPatchMoved.begin() + id + 1, false);
-    mPatchEdited.insert(mPatchEdited.begin() + id + 1, true);
-    sequences.insert(sequences.begin() + id + 1, Sequence());
-    mSequenceMoved.insert(mSequenceMoved.begin() + id + 1, false);
-    mSequenceEdited.insert(mSequenceEdited.begin() + id + 1, true);
+    mPatchMoved.insert(mPatchMoved.begin() + id, false);
+    mPatchEdited.insert(mPatchEdited.begin() + id, true);
+    sequences.insert(sequences.begin() + id, Sequence());
+    mSequenceMoved.insert(mSequenceMoved.begin() + id, false);
+    mSequenceEdited.insert(mSequenceEdited.begin() + id, true);
     numberOfPrograms += 1;
 
     // Mark as moved:
-    for (int i = id + 2; i < numberOfPrograms; i++) {
+    for (int i = id + 1; i < numberOfPrograms; i++) {
         mPatchMoved.at(i) = true;
         mSequenceMoved.at(i) = true;
     }
 }
 
 
-void Library::resetPrograms(const int &flags, const int &from, const int &to) {
+void Library::reset(const int &flags, const int &from, const int &to) {
 #ifdef DEBUGMSGS
     std::cout << "Library::resetPrograms(" << flags << ", " << from << ", " << to << ");" << std::endl;
 #endif
     if (flags&FLAG_PATCH) {
         for (int i = from; i <= to; i++) {
             if (firmwareVersionRequested) {
-                patches.at(i).resetPatch(firmwareVersion);
+                patches.at(i).reset(firmwareVersion);
             } else {
-                patches.at(i).resetPatch();
+                patches.at(i).reset();
             }
             mPatchMoved.at(i) = false;
             mPatchEdited.at(i) = true;

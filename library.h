@@ -68,9 +68,9 @@ class Library {
         bool receivedSequence(const unsigned char *seq);
         bool isFetchingSequences() const;
 
-        void deletePrograms(const int &from, const int &to);
-        void insertProgram(const int &id);
-        void resetPrograms(const int &flags, const int &from, const int &to);
+        void remove(const int &from, const int &to);
+        void insert(const int &id);
+        void reset(const int &flags, const int &from, const int &to);
 
         bool saveLibrary(const QString &path);
         bool loadLibrary(const QString &path, bool append = false);
