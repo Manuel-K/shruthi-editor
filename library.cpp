@@ -478,7 +478,7 @@ bool Library::saveLibrary(const QString &path) {
     }
 
     bool status = FileIO::saveToDisk(path, ba);
-    // CHECK: does this replace the file or only parts of it?
+    // Note: This replaces the file.
     return status;
 }
 

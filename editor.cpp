@@ -733,7 +733,7 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
 
 
 void Editor::actionLibraryLoad(const QString &path, const int &flags) {
-    //TODO respect flags
+    // Always load patches and sequences
     if (library->loadLibrary(path, flags&Library::FLAG_APPEND)) {
         emit displayStatusbar("Library loaded from disk.");
     } else {
@@ -745,7 +745,7 @@ void Editor::actionLibraryLoad(const QString &path, const int &flags) {
 
 void Editor::actionLibrarySave(const QString &path, const int &flags) {
     Q_UNUSED(flags);
-    //TODO respect flags
+    // Always save patches and sequences
     if (library->saveLibrary(path)) {
         emit displayStatusbar("Library saved to disk.");
     } else {
