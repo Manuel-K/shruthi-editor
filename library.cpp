@@ -131,7 +131,7 @@ bool Library::patchEdited(const int &id) const {
 
 QString Library::getPatchIdentifier(const int &id) const {
     const Patch &p = patches.at(id);
-    return p.getName().leftJustified(9, ' ') + "(" + p.getVersionString() + ")";
+    return p.getName().leftJustified(9, ' ');// + "(" + p.getVersionString() + ")";
 }
 
 
