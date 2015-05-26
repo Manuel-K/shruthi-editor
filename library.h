@@ -96,6 +96,9 @@ class Library : public QObject {
         static const int FLAG_APPEND = 8;
 
     private:
+        Library(const Library&); //forbid copying
+        Library &operator=(const Library&); //forbid assignment
+
         bool keepFetching();
 
         std::vector<Patch> patches;

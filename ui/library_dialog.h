@@ -42,6 +42,9 @@ class LibraryDialog : public QDialog {
         ~LibraryDialog();
 
     private:
+        LibraryDialog(const LibraryDialog&); //forbid copying
+        LibraryDialog &operator=(const LibraryDialog&); //forbid assignment
+
         void setFont(QListWidgetItem *item, bool edited, bool moved);
         void libraryRange(const QueueAction::QueueAction &action, const int &flags, const int &from, const int &to);
         void move(const int &flags, const int &from, const int &to);

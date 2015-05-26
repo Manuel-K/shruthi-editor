@@ -42,6 +42,9 @@ class SettingsDialog : public QDialog {
         void setShruthiFilterBoard(const int &index);
 
     private:
+        SettingsDialog(const SettingsDialog&); //forbid copying
+        SettingsDialog &operator=(const SettingsDialog&); //forbid assignment
+
         void getPortInfo();
 
         Ui::SettingsDialog *ui;

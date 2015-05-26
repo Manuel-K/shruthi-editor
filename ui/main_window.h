@@ -43,6 +43,9 @@ class ShruthiEditorMainWindow : public QMainWindow {
         ~ShruthiEditorMainWindow();
 
     private:
+        ShruthiEditorMainWindow(const ShruthiEditorMainWindow&); //forbid copying
+        ShruthiEditorMainWindow &operator=(const ShruthiEditorMainWindow&); //forbid assignment
+
         void displayMidiStatusChanged(const bool &in, const bool &out);
         void closeEvent(QCloseEvent* event);
 

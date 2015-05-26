@@ -37,6 +37,9 @@ class SignalRouter : public QObject {
         QQueue<QueueItem> queue;
 
     private:
+        SignalRouter(const SignalRouter&); //forbid copying
+        SignalRouter &operator=(const SignalRouter&); //forbid assignment
+
         Config config;
 
     public slots:

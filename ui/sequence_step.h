@@ -50,6 +50,9 @@ class SequenceStep : public QWidget {
 
 
     private:
+        SequenceStep(const SequenceStep&); //forbid copying
+        SequenceStep &operator=(const SequenceStep&); //forbid assignment
+
         Ui::SequenceStep *ui;
         int step;
         bool sendActive, sendNote, sendTie, sendVelocity, sendValue;

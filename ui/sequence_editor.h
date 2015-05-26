@@ -38,6 +38,9 @@ class SequenceEditor : public QDialog {
         ~SequenceEditor();
 
     private:
+        SequenceEditor(const SequenceEditor&); //forbid copying
+        SequenceEditor &operator=(const SequenceEditor&); //forbid assignment
+
         void sendSequenceUpdate();
 
         Ui::SequenceEditor *ui;

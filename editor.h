@@ -48,6 +48,9 @@ class Editor : public QObject {
         static const int FLAG_SEQUENCE = 2;
 
     private:
+        Editor(const Editor&); //forbid copying
+        Editor &operator=(const Editor&); //forbid assignment
+
         void actionPatchParameterChangeEditor(int id, int value);
         void actionFetchRequest(const int &what);
         void actionSendData(const int &what);

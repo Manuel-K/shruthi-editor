@@ -36,6 +36,9 @@ class KeyboardDialog : public QDialog {
         ~KeyboardDialog();
 
     private:
+        KeyboardDialog(const KeyboardDialog&); //forbid copying
+        KeyboardDialog &operator=(const KeyboardDialog&); //forbid assignment
+
         Ui::KeyboardDialog *ui;
         unsigned char noteVelocity;
         static const int defaultOctave = 0;

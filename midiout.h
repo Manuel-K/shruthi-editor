@@ -49,6 +49,9 @@ class MidiOut {
         bool sequenceWriteRequest(const int &slot);
 
     private:
+        MidiOut(const MidiOut&); //forbid copying
+        MidiOut &operator=(const MidiOut&); //forbid assignment
+
         // Wrappers:
         bool write(const unsigned char &c1, const unsigned char &c2, const unsigned char &c3);
         bool write(const unsigned char &c1, const unsigned char &c2);

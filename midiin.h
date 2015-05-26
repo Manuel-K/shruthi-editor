@@ -50,6 +50,9 @@ class MidiIn : public QObject {
         void process(const Message *message);
 
     private:
+        MidiIn(const MidiIn&); //forbid copying
+        MidiIn &operator=(const MidiIn&); //forbid assignment
+
         bool open(const unsigned int &port);
         bool isNRPN(const unsigned char &n0, const unsigned char &n1);
 

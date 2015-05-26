@@ -54,6 +54,9 @@ class KeyboardWidget : public QWidget {
         void setOctave(int value);
 
     private:
+        KeyboardWidget(const KeyboardWidget&); //forbid copying
+        KeyboardWidget &operator=(const KeyboardWidget&); //forbid assignment
+
         void resizeEvent(QResizeEvent * event);
         static bool isBlackKey(int i);
         static int numWhiteKeys(int i);

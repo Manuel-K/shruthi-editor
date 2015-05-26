@@ -43,6 +43,9 @@ class ShruthiEditorDial : public QWidget {
 
 
     private:
+        ShruthiEditorDial(const ShruthiEditorDial&); //forbid copying
+        ShruthiEditorDial &operator=(const ShruthiEditorDial&); //forbid assignment
+
         Ui::ShruthiEditorDial *ui;
         void setDisplay(const int &value);
 

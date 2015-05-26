@@ -27,7 +27,6 @@
 class Sequence {
     public:
         Sequence();
-        ~Sequence();
 
         void unpackData(const unsigned char *data);
         void packData(unsigned char data[]) const;

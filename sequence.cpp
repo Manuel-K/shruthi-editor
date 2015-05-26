@@ -28,10 +28,6 @@ Sequence::Sequence() {
 }
 
 
-Sequence::~Sequence() {
-}
-
-
 const int Sequence::ERROR_RETURN = -111;
 
 
