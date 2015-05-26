@@ -18,9 +18,9 @@
 
 #include "signalrouter.h"
 
-// #ifdef DEBUGMSGS
+#ifdef DEBUGMSGS
 #include <QDebug>
-// #endif
+#endif
 
 
 SignalRouter::SignalRouter() {
@@ -37,7 +37,7 @@ SignalRouter::~SignalRouter() {
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::~SignalRouter()";
 #endif
-    editorEnabled=false;
+    editorEnabled = false;
 }
 
 
@@ -49,16 +49,16 @@ void SignalRouter::run() {
     emit setMidiOutputPort(config.midiOutputPort());
     emit setMidiChannel(config.midiChannel());
     emit setShruthiFilterBoard(config.shruthiFilterBoard());
-    editorEnabled=true;
-    editorWorking=false;
+    editorEnabled = true;
+    editorWorking = false;
 }
 
 
 void SignalRouter::enqueue(QueueItem item) {
-    if (editorWorking)
+    if (editorWorking) {
         queue.enqueue(item);
-    else if (editorEnabled) {
-        editorWorking=true;
+    } else if (editorEnabled) {
+        editorWorking = true;
 
         emit editorProcess(item);
     }
@@ -67,10 +67,11 @@ void SignalRouter::enqueue(QueueItem item) {
 
 void SignalRouter::editorFinished() {
     if (editorEnabled) {
-        if (!queue.isEmpty())
+        if (!queue.isEmpty()) {
             emit editorProcess(queue.dequeue());
-        else
-            editorWorking=false;
+        } else {
+            editorWorking = false;
+        }
     }
 }
 
