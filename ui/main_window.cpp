@@ -543,7 +543,7 @@ void ShruthiEditorMainWindow::quitShruthiEditor() {
 
 void ShruthiEditorMainWindow::aboutShruthiEditor() {
     QMessageBox::about(this,"About Shruthi-Editor",
-                       QString::fromUtf8("Shruti-Editor Version "VERSION".\n\n Copyright (C) 2011-2015 Manuel Krönig."));
+                       QString::fromUtf8("Shruti-Editor Version " VERSION ".\n\n Copyright (C) 2011-2015 Manuel Krönig."));
 }
 
 
