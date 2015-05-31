@@ -89,12 +89,6 @@ class Library : public QObject {
         void rememberShruthiProgram(const int &patch, const int &sequence);
         bool recallShruthiProgramm();
 
-        // keep in sync with Editor::FLAGs
-        static const int FLAG_PATCH = 1;
-        static const int FLAG_SEQUENCE = 2;
-        static const int FLAG_CHANGED = 4;
-        static const int FLAG_APPEND = 8;
-
     private:
         Library(const Library&); //forbid copying
         Library &operator=(const Library&); //forbid assignment

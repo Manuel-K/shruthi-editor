@@ -21,6 +21,7 @@
 #include "midiout.h"
 #include "fileio.h"
 #include "midi.h"
+#include "flag.h"
 
 #ifdef DEBUGMSGS
 #include <QDebug>
@@ -48,7 +49,7 @@ void Editor::run() {
     qDebug("Editor::run()");
 #endif
     emit setStatusbarVersionLabel(patch->getVersionString());
-    redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(Flag::PATCH|Flag::SEQUENCE, 0, library->getNumberOfPrograms() - 1);
     redrawAllPatchParameters();
     redrawAllSequenceParameters();
 }
@@ -244,7 +245,7 @@ void Editor::actionFetchRequest(const int &what) {
     qDebug() << "Editor::actionFetchRequest()";
 #endif
     bool statusP = true;
-    if (what&FLAG_PATCH) {
+    if (what&Flag::PATCH) {
         statusP = midiout->patchTransferRequest();
         if (statusP)
             emit displayStatusbar("Patch transfer request sent.");
@@ -252,7 +253,7 @@ void Editor::actionFetchRequest(const int &what) {
             emit displayStatusbar("Could not send patch transfer request.");
     }
     bool statusS = true;
-    if (what&FLAG_SEQUENCE) {
+    if (what&Flag::SEQUENCE) {
         statusS = midiout->sequenceTransferRequest();
         if (statusS)
             emit displayStatusbar("Sequence transfer request sent.");
@@ -264,14 +265,14 @@ void Editor::actionFetchRequest(const int &what) {
     QString swhat = "unknown";
     QString sWhat = "Unknown";
     QString pl = "";
-    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    if ((what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "patch and sequence";
         sWhat = "Patch and sequence";
         pl = "s";
-    } else if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+    } else if ((what&Flag::PATCH) && !(what&Flag::SEQUENCE)) {
         swhat = "patch";
         sWhat = "Patch";
-    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    } else if (!(what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "sequence";
         sWhat = "Sequence";
     }
@@ -289,13 +290,13 @@ void Editor::actionSendData(const int &what) {
     qDebug() << "Editor::actionSendData()";
 #endif
     bool statusP = true;
-    if (what&FLAG_PATCH) {
+    if (what&Flag::PATCH) {
         Message temp;
         patch->generateSysex(&temp);
         statusP = midiout->write(temp);
     }
     bool statusS = true;
-    if (what&FLAG_SEQUENCE) {
+    if (what&Flag::SEQUENCE) {
         Message temp;
         sequence->generateSysex(&temp);
         statusS = midiout->write(temp);
@@ -304,13 +305,13 @@ void Editor::actionSendData(const int &what) {
 
     QString swhat = "unknown";
     QString sWhat = "Unknown";
-    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    if ((what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "patch and sequence";
         sWhat = "Patch and sequence";
-    } else if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+    } else if ((what&Flag::PATCH) && !(what&Flag::SEQUENCE)) {
         swhat = "patch";
         sWhat = "Patch";
-    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    } else if (!(what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "sequence";
         sWhat = "Sequence";
     }
@@ -418,7 +419,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
                 progress = library->fetchProgress();
                 ret = library->receivedPatch(message);
                 if (ret) {
-                    emit redrawLibraryItems(FLAG_PATCH, library->nextPatch() - 1, library->nextPatch() - 1);
+                    emit redrawLibraryItems(Flag::PATCH, library->nextPatch() - 1, library->nextPatch() - 1);
                 }
             } else {
                 ret = patch->unpackData(message);
@@ -441,7 +442,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
             if (library->isFetchingSequences()) {
                 progress = library->fetchProgress();
                 library->receivedSequence(message);
-                emit redrawLibraryItems(FLAG_SEQUENCE, library->nextSequence() - 1, library->nextSequence() - 1);
+                emit redrawLibraryItems(Flag::SEQUENCE, library->nextSequence() - 1, library->nextSequence() - 1);
             } else {
                 sequence->unpackData(message);
             }
@@ -461,7 +462,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
         std::cout << "Number of banks is " << argument << ". Therefore the number of programs is " << numberOfPrograms << "." << std::endl;
 #endif
         library->setNumberOfHWPrograms(numberOfPrograms);
-        emit redrawLibraryItems(FLAG_PATCH | FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
+        emit redrawLibraryItems(Flag::PATCH | Flag::SEQUENCE, 0, library->getNumberOfPrograms() - 1);
     } else {
         emit displayStatusbar("Received unknown sysex.");
 #ifdef DEBUGMSGS
@@ -492,7 +493,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
 
     const unsigned int &readBytes = temp.size();
 
-    if (status && path.endsWith(".sp", Qt::CaseInsensitive) && (what&FLAG_PATCH)) {
+    if (status && path.endsWith(".sp", Qt::CaseInsensitive) && (what&Flag::PATCH)) {
         if (readBytes == 92) {
 #ifdef DEBUGMSGS
             qDebug() << "Detected light patch files.";
@@ -509,13 +510,13 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
             statusP = false;
         }
     } else if (status) {
-        if (what&FLAG_PATCH) {
+        if (what&Flag::PATCH) {
             Message ptc;
             // ignore return value; if it fails, ptc is empty:
             Midi::getPatch(&temp, &ptc);
             statusP = patch->parseSysex(&ptc);
         }
-        if (what&FLAG_SEQUENCE) {
+        if (what&Flag::SEQUENCE) {
             Message seq;
             // ignore return value; if it fails, seq is empty:
             Midi::getSequence(&temp, &seq);
@@ -530,7 +531,7 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
     QString swhat = "unknown";
     QString sWhat = "Unknown";
     QString partial = ".";
-    if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    if ((what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "patch and sequence";
         sWhat = "Patch and sequence";
 
@@ -541,10 +542,10 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
             partial = "; only sequence found.";
         }
 
-    } else if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+    } else if ((what&Flag::PATCH) && !(what&Flag::SEQUENCE)) {
         swhat = "patch";
         sWhat = "Patch";
-    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    } else if (!(what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "sequence";
         sWhat = "Sequence";
     }
@@ -556,11 +557,11 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
     }
 
     // Send required refresh signals
-    if (statusP && (what&FLAG_PATCH)) {
+    if (statusP && (what&Flag::PATCH)) {
         redrawAllPatchParameters();
         emit setStatusbarVersionLabel(patch->getVersionString());
     }
-    if (statusS && (what&FLAG_SEQUENCE)) {
+    if (statusS && (what&Flag::SEQUENCE)) {
         redrawAllSequenceParameters();
     }
 }
@@ -575,10 +576,10 @@ void Editor::actionFileIOSave(QString path, const int &what) {
         FileIO::appendToByteArray(data, 92, ba);
     } else {
         Message temp;
-        if (what&FLAG_PATCH) {
+        if (what&Flag::PATCH) {
             patch->generateSysex(&temp);
         }
-        if (what&FLAG_SEQUENCE) {
+        if (what&Flag::SEQUENCE) {
             sequence->generateSysex(&temp);
         }
         FileIO::appendToByteArray(temp, ba);
@@ -591,13 +592,13 @@ void Editor::actionFileIOSave(QString path, const int &what) {
 
     QString swhat = "unknown";
     QString sWhat = "Unknown";
-    if ((what&FLAG_PATCH) && !(what&FLAG_SEQUENCE)) {
+    if ((what&Flag::PATCH) && !(what&Flag::SEQUENCE)) {
         swhat = "patch";
         sWhat = "Patch";
-    } else if (!(what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    } else if (!(what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "sequence";
         sWhat = "Sequence";
-    } else if ((what&FLAG_PATCH) && (what&FLAG_SEQUENCE)) {
+    } else if ((what&Flag::PATCH) && (what&Flag::SEQUENCE)) {
         swhat = "patch and sequence";
         sWhat = "Patch and sequence";
     }
@@ -699,11 +700,11 @@ void Editor::actionLibraryRecall(const unsigned int &what, const unsigned int &i
 #endif
     Q_UNUSED(what);
 
-    if (what&FLAG_PATCH) {
+    if (what&Flag::PATCH) {
         patch->set(library->recallPatch(id));
         redrawAllPatchParameters();
     }
-    if (what&FLAG_SEQUENCE) {
+    if (what&Flag::SEQUENCE) {
         sequence->set(library->recallSequence(id));
         redrawAllSequenceParameters();
     }
@@ -714,13 +715,13 @@ void Editor::actionLibraryStore(const unsigned int &what, const unsigned int &id
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryStore()";
 #endif
-    if (what&FLAG_PATCH) {
+    if (what&Flag::PATCH) {
         library->storePatch(id, *patch);
-        redrawLibraryItems(FLAG_PATCH, id, id);
+        redrawLibraryItems(Flag::PATCH, id, id);
     }
-    if (what&FLAG_SEQUENCE) {
+    if (what&Flag::SEQUENCE) {
         library->storeSequence(id, *sequence);
-        redrawLibraryItems(FLAG_SEQUENCE, id, id);
+        redrawLibraryItems(Flag::SEQUENCE, id, id);
     }
 }
 
@@ -729,10 +730,10 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibraryMove()";
 #endif
-    if (what&FLAG_PATCH) {
+    if (what&Flag::PATCH) {
         library->movePatch(start, target);
     }
-    if (what&FLAG_SEQUENCE) {
+    if (what&Flag::SEQUENCE) {
         library->moveSequence(start, target);
     }
     const int &s = std::min(start, target);
@@ -743,7 +744,7 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
 
 void Editor::actionLibraryLoad(const QString &path, const int &flags) {
     // Always load patches and sequences
-    if (library->loadLibrary(path, flags&Library::FLAG_APPEND)) {
+    if (library->loadLibrary(path, flags&Flag::APPEND)) {
         emit displayStatusbar("Library loaded from disk.");
     } else {
         emit displayStatusbar("Could not load library from disk.");
@@ -768,7 +769,7 @@ void Editor::actionLibraryRemove(const unsigned int &start, const unsigned int &
     qDebug() << "Editor::actionLibraryDelete()" << start << end;
 #endif
     library->remove(start, end);
-    redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(Flag::PATCH | Flag::SEQUENCE, start, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -777,7 +778,7 @@ void Editor::actionLibraryInsert(const unsigned int &id) {
     qDebug() << "Editor::actionLibraryInsert()" << id;
 #endif
     library->insert(id);
-    redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, id, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(Flag::PATCH | Flag::SEQUENCE, id, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -786,7 +787,7 @@ void Editor::actionLibraryReset(const unsigned int &flags, const unsigned int &s
     qDebug() << "Editor::actionLibraryReset()" << flags << start << end;
 #endif
     library->reset(flags, start, end);
-    redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, end);
+    redrawLibraryItems(Flag::PATCH | Flag::SEQUENCE, start, end);
 }
 
 
@@ -816,13 +817,13 @@ void Editor::redrawLibraryItems(int what, int start, int stop) {
     emit setNumberOfLibraryPrograms(library->getNumberOfPrograms());
     for (int i = start; i <= stop; i++) {
         const bool &onHardware = i < library->getNumberOfHWPrograms();
-        if (what&Library::FLAG_PATCH) {
+        if (what&Flag::PATCH) {
             const QString &name = library->getPatchIdentifier(i);
             const bool &edited = library->patchEdited(i);
             const bool &moved = library->patchMoved(i);
             emit redrawLibraryPatchItem(i, name, edited, moved, onHardware);
         }
-        if (what&Library::FLAG_SEQUENCE) {
+        if (what&Flag::SEQUENCE) {
             const QString &name = library->getSequenceIdentifier(i);
             const bool &edited = library->patchEdited(i);
             const bool &moved = library->patchMoved(i);

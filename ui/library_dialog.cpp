@@ -19,7 +19,7 @@
 
 #include "ui/library_dialog.h"
 #include "ui_library_dialog.h"
-#include "library.h"
+#include "flag.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -206,7 +206,7 @@ void LibraryDialog::store(const int &flags, const int &id) {
 
 void LibraryDialog::fetch() {
     QueueItem signal(QueueAction::LIBRARY_FETCH);
-    signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
+    signal.int0 = Flag::PATCH | Flag::SEQUENCE;
     signal.int1 = 0;
     signal.int2 = -1;
     emit enqueue(signal);
@@ -219,7 +219,7 @@ void LibraryDialog::send() {
         return;
     }
     QueueItem signal(QueueAction::LIBRARY_SEND);
-    signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE;
+    signal.int0 = Flag::PATCH | Flag::SEQUENCE;
     signal.int1 = 0;
     signal.int2 = -1;
     emit enqueue(signal);
@@ -232,7 +232,7 @@ void LibraryDialog::sendChanged(){
         return;
     }
     QueueItem signal(QueueAction::LIBRARY_SEND);
-    signal.int0 = Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
+    signal.int0 = Flag::PATCH | Flag::SEQUENCE | Flag::CHANGED;
     signal.int1 = 0;
     signal.int2 = -1;
     emit enqueue(signal);
@@ -242,7 +242,7 @@ void LibraryDialog::sendChanged(){
 void LibraryDialog::loadReplace() {
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
-        QueueItem signal(QueueAction::LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        QueueItem signal(QueueAction::LIBRARY_LOAD, path, Flag::PATCH | Flag::SEQUENCE);
         emit enqueue(signal);
     }
 }
@@ -251,7 +251,7 @@ void LibraryDialog::loadReplace() {
 void LibraryDialog::loadAppend() {
     QString path = QFileDialog::getOpenFileName(this, "Load Library", ".", "SysEx files (*.syx)");
     if (path != "") {
-        QueueItem signal(QueueAction::LIBRARY_LOAD, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE | Library::FLAG_APPEND);
+        QueueItem signal(QueueAction::LIBRARY_LOAD, path, Flag::PATCH | Flag::SEQUENCE | Flag::APPEND);
         emit enqueue(signal);
     }
 }
@@ -264,7 +264,7 @@ void LibraryDialog::save() {
             path.append(".syx");
         }
 
-        QueueItem signal(QueueAction::LIBRARY_SAVE, path, Library::FLAG_PATCH | Library::FLAG_SEQUENCE);
+        QueueItem signal(QueueAction::LIBRARY_SAVE, path, Flag::PATCH | Flag::SEQUENCE);
         emit enqueue(signal);
     }
 }
@@ -342,9 +342,9 @@ void LibraryDialog::patchRecall(QListWidgetItem *item) {
     Q_UNUSED(item);
     const int &c = ui->patchList->currentRow();
 
-    int flag = Library::FLAG_PATCH;
+    int flag = Flag::PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     recall(flag, c);
 }
@@ -354,9 +354,9 @@ void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
     Q_UNUSED(item);
     const int &c = ui->sequenceList->currentRow();
 
-    int flag = Library::FLAG_SEQUENCE;
+    int flag = Flag::SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     recall(flag, c);
 
@@ -366,9 +366,9 @@ void LibraryDialog::sequenceRecall(QListWidgetItem *item) {
 void LibraryDialog::patchCMStore() {
     const int &c = ui->patchList->currentRow();
 
-    int flag = Library::FLAG_PATCH;
+    int flag = Flag::PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     store(flag, c);
 }
@@ -377,63 +377,63 @@ void LibraryDialog::patchCMStore() {
 void LibraryDialog::sequenceCMStore() {
     const int &c = ui->sequenceList->currentRow();
 
-    int flag = Library::FLAG_SEQUENCE;
+    int flag = Flag::SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     store(flag, c);
 }
 
 
 void LibraryDialog::patchCMSend() {
-    int flag = Library::FLAG_PATCH;
+    int flag = Flag::PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
 void LibraryDialog::patchCMSendChanged() {
-    int flag = Library::FLAG_PATCH | Library::FLAG_CHANGED;
+    int flag = Flag::PATCH | Flag::CHANGED;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
 void LibraryDialog::sequenceCMSend() {
-    int flag = Library::FLAG_SEQUENCE;
+    int flag = Flag::SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
 void LibraryDialog::sequenceCMSendChanged() {
-    int flag = Library::FLAG_SEQUENCE | Library::FLAG_CHANGED;
+    int flag = Flag::SEQUENCE | Flag::CHANGED;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_SEND, flag);
 }
 
 
 void LibraryDialog::patchCMFetch() {
-    int flag = Library::FLAG_PATCH;
+    int flag = Flag::PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_FETCH, flag);
 }
 
 
 void LibraryDialog::sequenceCMFetch() {
-    int flag = Library::FLAG_SEQUENCE;
+    int flag = Flag::SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_FETCH, flag);
 }
@@ -459,9 +459,9 @@ void LibraryDialog::patchCMReset() {
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::patchCMReset()";
 #endif
-    int flag = Library::FLAG_PATCH;
+    int flag = Flag::PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     librarySelectedRanges(ui->patchList, QueueAction::LIBRARY_RESET, flag);
 }
@@ -471,9 +471,9 @@ void LibraryDialog::sequenceCMReset() {
 #ifdef DEBUGMSGS
     qDebug() << "LibraryDialog::sequenceCMReset()";
 #endif
-    int flag = Library::FLAG_SEQUENCE;
+    int flag = Flag::SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     librarySelectedRanges(ui->sequenceList, QueueAction::LIBRARY_RESET, flag);
 }
@@ -508,9 +508,9 @@ void LibraryDialog::patchMove(const QModelIndex &parent, int start, int end, con
 
     copySelectionFromPatchToSequence();
 
-    int flag = Library::FLAG_PATCH;
+    int flag = Flag::PATCH;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_SEQUENCE;
+        flag |= Flag::SEQUENCE;
     }
     move(flag, start, row);
 }
@@ -527,9 +527,9 @@ void LibraryDialog::sequenceMove(const QModelIndex &parent, int start, int end, 
 
     copySelectionFromSequenceToPatch();
 
-    int flag = Library::FLAG_SEQUENCE;
+    int flag = Flag::SEQUENCE;
     if (ui->sync->isChecked()) {
-        flag |= Library::FLAG_PATCH;
+        flag |= Flag::PATCH;
     }
     move(flag, start, row);
 }

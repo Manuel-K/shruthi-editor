@@ -21,6 +21,7 @@
 #include "fileio.h"
 #include "midi.h"
 #include "midiout.h"
+#include "flag.h"
 
 #include <iostream>
 #include <QThread>
@@ -214,7 +215,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
     Message temp;
     bool ret = true;
 
-    bool force = !(what&FLAG_CHANGED);
+    bool force = !(what&Flag::CHANGED);
 
     const int &count = to - from;
     for (int i = from; i <= to; i++) {
@@ -223,7 +224,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
         const int &progress = 100 * done / count;
         const QString &progress_str = QString("%1%: ").arg(progress);
 
-        if ((what&FLAG_PATCH) && (force || patchEdited(i) || patchMoved(i))) {
+        if ((what&Flag::PATCH) && (force || patchEdited(i) || patchMoved(i))) {
             emit displayStatusbar(progress_str + QString("Sending patch %1.").arg(i));
 #ifdef DEBUGMSGS
             std::cout << i << " patch " << std::endl;
@@ -241,7 +242,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
             // Don't flood the Shruthi
             QThread::msleep(250);
         }
-        if (ret && (what&FLAG_SEQUENCE) && (force || sequenceEdited(i) || sequenceMoved(i))) {
+        if (ret && (what&Flag::SEQUENCE) && (force || sequenceEdited(i) || sequenceMoved(i))) {
             emit displayStatusbar(progress_str + QString("Sending sequence %1.").arg(i));
 #ifdef DEBUGMSGS
             std::cout << i << " sequence " << std::endl;
@@ -271,7 +272,7 @@ bool Library::send(const int &what, const int &from, const int &to) {
 
 
 bool Library::startFetching(const int &flags, const int &from, const int &to) {
-    if (!(flags&FLAG_PATCH) && !(flags&FLAG_SEQUENCE)) {
+    if (!(flags&Flag::PATCH) && !(flags&Flag::SEQUENCE)) {
         return false;
     }
     // Note:
@@ -280,11 +281,11 @@ bool Library::startFetching(const int &flags, const int &from, const int &to) {
     fetchEnd = to;
     fetchNextRequest = from;
 
-    if (flags&FLAG_PATCH) {
+    if (flags&Flag::PATCH) {
         fetchPatchMode = true;
         fetchNextIncomingPatch = from;
     }
-    if (flags&FLAG_SEQUENCE) {
+    if (flags&Flag::SEQUENCE) {
         fetchSequenceMode = true;
         fetchNextIncomingSequence = from;
     }
@@ -432,7 +433,7 @@ void Library::reset(const int &flags, const int &from, const int &to) {
 #ifdef DEBUGMSGS
     std::cout << "Library::resetPrograms(" << flags << ", " << from << ", " << to << ");" << std::endl;
 #endif
-    if (flags&FLAG_PATCH) {
+    if (flags&Flag::PATCH) {
         for (int i = from; i <= to; i++) {
             if (firmwareVersionRequested) {
                 patches.at(i).reset(firmwareVersion);
@@ -443,7 +444,7 @@ void Library::reset(const int &flags, const int &from, const int &to) {
             mPatchEdited.at(i) = true;
         }
     }
-    if (flags&FLAG_SEQUENCE) {
+    if (flags&Flag::SEQUENCE) {
         for (int i = from; i <= to; i++) {
             sequences.at(i).reset();
             mSequenceMoved.at(i) = false;

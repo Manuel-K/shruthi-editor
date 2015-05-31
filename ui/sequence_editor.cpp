@@ -25,6 +25,7 @@
 
 #include "sequence.h"
 #include "patch.h"
+#include "flag.h"
 
 
 SequenceEditor::SequenceEditor(QWidget *parent) :
@@ -85,7 +86,7 @@ SequenceEditor::~SequenceEditor() {
 
 void SequenceEditor::sendSequenceUpdate() {
     if (ui->autoSendSequence->isChecked()) {
-        QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
+        QueueItem signal(QueueAction::SYSEX_SEND_DATA, Flag::SEQUENCE);
         emit enqueue(signal);
     }
 }

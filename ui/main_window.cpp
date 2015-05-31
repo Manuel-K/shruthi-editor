@@ -17,7 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtWidgets>
-#include "editor.h"
+#include "flag.h"
 #include "ui/main_window.h"
 #include "ui_main_window.h"
 #include "ui/settings_dialog.h"
@@ -391,7 +391,7 @@ void ShruthiEditorMainWindow::loadProgram() {
     if (success && filenames.size() > 0) {
         lastProgramFileMode = index;
         if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
-            flag = Editor::FLAG_PATCH;
+            flag = Flag::PATCH;
         }
         QueueItem signal(QueueAction::FILEIO_LOAD, filenames.first(), flag);
         emit enqueue(signal);
@@ -446,7 +446,7 @@ void ShruthiEditorMainWindow::saveProgram() {
     if (success && filenames.size() > 0) {
         lastProgramFileMode = index;
         if (filenames.first().endsWith(".sp", Qt::CaseInsensitive)) {
-            flag = Editor::FLAG_PATCH;
+            flag = Flag::PATCH;
         }
         QueueItem signal(QueueAction::FILEIO_SAVE, filenames.first(), flag);
         emit enqueue(signal);
@@ -455,37 +455,37 @@ void ShruthiEditorMainWindow::saveProgram() {
 
 
 void ShruthiEditorMainWindow::fetchProgram() {
-    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Flag::PATCH | Flag::SEQUENCE);
     emit enqueue(signal);
 }
 
 
 void ShruthiEditorMainWindow::sendProgram() {
-    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_PATCH | Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Flag::PATCH | Flag::SEQUENCE);
     emit enqueue(signal);
 }
 
 
 void ShruthiEditorMainWindow::fetchPatch() {
-    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_PATCH);
+    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Flag::PATCH);
     emit enqueue(signal);
 }
 
 
 void ShruthiEditorMainWindow::sendPatch() {
-    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_PATCH);
+    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Flag::PATCH);
     emit enqueue(signal);
 }
 
 
 void ShruthiEditorMainWindow::fetchSequence() {
-    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_FETCH_REQUEST, Flag::SEQUENCE);
     emit enqueue(signal);
 }
 
 
 void ShruthiEditorMainWindow::sendSequence() {
-    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Editor::FLAG_SEQUENCE);
+    QueueItem signal(QueueAction::SYSEX_SEND_DATA, Flag::SEQUENCE);
     emit enqueue(signal);
 }
 

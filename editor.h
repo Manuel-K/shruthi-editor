@@ -43,10 +43,6 @@ class Editor : public QObject {
 
         const Library *getLibrary() const;
 
-        // keep in sync with Library::FLAGs
-        static const int FLAG_PATCH = 1;
-        static const int FLAG_SEQUENCE = 2;
-
     private:
         Editor(const Editor&); //forbid copying
         Editor &operator=(const Editor&); //forbid assignment

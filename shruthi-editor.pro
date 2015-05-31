@@ -35,6 +35,7 @@ HEADERS = \
     config.h \
     editor.h \
     fileio.h \
+    flag.h \
     labels.h \
     library.h \
     message.h \
