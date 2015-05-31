@@ -37,11 +37,6 @@ class Editor : public QObject {
     public:
         Editor();
         ~Editor();
-        const int &getPatchValue(int id) const;
-        const QString &getPatchName() const;
-        const int &getSequenceValue(const int &step, const SequenceParameter::SequenceParameter &sp) const;
-
-        const Library *getLibrary() const;
 
     private:
         Editor(const Editor&); //forbid copying

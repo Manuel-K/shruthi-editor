@@ -96,26 +96,6 @@ Editor::~Editor() {
 }
 
 
-const int &Editor::getPatchValue(int id) const {
-    return patch->getValue(id);
-}
-
-
-const QString &Editor::getPatchName() const {
-    return patch->getName();
-}
-
-
-const int &Editor::getSequenceValue(const int &step, const SequenceParameter::SequenceParameter &sp) const {
-    return sequence->getValue(step, sp);
-}
-
-
-const Library *Editor::getLibrary() const {
-    return library;
-}
-
-
 void Editor::process(QueueItem item) {
     switch(item.action) {
         case QueueAction::PATCH_PARAMETER_CHANGE_EDITOR:
