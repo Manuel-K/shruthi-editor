@@ -81,6 +81,7 @@ class Editor : public QObject {
 
         void redrawAllPatchParameters();
         void redrawAllSequenceParameters();
+        void redrawLibraryItems(int what, int start, int stop);
 
         MidiOut *midiout;
         Patch *patch;
@@ -106,6 +107,8 @@ class Editor : public QObject {
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString);
         void setStatusbarVersionLabel(QString);
-        void redrawLibraryItems(int,int,int);
+        void redrawLibraryPatchItem(int,QString,bool,bool,bool);
+        void redrawLibrarySequenceItem(int,QString,bool,bool,bool);
+        void setNumberOfLibraryPrograms(int);
 };
 #endif

@@ -25,8 +25,6 @@
 #include <QDialog>
 #include <QListWidgetItem>
 
-class Library;
-
 namespace Ui {
 class LibraryDialog;
 }
@@ -38,7 +36,7 @@ class LibraryDialog : public QDialog {
         Q_OBJECT
 
     public:
-        explicit LibraryDialog(const Library *lib, QWidget *parent = 0);
+        explicit LibraryDialog(QWidget *parent = 0);
         ~LibraryDialog();
 
     private:
@@ -53,9 +51,12 @@ class LibraryDialog : public QDialog {
 
         void librarySelectedRanges(QListWidget *list, const QueueAction::QueueAction &action, const int &flags);
 
+        void prepareLists(int stop);
+        void cleanupLists();
+
+        int numberOfPrograms;
 
         Ui::LibraryDialog *ui;
-        const Library *library;
 
         QFont normalFont;
         QFont movedFont;
@@ -72,7 +73,9 @@ class LibraryDialog : public QDialog {
         bool dontCopySelection; // to prevent selection bouncing
 
     public slots:
-        void redrawItems(int what, int start, int stop);
+        void redrawLibraryPatchItem(int id, QString identifier, bool edited, bool moved, bool onHardware);
+        void redrawLibrarySequenceItem(int id, QString identifier, bool edited, bool moved, bool onHardware);
+        void setNumberOfLibraryPrograms(int num);
 
     private slots:
         void patchOpenContextMenu(QPoint p);

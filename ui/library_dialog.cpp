@@ -28,10 +28,9 @@
 #include <QMessageBox>
 
 
-LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
+LibraryDialog::LibraryDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::LibraryDialog),
-    library(lib) {
+    ui(new Ui::LibraryDialog) {
     ui->setupUi(this);
 
     ui->patchList->addItem("If you can read this,");
@@ -39,6 +38,8 @@ LibraryDialog::LibraryDialog(const Library *lib, QWidget *parent) :
 
     dontCopyScrollBarPosition = false;
     dontCopySelection = false;
+
+    numberOfPrograms = 0;
 
     // Setup fonts
     normalFont = QFont("Monospace");
@@ -122,56 +123,58 @@ void LibraryDialog::setFont(QListWidgetItem *item, bool edited, bool moved) {
 }
 
 
-void LibraryDialog::redrawItems(int what, int start, int stop) {
-    // TODO: set text immediately or ignore what
-    if ((what&Library::FLAG_PATCH) || (what&Library::FLAG_SEQUENCE)) {
-        // add missing items
-        const int &amount = stop - ui->patchList->count() + 1;
-        if (amount > 0) {
-            //std::cout << "amount: " << amount << std::endl;
-            for (int i = 0; i < amount; i++) {
-                ui->patchList->addItem(" ");
-                ui->sequenceList->addItem(" ");
-            }
+void LibraryDialog::prepareLists(int stop) {
+    // add missing items:
+    const int &amount = stop - ui->patchList->count() + 1;
+    if (amount > 0) {
+        //std::cout << "amount: " << amount << std::endl;
+        for (int i = 0; i < amount; i++) {
+            ui->patchList->addItem(" ");
+            ui->sequenceList->addItem(" ");
         }
     }
+}
 
-    if (what&Library::FLAG_PATCH) {
-        QListWidgetItem *item;
-        // setup items
-        //std::cout << "redrawPatchNames " <<  start << " " << stop << std::endl;
-        for (int i = start; i <= stop; i++) {
-            item = ui->patchList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library->getPatchIdentifier(i));
 
-            const bool &e = library->patchEdited(i);
-            const bool &m = library->patchMoved(i);
-            setFont(item, e, m);
-            item->setTextColor(i < library->getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
-        }
-    }
-    if (what&Library::FLAG_SEQUENCE) {
-        QListWidgetItem *item;
-        // setup items
-        //std::cout << "redrawSequenceInfo " <<  start << " " << stop << std::endl;
-        for (int i = start; i <= stop; i++) {
-            item = ui->sequenceList->item(i);
-            item->setText(QString("%1: ").arg(i+1, 3, 10, QChar(' ')) + library->getSequenceIdentifier(i));
-
-            const bool &e = library->sequenceEdited(i);
-            const bool &m = library->sequenceMoved(i);
-            setFont(item, e, m);
-            item->setTextColor(i < library->getNumberOfHWPrograms() ? colorOnHW : colorNotOnHW);
-        }
-    }
-
+void LibraryDialog::cleanupLists() {
     // cleanup items:
-    if (ui->patchList->count() - library->getNumberOfPrograms() > 0) {
-        for (int i = ui->patchList->count() - 1; i >= library->getNumberOfPrograms(); i--) {
+    if (ui->patchList->count() - numberOfPrograms > 0) {
+        for (int i = ui->patchList->count() - 1; i >= numberOfPrograms; i--) {
             delete ui->patchList->takeItem(i);
             delete ui->sequenceList->takeItem(i);
         }
     }
+}
+
+
+void LibraryDialog::redrawLibraryPatchItem(int id, QString identifier, bool edited, bool moved, bool onHardware) {
+    prepareLists(id);
+
+    QListWidgetItem *item = ui->patchList->item(id);
+    item->setText(QString("%1: ").arg(id+1, 3, 10, QChar(' ')) + identifier);
+
+    setFont(item, edited, moved);
+    item->setTextColor(onHardware ? colorOnHW : colorNotOnHW);
+
+    cleanupLists();
+}
+
+
+void LibraryDialog::redrawLibrarySequenceItem(int id, QString identifier, bool edited, bool moved, bool onHardware) {
+    prepareLists(id);
+
+    QListWidgetItem *item = ui->sequenceList->item(id);
+    item->setText(QString("%1: ").arg(id+1, 3, 10, QChar(' ')) + identifier);
+
+    setFont(item, edited, moved);
+    item->setTextColor(onHardware ? colorOnHW : colorNotOnHW);
+
+    cleanupLists();
+}
+
+
+void LibraryDialog::setNumberOfLibraryPrograms(int num) {
+    numberOfPrograms = num;
 }
 
 

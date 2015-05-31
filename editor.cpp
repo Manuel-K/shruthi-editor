@@ -48,7 +48,7 @@ void Editor::run() {
     qDebug("Editor::run()");
 #endif
     emit setStatusbarVersionLabel(patch->getVersionString());
-    emit redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
     redrawAllPatchParameters();
     redrawAllSequenceParameters();
 }
@@ -716,11 +716,11 @@ void Editor::actionLibraryStore(const unsigned int &what, const unsigned int &id
 #endif
     if (what&FLAG_PATCH) {
         library->storePatch(id, *patch);
-        emit redrawLibraryItems(FLAG_PATCH, id, id);
+        redrawLibraryItems(FLAG_PATCH, id, id);
     }
     if (what&FLAG_SEQUENCE) {
         library->storeSequence(id, *sequence);
-        emit redrawLibraryItems(FLAG_SEQUENCE, id, id);
+        redrawLibraryItems(FLAG_SEQUENCE, id, id);
     }
 }
 
@@ -737,7 +737,7 @@ void Editor::actionLibraryMove(const unsigned int &what, const unsigned int &sta
     }
     const int &s = std::min(start, target);
     const int &t = std::max(start, target);
-    emit redrawLibraryItems(what, s, t);
+    redrawLibraryItems(what, s, t);
 }
 
 
@@ -748,7 +748,7 @@ void Editor::actionLibraryLoad(const QString &path, const int &flags) {
     } else {
         emit displayStatusbar("Could not load library from disk.");
     }
-    emit redrawLibraryItems(flags, 0, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(flags, 0, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -768,7 +768,7 @@ void Editor::actionLibraryRemove(const unsigned int &start, const unsigned int &
     qDebug() << "Editor::actionLibraryDelete()" << start << end;
 #endif
     library->remove(start, end);
-    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -777,7 +777,7 @@ void Editor::actionLibraryInsert(const unsigned int &id) {
     qDebug() << "Editor::actionLibraryInsert()" << id;
 #endif
     library->insert(id);
-    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, id, library->getNumberOfPrograms() - 1);
+    redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, id, library->getNumberOfPrograms() - 1);
 }
 
 
@@ -786,7 +786,7 @@ void Editor::actionLibraryReset(const unsigned int &flags, const unsigned int &s
     qDebug() << "Editor::actionLibraryReset()" << flags << start << end;
 #endif
     library->reset(flags, start, end);
-    emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, end);
+    redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, end);
 }
 
 
@@ -808,5 +808,25 @@ void Editor::redrawAllSequenceParameters() {
         const int &velocity = sequence->getValue(i, SequenceParameter::VELOCITY);
         const int &value = sequence->getValue(i, SequenceParameter::VALUE);
         emit redrawSequenceStep(i, active, note, tie, velocity, value);
+    }
+}
+
+
+void Editor::redrawLibraryItems(int what, int start, int stop) {
+    emit setNumberOfLibraryPrograms(library->getNumberOfPrograms());
+    for (int i = start; i <= stop; i++) {
+        const bool &onHardware = i < library->getNumberOfHWPrograms();
+        if (what&Library::FLAG_PATCH) {
+            const QString &name = library->getPatchIdentifier(i);
+            const bool &edited = library->patchEdited(i);
+            const bool &moved = library->patchMoved(i);
+            emit redrawLibraryPatchItem(i, name, edited, moved, onHardware);
+        }
+        if (what&Library::FLAG_SEQUENCE) {
+            const QString &name = library->getSequenceIdentifier(i);
+            const bool &edited = library->patchEdited(i);
+            const bool &moved = library->patchMoved(i);
+            emit redrawLibrarySequenceItem(i, name, edited, moved, onHardware);
+        }
     }
 }
