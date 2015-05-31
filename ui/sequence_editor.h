@@ -23,8 +23,6 @@
 #include <QDialog>
 #include "queueitem.h"
 
-class Editor;
-
 namespace Ui {
 class SequenceEditor;
 }
@@ -34,7 +32,7 @@ class SequenceEditor : public QDialog {
         Q_OBJECT
 
     public:
-        explicit SequenceEditor(const Editor *edit, QWidget *parent = 0);
+        explicit SequenceEditor(QWidget *parent = 0);
         ~SequenceEditor();
 
     private:
@@ -44,12 +42,10 @@ class SequenceEditor : public QDialog {
         void sendSequenceUpdate();
 
         Ui::SequenceEditor *ui;
-        const Editor *editor;
 
     public slots:
-        void redrawPatchParameter(int id);
-        void redrawAllPatchParameters();
-        void redrawAllSequenceParameters();
+        void redrawPatchParameter(int id, int value);
+        void redrawSequenceStep(int id, int active, int note, int tie, int velocity, int value);
 
     private slots:
         void activeChanged(int step, int value);

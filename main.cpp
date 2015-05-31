@@ -78,14 +78,14 @@ int main(int argc, char *argv[]) {
         midiin.connect(&sr, SIGNAL(setShruthiFilterBoard(int)), SLOT(setShruthiFilterBoard(int)));
 
         // Setup main_window
-        ShruthiEditorMainWindow *main_window = new ShruthiEditorMainWindow(&editor);
+        ShruthiEditorMainWindow *main_window = new ShruthiEditorMainWindow();
         main_window->setWindowIcon(QIcon(":/shruthi_editor.png"));
         main_window->setFixedSize(main_window->width(), main_window->height());
         main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
         // main_window: incoming signals
-        main_window->connect(&editor, SIGNAL(redrawPatchParamter(int)), SLOT(redrawPatchParameter(int)));
-        main_window->connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));
+        main_window->connect(&editor, SIGNAL(redrawPatchParameter(int,int)), SLOT(redrawPatchParameter(int,int)));
+        main_window->connect(&editor, SIGNAL(redrawPatchName(QString)), SLOT(redrawPatchName(QString)));
         main_window->connect(&sr, SIGNAL(setMidiInputPort(int)), SLOT(setMidiInputPort(int)));
         main_window->connect(&sr, SIGNAL(setMidiOutputPort(int)), SLOT(setMidiOutputPort(int)));
         main_window->connect(&sr, SIGNAL(setMidiChannel(unsigned char)), SLOT(setMidiChannel(unsigned char)));
@@ -101,12 +101,11 @@ int main(int argc, char *argv[]) {
         keys.setWindowIcon(QIcon(":/shruthi_editor.png"));
 
         // Setup SequenceEditor
-        SequenceEditor sequence_editor(&editor);
+        SequenceEditor sequence_editor;
         sequence_editor.connect(main_window, SIGNAL(showSequenceEditor()), SLOT(show()));
         sequence_editor.setWindowIcon(QIcon(":/shruthi_editor.png"));
-        sequence_editor.connect(&editor, SIGNAL(redrawAllSequenceParameters()), SLOT(redrawAllSequenceParameters()));
-        sequence_editor.connect(&editor, SIGNAL(redrawAllPatchParameters()), SLOT(redrawAllPatchParameters()));
-        sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter2(int)), SLOT(redrawPatchParameter(int)));
+        sequence_editor.connect(&editor, SIGNAL(redrawSequenceStep(int,int,int,int,int,int)), SLOT(redrawSequenceStep(int,int,int,int,int,int)));
+        sequence_editor.connect(&editor, SIGNAL(redrawPatchParameter(int,int)), SLOT(redrawPatchParameter(int,int)));
 
         // Setup LibraryDialog
         LibraryDialog lib(editor.getLibrary());

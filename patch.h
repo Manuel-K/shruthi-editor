@@ -45,7 +45,8 @@ class Patch {
         static PatchParameter parameter(const int &id, int filter = 0);
 
         static bool enabled(const int &id);
-        static bool hasUI(const int &id);
+        static bool hasUI(const int &id); // widget in main window
+        static bool hasUI2(const int &id); // widget in sequence editor
         static bool sendAsNRPN(const int &id);
         static bool belongsToModMatrix(const int &id);
 

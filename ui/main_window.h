@@ -28,8 +28,6 @@ namespace Ui {
 class MainWindow;
 }
 
-class Editor;
-
 class QFileDialog;
 class QLabel;
 class QComboBox;
@@ -39,7 +37,7 @@ class ShruthiEditorMainWindow : public QMainWindow {
         Q_OBJECT
 
     public:
-        ShruthiEditorMainWindow(const Editor* edit, QWidget *parent = 0);
+        ShruthiEditorMainWindow(QWidget *parent = 0);
         ~ShruthiEditorMainWindow();
 
     private:
@@ -52,18 +50,18 @@ class ShruthiEditorMainWindow : public QMainWindow {
         QComboBox *injectQFileDialog(QFileDialog *d);
 
         Ui::MainWindow *ui;
-        const Editor* editor;
         int MIDI_INPUT_PORT, MIDI_OUTPUT_PORT, SHRUTHI_FILTER_BOARD;
         unsigned char MIDI_CHANNEL;
         bool MIDI_INPUT_STATUS, MIDI_OUTPUT_STATUS;
         QLabel *statusbarVersionLabel;
 
         int lastProgramFileMode;
+        int parameter84, parameter85, parameter92, parameter93;
 
     public slots:
         // redraw commands:
-        void redrawPatchParameter(int id);
-        void redrawAllPatchParameters();
+        void redrawPatchParameter(int id, int value);
+        void redrawPatchName(QString name);
         // ui settings:
         void setMidiInputPort(int midiin);
         void setMidiOutputPort(int midiout);

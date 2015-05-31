@@ -27,10 +27,9 @@
 #include "patch.h"
 
 
-SequenceEditor::SequenceEditor(const Editor *edit, QWidget *parent) :
+SequenceEditor::SequenceEditor(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SequenceEditor),
-    editor(edit) {
+    ui(new Ui::SequenceEditor) {
     ui->setupUi(this);
 
     SequenceStep *step;
@@ -76,7 +75,6 @@ SequenceEditor::SequenceEditor(const Editor *edit, QWidget *parent) :
             connect(dial, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
         }
     }
-    redrawAllSequenceParameters();
 }
 
 
@@ -93,10 +91,14 @@ void SequenceEditor::sendSequenceUpdate() {
 }
 
 
-void SequenceEditor::redrawPatchParameter(int id) {
+void SequenceEditor::redrawPatchParameter(int id, int value) {
 #ifdef DEBUGMSGS
-    std::cout << "SequenceEditor::redrawPatchParameter();" << id << std::endl;
+    std::cout << "SequenceEditor::redrawPatchParameter();" << id << " " << value << std::endl;
 #endif
+    if (!Patch::hasUI2(id)) {
+        return;
+    }
+
     if (Patch::parameter(id, 0).string_values) {
         QComboBox *cb = this->findChild<QComboBox*>(QString("c%1").arg(id));
         if (!cb) {
@@ -104,44 +106,35 @@ void SequenceEditor::redrawPatchParameter(int id) {
         }
         const bool &temp = cb->isEnabled();
         cb->setEnabled(false);
-        cb->setCurrentIndex(editor->getPatchValue(id));
+        cb->setCurrentIndex(value);
         cb->setEnabled(temp);
     } else {
         ShruthiEditorDial *dial = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(id));
         if (!dial) {
             return;
         }
-        dial->setValue(editor->getPatchValue(id));
+        dial->setValue(value);
     }
 }
 
 
-void SequenceEditor::redrawAllPatchParameters() {
+void SequenceEditor::redrawSequenceStep(int id, int active, int note, int tie, int velocity, int value) {
 #ifdef DEBUGMSGS
-    std::cout << "SequenceEditor::redrawAllPatchParameters();" << std::endl;
+    std::cout << "SequenceEditor::redrawSequenceStep()" << id << std::endl;
 #endif
-    for (unsigned int p = 100; p < 110; p++) {
-        redrawPatchParameter(p);
+    if (id < 0 || id >= Sequence::NUMBER_OF_STEPS) {
+        return;
     }
-}
 
-
-void SequenceEditor::redrawAllSequenceParameters() {
-#ifdef DEBUGMSGS
-    std::cout << "SequenceEditor::redrawAllSequenceParameters()" << std::endl;
-#endif
-    SequenceStep *s;
-    for (unsigned int i = 0; i < Sequence::NUMBER_OF_STEPS; i++) {
-        s = this->findChild<SequenceStep*>(QString("s%1").arg(i));
-        if (!s) {
-            continue;
-        }
-        s->setActive(editor->getSequenceValue(i, SequenceParameter::ACTIVE));
-        s->setNoteOctave(editor->getSequenceValue(i, SequenceParameter::NOTE));
-        s->setTie(editor->getSequenceValue(i, SequenceParameter::TIE));
-        s->setVelocity(editor->getSequenceValue(i, SequenceParameter::VELOCITY));
-        s->setValue(editor->getSequenceValue(i, SequenceParameter::VALUE));
+    SequenceStep *s = this->findChild<SequenceStep*>(QString("s%1").arg(id));
+    if (!s) {
+        return;
     }
+    s->setActive(active);
+    s->setNoteOctave(note);
+    s->setTie(tie);
+    s->setVelocity(velocity);
+    s->setValue(value);
 }
 
 

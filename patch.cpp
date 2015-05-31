@@ -265,6 +265,11 @@ bool Patch::hasUI(const int &id) {
 }
 
 
+bool Patch::hasUI2(const int &id) {
+    return (id >= 100 && id < 110);
+}
+
+
 bool Patch::sendAsNRPN(const int &id) {
     return (id < 68 || id == 84 || id == 85 || (id >= 92 && id < 108));
 }

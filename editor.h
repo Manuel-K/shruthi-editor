@@ -79,6 +79,9 @@ class Editor : public QObject {
         void actionLibraryInsert(const unsigned int &id);
         void actionLibraryReset(const unsigned int &flags, const unsigned int &start, const unsigned int &end);
 
+        void redrawAllPatchParameters();
+        void redrawAllSequenceParameters();
+
         MidiOut *midiout;
         Patch *patch;
         Sequence *sequence;
@@ -95,11 +98,10 @@ class Editor : public QObject {
         void run();
 
     signals:
-        void redrawPatchParamter(int);
-        void redrawPatchParameter2(int);
-        void redrawAllPatchParameters();
+        void redrawPatchParameter(int,int);
+        void redrawPatchName(QString);
         void redrawSequenceParameter(int);
-        void redrawAllSequenceParameters();
+        void redrawSequenceStep(int,int,int,int,int,int);
         void finished();
         void midiOutputStatusChanged(bool);
         void displayStatusbar(QString);

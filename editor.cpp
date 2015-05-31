@@ -49,6 +49,8 @@ void Editor::run() {
 #endif
     emit setStatusbarVersionLabel(patch->getVersionString());
     emit redrawLibraryItems(FLAG_PATCH|FLAG_SEQUENCE, 0, library->getNumberOfPrograms() - 1);
+    redrawAllPatchParameters();
+    redrawAllSequenceParameters();
 }
 
 
@@ -351,10 +353,7 @@ void Editor::actionPatchParameterChangeMidi(int id, int value) {
     }
     patch->setValue(id, value);
     if (Patch::hasUI(id)) {
-        emit redrawPatchParamter(id);
-    }
-    if (id >= 100 && id < 110) {
-        emit redrawPatchParameter2(id);
+        emit redrawPatchParameter(id, value);
     }
 }
 
@@ -428,7 +427,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
 
         if (ret) {
             emit displayStatusbar(progress + "Received valid patch (" + patch->getVersionString() + " format).");
-            emit redrawAllPatchParameters();
+            redrawAllPatchParameters();
             emit setStatusbarVersionLabel(patch->getVersionString());
         } else {
             if (library->isFetchingPatches()) {
@@ -448,7 +447,7 @@ void Editor::actionSysexReceived(unsigned int command, unsigned int argument,
             }
 
             emit displayStatusbar(progress + "Received valid sequence.");
-            emit redrawAllSequenceParameters();
+            redrawAllSequenceParameters();
         } else {
             if (library->isFetchingSequences()) {
                 library->abortFetching();
@@ -558,11 +557,11 @@ void Editor::actionFileIOLoad(QString path, const int &what) {
 
     // Send required refresh signals
     if (statusP && (what&FLAG_PATCH)) {
-        emit redrawAllPatchParameters();
+        redrawAllPatchParameters();
         emit setStatusbarVersionLabel(patch->getVersionString());
     }
     if (statusS && (what&FLAG_SEQUENCE)) {
-        emit redrawAllSequenceParameters();
+        redrawAllSequenceParameters();
     }
 }
 
@@ -616,7 +615,7 @@ void Editor::actionResetPatch(unsigned int version) {
     qDebug() << "Editor::actionResetPatch()";
 #endif
     patch->reset(version);
-    emit redrawAllPatchParameters();
+    redrawAllPatchParameters();
     emit displayStatusbar("Patch reset.");
     emit setStatusbarVersionLabel(patch->getVersionString());
 }
@@ -627,7 +626,7 @@ void Editor::actionRandomizePatch() {
     qDebug() << "Editor::actionRandomizePatch()";
 #endif
     patch->randomize(shruthiFilterBoard);
-    emit redrawAllPatchParameters();
+    redrawAllPatchParameters();
     emit displayStatusbar("Patch randomized.");
     emit setStatusbarVersionLabel(patch->getVersionString());
 }
@@ -646,7 +645,7 @@ void Editor::actionResetSequence() {
     qDebug() << "Editor::actionResetSequence()";
 #endif
     sequence->reset();
-    emit redrawAllSequenceParameters();
+    redrawAllSequenceParameters();
     emit displayStatusbar("Sequence reset.");
 }
 
@@ -702,11 +701,11 @@ void Editor::actionLibraryRecall(const unsigned int &what, const unsigned int &i
 
     if (what&FLAG_PATCH) {
         patch->set(library->recallPatch(id));
-        emit redrawAllPatchParameters();
+        redrawAllPatchParameters();
     }
     if (what&FLAG_SEQUENCE) {
         sequence->set(library->recallSequence(id));
-        emit redrawAllSequenceParameters();
+        redrawAllSequenceParameters();
     }
 }
 
@@ -788,4 +787,26 @@ void Editor::actionLibraryReset(const unsigned int &flags, const unsigned int &s
 #endif
     library->reset(flags, start, end);
     emit redrawLibraryItems(Library::FLAG_PATCH | Library::FLAG_SEQUENCE, start, end);
+}
+
+
+void Editor::redrawAllPatchParameters() {
+    for (int i = 0; i < 110; i++) {
+        if (Patch::hasUI(i) || Patch::hasUI2(i)) {
+            emit redrawPatchParameter(i, patch->getValue(i));
+        }
+    }
+    emit redrawPatchName(patch->getName());
+}
+
+
+void Editor::redrawAllSequenceParameters() {
+    for (int i = 0; i < Sequence::NUMBER_OF_STEPS; i++) {
+        const int &active = sequence->getValue(i, SequenceParameter::ACTIVE);
+        const int &note = sequence->getValue(i, SequenceParameter::NOTE);
+        const int &tie = sequence->getValue(i, SequenceParameter::TIE);
+        const int &velocity = sequence->getValue(i, SequenceParameter::VELOCITY);
+        const int &value = sequence->getValue(i, SequenceParameter::VALUE);
+        emit redrawSequenceStep(i, active, note, tie, velocity, value);
+    }
 }

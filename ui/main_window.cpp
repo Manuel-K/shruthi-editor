@@ -29,10 +29,9 @@
 #define VERSION "0.23"
 
 
-ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *parent):
+ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    editor(edit) {
+    ui(new Ui::MainWindow) {
 
     ui->setupUi(this);
 
@@ -42,6 +41,11 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
     SHRUTHI_FILTER_BOARD = 0;
     MIDI_INPUT_STATUS = false;
     MIDI_OUTPUT_STATUS = false;
+
+    parameter84 = 0;
+    parameter85 = 0;
+    parameter92 = 0;
+    parameter93 = 0;
 
     lastProgramFileMode = 2;
 
@@ -114,9 +118,6 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(const Editor *edit, QWidget *pa
     }
 
     connect(ui->patch_name, SIGNAL(editingFinished()), this, SLOT(patchNameChanged()));
-
-    // Now that everything is set up, update all UI elements:
-    redrawAllPatchParameters();
 
     // other UI Signals:
     connect(ui->actionLoadProgram, SIGNAL(triggered()), this, SLOT(loadProgram()));
@@ -285,10 +286,10 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
 
 
     // Force display update:
-    redrawPatchParameter(84);
-    redrawPatchParameter(85);
-    redrawPatchParameter(92);
-    redrawPatchParameter(93);
+    redrawPatchParameter(84, parameter84);
+    redrawPatchParameter(85, parameter85);
+    redrawPatchParameter(92, parameter92);
+    redrawPatchParameter(93, parameter93);
 
 
     // Enable active widgets:
@@ -564,7 +565,30 @@ void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
 //
 
 
-void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
+void ShruthiEditorMainWindow::redrawPatchParameter(int id, int value) {
+    if (!Patch::hasUI(id)) {
+        return;
+    }
+
+    // store parameter 84, 85, 92, 93 values:
+    switch (id) {
+        case 84:
+            parameter84 = value;
+            break;
+        case 85:
+            parameter85 = value;
+            break;
+        case 92:
+            parameter92 = value;
+            break;
+        case 93:
+            parameter93 = value;
+            break;
+        default:
+            break;
+    }
+
+
     const PatchParameter param = Patch::parameter(id, SHRUTHI_FILTER_BOARD);
 
     QString wid = QString("c%1").arg(id);
@@ -583,7 +607,7 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
         }
         const bool &wasEnabled = temp->isEnabled();
         temp->setEnabled(false);
-        temp->setCurrentIndex(editor->getPatchValue(id));
+        temp->setCurrentIndex(value);
         temp->setEnabled(wasEnabled);
     } else if (Patch::belongsToModMatrix(id)) {
         QDial* temp = this->findChild<QDial*>(wid);
@@ -592,25 +616,20 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id) {
         }
         const bool &wasEnabled = temp->isEnabled();
         temp->setEnabled(false);
-        temp->setValue(editor->getPatchValue(id));
+        temp->setValue(value);
         temp->setEnabled(wasEnabled);
     } else {
         ShruthiEditorDial* temp = this->findChild<ShruthiEditorDial*>(wid);
         if (!temp) {
             return;
         }
-        temp->setValue(editor->getPatchValue(id));
+        temp->setValue(value);
     }
 }
 
 
-void ShruthiEditorMainWindow::redrawAllPatchParameters() {
-    for (int i=0; i<100; i++) {
-        if (Patch::hasUI(i)) {
-            redrawPatchParameter(i);
-        }
-    }
-    ui->patch_name->setText(editor->getPatchName());
+void ShruthiEditorMainWindow::redrawPatchName(QString name) {
+    ui->patch_name->setText(name);
 }
 
 
