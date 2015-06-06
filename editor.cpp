@@ -177,6 +177,8 @@ void Editor::process(QueueItem item) {
         case QueueAction::RANDOMIZE_PATCH:
             actionRandomizePatch();
             break;
+        case QueueAction::NOOP:
+            break;
         default:
 #ifdef DEBUGMSGS
             qDebug() << "Editor::process():" << item.action << ":" << item.int0 << "," << item.int1 << "," << item.string;
