@@ -35,11 +35,18 @@
 #ifdef FUSION
 #include <QStyleFactory>
 #endif
-
+#ifdef CLEANLOOKS
+#include <QCleanlooksStyle>
+#endif
 
 int main(int argc, char *argv[]) {
     qRegisterMetaType<QueueItem>("QueueItem");
     qRegisterMetaType<Config>("Config");
+
+
+#ifdef CLEANLOOKS
+    QApplication::setStyle(new QCleanlooksStyle);
+#endif
 
     int retVal;
 

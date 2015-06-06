@@ -101,8 +101,12 @@ CONFIG += qt
 LIBS += -L. 
 target.path = release/
 
-# Comment the following line if you don't want to force the Fusion style
-DEFINES += FUSION
+# Comment the following line if you don't want to force the Fusion style for Qt 5
+greaterThan(QT_MAJOR_VERSION, 4): DEFINES += FUSION
+
+# Comment the following line if you don't want to force the Cleanlooks style for Qt 4
+equals(QT_MAJOR_VERSION, 4): DEFINES += CLEANLOOKS
+
 
 unix {
     message(RtMidi will use linux alsaseq.)
