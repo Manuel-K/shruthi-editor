@@ -24,10 +24,8 @@
 #include "flag.h"
 
 #include <iostream>
-#include <QThread>
 #include <QTime>
 #include <stdint.h> // needed for hash calculation
-
 
 Library::Library(MidiOut *out):
     midiout(out),
@@ -40,6 +38,10 @@ Library::Library(MidiOut *out):
     fetchNextRequest = 0;
     fetchNextIncomingPatch = 0;
     fetchNextIncomingSequence = 0;
+    abortSending();
+    mSendIndex = 0;
+    mSendRedrawFlags = 0;
+    mSendRedrawIndex = -1;
 
     mRememberedCurrentShruthiProgram = false;
 
@@ -209,65 +211,166 @@ QString Library::getSequenceIdentifier(const int &id) const {
 }
 
 
-bool Library::send(const int &what, const int &from, const int &to) {
-    QTime t;
-    t.start();
-    Message temp;
+bool Library::startSending(const int &flags, const int &from, const int &to) {
+    if (!(flags&Flag::PATCH) && !(flags&Flag::SEQUENCE)) {
+        return false;
+    }
+    // Note:
+    // Shruthi displays the first patches number as 1, but calls it 0 internally.
+    mSendStart = from;
+    mSendEnd = to;
+    mSendIndex = from;
+
+    mSendPatchMode = flags&Flag::PATCH;
+    mSendSequenceMode = flags&Flag::SEQUENCE;
+    mForceSending = !(flags&Flag::CHANGED);
+
+    time->start();
+
+    return keepSending();
+}
+
+
+void Library::abortSending() {
+    mSendPatchMode = false;
+    mSendSequenceMode = false;
+    mSendStart = 0;
+    mSendEnd = 0;
+    mForceSending = false;
+    mSendTimeout = 0;
+    mSendAlternate = false;
+}
+
+
+QString Library::sendProgress() const {
+    // calculate progress:
+    const int &num = (mSendEnd - mSendStart);
+    if (num == 0) {
+        return QString("");
+    }
+    const double &done = (mSendIndex - mSendStart);
+    const int &progress = 100 * done / num;
+    const QString &str = QString("%1%: ").arg(progress);
+    return str;
+}
+
+
+bool Library::keepSending() {
+    const QString progress_str = sendProgress();
     bool ret = true;
 
-    bool force = !(what&Flag::CHANGED);
+    mSendRedrawIndex = -1;
 
-    const int &count = to - from;
-    for (int i = from; i <= to; i++) {
-        // Calculate progress:
-        const double &done = i - from;
-        const int &progress = 100 * done / count;
-        const QString &progress_str = QString("%1%: ").arg(progress);
+    const bool &sendPatch = mSendPatchMode && (mForceSending || patchEdited(mSendIndex) || patchMoved(mSendIndex));
+    const bool &sendSequence = mSendSequenceMode && (mForceSending || sequenceEdited(mSendIndex) || sequenceMoved(mSendIndex));
 
-        if ((what&Flag::PATCH) && (force || patchEdited(i) || patchMoved(i))) {
-            emit displayStatusbar(progress_str + QString("Sending patch %1.").arg(i));
+    // Determine action
+    bool first = !(sendSequence && (mSendAlternate || !sendPatch));
+
+    if (first && sendPatch) {
+        emit displayStatusbar(progress_str + QString("Sending patch %1.").arg(mSendIndex + 1));
 #ifdef DEBUGMSGS
-            std::cout << i << " patch " << std::endl;
+        std::cout << sendIndex << " patch " << std::endl;
 #endif
-            temp.clear();
-            patches.at(i).generateSysex(&temp);
-            ret = midiout->write(temp);
-            if (ret) {
-                ret = midiout->patchWriteRequest(i);
-            }
-            if (ret) {
-                mPatchEdited.at(i) = false;
-                mPatchMoved.at(i) = false;
-            }
-            // Don't flood the Shruthi
-            QThread::msleep(250);
+        Message temp;
+        temp.clear();
+        patches.at(mSendIndex).generateSysex(&temp);
+        ret = midiout->write(temp);
+        if (ret) {
+            ret = midiout->patchWriteRequest(mSendIndex);
         }
-        if (ret && (what&Flag::SEQUENCE) && (force || sequenceEdited(i) || sequenceMoved(i))) {
-            emit displayStatusbar(progress_str + QString("Sending sequence %1.").arg(i));
-#ifdef DEBUGMSGS
-            std::cout << i << " sequence " << std::endl;
-#endif
-            temp.clear();
-            sequences.at(i).generateSysex(&temp);
-            ret = midiout->write(temp);
-            if (ret) {
-                ret = midiout->sequenceWriteRequest(i);
-            }
-            if (ret) {
-                mSequenceEdited.at(i) = false;
-                mSequenceMoved.at(i) = false;
-            }
-            // Don't flood the Shruthi
-            QThread::msleep(125);
+        if (ret) {
+            mPatchEdited.at(mSendIndex) = false;
+            mPatchMoved.at(mSendIndex) = false;
         }
+        // Don't flood the Shruthi
+        mSendTimeout = 250;
+        mSendRedrawIndex = mSendIndex;
+        mSendRedrawFlags = Flag::PATCH;
+    }
 
-        if (!ret) {
-            return false;
+
+    if (!first && sendSequence) {
+        emit displayStatusbar(progress_str + QString("Sending sequence %1.").arg(mSendIndex + 1));
+#ifdef DEBUGMSGS
+        std::cout << sendIndex << " sequence " << std::endl;
+#endif
+        Message temp;
+        temp.clear();
+        sequences.at(mSendIndex).generateSysex(&temp);
+        ret = midiout->write(temp);
+        if (ret) {
+            ret = midiout->sequenceWriteRequest(mSendIndex);
+        }
+        if (ret) {
+            mSequenceEdited.at(mSendIndex) = false;
+            mSequenceMoved.at(mSendIndex) = false;
+        }
+        // Don't flood the Shruthi
+        mSendTimeout = 125;
+        mSendRedrawIndex = mSendIndex;
+        mSendRedrawFlags = Flag::SEQUENCE;
+    }
+
+    if (!ret) {
+        return false;
+    }
+
+    // No timeout if nothing was sent
+    if (!sendPatch && !sendSequence) {
+        emit displayStatusbar(progress_str); // Would be prettier without the colon
+        mSendTimeout = 0;
+    }
+
+
+    if (mSendPatchMode != mSendSequenceMode || mSendAlternate) {
+        mSendIndex++;
+
+        if (mSendIndex > mSendEnd) {
+            // Finished sending. Display statistics:
+            std::cout << "Finished sending ";
+
+            if (mSendPatchMode) {
+                std::cout << "patches";
+                if (mSendSequenceMode) {
+                    std::cout << " and ";
+                }
+            }
+            if (mSendSequenceMode) {
+                std::cout << "sequences";
+            }
+            std::cout << ". It took " << time->elapsed() << " ms to send " << mSendEnd - mSendStart + 1 << " program(s)." << std::endl;
+
+            abortSending();
+            return true;
         }
     }
 
-    std::cout << "Sending finished. Time elapsed: " << t.elapsed() << " ms." << std::endl;
-    return ret;
+    if (mSendPatchMode && mSendSequenceMode) {
+        mSendAlternate = !mSendAlternate;
+    }
+
+    return true;
+}
+
+
+bool Library::isSending() {
+    return (mSendPatchMode || mSendSequenceMode) && mSendIndex <= mSendEnd;
+}
+
+
+const int &Library::sendTimeout() {
+    return mSendTimeout;
+}
+
+
+const int &Library::sendRedrawIndex() {
+    return mSendRedrawIndex;
+}
+
+
+const int &Library::sendRedrawFlags() {
+    return mSendRedrawFlags;
 }
 
 
@@ -306,6 +409,9 @@ void Library::abortFetching() {
 QString Library::fetchProgress() const {
     // calculate progress:
     const int &num = (fetchEnd - fetchStart);
+    if (num == 0) {
+        return QString("");
+    }
     const double &done = (fetchNextRequest - fetchStart);
     const int &progress = 100 * done / num;
     const QString &str = QString("%1%: ").arg(progress);

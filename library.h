@@ -60,8 +60,6 @@ class Library : public QObject {
         bool sequenceIsInit(const int &id) const;
         QString getSequenceIdentifier(const int &id) const;
 
-        bool send(const int &what, const int &from, const int &to);
-
         bool startFetching(const int &flags, const int &from, const int &to);
         void abortFetching();
         QString fetchProgress() const;
@@ -71,6 +69,15 @@ class Library : public QObject {
 
         bool receivedSequence(const unsigned char *seq);
         bool isFetchingSequences() const;
+
+        bool startSending(const int &flags, const int &from, const int &to);
+        void abortSending();
+        QString sendProgress() const;
+        bool keepSending();
+        bool isSending();
+        const int &sendTimeout();
+        const int &sendRedrawIndex();
+        const int &sendRedrawFlags();
 
         void remove(const int &from, const int &to);
         void insert(const int &id);
@@ -120,6 +127,17 @@ class Library : public QObject {
         unsigned int fetchNextRequest;
         unsigned int fetchNextIncomingPatch;
         unsigned int fetchNextIncomingSequence;
+
+        bool mSendPatchMode;
+        bool mSendSequenceMode;
+        unsigned int mSendStart;
+        unsigned int mSendEnd;
+        unsigned int mSendIndex;
+        bool mForceSending;
+        int mSendTimeout;
+        bool mSendAlternate;
+        int mSendRedrawIndex;
+        int mSendRedrawFlags;
 
         QTime *time;
 

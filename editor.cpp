@@ -22,6 +22,7 @@
 #include "fileio.h"
 #include "midi.h"
 #include "flag.h"
+#include <QTimer>
 
 #ifdef DEBUGMSGS
 #include <QDebug>
@@ -662,15 +663,48 @@ void Editor::actionLibrarySend(const unsigned int &what, const int &start, const
 #ifdef DEBUGMSGS
     qDebug() << "Editor::actionLibrarySend()" << what << start << end;
 #endif
+    if (library->isSending()) {
+        // It would be nice to enqueue several send commands, but it isn't that easy if you
+        // consider the way fetching works. Therefore we take the easy way out.
+        // If we get the command to start another send we either ignore it or abort sending.
+        if (end < 0) {
+            std::cout << "abort" << std::endl;
+            library->abortSending();
+            emit displayStatusbar("Aborted sending the library.");
+        }
+        return;
+    }
 
     emit displayStatusbar("Started sending the library.");
     const int &st = end >= 0 ? end : (library->getNumberOfHWPrograms() - 1);
-    if (library->send(what, start, st)) {
-        emit displayStatusbar("Finished sending the library.");
-    } else {
+    actionLibrarySendReturnHandler(library->startSending(what, start, st));
+}
+
+
+void Editor::actionLibrarySendReturnHandler(const bool &ret) {
+    if (ret && library->isSending()) {
+        QTimer::singleShot(library->sendTimeout(), this, SLOT(librarySendNext()));
+    }
+
+    if (!ret) {
         emit displayStatusbar("An error occured during sending of the library.");
     }
-    emit redrawLibraryItems(what, start, end); // always do this; there could be a partial success
+
+    if (!library->isSending() && ret) {
+        emit displayStatusbar("Finished sending the library.");
+    }
+
+    // Redraw UI (always do this; there could be a partial success):
+    const int &index = library->sendRedrawIndex();
+    if (index >= 0) {
+        const int &flags = library->sendRedrawFlags();
+        emit redrawLibraryItems(flags, index, index);
+    }
+}
+
+
+void Editor::librarySendNext() {
+    actionLibrarySendReturnHandler(library->keepSending());
 }
 
 
