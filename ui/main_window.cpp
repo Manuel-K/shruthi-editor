@@ -16,7 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <QtWidgets>
+#include <QDebug>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "flag.h"
 #include "ui/main_window.h"
 #include "ui_main_window.h"
