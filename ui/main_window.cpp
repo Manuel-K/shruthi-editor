@@ -28,7 +28,7 @@
 #include <iostream>
 
 
-#define VERSION "0.23"
+#define VERSION "0.24"
 
 
 ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
