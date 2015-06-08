@@ -23,7 +23,7 @@ first valid patch/sequence from the beginning of the file.
 After loading a patch you have to send the patch manually by using the
 "Shruthi">"Send Patch" menu option.
 
-# Notes on Patch versions:
+# Notes on patch versions:
 The version of the current patch is displayed at the right side of the status 
 bar. It shows "1.xx" for Shruthi firmware versions greater than 1.00 and "0.9x"
 for versions before 1.00. You can switch modes by using the two different reset
