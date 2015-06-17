@@ -61,6 +61,7 @@ class MidiIn : public QObject {
         RtMidiIn* midiin;
         bool opened;
         unsigned int input;
+        bool initialized;
 
 
         // The major part of the version number is multiplied by 1000 and the minor part is added,

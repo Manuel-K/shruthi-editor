@@ -61,6 +61,7 @@ class MidiOut {
         RtMidiOut* midiout;
         bool opened;
         unsigned int output;
+        bool initialized;
 };
 
 #endif

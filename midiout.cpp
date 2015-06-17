@@ -27,8 +27,10 @@ MidiOut::MidiOut() {
 #endif
     opened=false;
     output=-1;
+    initialized = false;
     try {
         midiout = new RtMidiOut(RtMidi::UNSPECIFIED, "shruthi-editor");
+        initialized = true;
     }
     catch (RtMidiError &error) {
         error.printMessage();
@@ -41,7 +43,10 @@ MidiOut::~MidiOut() {
 #ifdef DEBUGMSGS
     qDebug() << "MidiOut::~MidiOut()";
 #endif
-    delete midiout;
+    if (initialized) {
+        initialized = false;
+        delete midiout;
+    }
 }
 
 
@@ -49,6 +54,12 @@ bool MidiOut::open(const unsigned int &port) {
 #ifdef DEBUGMSGS
     qDebug() << "MidiOut::open(" << port << ")";
 #endif
+    if (!initialized) {
+        qDebug() << "MidiOut::open(): Can't open Midi port, RtMidi was not initialized.";
+        return false;
+    }
+
+
     if (output==port && opened) {
         return true;
     }

@@ -162,6 +162,7 @@ MidiIn::MidiIn() {
     opened = false;
     input = -1;
     firmwareVersion = 0;
+    initialized = false;
 
     warnedCC = false;
 
@@ -170,10 +171,11 @@ MidiIn::MidiIn() {
     try {
         midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor");
         midiin->setCallback(&mycallback,this);
+        initialized = true;
     }
     catch (RtMidiError &error) {
         error.printMessage();
-        qWarning() << "MidiOut::MidiIn(): could not initilize midi port for writing.";
+        qWarning() << "MidiIn::MidiIn(): could not initilize midi port for reading.";
     }
 }
 
@@ -182,7 +184,10 @@ MidiIn::~MidiIn() {
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::~MidiIn()";
 #endif
-    delete midiin;
+    if (initialized) {
+        initialized = false;
+        delete midiin;
+    }
 }
 
 
@@ -207,6 +212,11 @@ bool MidiIn::open(const unsigned int &port) {
 #ifdef DEBUGMSGS
     qDebug() << "MidiIn::open(" << port << ")";
 #endif
+    if (!initialized) {
+        qDebug() << "MidiIn::open(): Can't open Midi port, RtMidi was not initialized.";
+        return false;
+    }
+
     if (input == port && opened) {
         return true;
     }
