@@ -44,14 +44,13 @@ Using "File"->"Randomize Patch" will not change the patch version.
 
 
 ## What it can do:
- * Editing patches.
- * Remotely changing patch options on the Shruthi.
- * Loading/saving patches/sequences from/to disk as SysEx.
- * Fetching/sending patches/sequences from/to the Shruthi.
+ * Edit patches/sequences up to (and including) firmware version 1.02.
+ * Remotely change patch/sequence options on the Shruthi.
+ * Load/save patches/sequences from/to disk as SysEx.
+ * Fetch/send patches/sequences from/to the Shruthi.
  * Changes made to patch options on the Shruthi change the settings of the
    editor.
  * Generate random patches.
- * Editing patches/sequences up to (and including) firmware version 1.02.
 
 ## Known issues:
  * Receiving LFO 1/2 rates per CC (used by firmware version 1.01 and 1.02) is
