@@ -58,7 +58,7 @@ Using "File"->"Randomize Patch" will not change the patch version.
    not optimal, but it should map to the Shruthi's values.
  * Filseclab (at least versions from Jun 2015) flags the Windows binary compiled 
    by gcc as Packed.NSAnti.b.fomm.mg; the 43 other scan engines used by Metascan
-   don't detect anything. The windows binaries provided on github (starting with 
+   don't detect anything. The Windows binaries provided on github (starting with 
    v0.23) are compiled on Linux using MXE and are uploaded on Linux.
 
 ## Compiling the source code:
