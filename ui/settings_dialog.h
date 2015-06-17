@@ -47,6 +47,11 @@ class SettingsDialog : public QDialog {
 
         void getPortInfo();
 
+        int input_port;
+        int output_port;
+        bool input_port_error;
+        bool output_port_error;
+
         Ui::SettingsDialog *ui;
 };
 

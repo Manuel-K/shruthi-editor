@@ -27,6 +27,12 @@ SettingsDialog::SettingsDialog(QWidget *parent):
     QDialog(parent),
     ui(new Ui::SettingsDialog) {
     ui->setupUi(this);
+
+    input_port = 0;
+    output_port = 0;
+    input_port_error = false;
+    output_port_error = false;
+
     getPortInfo();
 
     ui->midiChannel->setMinimum(1);
@@ -45,6 +51,7 @@ void SettingsDialog::getPortInfo() {
     RtMidiIn  *midiin = 0;
     RtMidiOut *midiout = 0;
     QString name;
+    unsigned int numdev = 0;
 
     // Input ports:
     try {
@@ -52,22 +59,30 @@ void SettingsDialog::getPortInfo() {
     }
     catch (RtMidiError &error) {
         error.printMessage();
-        exit(EXIT_FAILURE);
+        ui->midiInputPort->addItem("Error: Could not initialize RtMidi!");
+        ui->midiInputPort->setCurrentIndex(0);
+        input_port_error = true;
     }
-    unsigned int numdev = midiin->getPortCount();
 
-    std::cout << numdev << " midi input ports found." << std::endl;
+    if (!input_port_error) {
+        numdev = midiin->getPortCount();
 
-    for (unsigned int i=0; i < numdev; i++) {
-        try {
-            name = QString::fromStdString(midiin->getPortName(i));
+        std::cout << numdev << " midi input ports found." << std::endl;
+
+        for (unsigned int i=0; i < numdev; i++) {
+            try {
+                name = QString::fromStdString(midiin->getPortName(i));
+            }
+            catch (RtMidiError &error) {
+                name = "Unknown Port";
+                error.printMessage();
+            }
+            ui->midiInputPort->addItem(name);
         }
-        catch (RtMidiError &error) {
-            error.printMessage();
-            goto cleanup;
-        }
-        ui->midiInputPort->addItem(name);
+        delete midiin;
+        midiin = NULL;
     }
+
 
     // Output ports:
     try {
@@ -75,43 +90,57 @@ void SettingsDialog::getPortInfo() {
     }
     catch (RtMidiError &error) {
         error.printMessage();
-        exit(EXIT_FAILURE);
-    }
-    numdev = midiout->getPortCount();
-
-    std::cout << numdev << " midi output ports found." << std::endl;
-
-    for (unsigned int i=0; i < numdev; i++) {
-        try {
-            name = QString::fromStdString(midiout->getPortName(i));
-        }
-        catch (RtMidiError &error) {
-            error.printMessage();
-            goto cleanup;
-        }
-        ui->midiOutputPort->addItem(name);
+        ui->midiOutputPort->addItem("Error: Could not initialize RtMidi!");
+        ui->midiOutputPort->setCurrentIndex(0);
+        output_port_error = true;
     }
 
-cleanup:
-    delete midiin;
-    midiin = NULL;
-    delete midiout;
-    midiout = NULL;
+    if (!output_port_error) {
+        numdev = midiout->getPortCount();
+
+        std::cout << numdev << " midi output ports found." << std::endl;
+
+        for (unsigned int i=0; i < numdev; i++) {
+            try {
+                name = QString::fromStdString(midiout->getPortName(i));
+            }
+            catch (RtMidiError &error) {
+                name = "Unknown Port";
+                error.printMessage();
+            }
+            ui->midiOutputPort->addItem(name);
+        }
+        delete midiout;
+        midiout = NULL;
+    }
 }
 
 
 void SettingsDialog::setMidiPorts(const int &in, const int &out) {
-    ui->midiInputPort->setCurrentIndex(in);
-    ui->midiOutputPort->setCurrentIndex(out);
+    input_port = in;
+    output_port = out;
+
+    if (!input_port_error) {
+        ui->midiInputPort->setCurrentIndex(in);
+    }
+    if (!output_port_error) {
+        ui->midiOutputPort->setCurrentIndex(out);
+    }
 }
 
 
 int SettingsDialog::getMidiInputPort() {
+    if (input_port_error) {
+        return input_port;
+    }
     return ui->midiInputPort->currentIndex();
 }
 
 
 int SettingsDialog::getMidiOutputPort() {
+    if (output_port_error) {
+        return output_port;
+    }
     return ui->midiOutputPort->currentIndex();
 }
 
