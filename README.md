@@ -143,4 +143,5 @@ to
   * non-blocking library send function
   * re-added ability to compile with qt 4
   * fixed crash due to RtMidi not initializing
-
+  * warn about RtMidi not initilizing in settings dialog
+  * hide editor instances during port selection
