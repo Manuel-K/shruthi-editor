@@ -112,6 +112,7 @@ void SettingsDialog::getPortInfo() {
                 name = "Unknown Port";
                 error.printMessage();
             }
+
             // don't add editor instances:
             if (!name.startsWith("shruthi-editor")) {
                 ui->midiOutputPort->addItem(name, i);
