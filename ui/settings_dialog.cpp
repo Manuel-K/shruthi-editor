@@ -55,7 +55,7 @@ void SettingsDialog::getPortInfo() {
 
     // Input ports:
     try {
-        midiin = new RtMidiIn();
+        midiin = new RtMidiIn(RtMidi::UNSPECIFIED, "shruthi-editor port probe");
     }
     catch (RtMidiError &error) {
         error.printMessage();
@@ -77,7 +77,11 @@ void SettingsDialog::getPortInfo() {
                 name = "Unknown Port";
                 error.printMessage();
             }
-            ui->midiInputPort->addItem(name);
+
+            // don't add editor instances:
+            if (!name.startsWith("shruthi-editor")) {
+                ui->midiInputPort->addItem(name, i);
+            }
         }
         delete midiin;
         midiin = NULL;
@@ -86,7 +90,7 @@ void SettingsDialog::getPortInfo() {
 
     // Output ports:
     try {
-        midiout = new RtMidiOut();
+        midiout = new RtMidiOut(RtMidi::UNSPECIFIED, "shruthi-editor port probe");
     }
     catch (RtMidiError &error) {
         error.printMessage();
@@ -108,7 +112,10 @@ void SettingsDialog::getPortInfo() {
                 name = "Unknown Port";
                 error.printMessage();
             }
-            ui->midiOutputPort->addItem(name);
+            // don't add editor instances:
+            if (!name.startsWith("shruthi-editor")) {
+                ui->midiOutputPort->addItem(name, i);
+            }
         }
         delete midiout;
         midiout = NULL;
@@ -133,7 +140,7 @@ int SettingsDialog::getMidiInputPort() {
     if (input_port_error) {
         return input_port;
     }
-    return ui->midiInputPort->currentIndex();
+    return ui->midiInputPort->currentData().toInt();
 }
 
 
@@ -141,7 +148,7 @@ int SettingsDialog::getMidiOutputPort() {
     if (output_port_error) {
         return output_port;
     }
-    return ui->midiOutputPort->currentIndex();
+    return ui->midiOutputPort->currentData().toInt();
 }
 
 
