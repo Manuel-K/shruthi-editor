@@ -56,7 +56,10 @@ Using "File"->"Randomize Patch" will not change the patch version.
 ## Known issues:
  * Receiving LFO 1/2 rates per CC (used by firmware version 1.01 and 1.02) is
    not optimal, but it should map to the Shruthi's values.
-
+ * Filseclab (at least versions from Jun 2015) flags the Windows binary compiled 
+   by gcc as Packed.NSAnti.b.fomm.mg; the 43 other scan engines used by Metascan
+   don't detect anything. The windows binaries provided on github (starting with 
+   v0.23) are compiled on Linux using MXE and are uploaded on Linux.
 
 ## Compiling the source code:
 
@@ -139,4 +142,5 @@ to
   * disallowed selection of multiple ranges
   * non-blocking library send function
   * re-added ability to compile with qt 4
+  * fixed crash due to RtMidi not initializing
 
