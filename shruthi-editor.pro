@@ -108,7 +108,7 @@ greaterThan(QT_MAJOR_VERSION, 4): DEFINES += FUSION
 equals(QT_MAJOR_VERSION, 4): DEFINES += CLEANLOOKS
 
 
-unix {
+unix:!macx {
     message(RtMidi will use linux alsaseq.)
     # alsa:
     DEFINES += __LINUX_ALSA__
