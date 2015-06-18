@@ -145,3 +145,5 @@ to
   * fixed crash due to RtMidi not initializing
   * warn about RtMidi not initilizing in settings dialog
   * hide editor instances during port selection
+* v0.25
+  * fix building on OS X
