@@ -26,9 +26,7 @@
 #include "labels.h"
 #include "patch.h"
 #include <iostream>
-
-
-#define VERSION "0.25"
+#include "version.h"
 
 
 ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
