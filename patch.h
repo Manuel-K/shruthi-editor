@@ -16,11 +16,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_PATCH_H
 #define SHRUTHI_PATCH_H
-#include "labels.h"
-#include "message.h"
 
+
+#include <QString>
+#include <stddef.h> // for NULL
+#include "message.h"
+class QStringList;
 
 
 struct PatchParameter {
@@ -90,4 +94,6 @@ class Patch {
         static const unsigned char INIT_PATCH[];
         static const unsigned char INIT_PATCH_PRE100[];
 };
-#endif
+
+
+#endif // SHRUTHI_PATCH_H

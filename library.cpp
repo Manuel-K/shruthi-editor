@@ -18,14 +18,17 @@
 
 
 #include "library.h"
+#include <QTime>
+#include <algorithm> // for max
+#include <iostream>
+#include <stddef.h> // for NULL
+#include <stdint.h> // for uint32_t (needed for hash calculation)
 #include "fileio.h"
+#include "flag.h"
+#include "message.h"
 #include "midi.h"
 #include "midiout.h"
-#include "flag.h"
 
-#include <iostream>
-#include <QTime>
-#include <stdint.h> // needed for hash calculation
 
 Library::Library(MidiOut *out):
     midiout(out),

@@ -16,10 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef QUEUEITEM_H
 #define QUEUEITEM_H
 
+
 #include <QString>
+
 
 namespace QueueAction {
 enum QueueAction {
@@ -118,4 +121,5 @@ struct QueueItem {
         }
 };
 
-#endif
+
+#endif // QUEUEITEM_H

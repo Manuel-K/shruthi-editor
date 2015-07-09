@@ -16,10 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_MESSAGE_H
 #define SHRUTHI_MESSAGE_H
+
 
 #include <vector>
 typedef std::vector<unsigned char> Message;
 
-#endif
+
+#endif // SHRUTHI_MESSAGE_H

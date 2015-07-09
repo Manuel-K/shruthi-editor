@@ -18,6 +18,7 @@
 
 
 #include "ui/keyboard_widget.h"
+#include <QPushButton>
 
 
 KeyboardWidget::KeyboardWidget(QWidget *parent, unsigned int numberOfKeys_):

@@ -17,15 +17,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "editor.h"
 #include "ui/sequence_editor.h"
 #include "ui_sequence_editor.h"
 #include <QDebug>
-#include <iostream>
-
-#include "sequence.h"
-#include "patch.h"
 #include "flag.h"
+#include "patch.h"
+#include "queueitem.h"
+#include "sequence.h"
+#include "sequence_parameter.h"
 
 
 SequenceEditor::SequenceEditor(QWidget *parent) :

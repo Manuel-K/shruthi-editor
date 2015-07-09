@@ -16,28 +16,29 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include <QApplication>
+#ifdef CLEANLOOKS
+#include <QCleanlooksStyle>
+#endif
 #ifdef DEBUGMSGS
 #include <QDebug>
 #endif
 #include <QStatusBar>
-#include <QThread>
-
-#include "ui/main_window.h"
-#include "ui/keyboard_dialog.h"
-#include "ui/sequence_editor.h"
-#include "ui/library_dialog.h"
-
-#include "editor.h"
-#include "midiin.h"
-#include "signalrouter.h"
-
 #ifdef FUSION
 #include <QStyleFactory>
 #endif
-#ifdef CLEANLOOKS
-#include <QCleanlooksStyle>
-#endif
+#include <QThread>
+#include "config.h"
+#include "editor.h"
+#include "midiin.h"
+#include "queueitem.h"
+#include "signalrouter.h"
+#include "ui/keyboard_dialog.h"
+#include "ui/library_dialog.h"
+#include "ui/main_window.h"
+#include "ui/sequence_editor.h"
+
 
 int main(int argc, char *argv[]) {
     qRegisterMetaType<QueueItem>("QueueItem");

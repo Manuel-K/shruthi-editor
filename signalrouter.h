@@ -16,13 +16,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_SIGNALROUTER_H
 #define SHRUTHI_SIGNALROUTER_H
 
-#include "config.h"
-#include "queueitem.h"
+
 #include <QObject>
 #include <QQueue>
+#include "config.h"
+#include "queueitem.h"
 
 
 class SignalRouter : public QObject {
@@ -56,4 +58,5 @@ class SignalRouter : public QObject {
         void setShruthiFilterBoard(int);
 };
 
-#endif
+
+#endif // SHRUTHI_SIGNALROUTER_H

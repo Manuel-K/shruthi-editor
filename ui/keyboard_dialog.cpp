@@ -16,9 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "ui/keyboard_dialog.h"
 #include "ui_keyboard_dialog.h"
-
 #ifdef DEBUGMSGS
 #include <QDebug>
 #endif

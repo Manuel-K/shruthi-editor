@@ -17,19 +17,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 #ifndef LIBRARY_DIALOG_H
 #define LIBRARY_DIALOG_H
 
-#include "queueitem.h"
+
 #include <QDialog>
-#include <QListWidgetItem>
-
-namespace Ui {
-class LibraryDialog;
-}
-
-class QFont;
+#include "queueitem.h"
+class QListWidget;
+class QListWidgetItem;
+class QMenu;
+class QModelIndex;
+class QPoint;
+class QWidget;
+namespace Ui { class LibraryDialog; }
 
 
 class LibraryDialog : public QDialog {
@@ -115,5 +115,6 @@ class LibraryDialog : public QDialog {
         void enqueue(QueueItem);
 
 };
+
 
 #endif // LIBRARY_DIALOG_H

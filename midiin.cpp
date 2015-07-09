@@ -16,11 +16,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "midiin.h"
+#include <QDebug>
+#include <stddef.h> // for NULL
+#include <iostream>
+#include <string>
+#include "RtMidi.h"
 #include "midi.h"
 #include "patch.h"
-
-#include <QDebug>
 
 
 //

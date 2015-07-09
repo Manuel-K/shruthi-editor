@@ -20,9 +20,10 @@
 #ifndef SHRUTHI_FILEIO_H
 #define SHRUTHI_FILEIO_H
 
-#include <QString>
-#include "message.h"
 
+#include "message.h"
+class QByteArray;
+class QString;
 
 
 class FileIO {
@@ -34,5 +35,6 @@ class FileIO {
         static void appendToByteArray(const unsigned char *data, const unsigned int &amount, QByteArray &byteArray);
         static bool saveToDisk(const QString &location, const QByteArray &data);
 };
+
 
 #endif // SHRUTHI_FILEIO_H

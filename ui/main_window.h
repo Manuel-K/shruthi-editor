@@ -16,21 +16,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_EDITOR_MAIN_WINDOW_H
 #define SHRUTHI_EDITOR_MAIN_WINDOW_H
 
+
 #include "config.h"
 #include "queueitem.h"
-
 #include <QMainWindow>
-
-namespace Ui {
-class MainWindow;
-}
-
 class QFileDialog;
 class QLabel;
 class QComboBox;
+namespace Ui { class MainWindow; }
 
 
 class ShruthiEditorMainWindow : public QMainWindow {
@@ -104,4 +101,4 @@ class ShruthiEditorMainWindow : public QMainWindow {
 };
 
 
-#endif
+#endif // SHRUTHI_EDITOR_MAIN_WINDOW_H

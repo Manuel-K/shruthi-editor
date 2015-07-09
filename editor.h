@@ -16,19 +16,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_EDITOR_H
 #define SHRUTHI_EDITOR_H
 
-#include "queueitem.h"
-#include "message.h"
-#include "sequence_parameter.h"
+
 #include <QObject>
-
-class Patch;
-class MidiOut;
-class Sequence;
+#include "queueitem.h"
 class Library;
-
+class MidiOut;
+class Patch;
+class Sequence;
 
 
 class Editor : public QObject {
@@ -104,4 +102,6 @@ class Editor : public QObject {
         void redrawLibrarySequenceItem(int,QString,bool,bool,bool);
         void setNumberOfLibraryPrograms(int);
 };
-#endif
+
+
+#endif // SHRUTHI_EDITOR_H

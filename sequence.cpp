@@ -16,11 +16,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "sequence.h"
-#include "midi.h"
-#include "labels.h"
-#include <iostream>
 #include <QDebug>
+#include <iostream>
+#include "labels.h"
+#include "midi.h"
 
 
 Sequence::Sequence() {

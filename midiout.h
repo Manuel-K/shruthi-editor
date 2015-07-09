@@ -16,11 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_MIDIOUT_H
 #define SHRUTHI_MIDIOUT_H
-#include "RtMidi.h"
-#include "message.h"
 
+
+#include "message.h"
+class RtMidiOut;
 
 
 class MidiOut {
@@ -64,4 +66,5 @@ class MidiOut {
         bool initialized;
 };
 
-#endif
+
+#endif // SHRUTHI_MIDIOUT_H

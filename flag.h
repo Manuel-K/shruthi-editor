@@ -20,6 +20,7 @@
 #ifndef SHRUTHI_FLAG_H
 #define SHRUTHI_FLAG_H
 
+
 class Flag {
     public:
         static const int PATCH = 1;
@@ -29,6 +30,4 @@ class Flag {
 };
 
 
-
 #endif // SHRUTHI_FLAG_H
-

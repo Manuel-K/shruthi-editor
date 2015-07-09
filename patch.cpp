@@ -16,14 +16,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "patch.h"
-#include "midi.h"
 
-#include <QDebug>
+#include "patch.h"
+#include <math.h> // for ceil, floor
+#include <stdlib.h> // for srand, rand
+#include <time.h>
+#include <QStringList>
 #include <iostream>
-#include "stdlib.h"
-#include "time.h"
-#include <math.h>
+#include "labels.h"
+#include "midi.h"
 
 
 const unsigned char Patch::parameterCount = 110;

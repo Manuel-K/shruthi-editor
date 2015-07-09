@@ -20,9 +20,11 @@
 #ifndef KEYBOARD_WIDGET_H
 #define KEYBOARD_WIDGET_H
 
+
 #include <QWidget>
-#include <QPushButton>
 #include <vector>
+class QPushButton;
+class QResizeEvent;
 
 
 class KeyboardWidget : public QWidget {
@@ -86,5 +88,6 @@ class KeyboardWidget : public QWidget {
         void keyPressed(int);
         void keyReleased(int);
 };
+
 
 #endif // KEYBOARD_WIDGET_H

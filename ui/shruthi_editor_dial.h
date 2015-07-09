@@ -20,11 +20,9 @@
 #ifndef SHRUTHI_EDITOR_DIAL_H
 #define SHRUTHI_EDITOR_DIAL_H
 
-#include <QWidget>
 
-namespace Ui {
-class ShruthiEditorDial;
-}
+#include <QWidget>
+namespace Ui { class ShruthiEditorDial; }
 
 
 class ShruthiEditorDial : public QWidget {
@@ -59,5 +57,6 @@ class ShruthiEditorDial : public QWidget {
     signals:
         void valueChanged(int, int);
 };
+
 
 #endif // SHRUTHI_EDITOR_DIAL_H

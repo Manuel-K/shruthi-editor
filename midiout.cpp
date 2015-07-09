@@ -16,9 +16,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "midiout.h"
-#include "midi.h"
 #include <QDebug>
+#include <string>
+#include "RtMidi.h"
+#include "midi.h"
 
 
 MidiOut::MidiOut() {

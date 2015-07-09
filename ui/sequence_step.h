@@ -20,11 +20,9 @@
 #ifndef SEQUENCESTEP_H
 #define SEQUENCESTEP_H
 
-#include <QWidget>
 
-namespace Ui {
-class SequenceStep;
-}
+#include <QWidget>
+namespace Ui { class SequenceStep; }
 
 
 class SequenceStep : public QWidget {

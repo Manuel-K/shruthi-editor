@@ -16,14 +16,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_MIDIIN_H
 #define SHRUTHI_MIDIIN_H
 
-#include <QObject>
-#include "queueitem.h"
-#include "message.h"
-#include "RtMidi.h"
 
+#include <QObject>
+#include "message.h"
+#include "queueitem.h"
+class RtMidiIn;
 
 
 class NRPN {
@@ -86,4 +87,4 @@ class MidiIn : public QObject {
 };
 
 
-#endif
+#endif // SHRUTHI_MIDIIN_H

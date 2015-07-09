@@ -16,17 +16,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "editor.h"
-#include "library.h"
-#include "midiout.h"
-#include "fileio.h"
-#include "midi.h"
-#include "flag.h"
-#include <QTimer>
 
+#include "editor.h"
 #ifdef DEBUGMSGS
 #include <QDebug>
 #endif
+#include <QTimer>
+#include <algorithm> // for max, min
+#include <iostream>
+#include <stddef.h> // for NULL
+#include "fileio.h"
+#include "flag.h"
+#include "library.h"
+#include "message.h"
+#include "midi.h"
+#include "midiout.h"
+#include "patch.h"
+#include "sequence.h"
+#include "sequence_parameter.h"
 
 
 Editor::Editor():

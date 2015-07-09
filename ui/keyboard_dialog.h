@@ -16,16 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef KEYBOARD_DIALOG_H
 #define KEYBOARD_DIALOG_H
 
-#include "queueitem.h"
 
 #include <QDialog>
-
-namespace Ui {
-class KeyboardDialog;
-}
+#include "queueitem.h"
+namespace Ui { class KeyboardDialog; }
 
 
 class KeyboardDialog : public QDialog {
@@ -53,4 +51,6 @@ class KeyboardDialog : public QDialog {
     signals:
         void enqueue(QueueItem);
 };
-#endif
+
+
+#endif // KEYBOARD_DIALOG_H

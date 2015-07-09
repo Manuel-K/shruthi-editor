@@ -19,7 +19,6 @@
 
 #include "ui/sequence_step.h"
 #include "ui_sequence_step.h"
-#include <iostream>
 
 
 SequenceStep::SequenceStep(QWidget *parent) :

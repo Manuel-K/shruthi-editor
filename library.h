@@ -20,14 +20,13 @@
 #ifndef SHRUTHI_LIBRARY_H
 #define SHRUTHI_LIBRARY_H
 
-#include <vector>
+
+#include <QObject>
 #include "patch.h"
 #include "sequence.h"
-#include <QObject>
-
+class MidiOut;
 class QString;
 class QTime;
-class MidiOut;
 
 
 class Library : public QObject {
@@ -156,5 +155,6 @@ class Library : public QObject {
     signals:
         void displayStatusbar(QString);
 };
+
 
 #endif // SHRUTHI_LIBRARY_H

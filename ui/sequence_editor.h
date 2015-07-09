@@ -20,12 +20,10 @@
 #ifndef SEQUENCEEDITOR_H
 #define SEQUENCEEDITOR_H
 
+
 #include <QDialog>
 #include "queueitem.h"
-
-namespace Ui {
-class SequenceEditor;
-}
+namespace Ui { class SequenceEditor; }
 
 
 class SequenceEditor : public QDialog {

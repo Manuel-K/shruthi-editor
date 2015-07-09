@@ -19,13 +19,12 @@
 
 #include "ui/library_dialog.h"
 #include "ui_library_dialog.h"
-#include "flag.h"
-
 #include <QDebug>
-#include <QScrollBar>
-#include <QMenu>
 #include <QFileDialog>
+#include <QMenu>
 #include <QMessageBox>
+#include <QScrollBar>
+#include "flag.h"
 
 
 LibraryDialog::LibraryDialog(QWidget *parent) :

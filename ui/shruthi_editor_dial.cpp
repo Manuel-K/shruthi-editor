@@ -19,6 +19,7 @@
 
 #include "ui/shruthi_editor_dial.h"
 #include "ui_shruthi_editor_dial.h"
+#include <stddef.h> // for NULL
 
 
 ShruthiEditorDial::ShruthiEditorDial(QWidget *parent) :

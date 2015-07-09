@@ -16,9 +16,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "ui/settings_dialog.h"
 #include "ui_settings_dialog.h"
 #include <iostream>
+#include <stddef.h> // for NULL
+#include <string>
 #include "RtMidi.h"
 #include "labels.h"
 

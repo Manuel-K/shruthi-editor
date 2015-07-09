@@ -20,9 +20,11 @@
 #ifndef SEQUENCE_PARAMETER_H
 #define SEQUENCE_PARAMETER_H
 
+
 namespace SequenceParameter {
 enum SequenceParameter {ACTIVE, NOTE, TIE, VELOCITY, VALUE};
 }
+
 
 #endif // SEQUENCE_PARAMETER_H
 

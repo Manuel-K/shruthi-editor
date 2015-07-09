@@ -18,9 +18,8 @@
 
 
 #include "fileio.h"
-#include <QFile>
-#include <QTextStream>
 #include <QDebug>
+#include <QFile>
 
 
 bool FileIO::loadFromDisk(const QString &location, Message &data) {

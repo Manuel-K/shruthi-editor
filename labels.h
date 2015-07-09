@@ -16,9 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_LABELS_H
 #define SHRUTHI_LABELS_H
-#include <QStringList>
+
+
+class QString;
+class QStringList;
+
 
 class Labels {
     public:
@@ -58,4 +63,6 @@ class Labels {
     private:
         static const QStringList LFORate; // used for LfoRateFormatter
 };
-#endif
+
+
+#endif // SHRUTHI_LABELS_H

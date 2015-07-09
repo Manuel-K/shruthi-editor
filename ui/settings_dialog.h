@@ -16,14 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SETTINGS_DIALOG_H
 #define SETTINGS_DIALOG_H
 
-#include <QDialog>
 
-namespace Ui {
-class SettingsDialog;
-}
+#include <QDialog>
+namespace Ui { class SettingsDialog; }
 
 
 class SettingsDialog : public QDialog {
@@ -56,4 +55,4 @@ class SettingsDialog : public QDialog {
 };
 
 
-#endif
+#endif // SETTINGS_DIALOG_H

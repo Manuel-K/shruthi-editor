@@ -16,8 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_MIDI_H
 #define SHRUTHI_MIDI_H
+
 
 #include "message.h"
 
@@ -43,4 +45,5 @@ class Midi {
         static unsigned char getArgument(const Message *message, const unsigned int start = 0);
 };
 
-#endif
+
+#endif // SHRUTHI_MIDI_H

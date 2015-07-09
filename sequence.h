@@ -16,12 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #ifndef SHRUTHI_SEQUENCE_H
 #define SHRUTHI_SEQUENCE_H
 
+
 #include "message.h"
 #include "sequence_parameter.h"
-
 
 
 class Sequence {
@@ -55,5 +56,6 @@ class Sequence {
         int mValue[16];
         static unsigned char INIT_SEQUENCE[];
 };
+
 
 #endif // SHRUTHI_SEQUENCE_H
