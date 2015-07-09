@@ -1755,11 +1755,17 @@
    <addaction name="menuAbout"/>
   </widget>
   <action name="actionLoadProgram">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
    <property name="text">
     <string>&amp;Load Program...</string>
    </property>
   </action>
   <action name="actionSaveProgram">
+   <property name="icon">
+    <iconset theme="document-save-as"/>
+   </property>
    <property name="text">
     <string>&amp;Save Program...</string>
    </property>
@@ -1775,16 +1781,25 @@
    </property>
   </action>
   <action name="actionOpenSettings">
+   <property name="icon">
+    <iconset theme="configure"/>
+   </property>
    <property name="text">
     <string>S&amp;ettings...</string>
    </property>
   </action>
   <action name="actionResetPatch">
+   <property name="icon">
+    <iconset theme="document-revert"/>
+   </property>
    <property name="text">
     <string>&amp;Reset Patch</string>
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -1800,6 +1815,9 @@
    </property>
   </action>
   <action name="actionRandomizePatch">
+   <property name="icon">
+    <iconset theme="roll"/>
+   </property>
    <property name="text">
     <string>Randomize &amp;Patch</string>
    </property>
@@ -1840,6 +1858,9 @@
    </property>
   </action>
   <action name="actionResetSequence">
+   <property name="icon">
+    <iconset theme="document-revert"/>
+   </property>
    <property name="text">
     <string>R&amp;eset Sequence</string>
    </property>
@@ -1850,11 +1871,17 @@
    </property>
   </action>
   <action name="actionFetchProgram">
+   <property name="icon">
+    <iconset theme="document-import"/>
+   </property>
    <property name="text">
     <string>&amp;Fetch Program</string>
    </property>
   </action>
   <action name="actionSendProgram">
+   <property name="icon">
+    <iconset theme="document-export"/>
+   </property>
    <property name="text">
     <string>&amp;Send Program</string>
    </property>
