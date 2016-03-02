@@ -46,7 +46,8 @@ HEADERS = \
     queueitem.h \
     sequence.h \
     sequence_parameter.h \
-    signalrouter.h
+    signalrouter.h \
+    version.h
 
 SOURCES = \
     ui/keyboard_dialog.cpp \
