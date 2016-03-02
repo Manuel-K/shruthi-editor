@@ -47,6 +47,7 @@ Library::Library(MidiOut *out):
     mSendRedrawIndex = -1;
 
     mRememberedCurrentShruthiProgram = false;
+    mMidiChannel = 0;
 
     growVectorsTo(16);
 }

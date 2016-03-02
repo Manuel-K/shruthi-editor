@@ -21,7 +21,7 @@
 #define SHRUTHI_VERSION_H
 
 
-#define VERSION "1.00"
+#define VERSION "1.01"
 
 
 #endif // SHRUTHI_VERSION_H

@@ -146,5 +146,8 @@ to
   * warn about RtMidi not initilizing in settings dialog
   * hide editor instances during port selection
 * v1.00
-  * fix building on OS X
+  * fixed building on OS X
   * minor internal cleanup
+  * added menu icons (will probably only work on Linux)
+* v1.01
+  * fixed midi channel handling of library

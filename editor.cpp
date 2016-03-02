@@ -78,6 +78,7 @@ void Editor::setMidiChannel(unsigned char channel) {
     qDebug() << "Editor::setMidiChannel:" << channel;
 #endif
     Editor::channel = channel;
+    library->setMidiChannel(channel);
 }
 
 
