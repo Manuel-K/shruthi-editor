@@ -151,3 +151,4 @@ to
   * added menu icons (will probably only work on Linux)
 * v1.01
   * fixed midi channel handling of library
+  * send editor changes on correct midi channel
