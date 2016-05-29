@@ -29,7 +29,7 @@ class MidiOut {
     public:
         MidiOut();
         ~MidiOut();
-        bool open(const unsigned int &channel);
+        bool open(const unsigned int &port);
         bool write(Message &sysex);
 
         // Wrappers:
