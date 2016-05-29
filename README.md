@@ -5,7 +5,7 @@ about the Shruthi, see <http://mutable-instruments.net/shruthi1>.
 
 Application icon: "saraswati" by Francois Barbut.
 
-Uses RtMidi 2.1.0 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
+Uses RtMidi 2.1.1 by Gary P. Scavone <http://music.mcgill.ca/~gary/rtmidi/>.
 
 The newest version can be found at <https://github.com/Manuel-K/shruthi-editor>.
 
@@ -152,3 +152,5 @@ to
 * v1.01
   * fixed midi channel handling of library
   * send editor changes on correct midi channel
+* v1.02
+  * updated RtMidi to version 2.1.1
