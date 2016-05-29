@@ -33,7 +33,7 @@ class MidiOut {
         bool write(Message &sysex);
 
         // Wrappers:
-        bool nrpn(const int &nrpn, const int &value);
+        bool nrpn(const unsigned char &channel, const int &nrpn, const int &value);
         bool noteOn(const unsigned char &channel, const unsigned char &note, const unsigned char &velocity);
         bool noteOff(const unsigned char &channel, const unsigned char &note);
         bool allNotesOff(const unsigned char &channel);

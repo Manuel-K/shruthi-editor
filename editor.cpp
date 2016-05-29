@@ -212,7 +212,7 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
         }
 
         if (Patch::sendAsNRPN(id)) {
-            if (!midiout->nrpn(id, value)) {
+            if (!midiout->nrpn(channel, id, value)) {
                 emit displayStatusbar("Could not send changes as NRPN.");
             }
         } else {
@@ -220,7 +220,7 @@ void Editor::actionPatchParameterChangeEditor(int id, int value) {
             const int &cc = param.cc;
             const int &val = 127.0 * (value - param.min) / param.max;
             if (cc >= 0) {
-                if (!midiout->controlChange(0, cc, val)) {
+                if (!midiout->controlChange(channel, cc, val)) {
                     emit displayStatusbar("Could not send changes as CC.");
                 }
             } else {

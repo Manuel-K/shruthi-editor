@@ -151,7 +151,7 @@ bool MidiOut::request(const unsigned char &which) {
 }
 
 
-bool MidiOut::nrpn(const int &nrpn, const int &value) {
+bool MidiOut::nrpn(const unsigned char &channel, const int &nrpn, const int &value) {
     if (!opened) {
         qDebug() << "MidiOut::nrpn(): could not send. Port not opened.";
         return false;
@@ -168,10 +168,10 @@ bool MidiOut::nrpn(const int &nrpn, const int &value) {
         value_msb = value >> 7;
         value_lsb = value % 128;
     }
-    return (write(176, 99, nrpn_msb) &&
-            write(176, 98, nrpn_lsb) &&
-            write(176, 6, value_msb) &&
-            write(176, 38, value_lsb));
+    return (write(176 | channel, 99, nrpn_msb) &&
+            write(176 | channel, 98, nrpn_lsb) &&
+            write(176 | channel, 6, value_msb) &&
+            write(176 | channel, 38, value_lsb));
 }
 
 
