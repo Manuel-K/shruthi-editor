@@ -157,3 +157,5 @@ to
 * v1.03
   * changed location of configuration file
     (renamed directory to shruthi-editor)
+* v1.04
+  * updated RtMidi to version 3.0.0
