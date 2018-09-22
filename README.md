@@ -161,3 +161,4 @@ to
   * updated RtMidi to version 3.0.0
   * fixed compilation with Qt 4
   * fixed hard to hit bug in midi port configuration code
+  * changed configuration type to ini on all platforms

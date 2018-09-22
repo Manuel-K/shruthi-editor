@@ -30,7 +30,7 @@ Config::Config() {
 
 
 void Config::save() {
-    QSettings settings("shruthi-editor", "Shruthi-Editor");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "shruthi-editor", "Shruthi-Editor");
     settings.setValue("midi/inputPort", mMidiInputPort);
     settings.setValue("midi/outputPort", mMidiOutputPort);
     settings.setValue("midi/channel", mMidiChannel);
@@ -39,7 +39,7 @@ void Config::save() {
 
 
 void Config::load() {
-    QSettings settings("shruthi-editor", "Shruthi-Editor");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "shruthi-editor", "Shruthi-Editor");
     mMidiInputPort = settings.value("midi/inputPort", 0).toInt();
     mMidiOutputPort = settings.value("midi/outputPort", 0).toInt();
     mMidiChannel = settings.value("midi/channel", 0).toInt();
