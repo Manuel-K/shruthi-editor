@@ -80,7 +80,7 @@ bool MidiOut::open(const unsigned int &port) {
         midiout->openPort(port, "Out");
         opened = true;
     }
-    catch (RtMidiError &error) {
+    catch (RtMidiError) {
 #ifdef DEBUGMSGS
         qDebug() << "MidiOut::open(" << port << "): RtMidiError on openPort().";
 #endif

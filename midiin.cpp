@@ -241,7 +241,7 @@ bool MidiIn::open(const unsigned int &port) {
         midiin->ignoreTypes(false, true, true);
         opened = true;
     }
-    catch (RtMidiError &error) {
+    catch (RtMidiError) {
 #ifdef DEBUGMSGS
         qDebug() << "MidiIn::open(" << port << "): RtMidiError on openPort().";
 #endif

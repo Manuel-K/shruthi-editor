@@ -44,7 +44,7 @@ bool Sequence::parseSysex(const Message *message) {
         return false;
     }
 
-    // copy to temporay array:
+    // copy to temporary array:
     unsigned char temp[payload.size()];
     for (unsigned int i = 0; i < payload.size(); i++) {
         temp[i] = payload.at(i);
@@ -84,9 +84,8 @@ const int &Sequence::getValue(const int &step, const SequenceParameter::Sequence
             return mValue[step];
         case SequenceParameter::VELOCITY:
             return mVelocity[step];
-        default:
-            return ERROR_RETURN;
     }
+    return ERROR_RETURN;
 }
 
 
@@ -110,8 +109,6 @@ void Sequence::setValue(const int &step, const SequenceParameter::SequenceParame
             break;
         case SequenceParameter::VELOCITY:
             mVelocity[step] = val;
-            break;
-        default:
             break;
     }
 }
@@ -203,8 +200,7 @@ void Sequence::print() const {
             typestr = " ";
         }
 
-        //std::cout << i << ": " << active[i] << " " << note[i] << " " << tie[i] << " " << velocity[i] << " " << value[i] << std::endl;
-        std::cout << (QString("%1").arg(i, 2)).toUtf8().constData() << ": " << Labels::NoteFormatter(mNote[i]).toUtf8().constData() << " " << typestr.toUtf8().constData()  << mVelocity[i]  << " " << Labels::HexValues.at(mValue[i]).toUtf8().constData() << std::endl;
+        std::cout << (QString("%1").arg(i, 2)).toUtf8().constData() << ": " << Labels::NoteFormatter(mNote[i]).toUtf8().constData() << " " << typestr.toUtf8().constData() << mVelocity[i] << " " << Labels::HexValues.at(mValue[i]).toUtf8().constData() << std::endl;
     }
 }
 
@@ -251,7 +247,6 @@ int Sequence::calculateParamId(const int &step, const SequenceParameter::Sequenc
             return 5 * step + 3;
         case SequenceParameter::VALUE:
             return 5 * step + 4;
-        default:
-            return ERROR_RETURN;
     }
+    return ERROR_RETURN;
 }
