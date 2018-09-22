@@ -132,10 +132,10 @@ void SettingsDialog::setMidiPorts(const int &in, const int &out) {
     output_port = out;
 
     if (!input_port_error) {
-        ui->midiInputPort->setCurrentIndex(in);
+        ui->midiInputPort->setCurrentIndex(ui->midiInputPort->findData(in));
     }
     if (!output_port_error) {
-        ui->midiOutputPort->setCurrentIndex(out);
+        ui->midiOutputPort->setCurrentIndex(ui->midiOutputPort->findData(out));
     }
 }
 

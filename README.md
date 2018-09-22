@@ -160,3 +160,4 @@ to
 * v1.04
   * updated RtMidi to version 3.0.0
   * fixed compilation with Qt 4
+  * fixed hard to hit bug in midi port configuration code
