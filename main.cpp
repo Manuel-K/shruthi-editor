@@ -29,6 +29,7 @@
 #include <QStyleFactory>
 #endif
 #include <QThread>
+#include <QMetaType>
 #include "config.h"
 #include "editor.h"
 #include "midiin.h"

@@ -19,6 +19,7 @@
 
 #include "sequence.h"
 #include <QDebug>
+#include <QStringList>
 #include <iostream>
 #include "labels.h"
 #include "midi.h"

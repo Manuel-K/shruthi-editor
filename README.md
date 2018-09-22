@@ -159,3 +159,4 @@ to
     (renamed directory to shruthi-editor)
 * v1.04
   * updated RtMidi to version 3.0.0
+  * fixed compilation with Qt 4

@@ -144,7 +144,8 @@ int SettingsDialog::getMidiInputPort() {
     if (input_port_error) {
         return input_port;
     }
-    return ui->midiInputPort->currentData().toInt();
+    // no currentData() in qt 4.8.7
+    return ui->midiInputPort->itemData(ui->midiInputPort->currentIndex()).toInt();;
 }
 
 
@@ -152,7 +153,8 @@ int SettingsDialog::getMidiOutputPort() {
     if (output_port_error) {
         return output_port;
     }
-    return ui->midiOutputPort->currentData().toInt();
+    // no currentData() in qt 4.8.7
+    return ui->midiOutputPort->itemData(ui->midiOutputPort->currentIndex()).toInt();;
 }
 
 
