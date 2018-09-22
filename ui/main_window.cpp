@@ -1,7 +1,7 @@
 // Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
 // informations about the Shruthi, see <http://www.mutable-instruments.net/shruthi1>.
 //
-// Copyright (C) 2011-2016 Manuel Krönig
+// Copyright (C) 2011-2018 Manuel Krönig
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -546,7 +546,7 @@ void ShruthiEditorMainWindow::quitShruthiEditor() {
 
 void ShruthiEditorMainWindow::aboutShruthiEditor() {
     QMessageBox::about(this,"About Shruthi-Editor",
-                       QString::fromUtf8("Shruti-Editor Version " VERSION ".\n\n Copyright (C) 2011-2016 Manuel Krönig."));
+                       QString::fromUtf8("Shruti-Editor Version " VERSION ".\n\n Copyright (C) 2011-2018 Manuel Krönig."));
 }
 
 
