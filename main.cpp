@@ -22,7 +22,6 @@
 #include <QLibraryInfo>
 #include <QStringList>
 #include <QLocale>
-
 #ifdef CLEANLOOKS
 #include <QCleanlooksStyle>
 #endif
