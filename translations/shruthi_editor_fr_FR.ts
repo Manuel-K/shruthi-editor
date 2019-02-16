@@ -162,7 +162,7 @@
     <message>
         <location filename="../ui/main_window.ui" line="704"/>
         <source>Operator 1/2:</source>
-        <translation>Opérateu 1/2 :</translation>
+        <translation>Opérateur 1/2 :</translation>
     </message>
     <message>
         <location filename="../ui/main_window.ui" line="792"/>
