@@ -28,12 +28,6 @@ SequenceStep::SequenceStep(QWidget *parent) :
 
     step = 0;
 
-    sendActive = true;
-    sendNote = true;
-    sendTie = true;
-    sendVelocity = true;
-    sendValue = true;
-
     QStringList Notes = QStringList() << "C" << "C#" << "D" << "D#" << "E" << "F" << "F#" << "G" << "G#" << "A" << "A#" << "B";
     //QStringList Notes = QStringList() << "C" << "C♯" << "D" << "D♯" << "E" << "F" << "F♯" << "G" << "G♯" << "A" << "A♯" << "B";
     QStringList HexValues = QStringList() << "0" << "1" << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "A" << "B" << "C" << "D" << "E" << "F";
@@ -98,54 +92,57 @@ void SequenceStep::setVelocityLimits(const int &min, const int &max) {
 
 
 void SequenceStep::setActive(const int &value) {
-    sendActive = false;
+    bool prev = ui->active->blockSignals(true);
     ui->active->setChecked(value ? true : false);
-    sendActive = true;
+    ui->active->blockSignals(prev);
 }
 
 
 void SequenceStep::setValue(const int &value) {
-    sendValue = false;
+    bool prev = ui->value->blockSignals(true);
     ui->value->setCurrentIndex(value);
-    sendValue = true;
+    ui->value->blockSignals(prev);
 }
 
 
 void SequenceStep::setNoteOctave(const int &value) {
     const int &note  = (value - noteBase) % 12;
     const int &octave = (value - noteBase) / 12;
-    sendNote = false;
+
+    bool prev = ui->note->blockSignals(true);
     ui->note->setCurrentIndex(note);
+    ui->note->blockSignals(prev);
+    prev = ui->octave->blockSignals(true);
     ui->octave->setValue(octave);
-    sendNote = true;
+    ui->octave->blockSignals(prev);
 }
 
 
 void SequenceStep::setNote(const int &value) {
-    sendNote = false;
+    bool prev = ui->note->blockSignals(true);
     ui->note->setCurrentIndex(value);
-    sendNote = true;
+    ui->note->blockSignals(prev);
 }
 
 
 void SequenceStep::setOctave(const int &value) {
-    sendNote = false;
+    bool prev = ui->octave->blockSignals(true);
     ui->octave->setValue(value);
-    sendNote = true;
+    ui->octave->blockSignals(prev);
 }
 
 
 void SequenceStep::setTie(const int &value) {
-    sendTie = false;
+    bool prev = ui->tie->blockSignals(true);
     ui->tie->setChecked(value ? true : false);
-    sendTie = true;
+    ui->tie->blockSignals(prev);
 }
 
 
 void SequenceStep::setVelocity(const int &value) {
-    sendVelocity = false;
+    bool prev = ui->velocity->blockSignals(true);
     ui->velocity->setValue(value);
-    sendVelocity = true;
+    ui->velocity->blockSignals(prev);
 }
 
 
@@ -155,27 +152,17 @@ void SequenceStep::setVelocity(const int &value) {
 
 
 void SequenceStep::activeChanged(int val) {
-    if (!sendActive) {
-        return;
-    }
-
     emit activeChanged(step, val ? 1 : 0);
 }
 
 
 void SequenceStep::noteChanged(int val) {
-    if (!sendNote) {
-        return;
-    }
     const int &note = noteBase + ui->octave->value() * 12 + val;
     emit noteChanged(step, note);
 }
 
 
 void SequenceStep::octaveChanged(int val) {
-    if (!sendNote) {
-        return;
-    }
     const int &note = noteBase + val * 12 + ui->note->currentIndex();
     emit noteChanged(step, note);
 }
@@ -183,25 +170,16 @@ void SequenceStep::octaveChanged(int val) {
 
 
 void SequenceStep::valueChanged(int val) {
-    if (!sendValue) {
-        return;
-    }
     emit valueChanged(step, val);
 }
 
 
 
 void SequenceStep::tieChanged(int val) {
-    if (!sendTie) {
-        return;
-    }
     emit tieChanged(step, val ? 1 : 0);
 }
 
 
 void SequenceStep::velocityChanged(int val) {
-    if (!sendVelocity) {
-        return;
-    }
     emit velocityChanged(step, val);
 }

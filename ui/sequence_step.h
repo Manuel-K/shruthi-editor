@@ -53,7 +53,6 @@ class SequenceStep : public QWidget {
 
         Ui::SequenceStep *ui;
         int step;
-        bool sendActive, sendNote, sendTie, sendVelocity, sendValue;
 
         static const int noteBase = 12;
 

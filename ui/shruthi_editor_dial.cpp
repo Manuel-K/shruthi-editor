@@ -27,7 +27,6 @@ ShruthiEditorDial::ShruthiEditorDial(QWidget *parent) :
     ui(new Ui::ShruthiEditorDial) {
     ui->setupUi(this);
 
-    sendValueChanges = true;
     parameter = 0;
     formatter = NULL;
     connect(ui->dial, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
@@ -65,9 +64,9 @@ void ShruthiEditorDial::setFormatter(QString (*formatter_)(int)) {
 
 
 void ShruthiEditorDial::setValue(const int &value) {
-    sendValueChanges = false;
+    bool prev = ui->dial->blockSignals(true);
     ui->dial->setValue(value);
-    sendValueChanges = true;
+    ui->dial->blockSignals(prev);
 }
 
 
@@ -87,7 +86,5 @@ void ShruthiEditorDial::setDisplay(const int &value) {
 
 void ShruthiEditorDial::valueChanged(int value) {
     setDisplay(value);
-    if (sendValueChanges) {
-        emit valueChanged(parameter, value);
-    }
+    valueChanged(parameter, value);
 }

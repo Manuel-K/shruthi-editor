@@ -48,7 +48,6 @@ class ShruthiEditorDial : public QWidget {
         void setDisplay(const int &value);
 
         int parameter;
-        bool sendValueChanges;
         QString (*formatter)(int);
 
     private slots:
