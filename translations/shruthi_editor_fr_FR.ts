@@ -29,7 +29,7 @@
     <message>
         <location filename="../ui/library_dialog.ui" line="35"/>
         <source>Fetch</source>
-        <translation>Attraper</translation>
+        <translation>Récupérer</translation>
     </message>
     <message>
         <location filename="../ui/library_dialog.ui" line="42"/>
@@ -152,7 +152,7 @@
         <location filename="../ui/main_window.ui" line="597"/>
         <location filename="../ui/main_window.ui" line="666"/>
         <source>Sync Mode:</source>
-        <translation>Mode de synchro</translation>
+        <translation>Mode de synchro :</translation>
     </message>
     <message>
         <location filename="../ui/main_window.ui" line="631"/>
@@ -259,7 +259,7 @@
     <message>
         <location filename="../ui/main_window.ui" line="1775"/>
         <source>Fetc&amp;h Patch</source>
-        <translation>Attraper un patc&amp;he</translation>
+        <translation>Récupérer un patc&amp;he</translation>
     </message>
     <message>
         <location filename="../ui/main_window.ui" line="1780"/>
@@ -314,7 +314,7 @@
     <message>
         <location filename="../ui/main_window.ui" line="1842"/>
         <source>Fet&amp;ch Sequence</source>
-        <translation>Attrapper une séquence</translation>
+        <translation>Récupérer une &amp;séquence</translation>
     </message>
     <message>
         <location filename="../ui/main_window.ui" line="1847"/>
@@ -344,7 +344,7 @@
     <message>
         <location filename="../ui/main_window.ui" line="1878"/>
         <source>&amp;Fetch Program</source>
-        <translation>A&amp;ttraper le programme</translation>
+        <translation>&amp;Récupérer le programme</translation>
     </message>
     <message>
         <location filename="../ui/main_window.ui" line="1886"/>
@@ -420,7 +420,7 @@
     <message>
         <location filename="../ui/sequence_step.ui" line="103"/>
         <source>Velocity:</source>
-        <translation>Vélocité : </translation>
+        <translation>Vélocité :</translation>
     </message>
     <message>
         <location filename="../ui/sequence_step.ui" line="110"/>
