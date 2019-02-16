@@ -22,6 +22,9 @@
     <height>152</height>
    </size>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -57,7 +60,7 @@
    <item row="7" column="0">
     <widget class="QLabel" name="valuelabel">
      <property name="text">
-      <string>Value: </string>
+      <string>Value:</string>
      </property>
     </widget>
    </item>
@@ -83,7 +86,7 @@
    <item row="2" column="0" colspan="3">
     <widget class="QLabel" name="name">
      <property name="text">
-      <string>Step</string>
+      <string notr="true">Step</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

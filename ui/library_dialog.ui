@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Library</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>4</number>

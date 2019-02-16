@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Sequence Editor</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>4</number>
@@ -111,7 +114,7 @@
             </size>
            </property>
            <property name="text">
-            <string>l100</string>
+            <string notr="true">l100</string>
            </property>
           </widget>
          </item>
@@ -241,7 +244,7 @@
             </size>
            </property>
            <property name="text">
-            <string>l107</string>
+            <string notr="true">l107</string>
            </property>
           </widget>
          </item>
@@ -326,7 +329,7 @@
             </size>
            </property>
            <property name="text">
-            <string>l102</string>
+            <string notr="true">l102</string>
            </property>
           </widget>
          </item>
@@ -463,7 +466,7 @@
             </size>
            </property>
            <property name="text">
-            <string>l104</string>
+            <string notr="true">l104</string>
            </property>
           </widget>
          </item>
@@ -658,7 +661,7 @@
             </size>
            </property>
            <property name="text">
-            <string>l109</string>
+            <string notr="true">l109</string>
            </property>
           </widget>
          </item>
