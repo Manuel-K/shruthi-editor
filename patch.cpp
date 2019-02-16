@@ -46,7 +46,7 @@ const PatchParameter Patch::parameters [110] = {
     /*11*/ {"Sub oscillator/transient generator shape", "Sub-Osc", 0, 10, &Labels::SubOscillatorAlgorithm, NULL, 23},
     /*12*/ {"Filter cutoff", "Cutoff", 0, 127, NULL, NULL, 14}, // alternate cc: 74
     /*13*/ {"Filter resonance", "Resonance", 0, 63, NULL, NULL, 15}, // alternate cc: 71
-    /*14*/ {"Envelope->cutoff modulation amount", "Evn Amnt", 0, 63, NULL, NULL, 102},
+    /*14*/ {"Envelope->cutoff modulation amount", "Env Amnt", 0, 63, NULL, NULL, 102},
     /*15*/ {"Lfo->cutoff modulation amount", "Lfo2 Amnt", 0, 63, NULL, NULL, 103},
     /*16*/ {"Envelope 1 attack", "Attack", 0, 127, NULL, NULL, 104},
     /*17*/ {"Envelope 1 decay", "Decay", 0, 127, NULL, NULL, 105},
