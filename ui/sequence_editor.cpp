@@ -51,18 +51,24 @@ SequenceEditor::SequenceEditor(QWidget *parent) :
     QComboBox *cb;
     QLabel *l;
     for (unsigned int p = 100; p < 110; p++) {
+
+        const QString &name = QCoreApplication::translate("Patch", qPrintable(Patch::parameter(p, 0).short_name)) \
+                              + QCoreApplication::translate("ShruthiEditorMainWindow", ":");
         if (Patch::parameter(p, 0).string_values) {
             cb = this->findChild<QComboBox*>(QString("c%1").arg(p));
             if (!cb) {
                 continue;
             }
-            cb->addItems(*Patch::parameter(p, 0).string_values);
+            const QStringList &values = *Patch::parameter(p, 0).string_values;
+            for (int i = 0; i < values.size(); i++) {
+                cb->addItem(QCoreApplication::translate("Labels", qPrintable(values.at(i))));
+            }
             connect(cb, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChanged(int)));
             l = this->findChild<QLabel*>(QString("l%1").arg(p));
             if (!l) {
                 continue;
             }
-            l->setText(Patch::parameter(p, 0).short_name + ":");
+            l->setText(name);
         } else {
             dial = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(p));
             if (!dial) {
@@ -70,7 +76,7 @@ SequenceEditor::SequenceEditor(QWidget *parent) :
             }
             dial->setParameter(p);
             dial->setFormatter(Patch::parameter(p, 0).formatter);
-            dial->setName(Patch::parameter(p, 0).short_name + ":");
+            dial->setName(name);
             dial->setLimits(Patch::parameter(p, 0).min, Patch::parameter(p, 0).max);
             connect(dial, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
         }
