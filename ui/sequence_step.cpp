@@ -28,7 +28,12 @@ SequenceStep::SequenceStep(QWidget *parent) :
 
     step = 0;
 
-    QStringList Notes = QStringList() << "C" << "C#" << "D" << "D#" << "E" << "F" << "F#" << "G" << "G#" << "A" << "A#" << "B";
+    QStringList Notes = QStringList() << QCoreApplication::translate("Labels", "C") << QCoreApplication::translate("Labels", "C#")
+                                      << QCoreApplication::translate("Labels", "D") << QCoreApplication::translate("Labels", "D#")
+                                      << QCoreApplication::translate("Labels", "E") << QCoreApplication::translate("Labels", "F")
+                                      << QCoreApplication::translate("Labels", "F#") << QCoreApplication::translate("Labels", "G")
+                                      << QCoreApplication::translate("Labels", "G#") << QCoreApplication::translate("Labels", "A")
+                                      << QCoreApplication::translate("Labels", "A#") << QCoreApplication::translate("Labels", "B");
     //QStringList Notes = QStringList() << "C" << "C♯" << "D" << "D♯" << "E" << "F" << "F♯" << "G" << "G♯" << "A" << "A♯" << "B";
     QStringList HexValues = QStringList() << "0" << "1" << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "A" << "B" << "C" << "D" << "E" << "F";
 
