@@ -34,6 +34,8 @@ class Config {
         void setMidiChannel(unsigned char);
         const int &shruthiFilterBoard() const;
         void setShruthiFilterBoard(int value);
+        void setNoTranslation(bool value);
+        bool noTranslation() const;
         void set(const Config &other);
         bool equals(const Config &other);
 
@@ -42,6 +44,7 @@ class Config {
         int mMidiOutputPort;
         unsigned char mMidiChannel;
         int mShruthiFilterBoard;
+        bool mNoTranslation;
 };
 
 

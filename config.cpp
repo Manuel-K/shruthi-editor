@@ -26,6 +26,7 @@ Config::Config() {
     mMidiOutputPort = 0;
     mMidiChannel = 0;
     mShruthiFilterBoard = 0;
+    mNoTranslation = false;
 }
 
 
@@ -35,6 +36,7 @@ void Config::save() {
     settings.setValue("midi/outputPort", mMidiOutputPort);
     settings.setValue("midi/channel", mMidiChannel);
     settings.setValue("shruthi/filterBoard", mShruthiFilterBoard);
+    settings.setValue("ui/noTranslation", mNoTranslation);
 }
 
 
@@ -44,6 +46,7 @@ void Config::load() {
     mMidiOutputPort = settings.value("midi/outputPort", 0).toInt();
     mMidiChannel = settings.value("midi/channel", 0).toInt();
     mShruthiFilterBoard = settings.value("shruthi/filterBoard", 0).toInt();
+    mNoTranslation = settings.value("ui/noTranslation", false).toBool();
 }
 
 
@@ -87,11 +90,24 @@ void Config::setShruthiFilterBoard(int value) {
 }
 
 
+void Config::setNoTranslation(bool value)
+{
+    mNoTranslation = value;
+}
+
+
+bool Config::noTranslation() const
+{
+    return mNoTranslation;
+}
+
+
 void Config::set(const Config &other) {
     mMidiChannel = other.mMidiChannel;
     mMidiInputPort = other.mMidiInputPort;
     mMidiOutputPort = other.mMidiOutputPort;
     mShruthiFilterBoard = other.mShruthiFilterBoard;
+    mNoTranslation = other.mNoTranslation;
 }
 
 
@@ -99,5 +115,6 @@ bool Config::equals(const Config &other) {
     return mMidiChannel == other.mMidiChannel &&
             mMidiInputPort == other.mMidiInputPort &&
             mMidiOutputPort == other.mMidiOutputPort &&
-            mShruthiFilterBoard == other.mShruthiFilterBoard;
+            mShruthiFilterBoard == other.mShruthiFilterBoard &&
+            mNoTranslation == other.mNoTranslation;
 }
