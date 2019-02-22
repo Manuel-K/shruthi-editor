@@ -22,6 +22,7 @@
 
 
 #include <QString>
+#include <QCoreApplication> // for tr(), Q_DECLARE_TR_FUNCTIONS() and QT_TR_NOOP()
 #include <stddef.h> // for NULL
 #include "message.h"
 class QStringList;
@@ -42,6 +43,8 @@ static const PatchParameter param_blank = {NULL, NULL, 0, 0, NULL, NULL, -1};
 
 
 class Patch {
+    Q_DECLARE_TR_FUNCTIONS(Patch)
+
     public:
         Patch();
         Patch(const unsigned int &version);

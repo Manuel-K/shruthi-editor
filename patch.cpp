@@ -32,38 +32,38 @@ const unsigned char Patch::parameterCount = 110;
 
 const PatchParameter Patch::parameters [110] = {
     /* Long name, short name, min, max, labels, value formatter, cc */
-    /*0*/ {"Oscillator 1 shape", "Shape", 0, 34, &Labels::OscillatorAlgorithm, NULL, 20},
-    /*1*/ {"Oscillator 1 parameter", "Param", 0, 127, NULL, NULL, 21},
-    /*2*/ {"Oscillator 1 range", "Range",-24, 24, NULL, NULL, 22},
-    /*3*/ {"Modulation operator", "Operator", 0, 13, &Labels::Operator, NULL, 28},
-    /*4*/ {"Oscillator 2 shape", "Shape", 0, 34, &Labels::OscillatorAlgorithm, NULL, 24},
-    /*5*/ {"Oscillator 2 parameter", "Param", 0, 127, NULL, NULL, 25},
-    /*6*/ {"Oscillator 2 range", "Range",-24, 24, NULL, NULL, 26},
-    /*7*/ {"Oscillator 2 detune", "Detune", 0, 127, NULL, NULL, 27},
-    /*8*/ {"Oscillator balance", "Mix", 0, 63, NULL, NULL, 29},
-    /*9*/ {"Sub oscillator volume", "Sub. Vol.", 0, 63, NULL, NULL, 30},
-    /*10*/ {"Noise volume", "Noise", 0, 63, NULL, NULL, 31},
-    /*11*/ {"Sub oscillator/transient generator shape", "Sub-Osc", 0, 10, &Labels::SubOscillatorAlgorithm, NULL, 23},
-    /*12*/ {"Filter cutoff", "Cutoff", 0, 127, NULL, NULL, 14}, // alternate cc: 74
-    /*13*/ {"Filter resonance", "Resonance", 0, 63, NULL, NULL, 15}, // alternate cc: 71
-    /*14*/ {"Envelope->cutoff modulation amount", "Env Amnt", 0, 63, NULL, NULL, 102},
-    /*15*/ {"Lfo->cutoff modulation amount", "Lfo2 Amnt", 0, 63, NULL, NULL, 103},
-    /*16*/ {"Envelope 1 attack", "Attack", 0, 127, NULL, NULL, 104},
-    /*17*/ {"Envelope 1 decay", "Decay", 0, 127, NULL, NULL, 105},
-    /*18*/ {"Envelope 1 sustain", "Sustain", 0, 127, NULL, NULL, 106},
-    /*19*/ {"Envelope 1 release", "Release", 0, 127, NULL, NULL, 107},
-    /*20*/ {"Envelope 2 attack", "Attack", 0, 127, NULL, NULL, 108}, // alternate cc: 73
-    /*21*/ {"Envelope 2 decay", "Decay", 0, 127, NULL, NULL, 109},
-    /*22*/ {"Envelope 2 sustain", "Sustain", 0, 127, NULL, NULL, 110},
-    /*23*/ {"Envelope 2 release", "Release", 0, 127, NULL, NULL, 111},
-    /*24*/ {"LFO 1 waveform", "Shape", 0, 20, &Labels::LfoWave, NULL, 112},
-    /*25*/ {"LFO 1 rate", "Rate", 0, 143, NULL, Labels::LfoRateFormatter, 113},
-    /*26*/ {"LFO 1 rise time", "Attack", 0, 127, NULL, NULL, 114},
-    /*27*/ {"LFO 1 master/slave", "Sync Mode", 0, 3, &Labels::LfoMode, NULL, 115},
-    /*28*/ {"LFO 2 waveform", "Shape", 0, 20, &Labels::LfoWave, NULL, 116},
-    /*29*/ {"LFO 2 rate", "Rate", 0, 143, NULL, Labels::LfoRateFormatter, 117},
-    /*30*/ {"LFO 2 rise time", "Attack", 0, 127, NULL, NULL, 118},
-    /*31*/ {"LFO 2 master/slave", "Sync Mode", 0, 3, &Labels::LfoMode, NULL, 119},
+    /*0*/ {"Oscillator 1 shape", QT_TR_NOOP("Shape"), 0, 34, &Labels::OscillatorAlgorithm, NULL, 20},
+    /*1*/ {"Oscillator 1 parameter", QT_TR_NOOP("Param"), 0, 127, NULL, NULL, 21},
+    /*2*/ {"Oscillator 1 range", QT_TR_NOOP("Range"), -24, 24, NULL, NULL, 22},
+    /*3*/ {"Modulation operator", QT_TR_NOOP("Operator"), 0, 13, &Labels::Operator, NULL, 28},
+    /*4*/ {"Oscillator 2 shape", QT_TR_NOOP("Shape"), 0, 34, &Labels::OscillatorAlgorithm, NULL, 24},
+    /*5*/ {"Oscillator 2 parameter", QT_TR_NOOP("Param"), 0, 127, NULL, NULL, 25},
+    /*6*/ {"Oscillator 2 range", QT_TR_NOOP("Range"), -24, 24, NULL, NULL, 26},
+    /*7*/ {"Oscillator 2 detune", QT_TR_NOOP("Detune"), 0, 127, NULL, NULL, 27},
+    /*8*/ {"Oscillator balance", QT_TR_NOOP("Mix"), 0, 63, NULL, NULL, 29},
+    /*9*/ {"Sub oscillator volume", QT_TR_NOOP("Sub. Vol."), 0, 63, NULL, NULL, 30},
+    /*10*/ {"Noise volume", QT_TR_NOOP("Noise"), 0, 63, NULL, NULL, 31},
+    /*11*/ {"Sub oscillator/transient generator shape", QT_TR_NOOP("Sub-Osc"), 0, 10, &Labels::SubOscillatorAlgorithm, NULL, 23},
+    /*12*/ {"Filter cutoff", QT_TR_NOOP("Cutoff"), 0, 127, NULL, NULL, 14}, // alternate cc: 74
+    /*13*/ {"Filter resonance", QT_TR_NOOP("Resonance"), 0, 63, NULL, NULL, 15}, // alternate cc: 71
+    /*14*/ {"Envelope->cutoff modulation amount", QT_TR_NOOP("Env Amnt"), 0, 63, NULL, NULL, 102},
+    /*15*/ {"Lfo->cutoff modulation amount", QT_TR_NOOP("LFO2 Amnt"), 0, 63, NULL, NULL, 103},
+    /*16*/ {"Envelope 1 attack", QT_TR_NOOP("Attack"), 0, 127, NULL, NULL, 104},
+    /*17*/ {"Envelope 1 decay", QT_TR_NOOP("Decay"), 0, 127, NULL, NULL, 105},
+    /*18*/ {"Envelope 1 sustain", QT_TR_NOOP("Sustain"), 0, 127, NULL, NULL, 106},
+    /*19*/ {"Envelope 1 release", QT_TR_NOOP("Release"), 0, 127, NULL, NULL, 107},
+    /*20*/ {"Envelope 2 attack", QT_TR_NOOP("Attack"), 0, 127, NULL, NULL, 108}, // alternate cc: 73
+    /*21*/ {"Envelope 2 decay", QT_TR_NOOP("Decay"), 0, 127, NULL, NULL, 109},
+    /*22*/ {"Envelope 2 sustain", QT_TR_NOOP("Sustain"), 0, 127, NULL, NULL, 110},
+    /*23*/ {"Envelope 2 release", QT_TR_NOOP("Release"), 0, 127, NULL, NULL, 111},
+    /*24*/ {"LFO 1 waveform", QT_TR_NOOP("Shape"), 0, 20, &Labels::LfoWave, NULL, 112},
+    /*25*/ {"LFO 1 rate", QT_TR_NOOP("Rate"), 0, 143, NULL, Labels::LfoRateFormatter, 113},
+    /*26*/ {"LFO 1 rise time", QT_TR_NOOP("Attack"), 0, 127, NULL, NULL, 114},
+    /*27*/ {"LFO 1 master/slave", QT_TR_NOOP("Sync Mode"), 0, 3, &Labels::LfoMode, NULL, 115},
+    /*28*/ {"LFO 2 waveform", QT_TR_NOOP("Shape"), 0, 20, &Labels::LfoWave, NULL, 116},
+    /*29*/ {"LFO 2 rate", QT_TR_NOOP("Rate"), 0, 143, NULL, Labels::LfoRateFormatter, 117},
+    /*30*/ {"LFO 2 rise time", QT_TR_NOOP("Attack"), 0, 127, NULL, NULL, 118},
+    /*31*/ {"LFO 2 master/slave", QT_TR_NOOP("Sync Mode"), 0, 3, &Labels::LfoMode, NULL, 119},
     /*32*/ {"Modulation 1 source", NULL, 0, 27, &Labels::ModulationSource, NULL, -1},
     /*33*/ {"Modulation 1 destination", NULL, 0, 26, &Labels::ModulationDestination, NULL, -1},
     /*34*/ {"Modulation 1 amount", NULL,-63, 63, NULL, NULL, -1},
@@ -116,33 +116,33 @@ const PatchParameter Patch::parameters [110] = {
     /*81*/ param_blank, // (arp_direction << 4) | arp_range
     /*82*/ param_blank, // arp_pattern
     /*83*/ param_blank, // arp_clock_division
-    /*84*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
-    /*85*/ {"SVF filter resonance 2", "Res2", 0, 63, NULL, NULL, 13},
+    /*84*/ {"SVF filter cutoff 2", QT_TR_NOOP("Cutoff2"), 0, 127, NULL, NULL, 12},
+    /*85*/ {"SVF filter resonance 2", QT_TR_NOOP("Res2"), 0, 63, NULL, NULL, 13},
     /*86*/ param_blank, //86: filter_topology_ (92<<4 | 93)
     /*87*/ param_blank, //87-90: op_data_[4] (94, 95<<3 | 96, 97, 98<<3 | 99)
     /*88*/ param_blank,
     /*89*/ param_blank,
     /*90*/ param_blank,
     /*91*/ param_blank, //91: version_
-    /*92*/ {"SVF filter mode 1", "Mode 1", 0, 5, &Labels::FilterSVFMode1, NULL, 85},
-    /*93*/ {"SVF filter mode 2", "Mode 2", 0, 5, &Labels::FilterSVFMode2, NULL, 86},
+    /*92*/ {"SVF filter mode 1", QT_TR_NOOP("Mode 1"), 0, 5, &Labels::FilterSVFMode1, NULL, 85},
+    /*93*/ {"SVF filter mode 2", QT_TR_NOOP("Mode 2"), 0, 5, &Labels::FilterSVFMode2, NULL, 86},
     /*94*/ {"Operator 1 in1", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
     /*95*/ {"Operator 1 in2", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
     /*96*/ {"Operator 1 out", NULL, 0, 9, &Labels::CvOperator, NULL, -1},
     /*97*/ {"Operator 2 in1", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
     /*98*/ {"Operator 2 in2", NULL, 0, 31, &Labels::ModulationSource, NULL, -1},
     /*99*/ {"Operator 2 out", NULL, 0, 9, &Labels::CvOperator, NULL, -1},
-    /*100*/ {"Sequencer mode", "Seq mode", 0, 2, &Labels::SequencerMode, NULL, 75},
-    /*101*/ {"Tempo", "Tempo", 39, 240, NULL, Labels::TempoFormatter, -1}, // 35..248 according to manual; (<40 external); min with encoder is 39, with poti it's 38
-    /*102*/ {"Groove template", "Grv tmp", 0, 5, &Labels::GrooveTemplate, NULL, 76},
-    /*103*/ {"Groove amount", "Grv amt", 0, 127, NULL, NULL, 77},
-    /*104*/ {"Arpeggiator direction", "Arp dir", 0, 4, &Labels::ArpeggiatorDirection, NULL, 78}, // 0..3 according to manual
-    /*105*/ {"Arpeggiator range", "Arp rng", 1, 4, NULL, NULL, 79},
-    /*106*/ {"Arpeggiator pattern", "Arp pat", 0, 15, NULL, Labels::ArpeggiatorPatternFormatter, 80}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
-    /*107*/ {"Sequencer Clock Division", "Cld div", 0, 11, &Labels::SequencerClockDivision, NULL, 81},
+    /*100*/ {"Sequencer mode", QT_TR_NOOP("Seq mode"), 0, 2, &Labels::SequencerMode, NULL, 75},
+    /*101*/ {"Tempo", QT_TR_NOOP("Tempo"), 39, 240, NULL, Labels::TempoFormatter, -1}, // 35..248 according to manual; (<40 external); min with encoder is 39, with poti it's 38
+    /*102*/ {"Groove template", QT_TR_NOOP("Grv tmp"), 0, 5, &Labels::GrooveTemplate, NULL, 76},
+    /*103*/ {"Groove amount", QT_TR_NOOP("Grv amt"), 0, 127, NULL, NULL, 77},
+    /*104*/ {"Arpeggiator direction", QT_TR_NOOP("Arp dir"), 0, 4, &Labels::ArpeggiatorDirection, NULL, 78}, // 0..3 according to manual
+    /*105*/ {"Arpeggiator range", QT_TR_NOOP("Arp rng"), 1, 4, NULL, NULL, 79},
+    /*106*/ {"Arpeggiator pattern", QT_TR_NOOP("Arp pat"), 0, 15, NULL, Labels::ArpeggiatorPatternFormatter, 80}, // 0..15 according to manual; (highest==sequence); label range: 1..15,manual
+    /*107*/ {"Sequencer Clock Division", QT_TR_NOOP("Cld div"), 0, 11, &Labels::SequencerClockDivision, NULL, 81},
     /* no NRPN support: */
-    /*108*/ {"Portamento", "Portamento", 0, 63, NULL, NULL, 84},
-    /*109*/ {"Legato", "Legato", 0, 1, &Labels::OffOn, NULL, 68}
+    /*108*/ {"Portamento", QT_TR_NOOP("Portamento"), 0, 63, NULL, NULL, 84},
+    /*109*/ {"Legato", QT_TR_NOOP("Legato"), 0, 1, &Labels::OffOn, NULL, 68}
 };
 
 
@@ -151,24 +151,24 @@ const unsigned char Patch::filterBoardCount = 8;
 
 const PatchParameter Patch::parameter84 [8] = {
     /*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-    /*Filter 1*/ {"SSM high pass", "High Pass", 0, 127, NULL, NULL, 12},
-    /*Filter 2*/ {"SVF filter cutoff 2", "Cutoff2", 0, 127, NULL, NULL, 12},
-    /*Filter 3*/ {"DSP FX Parameter 1", "Param. 1", 0, 127, NULL, NULL, 12},
-    /*Filter 4*/ {"Polivoks overdrive", "Overdrive", 0, 1, NULL, Labels::OffOnFormatter, 90}, // &Labels::OffOn
+    /*Filter 1*/ {"SSM high pass", QT_TR_NOOP("High Pass"), 0, 127, NULL, NULL, 12},
+    /*Filter 2*/ {"SVF filter cutoff 2", QT_TR_NOOP("Cutoff2"), 0, 127, NULL, NULL, 12},
+    /*Filter 3*/ {"DSP FX Parameter 1", QT_TR_NOOP("Param. 1"), 0, 127, NULL, NULL, 12},
+    /*Filter 4*/ {"Polivoks overdrive", QT_TR_NOOP("Overdrive"), 0, 1, NULL, Labels::OffOnFormatter, 90}, // &Labels::OffOn
     /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-    /*Filter 6*/ {"Delay time", "Time", 0, 127, NULL, NULL, 12},
-    /*Filter 7*/ {"SP feedback", "Feedback", 0, 127, NULL, NULL, 12}, // TODO: check cc
+    /*Filter 6*/ {"Delay time", QT_TR_NOOP("DTime"), 0, 127, NULL, NULL, 12},
+    /*Filter 7*/ {"SP feedback", QT_TR_NOOP("Feedback"), 0, 127, NULL, NULL, 12}, // TODO: check cc
 };
 
 
 const PatchParameter Patch::parameter85 [8] = {
     /*Filter 0*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
     /*Filter 1*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-    /*Filter 2*/ {"SVF filter resonance 2", "Res2", 0, 127, NULL, NULL, 13},
-    /*Filter 3*/ {"DSP FX Parameter 2", "Param. 2", 0, 63, NULL, NULL, 13},
-    /*Filter 4*/ {"Polivoks FM feedback", "FM feedbk.", 0, 1, NULL, Labels::OffOnFormatter, 91}, // &Labels::OffOn
+    /*Filter 2*/ {"SVF filter resonance 2", QT_TR_NOOP("Res2"), 0, 127, NULL, NULL, 13},
+    /*Filter 3*/ {"DSP FX Parameter 2", QT_TR_NOOP("Param. 2"), 0, 63, NULL, NULL, 13},
+    /*Filter 4*/ {"Polivoks FM feedback", QT_TR_NOOP("FM feedbk."), 0, 1, NULL, Labels::OffOnFormatter, 91}, // &Labels::OffOn
     /*Filter 5*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
-    /*Filter 6*/ {"Delay level", "Level", 0, 63, NULL, NULL, 13},
+    /*Filter 6*/ {"Delay level", QT_TR_NOOP("DLevel"), 0, 63, NULL, NULL, 13},
     /*Filter 7*/ {NULL, NULL, 0, 127, NULL, NULL, -1},
 };
 
@@ -176,12 +176,12 @@ const PatchParameter Patch::parameter85 [8] = {
 const PatchParameter Patch::parameter92 [8] = {
     /*Filter 0*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
     /*Filter 1*/ {NULL, NULL, 0, 2, NULL, NULL, -1},
-    /*Filter 2*/ {"SVF filter mode 1", "Mode 1", 0, 5, &Labels::FilterSVFMode1, NULL, 85},
-    /*Filter 3*/ {"DSP FX mode", "FX Mode", 0, 4, &Labels::FilterDSPMode, NULL, 87},
-    /*Filter 4*/ {"Polivoks filter mode", "Mode", 0, 1, &Labels::FilterPolivoksMode, NULL, 89},
-    /*Filter 5*/ {"4PM filter mode", "Mode", 0, 14, &Labels::Filter4PMMode, NULL, 92},
-    /*Filter 6*/ {"Delay feedback", "Feedback", 0, 15, NULL, NULL, 94},
-    /*Filter 7*/ {"SP mode", "Mode", 0, 3, &Labels::FilterSPMode, NULL, 96},
+    /*Filter 2*/ {"SVF filter mode 1", QT_TR_NOOP("Mode 1"), 0, 5, &Labels::FilterSVFMode1, NULL, 85},
+    /*Filter 3*/ {"DSP FX mode", QT_TR_NOOP("FX Mode"), 0, 4, &Labels::FilterDSPMode, NULL, 87},
+    /*Filter 4*/ {"Polivoks filter mode", QT_TR_NOOP("Mode"), 0, 1, &Labels::FilterPolivoksMode, NULL, 89},
+    /*Filter 5*/ {"4PM filter mode", QT_TR_NOOP("Mode"), 0, 14, &Labels::Filter4PMMode, NULL, 92},
+    /*Filter 6*/ {"Delay feedback", QT_TR_NOOP("Feedback"), 0, 15, NULL, NULL, 94},
+    /*Filter 7*/ {"SP mode", QT_TR_NOOP("Mode"), 0, 3, &Labels::FilterSPMode, NULL, 96},
 };
 
 
@@ -332,7 +332,7 @@ QString Patch::getVersionString() const {
     } else if (version == 37) {
         return "1.xx";
     }
-    return "Unknown";
+    return tr("Unknown");
 }
 
 
