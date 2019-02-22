@@ -26,6 +26,7 @@
 #include "config.h"
 #include "flag.h"
 #include "patch.h"
+#include "labels.h"
 #include "queueitem.h"
 #include "ui/settings_dialog.h"
 #include "version.h"
@@ -72,7 +73,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
                     qDebug() << "ComboBox" << QString("c%1").arg(i) << "could not be found!";
                     continue;
                 }
-                tmp_c->addItems(*(par.string_values));
+                comboBoxAddItemsTr(tmp_c, par.string_values);
                 connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
             } else if (Patch::belongsToModMatrix(i)){ // small dials
                 tmp_d = this->findChild<QDial*>(QString("c%1").arg(i));
@@ -98,7 +99,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
                 }
                 tmp_sed->setParameter(i);
                 tmp_sed->setLimits(par.min, par.max);
-                tmp_sed->setName(par.short_name + ":");
+                tmp_sed->setName(translateShortNameAddColon(par.short_name));
                 tmp_sed->setFormatter(par.formatter);
                 connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
             }
@@ -115,7 +116,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
             }
             tmp_sed->setParameter(i);
             tmp_sed->setLimits(par.min, par.max);
-            tmp_sed->setName(par.short_name + ":");
+            tmp_sed->setName(translateShortNameAddColon(par.short_name));
             tmp_sed->setFormatter(par.formatter);
             connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
         }
@@ -199,7 +200,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
     bool p84dial = false;
     const PatchParameter p84 = Patch::parameter(84, filter);
     if (p84.short_name != NULL) {
-        ui->c84->setName(p84.short_name + ":");
+        ui->c84->setName(translateShortNameAddColon(p84.short_name));
         if (p84.string_values == NULL) {
             p84dial = true;
             ui->c84->setLimits(p84.min, p84.max);
@@ -215,7 +216,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
     bool p85dial = false;
     const PatchParameter p85 = Patch::parameter(85, filter);
     if (p85.short_name != NULL) {
-        ui->c85->setName(p85.short_name + ":");
+        ui->c85->setName(translateShortNameAddColon(p85.short_name));
         if (p85.string_values == NULL) {
             p85dial = true;
             ui->c85->setLimits(p85.min, p85.max);
@@ -234,12 +235,12 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
     const PatchParameter p92 = Patch::parameter(92, filter);
     if (p92.short_name != NULL) {
         if (p92.string_values == NULL) {
-            ui->c92d->setName(p92.short_name + ":");
+            ui->c92d->setName(translateShortNameAddColon(p92.short_name));
             p92dial = true;
             ui->c92d->setLimits(p92.min, p92.max);
             ui->c92d->setFormatter(p92.formatter);
         } else {
-            ui->l92->setText(p92.short_name + ":");
+            ui->l92->setText(translateShortNameAddColon(p92.short_name));
             p92combo = p92.string_values;
         }
     }
@@ -251,7 +252,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
     bool p92hidden = true;
     if (p92combo) {
         ui->c92->clear();
-        ui->c92->addItems(*p92combo);
+        comboBoxAddItemsTr(ui->c92, p92combo);
         // need to set index?
         p92hidden = false;
     }
@@ -266,12 +267,12 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
     const PatchParameter p93 = Patch::parameter(93, filter);
     if (p93.short_name != NULL) {
         if (p93.string_values == NULL) {
-            ui->c93d->setName(p93.short_name + ":");
+            ui->c93d->setName(translateShortNameAddColon(p93.short_name));
             p93dial = true;
             ui->c93d->setLimits(p93.min, p93.max);
             ui->c93d->setFormatter(p93.formatter);
         } else {
-            ui->l93->setText(p93.short_name + ":");
+            ui->l93->setText(translateShortNameAddColon(p93.short_name));
             p93combo = p93.string_values;
         }
     }
@@ -283,7 +284,7 @@ void ShruthiEditorMainWindow::setShruthiFilterBoard(int filter) {
     bool p93hidden = true;
     if (p93combo) {
         ui->c93->clear();
-        ui->c93->addItems(*p93combo);
+        comboBoxAddItemsTr(ui->c93, p93combo);
         // need to set index?
         p93hidden = false;
     }
@@ -570,6 +571,20 @@ void ShruthiEditorMainWindow::aboutQt() {
 void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
     Q_UNUSED(event);
     quitShruthiEditor();
+}
+
+
+void ShruthiEditorMainWindow::comboBoxAddItemsTr(QComboBox *cb, const QStringList *sl)
+{
+    for (int j = 0; j < sl->size(); j++) {
+        cb->addItem(Labels::tr(qPrintable(sl->at(j))));
+    }
+}
+
+
+QString ShruthiEditorMainWindow::translateShortNameAddColon(const QString &shortname)
+{
+    return Patch::tr(qPrintable(shortname)) + tr(":");
 }
 
 

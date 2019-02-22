@@ -45,6 +45,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
 
         void displayMidiStatusChanged(const bool &in, const bool &out);
         void closeEvent(QCloseEvent* event);
+        void comboBoxAddItemsTr(QComboBox *cb, const QStringList *sl);
+        QString translateShortNameAddColon(const QString &shortname);
 
         QComboBox *injectQFileDialog(QFileDialog *d);
 
