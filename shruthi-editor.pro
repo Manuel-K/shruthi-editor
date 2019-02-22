@@ -88,14 +88,11 @@ FORMS = \
     ui/shruthi_editor_dial.ui
 
 RESOURCES = \
+    translations.qrc \
     ui/shruthi_editor.qrc
 
 TRANSLATIONS = \
     translations/shruthi_editor_fr_FR.ts
-
-
-QM_FILES_INSTALL_PATH = $$PREFIX/share/shruthi_editor/translations
-include(translations.pri)
 
 
 #
@@ -122,7 +119,7 @@ greaterThan(QT_MAJOR_VERSION, 4): DEFINES += FUSION
 equals(QT_MAJOR_VERSION, 4): DEFINES += CLEANLOOKS
 
 # Generate and embed translations
-CONFIG += lrelease embed_translations
+include(translations.pri)
 
 unix:!macx {
     message(RtMidi will use linux alsaseq.)

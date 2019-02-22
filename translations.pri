@@ -18,21 +18,6 @@ greaterThan(QT_MAJOR_VERSION, 5) {
 
     PRE_TARGETDEPS      += $${qmfile}
     QMAKE_EXTRA_TARGETS += $${qmfile}
-
-
-      thisinst    = translations_$${qmfile}
-      thisinstdep = $${thisinst}.depends
-    $$thisinstdep = $$qmfile
-
-      thisinstcfg = $${thisinst}.CONFIG
-    $$thisinstcfg = no_check_exist
-
-      thisinstfil = $${thisinst}.files
-    $$thisinstfil = $$PWD/$$qmfile
-
-      thisinstpat = $${thisinst}.path
-    $$thisinstpat = $$QM_FILES_INSTALL_PATH
-
-    INSTALLS += $$thisinst
+    QMAKE_CLEAN         += $${qmfile}
   }
 }
