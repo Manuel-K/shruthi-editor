@@ -18,6 +18,10 @@
 
 
 #include <QApplication>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QStringList>
+
 #ifdef CLEANLOOKS
 #include <QCleanlooksStyle>
 #endif
@@ -41,6 +45,24 @@
 #include "ui/sequence_editor.h"
 
 
+bool find_translation(QTranslator &translator) {
+    QStringList search;
+    search.append(QApplication::applicationDirPath());
+    search.append(":/i18n/");
+
+    for (int i = 0; i < search.size(); i++) {
+        if (translator.load(QLocale(), "shruthi_editor", "_", search.at(i), ".qm")) {
+#ifdef DEBUGMSGS
+            qDebug() << "Found translation file in path" << i << search.at(i);
+#endif
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 int main(int argc, char *argv[]) {
     qRegisterMetaType<QueueItem>("QueueItem");
     qRegisterMetaType<Config>("Config");
@@ -57,6 +79,19 @@ int main(int argc, char *argv[]) {
 
         Config cfg;
         cfg.load();
+
+        QTranslator seTranslator;
+        QTranslator qtTranslator;
+
+        if (!cfg.noTranslation() && find_translation(seTranslator)) {
+            app.installTranslator(&seTranslator);
+
+            if (qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+                app.installTranslator(&qtTranslator);
+            }
+        }
+
+
 
 #ifdef FUSION
         app.setStyle(QStyleFactory::create("Fusion"));
