@@ -22,186 +22,186 @@
 
 
 const QStringList Labels::ModulationSource = QStringList()
-        << "Lfo 1"
-        << "Lfo 2"
-        << "Step Seq"
-        << "Step Seq 1"
-        << "Step Seq 2"
-        << "Arpeggiator"
-        << "Mod Wheel"
-        << "Aftertouch"
-        << "Pitch-Bend"
-        << "Offset"
-        << "CV 1"
-        << "CV 2"
-        << "CV 3"
-        << "CV 4"
-        << "CC A (16)"
-        << "CC B (17)"
-        << "CC C (18) Breath"
-        << "CC D (19) Pedal"
-        << "Noise"
-        << "Env 1"
-        << "Env 2"
-        << "Velocity"
-        << "Random"
-        << "Note (Pitch)"
-        << "Gate"
-        << "Audio"
-        << "Operator 1"
-        << "Operator 2"
-        << "=4"
-        << "=8"
-        << "=16"
-        << "=32";
+        << QT_TR_NOOP("LFO 1")
+        << QT_TR_NOOP("LFO 2")
+        << QT_TR_NOOP("Step Seq")
+        << QT_TR_NOOP("Step Seq 1")
+        << QT_TR_NOOP("Step Seq 2")
+        << QT_TR_NOOP("Arpeggiator")
+        << QT_TR_NOOP("Mod Wheel")
+        << QT_TR_NOOP("Aftertouch")
+        << QT_TR_NOOP("Pitch-Bend")
+        << QT_TR_NOOP("Offset")
+        << QT_TR_NOOP("CV 1")
+        << QT_TR_NOOP("CV 2")
+        << QT_TR_NOOP("CV 3")
+        << QT_TR_NOOP("CV 4")
+        << QT_TR_NOOP("CC A (16)")
+        << QT_TR_NOOP("CC B (17)")
+        << QT_TR_NOOP("CC C (18) Breath")
+        << QT_TR_NOOP("CC D (19) Pedal")
+        << QT_TR_NOOP("Noise")
+        << QT_TR_NOOP("Env 1")
+        << QT_TR_NOOP("Env 2")
+        << QT_TR_NOOP("Velocity")
+        << QT_TR_NOOP("Random")
+        << QT_TR_NOOP("Note (Pitch)")
+        << QT_TR_NOOP("Gate")
+        << QT_TR_NOOP("Audio")
+        << QT_TR_NOOP("Operator 1")
+        << QT_TR_NOOP("Operator 2")
+        << QT_TR_NOOP("=4")
+        << QT_TR_NOOP("=8")
+        << QT_TR_NOOP("=16")
+        << QT_TR_NOOP("=32");
 
 
 const QStringList Labels::ModulationDestination = QStringList()
-        << "Filter cutoff"
-        << "VCA gain"
-        << "Osc 1 Param"
-        << "Osc 2 Param"
-        << "Osc 1 Pitch"
-        << "Osc 2 Pitch"
-        << "Osc 1+2 Pitch"
-        << "Osc 1+2 Fine"
-        << "Oscillator Mix"
-        << "Noise Volume"
-        << "Sub-Osc Vol"
-        << "Resonance"
-        << "CV 1"
-        << "CV 2"
-        << "Attack 1+2"
-        << "Lfo 1"
-        << "Lfo 2"
-        << "Trig. Env. 1"
-        << "Trig. Env. 2"
-        << "Attack 1"
-        << "Decay 1"
-        << "Sustain 1"
-        << "Release 1"
-        << "Attack 2"
-        << "Decay 2"
-        << "Sustain 2"
-        << "Release 2";
+        << QT_TR_NOOP("Filter cutoff")
+        << QT_TR_NOOP("VCA gain")
+        << QT_TR_NOOP("Osc 1 Param")
+        << QT_TR_NOOP("Osc 2 Param")
+        << QT_TR_NOOP("Osc 1 Pitch")
+        << QT_TR_NOOP("Osc 2 Pitch")
+        << QT_TR_NOOP("Osc 1+2 Pitch")
+        << QT_TR_NOOP("Osc 1+2 Fine")
+        << QT_TR_NOOP("Oscillator Mix")
+        << QT_TR_NOOP("Noise Volume")
+        << QT_TR_NOOP("Sub-Osc Vol")
+        << QT_TR_NOOP("Resonance")
+        << QT_TR_NOOP("CV 1")
+        << QT_TR_NOOP("CV 2")
+        << QT_TR_NOOP("Attack 1+2")
+        << QT_TR_NOOP("LFO 1")
+        << QT_TR_NOOP("LFO 2")
+        << QT_TR_NOOP("Trig. Env. 1")
+        << QT_TR_NOOP("Trig. Env. 2")
+        << QT_TR_NOOP("Attack 1")
+        << QT_TR_NOOP("Decay 1")
+        << QT_TR_NOOP("Sustain 1")
+        << QT_TR_NOOP("Release 1")
+        << QT_TR_NOOP("Attack 2")
+        << QT_TR_NOOP("Decay 2")
+        << QT_TR_NOOP("Sustain 2")
+        << QT_TR_NOOP("Release 2");
 
 
 const QStringList Labels::OscillatorAlgorithm = QStringList()
-        << "Silence"
-        << "Sawtooth"
-        << "Square wave"
-        << "Triangle"
-        << "Phase-dist saw (filter sweep)"
-        << "Phase-dist saw (res filter sweep)"
-        << "Phase-dist resonant triangle"
-        << "Phase-dist trapezoidal creature"
-        << "Phase-distortion/self-sync trick"
-        << "4 detuned sawtooths" //Stack of 4 detuned sawtooth waves
-        << "Minimal 2-operators FM"
-        << "Waves"
-        << "Tampur"
-        << "Digital"
-        << "Metal"
-        << "Bowed"
-        << "Slap"
-        << "Organ"
-        << "Male"
-        << "User wavetable"
-        << "Bitwise anarchy"
-        << "Bit-crushed" // sine and triangle wave
-        << "Naive square wave"
-        << "Filtered noise generator"
-        << "Vowel" //Low-tech formant synthesis
-        << "Bellish"
-        << "Polated"
-        << "Cello"
-        << "Clipsweep"
-        << "Female"
-        << "Fmntvocal"
-        << "Formant2"
-        << "Reso3hp"
-        << "Electp"
-        << "Vibes";
+        << QT_TR_NOOP("Silence")
+        << QT_TR_NOOP("Sawtooth")
+        << QT_TR_NOOP("Square wave")
+        << QT_TR_NOOP("Triangle")
+        << QT_TR_NOOP("Phase-dist saw (filter sweep)")
+        << QT_TR_NOOP("Phase-dist saw (res filter sweep)")
+        << QT_TR_NOOP("Phase-dist resonant triangle")
+        << QT_TR_NOOP("Phase-dist trapezoidal creature")
+        << QT_TR_NOOP("Phase-distortion/self-sync trick")
+        << QT_TR_NOOP("4 detuned sawtooths") //Stack of 4 detuned sawtooth waves
+        << QT_TR_NOOP("Minimal 2-operators FM")
+        << QT_TR_NOOP("Waves")
+        << QT_TR_NOOP("Tampur")
+        << QT_TR_NOOP("Digital")
+        << QT_TR_NOOP("Metal")
+        << QT_TR_NOOP("Bowed")
+        << QT_TR_NOOP("Slap")
+        << QT_TR_NOOP("Organ")
+        << QT_TR_NOOP("Male")
+        << QT_TR_NOOP("User wavetable")
+        << QT_TR_NOOP("Bitwise anarchy")
+        << QT_TR_NOOP("Bit-crushed") // sine and triangle wave
+        << QT_TR_NOOP("Naive square wave")
+        << QT_TR_NOOP("Filtered noise generator")
+        << QT_TR_NOOP("Vowel") //Low-tech formant synthesis
+        << QT_TR_NOOP("Bellish")
+        << QT_TR_NOOP("Polated")
+        << QT_TR_NOOP("Cello")
+        << QT_TR_NOOP("Clipsweep")
+        << QT_TR_NOOP("Female")
+        << QT_TR_NOOP("Fmntvocal")
+        << QT_TR_NOOP("Formant2")
+        << QT_TR_NOOP("Reso3hp")
+        << QT_TR_NOOP("Electp")
+        << QT_TR_NOOP("Vibes");
 
 
 const QStringList Labels::SubOscillatorAlgorithm = QStringList()
-        << "square, 1 octave below"
-        << "triangle, 1 octave below"
-        << "25% pulse, 1 octave below"
-        << "square, 2 octaves below"
-        << "triangle, 2 octaves below"
-        << "25% pulse, 2 octaves below"
-        << "discrete click"
-        << "glitch"
-        << "blow"
-        << "high-pitched click"
-        << "low-pitched discontinuity";
+        << QT_TR_NOOP("square, 1 octave below")
+        << QT_TR_NOOP("triangle, 1 octave below")
+        << QT_TR_NOOP("25% pulse, 1 octave below")
+        << QT_TR_NOOP("square, 2 octaves below")
+        << QT_TR_NOOP("triangle, 2 octaves below")
+        << QT_TR_NOOP("25% pulse, 2 octaves below")
+        << QT_TR_NOOP("discrete click")
+        << QT_TR_NOOP("glitch")
+        << QT_TR_NOOP("blow")
+        << QT_TR_NOOP("high-pitched click")
+        << QT_TR_NOOP("low-pitched discontinuity");
 
 
 const QStringList Labels::LfoWave = QStringList()
-        << "Triangle"
-        << "Square"
-        << "Sample&Hold"
-        << "Ramp"
-        << "Step"
-        << "Wave 1"
-        << "Wave 2"
-        << "Wave 3"
-        << "Wave 4"
-        << "Wave 5"
-        << "Wave 6"
-        << "Wave 7"
-        << "Wave 8"
-        << "Wave 9"
-        << "Wave 10"
-        << "Wave 11"
-        << "Wave 12"
-        << "Wave 13"
-        << "Wave 14"
-        << "Wave 15"
-        << "Wave 16";
+        << QT_TR_NOOP("Triangle")
+        << QT_TR_NOOP("Square")
+        << QT_TR_NOOP("Sample&Hold")
+        << QT_TR_NOOP("Ramp")
+        << QT_TR_NOOP("Step")
+        << QT_TR_NOOP("Wave 1")
+        << QT_TR_NOOP("Wave 2")
+        << QT_TR_NOOP("Wave 3")
+        << QT_TR_NOOP("Wave 4")
+        << QT_TR_NOOP("Wave 5")
+        << QT_TR_NOOP("Wave 6")
+        << QT_TR_NOOP("Wave 7")
+        << QT_TR_NOOP("Wave 8")
+        << QT_TR_NOOP("Wave 9")
+        << QT_TR_NOOP("Wave 10")
+        << QT_TR_NOOP("Wave 11")
+        << QT_TR_NOOP("Wave 12")
+        << QT_TR_NOOP("Wave 13")
+        << QT_TR_NOOP("Wave 14")
+        << QT_TR_NOOP("Wave 15")
+        << QT_TR_NOOP("Wave 16");
 
 
 const QStringList Labels::LfoMode = QStringList()
-        << "Free"
-        << "Slave"
-        << "Master"
-        << "Oneshot";
+        << QT_TR_NOOP("Free")
+        << QT_TR_NOOP("Slave")
+        << QT_TR_NOOP("Master")
+        << QT_TR_NOOP("Oneshot");
 
 
 const QStringList Labels::Status = QStringList()
-        << "OFF"
-        << "ON";
+        << QT_TR_NOOP("OFF")
+        << QT_TR_NOOP("ON");
 
 
 const QStringList Labels::Operator = QStringList()
-        << "Sum"
-        << "Sync"
-        << "Ring mod."
-        << "XOR"
-        << "Fuzz"
-        << ">>4"
-        << ">>8"
-        << "Fold"
-        << "Bits"
-        << "Duo"
-        << "Ping Pong 2"
-        << "Ping Pong 4"
-        << "Ping Pong 8"
-        << "Ping Png Seq";
+        << QT_TR_NOOP("Sum")
+        << QT_TR_NOOP("Sync")
+        << QT_TR_NOOP("Ring mod.")
+        << QT_TR_NOOP("XOR")
+        << QT_TR_NOOP("Fuzz")
+        << QT_TR_NOOP(">>4")
+        << QT_TR_NOOP(">>8")
+        << QT_TR_NOOP("Fold")
+        << QT_TR_NOOP("Bits")
+        << QT_TR_NOOP("Duo")
+        << QT_TR_NOOP("Ping Pong 2")
+        << QT_TR_NOOP("Ping Pong 4")
+        << QT_TR_NOOP("Ping Pong 8")
+        << QT_TR_NOOP("Ping Png Seq");
 
 
 const QStringList Labels::CvOperator = QStringList()
-        << "Off"
-        << "Sum"
-        << "Product"
-        << "Max"
-        << "Min"
-        << "XOR"
-        << ">="
-        << "<="
-        << "qtz"
-        << "lag";
+        << QT_TR_NOOP("Off")
+        << QT_TR_NOOP("Sum")
+        << QT_TR_NOOP("Product")
+        << QT_TR_NOOP("Max")
+        << QT_TR_NOOP("Min")
+        << QT_TR_NOOP("XOR")
+        << QT_TR_NOOP(">=")
+        << QT_TR_NOOP("<=")
+        << QT_TR_NOOP("qtz")
+        << QT_TR_NOOP("lag");
 
 
 const QStringList Labels::LFORate = QStringList()
@@ -233,132 +233,132 @@ QString Labels::LfoRateFormatter(int value) {  // used for labels
 
 QString Labels::OffOnFormatter(int value) {
     if (value > 0) {
-        return "On";
+        return tr("On");
     } else {
-        return "Off";
+        return tr("Off");
     }
 }
 
 
 const QStringList Labels::OffOn = QStringList()
-        << "Off"
-        << "On";
+        << QT_TR_NOOP("Off")
+        << QT_TR_NOOP("On");
 
 
 const QStringList Labels::FilterBoard = QStringList()
-        << /* Filter 0*/ "SMR4 (lpf)"
-        << /* Filter 1*/ "SSM2044 (ssm)"
-        << /* Filter 2*/ "Dual SVF (svf)"
-        << /* Filter 3*/ "Digital (dsp)"
-        << /* Filter 4*/ "Polivoks (pvk)"
-        << /* Filter 5*/ "4-Pole Mission (4pm)"
-        << /* Filter 6*/ "LP2+Delay"
-        << /* Filter 7*/ "Shruthacon (sp)";
+        << /* Filter 0*/ QT_TR_NOOP("SMR4 (lpf)")
+        << /* Filter 1*/ QT_TR_NOOP("SSM2044 (ssm)")
+        << /* Filter 2*/ QT_TR_NOOP("Dual SVF (svf)")
+        << /* Filter 3*/ QT_TR_NOOP("Digital (dsp)")
+        << /* Filter 4*/ QT_TR_NOOP("Polivoks (pvk)")
+        << /* Filter 5*/ QT_TR_NOOP("4-Pole Mission (4pm)")
+        << /* Filter 6*/ QT_TR_NOOP("LP2+Delay")
+        << /* Filter 7*/ QT_TR_NOOP("Shruthacon (sp)");
 
 
 const QStringList Labels::FilterSVFMode1 = QStringList()
-        << "Lowpass"
-        << "Bandpass"
-        << "Highpass"
-        << "Lowpass <"
-        << "Bandpass <"
-        << "Highpass <";
+        << QT_TR_NOOP("Lowpass")
+        << QT_TR_NOOP("Bandpass")
+        << QT_TR_NOOP("Highpass")
+        << QT_TR_NOOP("Lowpass <")
+        << QT_TR_NOOP("Bandpass <")
+        << QT_TR_NOOP("Highpass <");
 
 
 const QStringList Labels::FilterSVFMode2 = QStringList()
-        << "Lowpass (parallel)"
-        << "Bandpass (parallel)"
-        << "Highpass (parallel)"
-        << "Lowpass > (serial)"
-        << "Bandpass > (serial)"
-        << "Highpass > (serial)";
+        << QT_TR_NOOP("Lowpass (parallel)")
+        << QT_TR_NOOP("Bandpass (parallel)")
+        << QT_TR_NOOP("Highpass (parallel)")
+        << QT_TR_NOOP("Lowpass > (serial)")
+        << QT_TR_NOOP("Bandpass > (serial)")
+        << QT_TR_NOOP("Highpass > (serial)");
 
 
 const QStringList Labels::FilterDSPMode = QStringList()
-        << "LP > FX"
-        << "HP > FX"
-        << "FX > LP"
-        << "FX > HP"
-        << "FX";
+        << QT_TR_NOOP("LP > FX")
+        << QT_TR_NOOP("HP > FX")
+        << QT_TR_NOOP("FX > LP")
+        << QT_TR_NOOP("FX > HP")
+        << QT_TR_NOOP("FX");
 
 
 const QStringList Labels::FilterDSPFx = QStringList()
-        << "Distortion (distrt)"
-        << "Bit crusher (crushr)"
-        << "Comb/pos. fb. (+cmbfl)"
-        << "Comb/neg. fb. (-cmbfl)"
-        << "Ring modulator (ringmd)"
-        << "Simple delay"
-        << "Delay/30% fb. (fb dly)"
-        << "Delay/80% fb. (dubdly)"
-        << "Delay/30%/no AA (!fbdly)"
-        << "Delay/80%/no AA (!dbdly)"
-        << "1/16 tempo-sync. delay"
-        << "1/12 tempo-sync. delay"
-        << "1/8 tempo-sync. delay"
-        << "3/16 tempo-sync. delay"
-        << "Looper"
-        << "Pitch shifter";
+        << QT_TR_NOOP("Distortion (distrt)")
+        << QT_TR_NOOP("Bit crusher (crushr)")
+        << QT_TR_NOOP("Comb/pos. fb. (+cmbfl)")
+        << QT_TR_NOOP("Comb/neg. fb. (-cmbfl)")
+        << QT_TR_NOOP("Ring modulator (ringmd)")
+        << QT_TR_NOOP("Simple delay")
+        << QT_TR_NOOP("Delay/30% fb. (fb dly)")
+        << QT_TR_NOOP("Delay/80% fb. (dubdly)")
+        << QT_TR_NOOP("Delay/30%/no AA (!fbdly)")
+        << QT_TR_NOOP("Delay/80%/no AA (!dbdly)")
+        << QT_TR_NOOP("1/16 tempo-sync. delay")
+        << QT_TR_NOOP("1/12 tempo-sync. delay")
+        << QT_TR_NOOP("1/8 tempo-sync. delay")
+        << QT_TR_NOOP("3/16 tempo-sync. delay")
+        << QT_TR_NOOP("Looper")
+        << QT_TR_NOOP("Pitch shifter");
 
 
 const QStringList Labels::FilterPolivoksMode = QStringList()
-        << "Lowpass"
-        << "Bandpass";
+        << QT_TR_NOOP("Lowpass")
+        << QT_TR_NOOP("Bandpass");
 
 
 const QStringList Labels::Filter4PMMode = QStringList()
-        << "4-pole LP"
-        << "3-pole LP"
-        << "2-pole LP"
-        << "1-pole LP"
-        << "1-pole HP"
-        << "2-pole HP"
-        << "3-pole HP"
-        << "2-pole BP"
-        << "4-pole BP"
-        << "Notch filter"
-        << "Phaser"
-        << "2-p HP + 1-p LP (h21p)"
-        << "3-p HP + 1-p LP (h31p)"
-        << "Notch + 1-p LP (n+lp)"
-        << "Allpass + 1-p LP (p+lp)";
+        << QT_TR_NOOP("4-pole LP")
+        << QT_TR_NOOP("3-pole LP")
+        << QT_TR_NOOP("2-pole LP")
+        << QT_TR_NOOP("1-pole LP")
+        << QT_TR_NOOP("1-pole HP")
+        << QT_TR_NOOP("2-pole HP")
+        << QT_TR_NOOP("3-pole HP")
+        << QT_TR_NOOP("2-pole BP")
+        << QT_TR_NOOP("4-pole BP")
+        << QT_TR_NOOP("Notch filter")
+        << QT_TR_NOOP("Phaser")
+        << QT_TR_NOOP("2-p HP + 1-p LP (h21p)")
+        << QT_TR_NOOP("3-p HP + 1-p LP (h31p)")
+        << QT_TR_NOOP("Notch + 1-p LP (n+lp)")
+        << QT_TR_NOOP("Allpass + 1-p LP (p+lp)");
 
 
 const QStringList Labels::Filter4PMResonanceFlavor = QStringList()
-        << "Liquid"
-        << "MS"
-        << "Wobbly"
-        << "Whacky";
+        << QT_TR_NOOP("Liquid")
+        << QT_TR_NOOP("MS")
+        << QT_TR_NOOP("Wobbly")
+        << QT_TR_NOOP("Whacky");
 
 
 const QStringList Labels::FilterSPMode = QStringList()
-        << "Lowpass"
-        << "Bandpass"
-        << "Highpass"
-        << "Allpass";
+        << QT_TR_NOOP("Lowpass")
+        << QT_TR_NOOP("Bandpass")
+        << QT_TR_NOOP("Highpass")
+        << QT_TR_NOOP("Allpass");
 
 
 const QStringList Labels::SequencerMode = QStringList()
-        << "Step"
-        << "Arpeggiator"
-        << "Sequence";
+        << QT_TR_NOOP("Step")
+        << QT_TR_NOOP("Arpeggiator")
+        << QT_TR_NOOP("Sequence");
 
 
 const QStringList Labels::ArpeggiatorDirection = QStringList()
-        << "Up"
-        << "Down"
-        << "Up/Down"
-        << "?"
-        << "Played";
+        << QT_TR_NOOP("Up")
+        << QT_TR_NOOP("Down")
+        << QT_TR_NOOP("Up/Down")
+        << QT_TR_NOOP("?")
+        << QT_TR_NOOP("Played");
 
 
 const QStringList Labels::GrooveTemplate = QStringList()
-        << "Swing"
-        << "Shuffle"
-        << "Push"
-        << "Lag"
-        << "Human"
-        << "Monkey";
+        << QT_TR_NOOP("Swing")
+        << QT_TR_NOOP("Shuffle")
+        << QT_TR_NOOP("Push")
+        << QT_TR_NOOP("Lag")
+        << QT_TR_NOOP("Human")
+        << QT_TR_NOOP("Monkey");
 
 
 const QStringList Labels::SequencerClockDivision = QStringList()
@@ -390,24 +390,24 @@ QString Labels::ArpeggiatorPatternFormatter(int value) {
     if (value < 15) {
         return QString("%1").arg(value + 1);
     } else {
-        return "sq";
+        return tr("sq");
     }
 }
 
 
 const QStringList Labels::Notes = QStringList()
-        << "C"
-        << "C#"
-        << "D"
-        << "D#"
-        << "E"
-        << "F"
-        << "F#"
-        << "G"
-        << "G#"
-        << "A"
-        << "A#"
-        << "B";
+        << QT_TR_NOOP("C")
+        << QT_TR_NOOP("C#")
+        << QT_TR_NOOP("D")
+        << QT_TR_NOOP("D#")
+        << QT_TR_NOOP("E")
+        << QT_TR_NOOP("F")
+        << QT_TR_NOOP("F#")
+        << QT_TR_NOOP("G")
+        << QT_TR_NOOP("G#")
+        << QT_TR_NOOP("A")
+        << QT_TR_NOOP("A#")
+        << QT_TR_NOOP("B");
 
 
 QString Labels::NoteFormatter(int value) {

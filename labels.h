@@ -20,12 +20,15 @@
 #ifndef SHRUTHI_LABELS_H
 #define SHRUTHI_LABELS_H
 
+#include <QCoreApplication> // for tr(), Q_DECLARE_TR_FUNCTIONS() and QT_TR_NOOP()
 
 class QString;
 class QStringList;
 
 
 class Labels {
+    Q_DECLARE_TR_FUNCTIONS(Labels)
+
     public:
         static const QStringList ModulationSource;
         static const QStringList ModulationDestination;
