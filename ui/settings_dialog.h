@@ -39,6 +39,8 @@ class SettingsDialog : public QDialog {
         unsigned char getMidiChannel();
         int getShruthiFilterBoard();
         void setShruthiFilterBoard(const int &index);
+        void setNoTranslation(bool value);
+        bool getNoTranslation() const;
 
     private:
         SettingsDialog(const SettingsDialog&); //forbid copying

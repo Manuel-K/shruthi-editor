@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>419</width>
-    <height>286</height>
+    <height>406</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -156,6 +156,35 @@
       <size>
        <width>0</width>
        <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gEditorSettings">
+     <property name="title">
+      <string>Editor settings:</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="noTranslation">
+        <property name="text">
+         <string>Disable translation (requires restart)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
       </size>
      </property>
     </spacer>

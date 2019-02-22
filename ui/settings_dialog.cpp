@@ -173,6 +173,18 @@ void SettingsDialog::setShruthiFilterBoard(const int &index) {
 }
 
 
+void SettingsDialog::setNoTranslation(bool value)
+{
+    ui->noTranslation->setChecked(value);
+}
+
+
+bool SettingsDialog::getNoTranslation() const
+{
+    return ui->noTranslation->isChecked();
+}
+
+
 int SettingsDialog::getShruthiFilterBoard() {
     return ui->shruthiFilterBoard->currentIndex();
 }
