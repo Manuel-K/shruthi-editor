@@ -49,6 +49,8 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
     parameter92 = 0;
     parameter93 = 0;
 
+    noTranslationState = false;
+
     lastProgramFileMode = 2;
 
     statusbarVersionLabel = new QLabel("Version ");
@@ -146,6 +148,12 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
 
 ShruthiEditorMainWindow::~ShruthiEditorMainWindow() {
     delete ui;
+}
+
+
+void ShruthiEditorMainWindow::setNoTranslation(bool value)
+{
+    noTranslationState = value;
 }
 
 
@@ -498,6 +506,7 @@ void ShruthiEditorMainWindow::openSettings() {
     prefs.setMidiPorts(MIDI_INPUT_PORT, MIDI_OUTPUT_PORT);
     prefs.setMidiChannel(MIDI_CHANNEL);
     prefs.setShruthiFilterBoard(SHRUTHI_FILTER_BOARD);
+    prefs.setNoTranslation(noTranslationState);
     prefs.setWindowIcon(QIcon(":/shruthi_editor.png"));
     if (prefs.exec()) {
         Config conf;
@@ -505,6 +514,8 @@ void ShruthiEditorMainWindow::openSettings() {
         conf.setMidiOutputPort(prefs.getMidiOutputPort());
         conf.setMidiChannel(prefs.getMidiChannel());
         conf.setShruthiFilterBoard(prefs.getShruthiFilterBoard());
+        conf.setNoTranslation(prefs.getNoTranslation());
+        noTranslationState = prefs.getNoTranslation();
         emit settingsChanged(conf);
     }
     prefs.done(1);

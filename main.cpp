@@ -54,12 +54,16 @@ int main(int argc, char *argv[]) {
 
     {
         QApplication app(argc, argv);
+
+        Config cfg;
+        cfg.load();
+
 #ifdef FUSION
         app.setStyle(QStyleFactory::create("Fusion"));
 #endif
 
         // Setup signalrouter
-        SignalRouter sr;
+        SignalRouter sr(&cfg);
         QThread srThread;
         sr.connect(&srThread, SIGNAL(started()), SLOT(run()));
         sr.moveToThread(&srThread);
@@ -92,6 +96,7 @@ int main(int argc, char *argv[]) {
         main_window->setFixedSize(main_window->width(), main_window->height());
         main_window->statusBar()->setSizeGripEnabled(false);
         main_window->setAttribute(Qt::WA_DeleteOnClose, true);
+        main_window->setNoTranslation(cfg.noTranslation());
         // main_window: incoming signals
         main_window->connect(&editor, SIGNAL(redrawPatchParameter(int,int)), SLOT(redrawPatchParameter(int,int)));
         main_window->connect(&editor, SIGNAL(redrawPatchName(QString)), SLOT(redrawPatchName(QString)));

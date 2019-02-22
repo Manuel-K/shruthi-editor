@@ -37,6 +37,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
         ShruthiEditorMainWindow(QWidget *parent = 0);
         ~ShruthiEditorMainWindow();
 
+        void setNoTranslation(bool value);
+
     private:
         ShruthiEditorMainWindow(const ShruthiEditorMainWindow&); //forbid copying
         ShruthiEditorMainWindow &operator=(const ShruthiEditorMainWindow&); //forbid assignment
@@ -54,6 +56,8 @@ class ShruthiEditorMainWindow : public QMainWindow {
 
         int lastProgramFileMode;
         int parameter84, parameter85, parameter92, parameter93;
+
+        bool noTranslationState;
 
     public slots:
         // redraw commands:
