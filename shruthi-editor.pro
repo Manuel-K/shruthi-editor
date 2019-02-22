@@ -84,6 +84,9 @@ FORMS = \
 RESOURCES = \
     ui/shruthi_editor.qrc
 
+TRANSLATIONS = \
+
+
 
 #
 # Settings
@@ -108,6 +111,8 @@ greaterThan(QT_MAJOR_VERSION, 4): DEFINES += FUSION
 # Comment the following line if you don't want to force the Cleanlooks style for Qt 4
 equals(QT_MAJOR_VERSION, 4): DEFINES += CLEANLOOKS
 
+# Generate and embed translations
+CONFIG += lrelease embed_translations
 
 unix:!macx {
     message(RtMidi will use linux alsaseq.)
