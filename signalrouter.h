@@ -31,7 +31,7 @@ class SignalRouter : public QObject {
         Q_OBJECT
 
     public:
-        SignalRouter();
+        SignalRouter(Config *cfg = 0);
         ~SignalRouter();
 
         bool editorWorking;

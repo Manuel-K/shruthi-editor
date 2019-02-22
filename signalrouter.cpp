@@ -23,13 +23,18 @@
 #endif
 
 
-SignalRouter::SignalRouter() {
+SignalRouter::SignalRouter(Config *cfg) {
 #ifdef DEBUGMSGS
     qDebug() << "SignalRouter::SignalRouter()";
 #endif
-    // load config
+
     config = Config();
-    config.load();
+    if (cfg) {
+        config.set(*cfg);
+    } else {
+        // load config
+        config.load();
+    }
 }
 
 
