@@ -1,5 +1,5 @@
-# Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For 
-# informations about the Shruthi, see <http:#www.mutable-instruments.net/shruthi1>. 
+# Shruthi-Editor: An unofficial Editor for the Shruthi hardware synthesizer. For
+# informations about the Shruthi, see <http:#www.mutable-instruments.net/shruthi1>.
 #
 # Copyright (C) 2011-2019 Manuel Krönig
 #
@@ -102,7 +102,7 @@ CONFIG += qt
 # Uncomment the following line if you use a firmware version prior to 0.94
 #DEFINES += PRE094SYSEXHEADER
 
-LIBS += -L. 
+LIBS += -L.
 target.path = release/
 
 # Comment the following line if you don't want to force the Fusion style for Qt 5
