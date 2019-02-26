@@ -52,7 +52,7 @@ bool find_translation(QTranslator &translator) {
     search.append(":/i18n/");
 
     for (int i = 0; i < search.size(); i++) {
-        if (translator.load(QLocale(), "shruthi_editor", "_", search.at(i), ".qm")) {
+        if (translator.load(QLocale(), "shruthi-editor", "_", search.at(i), ".qm")) {
 #ifdef DEBUGMSGS
             qDebug() << "Found translation file in path" << i << search.at(i);
 #endif
