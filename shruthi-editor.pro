@@ -85,7 +85,7 @@ RESOURCES = \
     ui/shruthi_editor.qrc
 
 TRANSLATIONS = \
-
+    tr/shruthi_editor_fr.ts
 
 
 #
