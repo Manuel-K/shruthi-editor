@@ -540,7 +540,7 @@
     <message>
         <location filename="../labels.cpp" line="144"/>
         <source>Sample&amp;Hold</source>
-        <translation>Échantillon&maintien</translation>
+        <translation>Échantillon&amp;maintien</translation>
     </message>
     <message>
         <location filename="../labels.cpp" line="145"/>
