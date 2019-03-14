@@ -1833,7 +1833,7 @@
     <message>
         <location filename="../ui/sequence_step.ui" line="113"/>
         <source>Tie/Slide</source>
-        <translation type="unfinished">Égalité/glissière</translation>
+        <translation>Lier/glisser</translation>
     </message>
 </context>
 <context>
