@@ -946,46 +946,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QWidget" name="w34" native="true">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>50</y>
-         <width>71</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <widget class="QDial" name="c34">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d34">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="w40" native="true">
+      <widget class="ShruthiEditorDial" name="c40" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -994,37 +955,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c40">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d40">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w43" native="true">
+      <widget class="ShruthiEditorDial" name="c43" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1033,37 +965,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c43">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d43">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w37" native="true">
+      <widget class="ShruthiEditorDial" name="c37" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1072,35 +975,16 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c37">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d37">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
+      </widget>
+      <widget class="ShruthiEditorDial" name="c34" native="true">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>50</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
       </widget>
      </widget>
     </item>
@@ -1243,7 +1127,7 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QWidget" name="w46" native="true">
+      <widget class="ShruthiEditorDial" name="c46" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1252,37 +1136,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c46">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d46">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w49" native="true">
+      <widget class="ShruthiEditorDial" name="c49" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1291,37 +1146,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c49">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d49">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w52" native="true">
+      <widget class="ShruthiEditorDial" name="c52" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1330,37 +1156,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c52">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d52">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w55" native="true">
+      <widget class="ShruthiEditorDial" name="c55" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1369,35 +1166,6 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QLabel" name="d55">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QDial" name="c55">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -1534,7 +1302,7 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QWidget" name="w58" native="true">
+      <widget class="ShruthiEditorDial" name="c58" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1543,37 +1311,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c58">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d58">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w61" native="true">
+      <widget class="ShruthiEditorDial" name="c61" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1582,37 +1321,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c61">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d61">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w64" native="true">
+      <widget class="ShruthiEditorDial" name="c64" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1621,37 +1331,8 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c64">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d64">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
-      <widget class="QWidget" name="w67" native="true">
+      <widget class="ShruthiEditorDial" name="c67" native="true">
        <property name="geometry">
         <rect>
          <x>250</x>
@@ -1660,35 +1341,6 @@
          <height>41</height>
         </rect>
        </property>
-       <widget class="QDial" name="c67">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>0</y>
-          <width>41</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="d67">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string notr="true">TextLabel</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -1701,7 +1353,7 @@
      <x>0</x>
      <y>0</y>
      <width>988</width>
-     <height>27</height>
+     <height>34</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1756,7 +1408,8 @@
   </widget>
   <action name="actionLoadProgram">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Load Program...</string>
@@ -1764,7 +1417,8 @@
   </action>
   <action name="actionSaveProgram">
    <property name="icon">
-    <iconset theme="document-save-as"/>
+    <iconset theme="document-save-as">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Save Program...</string>
@@ -1782,7 +1436,8 @@
   </action>
   <action name="actionOpenSettings">
    <property name="icon">
-    <iconset theme="configure"/>
+    <iconset theme="configure">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>S&amp;ettings...</string>
@@ -1790,7 +1445,8 @@
   </action>
   <action name="actionResetPatch">
    <property name="icon">
-    <iconset theme="document-revert"/>
+    <iconset theme="document-revert">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Reset Patch</string>
@@ -1798,7 +1454,8 @@
   </action>
   <action name="actionQuit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
@@ -1816,7 +1473,8 @@
   </action>
   <action name="actionRandomizePatch">
    <property name="icon">
-    <iconset theme="roll"/>
+    <iconset theme="roll">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Randomize &amp;Patch</string>
@@ -1859,7 +1517,8 @@
   </action>
   <action name="actionResetSequence">
    <property name="icon">
-    <iconset theme="document-revert"/>
+    <iconset theme="document-revert">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>R&amp;eset Sequence</string>
@@ -1872,7 +1531,8 @@
   </action>
   <action name="actionFetchProgram">
    <property name="icon">
-    <iconset theme="document-import"/>
+    <iconset theme="document-import">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Fetch Program</string>
@@ -1880,7 +1540,8 @@
   </action>
   <action name="actionSendProgram">
    <property name="icon">
-    <iconset theme="document-export"/>
+    <iconset theme="document-export">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Send Program</string>

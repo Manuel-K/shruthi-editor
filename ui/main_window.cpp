@@ -60,11 +60,9 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
     // deleted automatically when the statusbar is destroyed.
 
     // Setup Dials/ComboBoxes:
-    QDial* tmp_d;
     QComboBox* tmp_c;
-    QLabel *tmp_l;
     ShruthiEditorDial * tmp_sed;
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
         if (Patch::hasUI(i)) {
             const PatchParameter &par = Patch::parameter(i, 2);
             if (par.string_values) {
@@ -74,23 +72,7 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
                     continue;
                 }
                 comboBoxAddItemsTr(tmp_c, par.string_values);
-                connect(tmp_c,SIGNAL(currentIndexChanged(int)),this,SLOT(comboBoxChanged(int)));
-            } else if (Patch::belongsToModMatrix(i)){ // small dials
-                tmp_d = this->findChild<QDial*>(QString("c%1").arg(i));
-                if (!tmp_d) {
-                    qDebug() << "Dial" << QString("c%1").arg(i) << "could not be found!";
-                    continue;
-                }
-                tmp_d->setMinimum(par.min);
-                tmp_d->setMaximum(par.max);
-                tmp_l = this->findChild<QLabel*>(QString("d%1").arg(i));
-                if (tmp_l) {
-                    tmp_l->setText("0");
-                } else {
-                    qDebug() << "Label" << QString("d%1").arg(i) << "could not be found!";
-                    continue;
-                }
-                connect(tmp_d,SIGNAL(valueChanged(int)), this, SLOT(dialChanged(int)));
+                connect(tmp_c, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChanged(int)));
             } else {
                 tmp_sed = this->findChild<ShruthiEditorDial*>(QString("c%1").arg(i));
                 if (!tmp_sed) {
@@ -99,8 +81,10 @@ ShruthiEditorMainWindow::ShruthiEditorMainWindow(QWidget *parent):
                 }
                 tmp_sed->setParameter(i);
                 tmp_sed->setLimits(par.min, par.max);
-                tmp_sed->setName(translateShortNameAddColon(par.short_name));
-                tmp_sed->setFormatter(par.formatter);
+                if (!Patch::belongsToModMatrix(i)) { // not a small dial
+                    tmp_sed->setName(translateShortNameAddColon(par.short_name));
+                    tmp_sed->setFormatter(par.formatter);
+                }
                 connect(tmp_sed, SIGNAL(valueChanged(int,int)), this, SLOT(dialChanged(int,int)));
             }
         }
@@ -335,39 +319,6 @@ void ShruthiEditorMainWindow::comboBoxChanged(int val) {
 }
 
 
-void ShruthiEditorMainWindow::dialChanged(int val) {
-    QDial* s = (QDial*) sender();
-    QString id = s->objectName();
-
-    // Fix for additional dials (e.g. parameter 92/93):
-    if (id.endsWith('d')) {
-        id.chop(1);
-    }
-
-    QString temp = id;
-    temp.remove(0, 1);
-    int param = temp.toInt();
-
-    // Update label:
-    id.replace(0,1,"d");
-
-    QLabel *temp2 = this->findChild<QLabel*>(id);;
-    if (temp2) {
-        temp2->setText(Patch::formatParameterValue(param, val, SHRUTHI_FILTER_BOARD));
-    } else {
-        qDebug() << "Label" << id << "could not be found!";
-    }
-
-    // Don't send changed signal if element is disabled:
-    if (!s->isEnabled()) {
-        return;
-    }
-
-    QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, param, val);
-    emit enqueue(signal);
-}
-
-
 void ShruthiEditorMainWindow::dialChanged(int id, int val) {
     QueueItem signal(QueueAction::PATCH_PARAMETER_CHANGE_EDITOR, id, val);
     emit enqueue(signal);
@@ -569,7 +520,7 @@ void ShruthiEditorMainWindow::aboutQt() {
 
 
 void ShruthiEditorMainWindow::closeEvent(QCloseEvent* event) {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     quitShruthiEditor();
 }
 
@@ -626,25 +577,16 @@ void ShruthiEditorMainWindow::redrawPatchParameter(int id, int value) {
         wid.append("d");
     }
 
-    // Deactivate element before setting value to prevent sending
-    // the change back (i.e. debouncing)!
     if (param.string_values) {
         QComboBox* temp = this->findChild<QComboBox*>(wid);
         if (!temp) {
             return;
         }
+        // Deactivate element before setting value to prevent sending
+        // the change back (i.e. debouncing)!
         const bool &wasEnabled = temp->isEnabled();
         temp->setEnabled(false);
         temp->setCurrentIndex(value);
-        temp->setEnabled(wasEnabled);
-    } else if (Patch::belongsToModMatrix(id)) {
-        QDial* temp = this->findChild<QDial*>(wid);
-        if (!temp) {
-            return;
-        }
-        const bool &wasEnabled = temp->isEnabled();
-        temp->setEnabled(false);
-        temp->setValue(value);
         temp->setEnabled(wasEnabled);
     } else {
         ShruthiEditorDial* temp = this->findChild<ShruthiEditorDial*>(wid);

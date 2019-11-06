@@ -78,8 +78,7 @@ FORMS = \
     ui/main_window.ui \
     ui/sequence_editor.ui \
     ui/sequence_step.ui \
-    ui/settings_dialog.ui \
-    ui/shruthi_editor_dial.ui
+    ui/settings_dialog.ui
 
 RESOURCES = \
     ui/shruthi_editor.qrc

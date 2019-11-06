@@ -22,7 +22,8 @@
 
 
 #include <QWidget>
-namespace Ui { class ShruthiEditorDial; }
+class QLabel;
+class QDial;
 
 
 class ShruthiEditorDial : public QWidget {
@@ -33,7 +34,7 @@ class ShruthiEditorDial : public QWidget {
         ~ShruthiEditorDial();
 
         void setParameter(const int &parameter_);
-        void setName(const QString &name);
+        void setName(const QString &short_name);
         void setLimits(const int &min, const int &max);
         void setFormatter(QString (*formatter_)(int));
 
@@ -44,11 +45,19 @@ class ShruthiEditorDial : public QWidget {
         ShruthiEditorDial(const ShruthiEditorDial&); //forbid copying
         ShruthiEditorDial &operator=(const ShruthiEditorDial&); //forbid assignment
 
-        Ui::ShruthiEditorDial *ui;
+        void resizeEvent(QResizeEvent * event);
+        void resize();
         void setDisplay(const int &value);
+        void calculateDisplayWidth();
+
+        QLabel *header;
+        QLabel *display;
+        QDial *dial;
 
         int parameter;
+        int display_width;
         QString (*formatter)(int);
+        bool has_header;
 
     private slots:
         void valueChanged(int);
