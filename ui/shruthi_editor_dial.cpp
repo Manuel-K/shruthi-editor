@@ -59,7 +59,7 @@ void ShruthiEditorDial::setLimits(const int &min, const int &max) {
 
 void ShruthiEditorDial::setFormatter(QString (*formatter_)(int)) {
     formatter = formatter_;
-    valueChanged(ui->dial->value());
+    setDisplay(dial->value());
 }
 
 
