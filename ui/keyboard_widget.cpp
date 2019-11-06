@@ -40,7 +40,7 @@ KeyboardWidget::~KeyboardWidget() {
 
 
 void KeyboardWidget::resizeEvent(QResizeEvent *event) {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     setKeySize();
 }
 
@@ -199,6 +199,8 @@ void KeyboardWidget::destroyKeys() {
     for (unsigned int i = 0; i < len; i++) {
         temp = keys.back();
         keys.pop_back();
+        disconnect(temp, SIGNAL(pressed()), this, SLOT(keyPressed()));
+        disconnect(temp, SIGNAL(released()), this, SLOT(keyReleased()));
         delete temp;
     }
 }
