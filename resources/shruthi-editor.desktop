@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=shruthi-editor
+Comment=Editor for the Shruthi hardware synthesizer
+Comment[fr]=Éditeur pour le synthétiseur matériel Shruthi
+Exec=shruthi-editor
+Terminal=false
+Icon=shruthi_editor
+Type=Application
+Categories=AudioVideo;Audio;
