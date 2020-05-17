@@ -17,6 +17,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+isEmpty(PREFIX) {
+    win32:PREFIX = C:/shruti-editor
+    else:PREFIX = /usr/local
+}
+
+
 #
 # Source files
 #
@@ -82,10 +88,11 @@ FORMS = \
     ui/shruthi_editor_dial.ui
 
 RESOURCES = \
+    translations.qrc \
     ui/shruthi_editor.qrc
 
 TRANSLATIONS = \
-
+    translations/shruthi-editor_fr_FR.ts
 
 
 #
@@ -112,7 +119,7 @@ greaterThan(QT_MAJOR_VERSION, 4): DEFINES += FUSION
 equals(QT_MAJOR_VERSION, 4): DEFINES += CLEANLOOKS
 
 # Generate and embed translations
-CONFIG += lrelease embed_translations
+include(translations.pri)
 
 unix:!macx {
     message(RtMidi will use linux alsaseq.)
@@ -141,3 +148,4 @@ win32 {
 
 # install
 INSTALLS += target
+target.path = $$PREFIX/bin
